@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FCI — For Insurance Carriers &amp; Agencies</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Inter+Tight:wght@500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --blue:      #2563EB;
+      --blue-dark: #1D4ED8;
+      --sky:       #0EA5E9;
+      --blue-tint: #DBEAFE;
+      --blue-faint:#EFF6FF;
+      --white:     #FFFFFF;
+      --offwhite:  #F8FAFC;
+      --rule:      #E2E8F0;
+      --text:      #1E3A5F;
+      --body:      #475569;
+      --muted:     #94A3B8;
+      --faint:     #CBD5E1;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { font-size: 16px; }
+    body { font-family: 'Inter', sans-serif; background: #E2E8F0; color: var(--text); -webkit-font-smoothing: antialiased; }
+
+    /* ── PAGE SHELL ── */
+    .page {
+      max-width: 780px;
+      margin: 48px auto;
+      background: var(--white);
+      box-shadow: 0 8px 48px rgba(0,0,0,0.12);
+    }
+
+    /* ── FRONT PANEL ── */
+    .front {
+      background: var(--blue);
+      padding: 64px 64px 56px;
+      position: relative;
+      overflow: hidden;
+    }
+    .front::before {
+      content: '';
+      position: absolute;
+      top: -140px; right: -140px;
+      width: 480px; height: 480px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.04);
+      pointer-events: none;
+    }
+    .front::after {
+      content: '';
+      position: absolute;
+      bottom: -80px; left: 30%;
+      width: 320px; height: 320px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.03);
+      pointer-events: none;
+    }
+
+    .front-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 56px;
+      position: relative; z-index: 1;
+    }
+
+    .logo-block {}
+    .logo-mark {
+      font-family: 'Inter Tight', sans-serif;
+      font-size: 36px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      color: var(--white);
+      line-height: 1;
+    }
+    .logo-desc {
+      font-size: 10px;
+      font-weight: 400;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.45);
+      margin-top: 8px;
+    }
+
+    .persona-tag {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.5);
+      background: rgba(255,255,255,0.08);
+      padding: 8px 16px;
+      align-self: flex-start;
+    }
+
+    .front-headline {
+      font-family: 'Inter Tight', sans-serif;
+      font-size: clamp(26px, 3.8vw, 38px);
+      font-weight: 600;
+      color: var(--white);
+      letter-spacing: -0.025em;
+      line-height: 1.15;
+      max-width: 580px;
+      margin-bottom: 24px;
+      position: relative; z-index: 1;
+    }
+
+    .front-sub {
+      font-size: 16px;
+      font-weight: 300;
+      color: rgba(255,255,255,0.65);
+      line-height: 1.7;
+      max-width: 520px;
+      margin-bottom: 48px;
+      position: relative; z-index: 1;
+    }
+
+    .front-pillars {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 2px;
+      position: relative; z-index: 1;
+    }
+
+    .pillar {
+      background: rgba(255,255,255,0.07);
+      padding: 20px 20px 22px;
+    }
+
+    .pillar-num {
+      font-family: 'Inter', monospace;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      color: var(--sky);
+      margin-bottom: 10px;
+    }
+
+    .pillar-title {
+      font-family: 'Inter Tight', sans-serif;
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--white);
+      line-height: 1.3;
+      margin-bottom: 8px;
+    }
+
+    .pillar-desc {
+      font-size: 12px;
+      color: rgba(255,255,255,0.5);
+      line-height: 1.6;
+    }
+
+    /* ── DIVIDER BAND ── */
+    .band {
+      background: var(--blue-faint);
+      border-top: 3px solid var(--blue);
+      padding: 24px 64px;
+      display: flex;
+      align-items: center;
+      gap: 32px;
+    }
+
+    .band-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--sky);
+      white-space: nowrap;
+    }
+
+    .band-quote {
+      font-family: 'Inter Tight', sans-serif;
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--text);
+      letter-spacing: -0.01em;
+      line-height: 1.4;
+      font-style: italic;
+    }
+
+    /* ── BACK PANEL ── */
+    .back {
+      padding: 56px 64px 64px;
+      background: var(--white);
+    }
+
+    .back-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      margin-bottom: 48px;
+    }
+
+    .back-col-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--sky);
+      margin-bottom: 20px;
+    }
+
+    .back-col-title {
+      font-family: 'Inter Tight', sans-serif;
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--text);
+      letter-spacing: -0.01em;
+      line-height: 1.25;
+      margin-bottom: 16px;
+    }
+
+    .back-col-body {
+      font-size: 14px;
+      color: var(--body);
+      line-height: 1.75;
+      margin-bottom: 20px;
+    }
+
+    .item-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .item-list li {
+      font-size: 13px;
+      color: var(--body);
+      padding: 10px 0;
+      border-bottom: 1px solid var(--rule);
+      line-height: 1.55;
+      padding-left: 16px;
+      position: relative;
+    }
+    .item-list li:last-child { border-bottom: none; }
+    .item-list li::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 18px;
+      width: 5px; height: 5px;
+      border-radius: 50%;
+      background: var(--sky);
+    }
+
+    /* ── STATS ROW ── */
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 2px;
+      margin-bottom: 40px;
+      background: var(--rule);
+    }
+
+    .stat-cell {
+      background: var(--blue-faint);
+      padding: 20px 20px 22px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .stat-num {
+      font-family: 'Inter', monospace;
+      font-size: 26px;
+      font-weight: 600;
+      color: var(--blue);
+      letter-spacing: -0.02em;
+      line-height: 1;
+    }
+
+    .stat-label {
+      font-size: 11px;
+      color: var(--muted);
+      letter-spacing: 0.04em;
+      line-height: 1.4;
+    }
+
+    /* ── CTA BLOCK ── */
+    .cta-block {
+      background: var(--blue);
+      padding: 32px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 32px;
+    }
+
+    .cta-left {}
+    .cta-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.45);
+      margin-bottom: 8px;
+    }
+    .cta-text {
+      font-family: 'Inter Tight', sans-serif;
+      font-size: 17px;
+      font-weight: 500;
+      color: var(--white);
+      letter-spacing: -0.01em;
+      line-height: 1.4;
+    }
+
+    .cta-right {
+      text-align: right;
+      flex-shrink: 0;
+    }
+    .cta-contact {
+      font-size: 12px;
+      color: rgba(255,255,255,0.5);
+      letter-spacing: 0.04em;
+      line-height: 1.8;
+    }
+    .cta-contact strong {
+      display: block;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--white);
+    }
+
+    /* ── PRINT ── */
+    @media print {
+      body { background: white; }
+      .page { box-shadow: none; margin: 0; max-width: 100%; }
+    }
+  </style>
+</head>
+<body>
+<div class="page">
+
+  <!-- ═══ FRONT ═══ -->
+  <div class="front">
+    <div class="front-top">
+      <div class="logo-block">
+        <div class="logo-mark">FCI</div>
+        <div class="logo-desc">Managed Cybersecurity for Financial Services</div>
+      </div>
+      <div class="persona-tag">For Insurance Carriers &amp; Agencies</div>
+    </div>
+
+    <div class="front-headline">Security controls that reach<br>every appointed agent.<br>Evidence your insurer will accept.</div>
+
+    <div class="front-sub">Your appointed agents and independent field offices operate outside your direct IT control — but inside your regulatory perimeter. State regulators under NAIC Model Law requirements and your own cyber insurance carrier both expect proof that controls extend to the field. FCI delivers that proof, continuously, without requiring your agents to manage anything themselves.</div>
+
+    <div class="front-pillars">
+      <div class="pillar">
+        <div class="pillar-num">01</div>
+        <div class="pillar-title">Controls to the field edge</div>
+        <div class="pillar-desc">NAIC-aligned safeguards deployed to every appointed agent and independent office — automatically, without burdening field staff.</div>
+      </div>
+      <div class="pillar">
+        <div class="pillar-num">02</div>
+        <div class="pillar-title">Renewal-ready evidence</div>
+        <div class="pillar-desc">The CISO Portal produces the exact documentation your cyber insurance carrier requests at renewal — mapped to their questionnaire format.</div>
+      </div>
+      <div class="pillar">
+        <div class="pillar-num">03</div>
+        <div class="pillar-title">Contained field exposure</div>
+        <div class="pillar-desc">Zero Trust access controls ensure a compromise in one field agency cannot reach carrier systems or spread across the agent network.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ BAND ═══ -->
+  <div class="band">
+    <div class="band-label">The difference</div>
+    <div class="band-quote">"Your cyber insurer will ask what controls you had in place. FCI makes sure you have an answer before they ask."</div>
+  </div>
+
+  <!-- ═══ BACK ═══ -->
+  <div class="back">
+
+    <div class="back-grid">
+      <div>
+        <div class="back-col-label">What changes on day one</div>
+        <div class="back-col-body">FCI maps the full scope of your agency network — appointed agents, their devices, and every connection to carrier systems. Operations leaders often see, for the first time, the full extent of exposure the field model creates. Controls begin deploying immediately. Your NAIC compliance posture improves from the first week.</div>
+        <ul class="item-list">
+          <li>Complete inventory of appointed agent devices and connections</li>
+          <li>NAIC Model Law-aligned controls deployed across the field network</li>
+          <li>Zero Trust access controls active between agents and carrier systems</li>
+          <li>Always-On VPN and MFA enforced for all field users</li>
+          <li>24x7 SOC monitoring extended across the full agent network</li>
+        </ul>
+      </div>
+      <div>
+        <div class="back-col-label">What you can hand to a regulator or insurer</div>
+        <div class="back-col-body">When your cyber insurance renewal arrives — or a state regulator requests your cybersecurity program documentation — the evidence is already assembled. The CISO Portal produces it in minutes, not weeks.</div>
+        <ul class="item-list">
+          <li>NAIC Model Law cybersecurity program documentation</li>
+          <li>Appointed agent device inventory and control enforcement log</li>
+          <li>Cyber insurance renewal package mapped to carrier questionnaire format</li>
+          <li>Zero Trust access records showing agent and device permissions</li>
+          <li>Incident and response log for the full field network</li>
+          <li>Annual cybersecurity review documentation required under state law</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="stats-row">
+      <div class="stat-cell">
+        <div class="stat-num">40,000+</div>
+        <div class="stat-label">endpoints under management</div>
+      </div>
+      <div class="stat-cell">
+        <div class="stat-num">90%</div>
+        <div class="stat-label">faster implementation via CISO Portal</div>
+      </div>
+      <div class="stat-cell">
+        <div class="stat-num">80%</div>
+        <div class="stat-label">less monthly compliance management time</div>
+      </div>
+      <div class="stat-cell">
+        <div class="stat-num">30+</div>
+        <div class="stat-label">years serving financial services exclusively</div>
+      </div>
+    </div>
+
+    <div class="cta-block">
+      <div class="cta-left">
+        <div class="cta-label">Next step</div>
+        <div class="cta-text">Request a 30-minute Risk Assessment. You will see where your field network is exposed and what your next NAIC filing or insurance renewal will require.</div>
+      </div>
+      <div class="cta-right">
+        <div class="cta-contact">
+          <strong>fcicyber.com</strong>
+          SOC 2 Type 1 Certified<br>
+          100% SecurityScorecard<br>
+          NIST CSF · NAIC · NYDFS
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+</body>
+</html>
