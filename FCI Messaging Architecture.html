@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FCI — Messaging Architecture</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Inter+Tight:wght@500;600&display=swap" rel="stylesheet" />
+  <style>
+    /* ─── DESIGN TOKENS ──────────────────────────── */
+    :root {
+      --blue:       #2563EB;
+      --blue-dark:  #1D4ED8;
+      --sky:        #0EA5E9;
+      --blue-tint:  #DBEAFE;
+      --blue-faint: #EFF6FF;
+      --offwhite:   #F8FAFC;
+      --white:      #FFFFFF;
+      --rule:       #E2E8F0;
+      --text:       #1E3A5F;
+      --body:       #475569;
+      --muted:      #94A3B8;
+      --faint:      #CBD5E1;
+    }
+
+    /* ─── RESET ──────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { font-size: 16px; scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--offwhite);
+      color: var(--text);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ─── LAYOUT ─────────────────────────────────── */
+    .wrap { max-width: 900px; margin: 0 auto; padding: 0 48px 120px; }
+
+    /* ─── HEADER ─────────────────────────────────── */
+    .site-header {
+      background: var(--blue);
+      margin: 0 -48px;
+      padding: 56px 48px 48px;
+      position: relative;
+      overflow: hidden;
+    }
+    .site-header::before {
+      content: '';
+      position: absolute;
+      top: -100px; right: -100px;
+      width: 400px; height: 400px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.04);
+      pointer-events: none;
+    }
+    .header-eyebrow {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.45);
+      margin-bottom: 20px;
+      position: relative; z-index: 1;
+    }
+    .header-logo {
+      font-family: 'Inter Tight', sans-serif;
+      font-size: 40px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      color: var(--white);
+      line-height: 1;
+      position: relative; z-index: 1;
+    }
+    .header-descriptor {
+      font-size: 12px;
+      font-weight: 400;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.45);
+      margin-top: 10px;
+      position: relative; z-index: 1;
+    }
+    .header-title {
+      font-family: 'Inter Tight', sans-serif;
+      font-size: clamp(26px, 3.5vw, 36px);
+      font-weight: 600;
+      color: var(--white);
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+      margin-top: 32px;
+      position: relative; z-index: 1;
+    }
+    .header-sub {
+      font-size: 15px;
+      color: rgba(255,255,255,0.6);
+      margin-top: 12px;
+      max-width: 540px;
+      line-height: 1.65;
+      position: relative; z-index: 1;
+    }
+
+    /* ─── NAV ────────────────────────────────────── */
+    .toc {
+      margin: 48px 0 0;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .toc a {
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      color: var(--blue);
+      background: var(--blue-tint);
+      padding: 7px 16px;
+      text-decoration: none;
+      border: 1px solid #BFDBFE;
+      transition: background 0.15s;
+    }
+    .toc a:hover { background: #BFDBFE; }
+
+    /* ─── SECTION HEADERS ────────────────────────── */
+    .section { margin-top: 72px; }
+
+    .section-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--sky);
+      margin-bottom: 12px;
+    }
+
+    .section-title {
+      font-family: 'Inter Tight', sans-serif;
+      font-size: clamp(24px, 3vw, 32px);
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      color: var(--text);
+      line-height: 1.15;
+      margin-bottom: 8px;
+    }
+
+    .section-intro {
+      font-size: 15px;
+      color: var(--body);
+      max-width: 620px;
+      line-height: 1.75;
+      margin-bottom: 36px;
+      padding-bottom: 36px;
+      border-bottom: 1px solid var(--rule);
+    }
+
+    /* ─── BLOCKS ─────────────────────────────────── */
+    /* Each block = one editable unit */
+    .block { margin-bottom: 32px; }
+
+    .block-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--sky);
+      margin-bottom: 10px;
+    }
+
+    .block-content {
+      font-size: 15px;
+      color: var(--body);
+      line-height: 1.75;
+      max-width: 720px;
+    }
+
+    /* ─── CALLOUT (highlighted single sentence) ──── */
+    .callout {
+      background: var(--blue);
+      padding: 28px 36px;
+      margin: 36px 0;
+    }
+    .callout-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.45);
+      margin-bottom: 12px;
+    }
+    .callout-text {
+      font-family: 'Inter Tight', sans-serif;
+      font-size: clamp(17px, 2.2vw, 21px);
+      font-weight: 500;
+      color: var(--white);
+      letter-spacing: -0.01em;
+      line-height: 1.45;
+    }
+
+    /* ─── LIST BLOCK ─────────────────────────────── */
+    .list-block {
+      background: var(--white);
+      border: 1px solid var(--rule);
+      padding: 28px 32px;
+      margin: 16px 0 32px;
+    }
+    .list-block ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+    .list-block li {
+      font-size: 14px;
+      color: var(--body);
+      padding: 12px 0;
+      border-bottom: 1px solid var(--rule);
+      line-height: 1.6;
+      padding-left: 20px;
+      position: relative;
+    }
+    .list-block li:last-child { border-bottom: none; }
+    .list-block li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 20px;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--sky);
+    }
+
+    /* ─── TWO-COL GRID (use / avoid) ──────────────── */
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3px;
+      margin: 16px 0 32px;
+      background: var(--rule);
+    }
+    .col-card {
+      background: var(--white);
+      padding: 32px;
+    }
+    .col-card.avoid { background: #FFF8F8; }
+    .col-card-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+    }
+    .col-card.use   .col-card-label { color: var(--sky); }
+    .col-card.avoid .col-card-label { color: #EF4444; }
+    .col-card ul { list-style: none; display: flex; flex-direction: column; gap: 0; }
+    .col-card li {
+      font-size: 13px;
+      color: var(--body);
+      padding: 10px 0;
+      border-bottom: 1px solid var(--rule);
+      line-height: 1.55;
+    }
+    .col-card.avoid li { border-color: #FEE2E2; }
+    .col-card li:last-child { border-bottom: none; }
+    .col-card li em { font-style: normal; font-weight: 600; color: var(--text); }
+
+    /* ─── PROOF PILLS ────────────────────────────── */
+    .proof-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin: 16px 0 32px;
+    }
+    .proof-pill {
+      background: var(--blue-faint);
+      border: 1px solid #BFDBFE;
+      padding: 10px 20px;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--blue);
+      line-height: 1.4;
+    }
+
+    /* ─── PERSONA CARD ───────────────────────────── */
+    .persona-band {
+      background: var(--blue-tint);
+      border-left: 4px solid var(--blue);
+      padding: 20px 24px;
+      margin-bottom: 36px;
+    }
+    .persona-band-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--blue-dark);
+      margin-bottom: 6px;
+    }
+    .persona-band-title {
+      font-family: 'Inter Tight', sans-serif;
+      font-size: 20px;
+      font-weight: 600;
+      color: var(--text);
+      letter-spacing: -0.01em;
+    }
+
+    /* ─── DIVIDER ────────────────────────────────── */
+    .divider {
+      border: none;
+      border-top: 1px solid var(--rule);
+      margin: 48px 0;
+    }
+
+    /* ─── OBJECTION BLOCK ────────────────────────── */
+    .objection {
+      background: var(--white);
+      border: 1px solid var(--rule);
+      margin-bottom: 16px;
+      overflow: hidden;
+    }
+    .objection-q {
+      background: var(--blue-faint);
+      padding: 18px 24px;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text);
+      border-bottom: 1px solid #BFDBFE;
+    }
+    .objection-a {
+      padding: 18px 24px;
+      font-size: 14px;
+      color: var(--body);
+      line-height: 1.75;
+    }
+
+    /* ─── FOOTER ─────────────────────────────────── */
+    .page-footer {
+      margin-top: 96px;
+      padding-top: 36px;
+      border-top: 1px solid var(--rule);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .page-footer-logo {
+      font-family: 'Inter Tight', sans-serif;
+      font-size: 22px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      color: var(--blue);
+    }
+    .page-footer-note {
+      font-size: 12px;
+      color: var(--faint);
+      letter-spacing: 0.04em;
+    }
+  </style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- ═══════════════════════════════════════════════
+       HEADER
+  ═══════════════════════════════════════════════ -->
+  <div class="site-header">
+    <div class="header-eyebrow">Internal Reference — Not for Distribution</div>
+    <div class="header-logo">FCI</div>
+    <div class="header-descriptor">Managed Cybersecurity for Financial Services</div>
+    <div class="header-title">Messaging Architecture</div>
+    <div class="header-sub">The single source of truth for all FCI copywriting. Every one-pager, website page, presentation, and email draws from this document.</div>
+  </div>
+
+  <!-- TABLE OF CONTENTS -->
+  <nav class="toc">
+    <a href="#universal">Universal Messages</a>
+    <a href="#ria">RIA Principals</a>
+    <a href="#broker-dealer">Broker-Dealers</a>
+    <a href="#insurance">Insurance Carriers</a>
+    <a href="#objections">Objection Responses</a>
+    <a href="#vocabulary">Vocabulary</a>
+  </nav>
+
+
+  <!-- ═══════════════════════════════════════════════
+       PART 1 — UNIVERSAL MESSAGES
+  ═══════════════════════════════════════════════ -->
+  <div class="section" id="universal">
+    <div class="section-label">Part 1</div>
+    <div class="section-title">Universal Messages</div>
+    <div class="section-intro">These messages apply regardless of persona. They establish what FCI is, what it does, and why it is different. Every asset uses at least one of these.</div>
+
+    <!-- One-sentence positioning -->
+    <div class="block">
+      <div class="block-label">The one-sentence positioning</div>
+      <div class="callout">
+        <div class="callout-label">Use this in every first impression — website hero, presentation cover, intro email</div>
+        <div class="callout-text">FCI manages cybersecurity and compliance for financial firms that operate through distributed field models — so every advisor, every device, and every field office is covered, and every examiner gets the evidence they need.</div>
+      </div>
+    </div>
+
+    <!-- Three pillars -->
+    <div class="block">
+      <div class="block-label">The three pillars</div>
+      <div class="block-content">Every FCI asset connects to at least one of these three ideas. They are the organizing logic for all messaging.</div>
+      <div class="list-block">
+        <ul>
+          <li>Pillar 1 — Enforcement without friction. Controls are set and maintained automatically, without touching your users' workflows. Your advisors do not notice the protections running. Your compliance team does not have to ask anyone to do anything differently.</li>
+          <li>Pillar 2 — Proof at exam time. Every safeguard FCI manages is logged, timestamped, and mapped to the framework your regulator expects. When the examiner walks in, the evidence is already assembled. The CISO Portal produces it in minutes.</li>
+          <li>Pillar 3 — Expert coverage, not just software. A human-led SOC watches every endpoint, 24 hours a day, seven days a week. When something needs a response, a person responds — not an automated alert sitting in a queue.</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Proof points -->
+    <div class="block">
+      <div class="block-label">The four proof points — use exactly as written</div>
+      <div class="proof-row">
+        <div class="proof-pill">40,000+ endpoints under management</div>
+        <div class="proof-pill">Up to 90% reduction in implementation time</div>
+        <div class="proof-pill">Up to 80% less recurring monthly compliance work</div>
+        <div class="proof-pill">30+ years serving exclusively financial services</div>
+      </div>
+    </div>
+
+    <!-- Certifications -->
+    <div class="block">
+      <div class="block-label">Certifications and standards</div>
+      <div class="proof-row">
+        <div class="proof-pill">SOC 2 Type 1 certified</div>
+        <div class="proof-pill">100% SecurityScorecard rating</div>
+        <div class="proof-pill">NIST CSF-mapped controls</div>
+        <div class="proof-pill">SEC · FINRA · NYDFS · NAIC alignment</div>
+      </div>
+    </div>
+
+    <!-- CTA -->
+    <div class="block">
+      <div class="block-label">The universal call to action</div>
+      <div class="callout">
+        <div class="callout-label">End every asset with this — or a close variation</div>
+        <div class="callout-text">Request a Risk Assessment. In 30 minutes, you will have a clear picture of your current exposure and a map of what your next regulatory exam or cyber insurance renewal will ask for.</div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ═══════════════════════════════════════════════
+       PART 2 — PERSONA: RIA PRINCIPALS
+  ═══════════════════════════════════════════════ -->
+  <hr class="divider" />
+  <div class="section" id="ria">
+    <div class="section-label">Part 2 — Persona</div>
+    <div class="section-title">RIA Principals &amp; Managing Partners</div>
+    <div class="section-intro">Owners of registered investment advisory firms. Often the compliance officer and the business leader simultaneously. Their reputation is their business — a breach or an exam failure is existential.</div>
+
+    <div class="persona-band">
+      <div class="persona-band-label">Who they are</div>
+      <div class="persona-band-title">The owner of a practice built on client trust, now managing growing compliance expectations with a lean team.</div>
+    </div>
+
+    <div class="block">
+      <div class="block-label">Their world</div>
+      <div class="block-content">They built their practice to serve clients, not to manage technology. But every year the regulatory expectations grow — from cybersecurity policies to annual reviews to evidence of controls on every device their advisors use. Their advisors are often semi-independent, working from home offices and personal devices. A single breach, a single exam failure, or a single FINRA fine can permanently damage the trust they have spent years building.</div>
+    </div>
+
+    <div class="block">
+      <div class="block-label">The job they need done</div>
+      <div class="list-block">
+        <ul>
+          <li>Pass the next SEC or FINRA exam without spending weeks preparing evidence manually.</li>
+          <li>Know that every advisor's device is protected, regardless of where they work or what network they use.</li>
+          <li>Keep advisors focused on clients, not on security software, policy updates, or compliance checklists.</li>
+          <li>Have a credible answer when a cyber insurance carrier asks what controls are in place.</li>
+          <li>Know that someone qualified is watching — even when the principal is not.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="block">
+      <div class="block-label">The fear that drives the decision</div>
+      <div class="callout">
+        <div class="callout-label">This is what they are thinking when they take the first meeting</div>
+        <div class="callout-text">"A breach or an exam failure would destroy client trust that took me 20 years to build. And I would not even know it was happening until it was too late."</div>
+      </div>
+    </div>
+
+    <div class="block">
+      <div class="block-label">FCI's answer to this persona</div>
+      <div class="block-content">FCI quietly manages every device and control in the background — so your practice stays compliant, your advisors stay focused, and your next exam produces a report instead of a crisis.</div>
+    </div>
+
+    <div class="block">
+      <div class="block-label">Persona-specific proof points</div>
+      <div class="list-block">
+        <ul>
+          <li>NIST CSF-mapped controls enforced on every endpoint, including BYOD and home office devices, without user involvement.</li>
+          <li>The CISO Portal produces exam-ready documentation in minutes — mapped to what SEC and FINRA examiners actually ask for.</li>
+          <li>Always-On VPN and MFA enforced automatically — advisors connect securely without extra steps.</li>
+          <li>Zero Trust access controls contain any incident before it can spread across the practice.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="block">
+      <div class="block-label">What changes on day one</div>
+      <div class="block-content">FCI's team takes inventory of every device in the practice. Controls are pushed silently and automatically. The principal receives a dashboard showing the full posture of every endpoint. For most practices, the first view of that dashboard is the first time anyone has seen the complete picture.</div>
+    </div>
+
+    <div class="block">
+      <div class="block-label">What they can hand to an auditor or insurer</div>
+      <div class="list-block">
+        <ul>
+          <li>Full endpoint inventory with compliance status for every device.</li>
+          <li>Evidence log showing which controls are active, when they were applied, and whether any were tampered with.</li>
+          <li>SEC and FINRA-aligned policy documentation, timestamped.</li>
+          <li>MFA and VPN enforcement records for all users.</li>
+          <li>Incident response documentation if any event occurred.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="block">
+      <div class="block-label">The sentence that makes them lean in</div>
+      <div class="callout">
+        <div class="callout-label">Use at the close of a first meeting, at the end of a one-pager, or as the subject line of a follow-up</div>
+        <div class="callout-text">"Your advisors will not notice the difference. Your examiner will."</div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ═══════════════════════════════════════════════
+       PART 3 — PERSONA: BROKER-DEALERS
+  ═══════════════════════════════════════════════ -->
+  <hr class="divider" />
+  <div class="section" id="broker-dealer">
+    <div class="section-label">Part 3 — Persona</div>
+    <div class="section-title">Broker-Dealer Compliance Officers</div>
+    <div class="section-intro">CCOs and supervision leads at registered broker-dealers. Responsible for the security and compliance posture of a network of registered representatives operating in offices they do not directly control.</div>
+
+    <div class="persona-band">
+      <div class="persona-band-label">Who they are</div>
+      <div class="persona-band-title">The person answering to FINRA and SEC examiners — and to firm leadership — when something goes wrong in a branch they cannot see.</div>
+    </div>
+
+    <div class="block">
+      <div class="block-label">Their world</div>
+      <div class="block-content">They supervise a network that is structurally difficult to control. Registered representatives use their own devices, operate in offices that may not have dedicated IT support, and connect through networks that no central team manages. FINRA's examination priorities and the SEC's cybersecurity rules demand evidence of specific controls. Assembling that evidence manually, across a distributed network, takes their team weeks before every exam.</div>
+    </div>
+
+    <div class="block">
+      <div class="block-label">The job they need done</div>
+      <div class="list-block">
+        <ul>
+          <li>Demonstrate to FINRA and SEC examiners that cybersecurity controls are enforced across every branch and every rep — not just at the home office.</li>
+          <li>Reduce the time their team spends preparing exam documentation — they need evidence that assembles itself.</li>
+          <li>Prove that written supervisory procedures are backed by actual technical controls, not just policies on paper.</li>
+          <li>Get visibility into every device and connection in the network, including BYOD.</li>
+          <li>Answer a FINRA cybersecurity questionnaire confidently and immediately.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="block">
+      <div class="block-label">The fear that drives the decision</div>
+      <div class="callout">
+        <div class="callout-label">This is what they are thinking when they take the first meeting</div>
+        <div class="callout-text">"FINRA asks me to prove that our cybersecurity controls are working across our entire rep network. Right now, I know they are not — and I cannot prove they are."</div>
+      </div>
+    </div>
+
+    <div class="block">
+      <div class="block-label">FCI's answer to this persona</div>
+      <div class="block-content">FCI enforces controls across your entire rep network — home offices, branch offices, BYOD devices — and produces the FINRA and SEC-aligned evidence your examiners expect, before they walk in the door.</div>
+    </div>
+
+    <div class="block">
+      <div class="block-label">Persona-specific proof points</div>
+      <div class="list-block">
+        <ul>
+          <li>NIST CSF controls mapped specifically to FINRA's examination priorities and SEC Regulation S-P requirements.</li>
+          <li>The CISO Portal provides a single view of every device in the rep network — compliance status, control enforcement, and incident history.</li>
+          <li>Written supervisory procedure templates aligned to current SEC and FINRA cybersecurity expectations.</li>
+          <li>Vendor due diligence documentation produced as part of the FCI engagement — FCI itself is the evidence of a vetted cybersecurity vendor.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="block">
+      <div class="block-label">What changes on day one</div>
+      <div class="block-content">The compliance officer gets a complete inventory of the firm's distributed device landscape — many firms discover devices and connections they did not know existed. Controls are enforced and logged from that point forward. The exam evidence gap begins closing immediately.</div>
+    </div>
+
+    <div class="block">
+      <div class="block-label">What they can hand to an auditor or insurer</div>
+      <div class="list-block">
+        <ul>
+          <li>Device inventory and control enforcement log across all reps and branches.</li>
+          <li>FINRA and SEC cybersecurity rule alignment mapping.</li>
+          <li>Written supervisory procedure documentation backed by technical evidence.</li>
+          <li>Vendor due diligence file for FCI (SOC 2 Type 1, SecurityScorecard, regulatory alignment).</li>
+          <li>MFA, VPN, and endpoint encryption enforcement records.</li>
+          <li>Incident log and response documentation.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="block">
+      <div class="block-label">The sentence that makes them lean in</div>
+      <div class="callout">
+        <div class="callout-label">Use at the close of a first meeting, at the end of a one-pager, or as the subject line of a follow-up</div>
+        <div class="callout-text">"The FINRA examiner will ask for your cybersecurity evidence. FCI builds it while your reps are working — not after the exam notice arrives."</div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ═══════════════════════════════════════════════
+       PART 4 — PERSONA: INSURANCE CARRIERS & AGENCIES
+  ═══════════════════════════════════════════════ -->
+  <hr class="divider" />
+  <div class="section" id="insurance">
+    <div class="section-label">Part 4 — Persona</div>
+    <div class="section-title">Insurance Carriers &amp; Agency Operations Leaders</div>
+    <div class="section-intro">Operations executives, compliance officers, and technology leaders at insurance carriers and independent agency networks. Responsible for security and compliance across a field model of appointed agents working from offices outside the firm's direct control.</div>
+
+    <div class="persona-band">
+      <div class="persona-band-label">Who they are</div>
+      <div class="persona-band-title">The leader managing compliance and cyber insurance exposure across a distribution network they cannot fully see or control.</div>
+    </div>
+
+    <div class="block">
+      <div class="block-label">Their world</div>
+      <div class="block-content">The insurance sector faces converging pressure from three directions. State regulators — particularly under NAIC Model Law requirements — are expanding cybersecurity mandates for carriers and the agents they appoint. Cyber insurance carriers are requiring proof of specific controls at policy renewal. And the distributed agency model creates the same visibility problem that broker-dealers face: security controls that exist at the home office do not reach the field, and the field is where most of the customer data lives.</div>
+    </div>
+
+    <div class="block">
+      <div class="block-label">The job they need done</div>
+      <div class="list-block">
+        <ul>
+          <li>Meet NAIC Model Law cybersecurity requirements without building a large internal security team.</li>
+          <li>Produce the control evidence that cyber insurance carriers request at renewal — before the renewal conversation, not during it.</li>
+          <li>Extend security controls to appointed agents and independent field offices who are outside the firm's direct IT management.</li>
+          <li>Demonstrate to state regulators that the cybersecurity program reaches every part of the distribution network.</li>
+          <li>Reduce the cost and complexity of managing compliance across a large, distributed agent population.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="block">
+      <div class="block-label">The fear that drives the decision</div>
+      <div class="callout">
+        <div class="callout-label">This is what they are thinking when they take the first meeting</div>
+        <div class="callout-text">"We had a breach in an independent agency, and our cyber insurance carrier is asking why our controls did not extend to that office. We do not have a good answer."</div>
+      </div>
+    </div>
+
+    <div class="block">
+      <div class="block-label">FCI's answer to this persona</div>
+      <div class="block-content">FCI extends your cybersecurity and compliance controls to every appointed agent and field office — so your NAIC filings reflect what is actually happening in the field, and your cyber insurer sees the evidence they need to renew your policy.</div>
+    </div>
+
+    <div class="block">
+      <div class="block-label">Persona-specific proof points</div>
+      <div class="list-block">
+        <ul>
+          <li>NAIC Model Law-aligned cybersecurity controls deployed to independent agents and field offices without requiring them to manage anything themselves.</li>
+          <li>Cyber insurance documentation package produced by the CISO Portal — exactly the evidence carriers ask for at renewal.</li>
+          <li>Zero Trust access controls ensure a compromise in one field agency cannot reach carrier systems or other agents.</li>
+          <li>24x7 SOC monitoring extends across the full agent network — not just the home office.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="block">
+      <div class="block-label">What changes on day one</div>
+      <div class="block-content">FCI maps the full scope of the agency network — appointed agents, their devices, and their connections to carrier systems. The operations leader often sees, for the first time, the full scope of exposure the field model creates. Controls begin deploying immediately. The NAIC compliance posture improves from the first week.</div>
+    </div>
+
+    <div class="block">
+      <div class="block-label">What they can hand to a regulator or insurer</div>
+      <div class="list-block">
+        <ul>
+          <li>NAIC Model Law cybersecurity program documentation.</li>
+          <li>Appointed agent device inventory and control enforcement log.</li>
+          <li>Cyber insurance renewal package — control evidence mapped to the carrier's specific questionnaire format.</li>
+          <li>Zero Trust access control records showing which agents and devices can reach which systems.</li>
+          <li>Annual cybersecurity review documentation required under state law.</li>
+          <li>Incident and response log for the full field network.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="block">
+      <div class="block-label">The sentence that makes them lean in</div>
+      <div class="callout">
+        <div class="callout-label">Use at the close of a first meeting, at the end of a one-pager, or as the subject line of a follow-up</div>
+        <div class="callout-text">"Your cyber insurer will ask what controls you had in place. FCI makes sure you have an answer before they ask."</div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ═══════════════════════════════════════════════
+       PART 5 — OBJECTION RESPONSES
+  ═══════════════════════════════════════════════ -->
+  <hr class="divider" />
+  <div class="section" id="objections">
+    <div class="section-label">Part 5</div>
+    <div class="section-title">Objection Responses</div>
+    <div class="section-intro">The four objections FCI hears most often, across all personas. Always acknowledge the concern before addressing it. Use in conversations, FAQ sections, and email sequences.</div>
+
+    <div class="objection">
+      <div class="objection-q">We already have an IT provider.</div>
+      <div class="objection-a">An IT provider manages performance and uptime. FCI manages the compliance posture and security controls that regulators and cyber insurers actually ask about. Most IT providers do not produce NIST-mapped evidence, do not run a 24x7 SOC, and are not built around the distributed field model your firm runs on. FCI works alongside your IT provider — the two roles do not overlap.</div>
+    </div>
+
+    <div class="objection">
+      <div class="objection-q">We are too small for this level of security.</div>
+      <div class="objection-a">Regulators and cyber insurers do not adjust their expectations based on firm size. A 10-person RIA faces the same SEC cybersecurity examination questions as a 500-person broker-dealer. FCI is designed for exactly this — providing enterprise-level compliance coverage at a scale and cost that smaller financial firms can actually sustain.</div>
+    </div>
+
+    <div class="objection">
+      <div class="objection-q">We have never had an incident, so we are probably fine.</div>
+      <div class="objection-a">Most firms that experience a breach had never had one before. The distributed field model — BYOD, home networks, independent offices — creates exposure that does not announce itself until it is too late. The question regulators and insurers ask is not "have you been breached?" but "can you prove your controls were in place?" FCI answers that second question.</div>
+    </div>
+
+    <div class="objection">
+      <div class="objection-q">We will look at this after our next exam.</div>
+      <div class="objection-a">Exam preparation should not start when the notice arrives. The evidence FCI produces is built continuously — every day controls are enforced and logged. Firms that start after the notice often spend weeks assembling documentation that FCI-managed firms already have ready. The firms that fare best in examinations started preparing before the examiner was scheduled.</div>
+    </div>
+  </div>
+
+
+  <!-- ═══════════════════════════════════════════════
+       PART 6 — VOCABULARY
+  ═══════════════════════════════════════════════ -->
+  <hr class="divider" />
+  <div class="section" id="vocabulary">
+    <div class="section-label">Part 6</div>
+    <div class="section-title">Vocabulary Reference</div>
+    <div class="section-intro">Use these terms consistently across all FCI materials. Inconsistency creates doubt about expertise. When in doubt, check here first.</div>
+
+    <div class="two-col">
+      <div class="col-card use">
+        <div class="col-card-label">Use these words</div>
+        <ul>
+          <li><em>Safeguards, controls, enforcement</em> — what FCI deploys and maintains</li>
+          <li><em>Evidence, proof, documentation</em> — what FCI produces for exams and insurers</li>
+          <li><em>Posture</em> — the current state of a firm's security and compliance</li>
+          <li><em>Exam-ready</em> — the condition FCI creates at all times, not just before an audit</li>
+          <li><em>Field compliance</em> — the problem space FCI uniquely solves</li>
+          <li><em>Distributed, BYOD, field office</em> — the environment FCI manages</li>
+          <li><em>Zero Trust, endpoint visibility, MXDR, SOC</em> — the technical capabilities</li>
+          <li><em>NIST CSF, SEC, FINRA, NYDFS, NAIC</em> — always explain the benefit alongside</li>
+        </ul>
+      </div>
+      <div class="col-card avoid">
+        <div class="col-card-label">Avoid these words</div>
+        <ul>
+          <li><em>Solutions</em> — vague and overused in the category</li>
+          <li><em>Suite</em> — dated enterprise software language</li>
+          <li><em>Platform</em> — overused by every vendor in the space</li>
+          <li><em>Cutting-edge, next-generation</em> — means nothing without specifics</li>
+          <li><em>Best-of-breed, best-in-class</em> — claims no one believes</li>
+          <li><em>Seamless, robust, holistic</em> — filler adjectives that add no information</li>
+          <li><em>Leverage</em> — use "use" instead</li>
+          <li><em>Synergy</em> — never appropriate in any context</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="block" style="margin-top: 24px;">
+      <div class="block-label">Regulatory body style guide</div>
+      <div class="block-content">Always spell out on first use in any document, then use the abbreviation thereafter. Securities and Exchange Commission (SEC). Financial Industry Regulatory Authority (FINRA). New York Department of Financial Services (NYDFS). National Association of Insurance Commissioners (NAIC). NIST Cybersecurity Framework (NIST CSF). Never cite a framework name without stating what it means for the client.</div>
+    </div>
+  </div>
+
+
+  <!-- FOOTER -->
+  <div class="page-footer">
+    <div class="page-footer-logo">FCI</div>
+    <div class="page-footer-note">Messaging Architecture — March 2026 — Internal use only</div>
+  </div>
+
+</div>
+</body>
+</html>

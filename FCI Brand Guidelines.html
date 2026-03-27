@@ -1,0 +1,956 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FCI — Brand Guidelines</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300&family=Inter+Tight:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --blue:        #2563EB;
+      --blue-dark:   #1D4ED8;
+      --blue-deep:   #1E3A8A;
+      --blue-mid:    #3B82F6;
+      --sky:         #0EA5E9;
+      --sky-light:   #BAE6FD;
+      --blue-tint:   #DBEAFE;
+      --blue-faint:  #EFF6FF;
+      --white:       #FFFFFF;
+      --offwhite:    #F8FAFC;
+      --rule:        #E2E8F0;
+      --text:        #1E3A5F;
+      --text-body:   #475569;
+      --text-muted:  #94A3B8;
+      --text-faint:  #CBD5E1;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { font-size: 16px; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--offwhite);
+      color: var(--text);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ─── LAYOUT ─────────────────────────────────── */
+    .page { max-width: 980px; margin: 0 auto; padding: 0 56px 140px; }
+
+    section {
+      padding-top: 96px;
+      border-top: 1px solid var(--rule);
+      margin-top: 96px;
+    }
+
+    .section-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--sky);
+      margin-bottom: 32px;
+    }
+
+    h2 {
+      font-family: 'Inter Tight', sans-serif;
+      font-size: clamp(32px, 4.2vw, 46px);
+      font-weight: 600;
+      letter-spacing: -0.028em;
+      color: var(--text);
+      line-height: 1.1;
+      margin-bottom: 18px;
+    }
+
+    p.lead {
+      font-size: 16px;
+      color: var(--text-body);
+      max-width: 580px;
+      line-height: 1.75;
+      margin-bottom: 12px;
+    }
+
+    /* ─── COVER ──────────────────────────────────── */
+    .cover {
+      background: var(--blue);
+      margin: 0 -56px;
+      padding: 104px 56px 96px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cover::before {
+      content: '';
+      position: absolute;
+      top: -160px; right: -160px;
+      width: 560px; height: 560px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.05);
+      pointer-events: none;
+    }
+
+    .cover::after {
+      content: '';
+      position: absolute;
+      bottom: -100px; left: 38%;
+      width: 380px; height: 380px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.03);
+      pointer-events: none;
+    }
+
+    .cover-eyebrow {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.45);
+      margin-bottom: 60px;
+      position: relative; z-index: 1;
+    }
+
+    .logo-lockup {
+      margin-bottom: 48px;
+      position: relative; z-index: 1;
+    }
+
+    .logo-mark {
+      font-family: 'Inter Tight', sans-serif;
+      font-size: clamp(88px, 14vw, 136px);
+      font-weight: 600;
+      letter-spacing: 0.13em;
+      color: var(--white);
+      line-height: 1;
+      display: block;
+    }
+
+    .logo-descriptor {
+      font-size: 13px;
+      font-weight: 400;
+      letter-spacing: 0.08em;
+      color: rgba(255,255,255,0.5);
+      text-transform: uppercase;
+      margin-top: 18px;
+      display: block;
+    }
+
+    .cover-tagline {
+      font-family: 'Inter Tight', sans-serif;
+      font-size: clamp(18px, 2.5vw, 24px);
+      font-weight: 300;
+      color: rgba(255,255,255,0.7);
+      letter-spacing: -0.01em;
+      max-width: 480px;
+      line-height: 1.55;
+      position: relative; z-index: 1;
+    }
+
+    .cover-meta {
+      margin-top: 80px;
+      font-size: 11px;
+      color: rgba(255,255,255,0.25);
+      letter-spacing: 0.05em;
+      position: relative; z-index: 1;
+    }
+
+    /* ─── LOGO VARIANTS ──────────────────────────── */
+    .logo-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 3px;
+      margin-top: 48px;
+      background: var(--rule);
+    }
+
+    .lv {
+      padding: 60px 44px 48px;
+      display: flex;
+      flex-direction: column;
+      gap: 11px;
+    }
+
+    .lv-a { background: var(--blue); }
+    .lv-b { background: var(--white); }
+    .lv-c { background: var(--blue-faint); }
+
+    .lv-fci {
+      font-family: 'Inter Tight', sans-serif;
+      font-size: 48px;
+      font-weight: 600;
+      letter-spacing: 0.13em;
+      line-height: 1;
+    }
+    .lv-a .lv-fci { color: var(--white); }
+    .lv-b .lv-fci { color: var(--blue); }
+    .lv-c .lv-fci { color: var(--blue-dark); }
+
+    .lv-desc {
+      font-size: 9.5px;
+      font-weight: 400;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      line-height: 1.65;
+      max-width: 180px;
+    }
+    .lv-a .lv-desc { color: rgba(255,255,255,0.45); }
+    .lv-b .lv-desc { color: var(--text-muted); }
+    .lv-c .lv-desc { color: #93C5FD; }
+
+    .lv-label {
+      font-size: 11px;
+      margin-top: 12px;
+    }
+    .lv-a .lv-label { color: rgba(255,255,255,0.3); }
+    .lv-b .lv-label { color: var(--text-faint); }
+    .lv-c .lv-label { color: #93C5FD; }
+
+    /* clearspace */
+    .cs-wrap {
+      margin-top: 52px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      align-items: flex-start;
+    }
+
+    .cs-box {
+      background: var(--white);
+      border: 1px solid var(--rule);
+      padding: 48px 56px;
+      display: inline-flex;
+    }
+
+    .cs-dashed {
+      border: 1.5px dashed var(--sky);
+      padding: 28px 44px;
+    }
+
+    .cs-fci {
+      font-family: 'Inter Tight', sans-serif;
+      font-size: 52px;
+      font-weight: 600;
+      letter-spacing: 0.13em;
+      color: var(--blue);
+      line-height: 1;
+    }
+
+    .cs-note {
+      font-size: 12px;
+      color: var(--sky);
+      letter-spacing: 0.03em;
+    }
+
+    /* ─── TAGLINE ─────────────────────────────────── */
+    .tl-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3px;
+      margin-top: 48px;
+      background: var(--rule);
+    }
+
+    .tl-card {
+      padding: 56px 52px;
+      display: flex;
+      flex-direction: column;
+      gap: 22px;
+    }
+
+    .tl-primary   { background: var(--blue); }
+    .tl-secondary { background: var(--white); }
+
+    .tl-type {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+    }
+    .tl-primary   .tl-type { color: rgba(255,255,255,0.45); }
+    .tl-secondary .tl-type { color: var(--sky); }
+
+    .tl-text {
+      font-family: 'Inter Tight', sans-serif;
+      font-size: clamp(22px, 2.8vw, 30px);
+      font-weight: 500;
+      letter-spacing: -0.018em;
+      line-height: 1.28;
+    }
+    .tl-primary   .tl-text { color: var(--white); }
+    .tl-secondary .tl-text { color: var(--text); }
+
+    .tl-note {
+      font-size: 14px;
+      line-height: 1.7;
+      padding-top: 4px;
+      border-top: 1px solid;
+    }
+    .tl-primary   .tl-note { color: rgba(255,255,255,0.5); border-color: rgba(255,255,255,0.1); }
+    .tl-secondary .tl-note { color: var(--text-body); border-color: var(--rule); }
+
+    /* ─── COLOR ──────────────────────────────────── */
+    .color-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 3px;
+      margin-top: 48px;
+      background: var(--rule);
+    }
+
+    .sw { display: flex; flex-direction: column; }
+
+    .sw-block { height: 128px; }
+
+    .sw-info {
+      padding: 20px 18px;
+      background: var(--white);
+      flex: 1;
+    }
+
+    .sw-role {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--sky);
+      margin-bottom: 7px;
+    }
+
+    .sw-name {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 5px;
+    }
+
+    .sw-hex {
+      font-family: 'Inter', monospace;
+      font-size: 12px;
+      color: var(--text-muted);
+      letter-spacing: 0.05em;
+      margin-bottom: 10px;
+    }
+
+    .sw-use {
+      font-size: 12px;
+      color: var(--text-body);
+      line-height: 1.6;
+    }
+
+    /* ─── TYPOGRAPHY ─────────────────────────────── */
+    .type-rows { margin-top: 48px; }
+
+    .tr {
+      padding: 48px 0;
+      border-bottom: 1px solid var(--rule);
+      display: grid;
+      grid-template-columns: 210px 1fr;
+      gap: 48px;
+      align-items: start;
+    }
+
+    .tr-meta { padding-top: 4px; }
+
+    .tr-role {
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      color: var(--sky);
+      margin-bottom: 12px;
+    }
+
+    .tr-spec {
+      font-size: 12px;
+      color: var(--text-muted);
+      line-height: 2;
+    }
+    .tr-spec span { display: block; }
+
+    .ts-display {
+      font-family: 'Inter Tight', sans-serif;
+      font-size: clamp(40px, 5.8vw, 64px);
+      font-weight: 600;
+      letter-spacing: -0.028em;
+      line-height: 1.07;
+      color: var(--text);
+    }
+
+    .ts-h1 {
+      font-family: 'Inter Tight', sans-serif;
+      font-size: clamp(30px, 4vw, 44px);
+      font-weight: 600;
+      letter-spacing: -0.022em;
+      line-height: 1.16;
+      color: var(--text);
+    }
+
+    .ts-h2 {
+      font-family: 'Inter Tight', sans-serif;
+      font-size: clamp(22px, 2.8vw, 30px);
+      font-weight: 500;
+      letter-spacing: -0.012em;
+      line-height: 1.32;
+      color: var(--text);
+    }
+
+    .ts-body {
+      font-size: 16px;
+      font-weight: 400;
+      line-height: 1.8;
+      color: var(--text-body);
+      max-width: 520px;
+    }
+
+    .ts-data {
+      font-family: 'Inter', monospace;
+      font-size: 36px;
+      font-weight: 600;
+      color: var(--blue);
+      letter-spacing: -0.01em;
+      line-height: 1.1;
+    }
+
+    .ts-data-sub {
+      font-size: 12px;
+      font-weight: 400;
+      color: var(--text-faint);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin-top: 6px;
+    }
+
+    .ts-caption {
+      font-size: 12px;
+      font-weight: 400;
+      letter-spacing: 0.06em;
+      color: var(--text-faint);
+      text-transform: uppercase;
+    }
+
+    /* ─── VOICE ──────────────────────────────────── */
+    .voice-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3px;
+      margin-top: 48px;
+      background: var(--rule);
+    }
+
+    .vc {
+      padding: 48px;
+      background: var(--white);
+    }
+
+    .vc.avoid { background: #FFF8F8; }
+
+    .vc-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      margin-bottom: 28px;
+    }
+    .vc.use   .vc-label { color: var(--sky); }
+    .vc.avoid .vc-label { color: #EF4444; }
+
+    .vc-item {
+      font-size: 14px;
+      color: var(--text-body);
+      padding: 13px 0;
+      border-bottom: 1px solid var(--rule);
+      line-height: 1.6;
+    }
+    .vc.avoid .vc-item { border-color: #FEE2E2; }
+    .vc-item:last-child { border-bottom: none; padding-bottom: 0; }
+    .vc-item em { font-style: normal; font-weight: 600; color: var(--text); }
+
+    /* ─── IMAGERY ────────────────────────────────── */
+    .img-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 3px;
+      margin-top: 48px;
+      background: var(--rule);
+    }
+
+    .img-card {
+      aspect-ratio: 4/3;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 22px;
+    }
+
+    .img-u1 { background: linear-gradient(155deg, #EFF6FF 0%, #DBEAFE 100%); }
+    .img-u2 { background: linear-gradient(155deg, #E0F2FE 0%, #BAE6FD 100%); }
+    .img-u3 { background: linear-gradient(155deg, #F0F9FF 0%, #E0F2FE 100%); }
+    .img-a1 { background: #111827; }
+    .img-a2 { background: linear-gradient(135deg, #1a0040 0%, #3b0764 100%); }
+    .img-a3 { background: linear-gradient(135deg, #0c0c0c 0%, #1f2937 100%); }
+
+    .img-tag {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+    .img-u1 .img-tag, .img-u2 .img-tag, .img-u3 .img-tag { color: var(--blue); }
+    .img-a1 .img-tag, .img-a2 .img-tag, .img-a3 .img-tag { color: #F87171; }
+
+    .img-desc { font-size: 12px; line-height: 1.5; }
+    .img-u1 .img-desc, .img-u2 .img-desc, .img-u3 .img-desc { color: var(--text); }
+    .img-a1 .img-desc, .img-a2 .img-desc, .img-a3 .img-desc { color: rgba(255,255,255,0.4); }
+
+    /* ─── SAMPLE CARD ────────────────────────────── */
+    .sample-card {
+      margin-top: 48px;
+      background: var(--white);
+      border: 1px solid var(--rule);
+      overflow: hidden;
+      max-width: 600px;
+    }
+
+    .sc-top {
+      background: var(--blue);
+      padding: 48px 48px 40px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .sc-top::before {
+      content: '';
+      position: absolute;
+      top: -80px; right: -80px;
+      width: 280px; height: 280px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.06);
+      pointer-events: none;
+    }
+
+    .sc-eyebrow {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.5);
+      margin-bottom: 18px;
+      position: relative; z-index: 1;
+    }
+
+    .sc-headline {
+      font-family: 'Inter Tight', sans-serif;
+      font-size: clamp(20px, 2.6vw, 26px);
+      font-weight: 500;
+      color: var(--white);
+      letter-spacing: -0.015em;
+      line-height: 1.35;
+      position: relative; z-index: 1;
+    }
+
+    .sc-body {
+      padding: 40px 48px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .sc-body p {
+      font-size: 14px;
+      color: var(--text-body);
+      line-height: 1.8;
+    }
+
+    .sc-stats {
+      display: flex;
+      gap: 40px;
+      padding-top: 24px;
+      border-top: 1px solid var(--rule);
+    }
+
+    .sc-stat { display: flex; flex-direction: column; gap: 4px; }
+
+    .sc-num {
+      font-family: 'Inter', monospace;
+      font-size: 28px;
+      font-weight: 600;
+      color: var(--blue);
+      letter-spacing: -0.01em;
+    }
+
+    .sc-desc {
+      font-size: 11px;
+      color: var(--text-faint);
+      letter-spacing: 0.04em;
+    }
+
+    .sc-cta {
+      display: inline-block;
+      background: var(--blue);
+      color: var(--white);
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      padding: 14px 28px;
+      text-decoration: none;
+      align-self: flex-start;
+    }
+
+    .sc-cta:hover { background: var(--blue-dark); }
+
+    /* ─── FOOTER ─────────────────────────────────── */
+    .doc-footer {
+      margin-top: 112px;
+      padding-top: 44px;
+      border-top: 1px solid var(--rule);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .footer-mark {
+      font-family: 'Inter Tight', sans-serif;
+      font-size: 26px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      color: var(--blue);
+    }
+
+    .footer-note {
+      font-size: 12px;
+      color: var(--text-faint);
+      letter-spacing: 0.04em;
+    }
+
+  </style>
+</head>
+<body>
+<div class="page">
+
+  <!-- COVER -->
+  <div class="cover">
+    <div class="cover-eyebrow">Brand Guidelines — March 2026</div>
+    <div class="logo-lockup">
+      <span class="logo-mark">FCI</span>
+      <span class="logo-descriptor">Managed Cybersecurity for Financial Services</span>
+    </div>
+    <p class="cover-tagline">Built for the way financial firms actually work.</p>
+    <div class="cover-meta">Confidential — For internal use and agency briefing only</div>
+  </div>
+
+
+  <!-- 01 LOGO -->
+  <section>
+    <div class="section-label">01 — Logo</div>
+    <h2>The mark</h2>
+    <p class="lead">Three letters. No icon. No emblem. The discipline to leave everything else out is what signals confidence. FCI is a proper noun — it does not need to explain itself.</p>
+
+    <div class="logo-grid">
+      <div class="lv lv-a">
+        <div class="lv-fci">FCI</div>
+        <div class="lv-desc">Managed Cybersecurity for Financial Services</div>
+        <div class="lv-label">Primary — blue background</div>
+      </div>
+      <div class="lv lv-b">
+        <div class="lv-fci">FCI</div>
+        <div class="lv-desc">Managed Cybersecurity for Financial Services</div>
+        <div class="lv-label">Primary — white background</div>
+      </div>
+      <div class="lv lv-c">
+        <div class="lv-fci">FCI</div>
+        <div class="lv-desc">Managed Cybersecurity for Financial Services</div>
+        <div class="lv-label">Secondary — light blue background</div>
+      </div>
+    </div>
+
+    <div class="cs-wrap">
+      <p class="lead" style="margin-top: 16px; font-size: 13px; color: var(--text-body);">Clear space — maintain a space equal to the cap-height of the letter C on all four sides. Nothing lives inside that boundary.</p>
+      <div class="cs-box">
+        <div class="cs-dashed">
+          <div class="cs-fci">FCI</div>
+        </div>
+      </div>
+      <div class="cs-note">↑ Dashed line represents the minimum clear space boundary</div>
+    </div>
+  </section>
+
+
+  <!-- 02 TAGLINE -->
+  <section>
+    <div class="section-label">02 — Tagline System</div>
+    <h2>Two layers, one voice</h2>
+    <p class="lead">The descriptor line tells a new prospect what FCI is and who it serves. The brand promise line tells them why FCI is different from any generic security vendor.</p>
+
+    <div class="tl-grid">
+      <div class="tl-card tl-primary">
+        <div class="tl-type">Layer 1 — Descriptor</div>
+        <div class="tl-text">Managed Cybersecurity<br>for Financial Services</div>
+        <div class="tl-note">Appears under the FCI mark on the logo lockup, email signatures, business cards, and the website header. Clear and direct — answers: what is FCI?</div>
+      </div>
+      <div class="tl-card tl-secondary">
+        <div class="tl-type">Layer 2 — Brand Promise</div>
+        <div class="tl-text">Built for the way<br>financial firms actually work.</div>
+        <div class="tl-note">Used in the website hero, one-pager openers, sales presentations, and conversations. Answers: why FCI and not a generic MSSP?</div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- 03 COLOR -->
+  <section>
+    <div class="section-label">03 — Color</div>
+    <h2>The palette</h2>
+    <p class="lead">The palette lives entirely in the blue family. Electric Blue leads — it carries the brand mark, hero surfaces, and all primary actions. Sky Blue accents. Tints and off-whites provide the breathing room.</p>
+
+    <div class="color-grid">
+      <div class="sw">
+        <div class="sw-block" style="background: #2563EB;"></div>
+        <div class="sw-info">
+          <div class="sw-role">Primary</div>
+          <div class="sw-name">Electric Blue</div>
+          <div class="sw-hex">#2563EB</div>
+          <div class="sw-use">The brand color. Hero backgrounds, buttons, primary CTA, the FCI mark on light surfaces.</div>
+        </div>
+      </div>
+      <div class="sw">
+        <div class="sw-block" style="background: #0EA5E9;"></div>
+        <div class="sw-info">
+          <div class="sw-role">Accent</div>
+          <div class="sw-name">Sky Blue</div>
+          <div class="sw-hex">#0EA5E9</div>
+          <div class="sw-use">Section labels, compliance status indicators, hover states, and data highlights. Use sparingly.</div>
+        </div>
+      </div>
+      <div class="sw">
+        <div class="sw-block" style="background: #DBEAFE; border: 1px solid #BFDBFE;"></div>
+        <div class="sw-info">
+          <div class="sw-role">Tint</div>
+          <div class="sw-name">Blue Tint</div>
+          <div class="sw-hex">#DBEAFE</div>
+          <div class="sw-use">Callout backgrounds, subtle highlights, info banners. Keeps the palette cohesive on light pages.</div>
+        </div>
+      </div>
+      <div class="sw">
+        <div class="sw-block" style="background: #F8FAFC; border: 1px solid #E2E8F0;"></div>
+        <div class="sw-info">
+          <div class="sw-role">Surface</div>
+          <div class="sw-name">Off-White</div>
+          <div class="sw-hex">#F8FAFC</div>
+          <div class="sw-use">Page backgrounds, card surfaces. Slightly cool and blue-tinted — keeps every surface in the same family.</div>
+        </div>
+      </div>
+      <div class="sw">
+        <div class="sw-block" style="background: #1E3A5F;"></div>
+        <div class="sw-info">
+          <div class="sw-role">Text</div>
+          <div class="sw-name">Deep Blue-Slate</div>
+          <div class="sw-hex">#1E3A5F</div>
+          <div class="sw-use">All headline and body text. A deep blue-tinted slate — not gray, not black. Every word stays in the palette.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- 04 TYPOGRAPHY -->
+  <section>
+    <div class="section-label">04 — Typography</div>
+    <h2>Type system</h2>
+    <p class="lead">Inter Tight for headlines — compact, confident, authoritative. Inter for body and data — legible at every scale, from a mobile screen to a printed report.</p>
+
+    <div class="type-rows">
+
+      <div class="tr">
+        <div class="tr-meta">
+          <div class="tr-role">Display</div>
+          <div class="tr-spec">
+            <span>Inter Tight</span>
+            <span>Weight 600</span>
+            <span>–2.8% tracking</span>
+            <span>1.07 line height</span>
+          </div>
+        </div>
+        <div class="ts-display">Every advisor.<br>Every device.<br>Every exam.</div>
+      </div>
+
+      <div class="tr">
+        <div class="tr-meta">
+          <div class="tr-role">Heading 1</div>
+          <div class="tr-spec">
+            <span>Inter Tight</span>
+            <span>Weight 600</span>
+            <span>–2.2% tracking</span>
+            <span>1.16 line height</span>
+          </div>
+        </div>
+        <div class="ts-h1">Compliance evidence ready<br>before the examiner asks.</div>
+      </div>
+
+      <div class="tr">
+        <div class="tr-meta">
+          <div class="tr-role">Heading 2</div>
+          <div class="tr-spec">
+            <span>Inter Tight</span>
+            <span>Weight 500</span>
+            <span>–1.2% tracking</span>
+            <span>1.32 line height</span>
+          </div>
+        </div>
+        <div class="ts-h2">Controls enforced on every field device, without asking your users to do anything differently.</div>
+      </div>
+
+      <div class="tr">
+        <div class="tr-meta">
+          <div class="tr-role">Body</div>
+          <div class="tr-spec">
+            <span>Inter</span>
+            <span>Weight 400</span>
+            <span>Normal tracking</span>
+            <span>1.8 line height</span>
+          </div>
+        </div>
+        <div class="ts-body">Financial firms that operate through independent advisors and field offices face a compliance problem most security providers were never built to solve. Devices are spread across offices no IT team controls. Regulators are watching every one of them. FCI was built for exactly this model — and has managed it, for more than 30 years, without pivoting to another market.</div>
+      </div>
+
+      <div class="tr">
+        <div class="tr-meta">
+          <div class="tr-role">Data / Metric</div>
+          <div class="tr-spec">
+            <span>Inter monospaced</span>
+            <span>Weight 600</span>
+            <span>Electric Blue</span>
+          </div>
+        </div>
+        <div>
+          <div class="ts-data">40,000+</div>
+          <div class="ts-data-sub">Endpoints under management</div>
+        </div>
+      </div>
+
+      <div class="tr">
+        <div class="tr-meta">
+          <div class="tr-role">Caption / Label</div>
+          <div class="tr-spec">
+            <span>Inter</span>
+            <span>Weight 400</span>
+            <span>+6% tracking</span>
+            <span>Uppercase</span>
+          </div>
+        </div>
+        <div class="ts-caption">NIST CSF-mapped · SOC 2 Type 1 · 100% SecurityScorecard · 30+ years in financial services</div>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- 05 VOICE -->
+  <section>
+    <div class="section-label">05 — Voice & Tone</div>
+    <h2>How FCI sounds</h2>
+    <p class="lead">Every sentence should answer "so what?" before it is published. Lead with the client's world, not FCI's capabilities. Short sentences. One idea per sentence. Outcomes, not features.</p>
+
+    <div class="voice-grid">
+      <div class="vc use">
+        <div class="vc-label">Use</div>
+        <div class="vc-item"><em>Short declarative sentences.</em> One idea at a time.</div>
+        <div class="vc-item"><em>Outcome verbs:</em> enforcing, proving, reducing, demonstrating, preventing, simplifying.</div>
+        <div class="vc-item"><em>Hedged claims:</em> "helps," "supports," "enables," "provides evidence of."</div>
+        <div class="vc-item"><em>Specific numbers</em> over vague adjectives — "40,000 endpoints" rather than "thousands of clients."</div>
+        <div class="vc-item"><em>Client's problem first,</em> FCI's solution second. Always.</div>
+        <div class="vc-item"><em>Named frameworks</em> — SEC, FINRA, NYDFS, NIST CSF — when they help the reader take action.</div>
+      </div>
+      <div class="vc avoid">
+        <div class="vc-label">Avoid</div>
+        <div class="vc-item"><em>Superlatives without proof:</em> "best-in-class," "world-class," "cutting-edge."</div>
+        <div class="vc-item"><em>Meaningless adjectives:</em> "robust," "holistic," "seamless," "comprehensive."</div>
+        <div class="vc-item"><em>Absolute security claims.</em> No promises of zero breaches or guaranteed protection.</div>
+        <div class="vc-item"><em>Bold text in prose.</em> Write clearly enough that no emphasis is needed.</div>
+        <div class="vc-item"><em>Scare tactics.</em> Describe risk plainly — do not amplify fear to close a deal.</div>
+        <div class="vc-item"><em>Jargon-first language.</em> Lead in plain English; acronyms follow only when useful.</div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- 06 IMAGERY -->
+  <section>
+    <div class="section-label">06 — Imagery Direction</div>
+    <h2>What FCI looks like</h2>
+    <p class="lead">Photography should reflect the professional world of FCI's clients — calm, light, and human. The subject is always a person in a real work context. No clichés, no dark drama.</p>
+
+    <div class="img-grid">
+      <div class="img-card img-u1">
+        <div class="img-tag">Use</div>
+        <div class="img-desc">Financial advisor at a desk — natural light, real workspace, calm and focused</div>
+      </div>
+      <div class="img-card img-u2">
+        <div class="img-tag">Use</div>
+        <div class="img-desc">Compliance team reviewing a report — quiet concentration, professional context</div>
+      </div>
+      <div class="img-card img-u3">
+        <div class="img-tag">Use</div>
+        <div class="img-desc">Branch office or field setting — distributed, professional, human scale</div>
+      </div>
+      <div class="img-card img-a1">
+        <div class="img-tag">Avoid</div>
+        <div class="img-desc">Dark rooms, green terminal text, hooded figures — hacker clichés that signal generic security</div>
+      </div>
+      <div class="img-card img-a2">
+        <div class="img-tag">Avoid</div>
+        <div class="img-desc">Abstract dark gradients, lock icons, floating shields, neural network graphics</div>
+      </div>
+      <div class="img-card img-a3">
+        <div class="img-tag">Avoid</div>
+        <div class="img-desc">3D charts, excessive drop shadows, and data-center stock photography</div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- 07 APPLICATION -->
+  <section>
+    <div class="section-label">07 — Sample Application</div>
+    <h2>The brand in context</h2>
+    <p class="lead">How color, type, voice, and spacing work together in a client-facing content block — the foundation for all one-pagers, website sections, and presentation slides.</p>
+
+    <div class="sample-card">
+      <div class="sc-top">
+        <div class="sc-eyebrow">For RIA Principals &amp; CCOs</div>
+        <div class="sc-headline">Your next exam is already<br>in preparation. You just need<br>FCI to run it.</div>
+      </div>
+      <div class="sc-body">
+        <p>Distributed advisor networks create compliance gaps that centralized IT controls cannot reach. FCI manages those gaps — enforcing safeguards on every device, in every field office, across every network your advisors use.</p>
+        <p>When the examiner arrives, the CISO Portal produces the evidence they need in minutes — not the weeks your compliance team would otherwise spend assembling it manually.</p>
+        <div class="sc-stats">
+          <div class="sc-stat">
+            <span class="sc-num">40,000+</span>
+            <span class="sc-desc">endpoints under management</span>
+          </div>
+          <div class="sc-stat">
+            <span class="sc-num">90%</span>
+            <span class="sc-desc">faster implementation</span>
+          </div>
+          <div class="sc-stat">
+            <span class="sc-num">30+</span>
+            <span class="sc-desc">years in financial services</span>
+          </div>
+        </div>
+        <a class="sc-cta" href="#">Request a Risk Assessment →</a>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- FOOTER -->
+  <div class="doc-footer">
+    <div class="footer-mark">FCI</div>
+    <div class="footer-note">Brand Guidelines — March 2026 — Confidential</div>
+  </div>
+
+</div>
+</body>
+</html>
