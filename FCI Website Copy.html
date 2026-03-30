@@ -1292,5 +1292,37 @@
   }, { threshold: 0.25 });
   sections.forEach(s => observer.observe(s));
 </script>
+
+<!-- Edit Mode -->
+<div id="edit-toolbar" style="position:fixed;bottom:24px;right:24px;z-index:9999;display:flex;gap:8px;font-family:system-ui,sans-serif;">
+  <button id="edit-btn" onclick="toggleEditMode()" style="background:#2563EB;color:#fff;border:none;padding:8px 18px;border-radius:6px;font-size:13px;letter-spacing:0.04em;cursor:pointer;box-shadow:0 2px 10px rgba(0,0,0,0.18);">Edit</button>
+  <button id="save-btn" onclick="saveDoc()" style="display:none;background:#0F172A;color:#fff;border:none;padding:8px 18px;border-radius:6px;font-size:13px;letter-spacing:0.04em;cursor:pointer;box-shadow:0 2px 10px rgba(0,0,0,0.18);">Save HTML</button>
+</div>
+<script>
+(function(){
+  var editing = false;
+  var sel = 'h1,h2,h3,h4,h5,h6,p,li,td,th,blockquote';
+  window.toggleEditMode = function(){
+    editing = !editing;
+    document.querySelectorAll(sel).forEach(function(el){
+      el.contentEditable = editing ? 'true' : 'false';
+      el.style.outline = editing ? '1.5px dashed rgba(37,99,235,0.35)' : '';
+      el.style.borderRadius = editing ? '3px' : '';
+    });
+    var btn = document.getElementById('edit-btn');
+    var save = document.getElementById('save-btn');
+    btn.textContent = editing ? 'Done' : 'Edit';
+    btn.style.background = editing ? '#64748B' : '#2563EB';
+    save.style.display = editing ? 'inline-block' : 'none';
+  };
+  window.saveDoc = function(){
+    var html = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
+    var a = document.createElement('a');
+    a.href = URL.createObjectURL(new Blob([html],{type:'text/html'}));
+    a.download = (document.title||'document').replace(/[^a-z0-9 \-]/gi,'').trim()+'.html';
+    a.click();
+  };
+})();
+</script>
 </body>
 </html>
