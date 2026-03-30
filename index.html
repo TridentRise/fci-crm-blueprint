@@ -21,7 +21,10 @@
     body { font-family: 'Inter', sans-serif; background: var(--offwhite); color: var(--text); -webkit-font-smoothing: antialiased; }
     .wrap { max-width: 760px; margin: 0 auto; padding: 80px 48px 120px; }
     .header { background: var(--blue); margin: 0 -48px; padding: 64px 48px 56px; margin-bottom: 64px; }
-    .logo { font-family: 'Inter Tight', sans-serif; font-size: 52px; font-weight: 600; letter-spacing: 0.12em; color: white; line-height: 1; }
+    .logo { font-family: 'Inter Tight', sans-serif; font-size: 52px; font-weight: 600; color: white; line-height: 1; display: inline-flex; align-items: baseline; }
+    .fk-f { letter-spacing: 0; }
+    .fk-c { letter-spacing: 0; margin-left: 0.02em; }
+    .fk-i { letter-spacing: 0; margin-left: 0.05em; }
     .descriptor { font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(255,255,255,0.5); margin-top: 12px; }
     .hub-title { font-family: 'Inter Tight', sans-serif; font-size: 22px; font-weight: 600; color: white; margin-top: 28px; letter-spacing: -0.01em; }
     .hub-sub { font-size: 14px; color: rgba(255,255,255,0.55); margin-top: 8px; }
@@ -41,13 +44,23 @@
 <body>
 <div class="wrap">
   <div class="header">
-    <div class="logo">FCI</div>
+    <div class="logo"><span class="fk-f">F</span><span class="fk-c">C</span><span class="fk-i">I</span></div>
     <div class="descriptor">Managed Cybersecurity for Financial Services</div>
     <div class="hub-title">Brand Hub</div>
     <div class="hub-sub">Internal reference — not for distribution</div>
   </div>
 
-  <div class="label">Brand Documents</div>
+  <div class="label">Logo Development</div>
+  <div class="card-grid">
+    <a class="card" href="FCI Logo Exploration.html">
+      <div class="card-tag">Wordmark</div>
+      <div class="card-title">Logo Exploration</div>
+      <div class="card-desc">10 font directions, letter-spacing progression, and custom kerning research. Final mark: Inter Tight 600, F·CI = 0.02em, C·I = 0.05em.</div>
+      <div class="card-link">Open exploration →</div>
+    </a>
+  </div>
+
+  <div class="label" style="margin-top: 48px;">Brand Documents</div>
   <div class="card-grid">
     <a class="card" href="FCI Brand Guidelines.html">
       <div class="card-tag">Brand Identity</div>
@@ -102,7 +115,7 @@
   </div>
 
   <div class="footer">
-    <div class="footer-logo">FCI</div>
+    <div class="footer-logo" style="display:inline-flex;align-items:baseline;"><span class="fk-f">F</span><span class="fk-c">C</span><span class="fk-i">I</span></div>
     <div class="footer-note">Brand Hub — March 2026 — Internal use only</div>
   </div>
 </div>
