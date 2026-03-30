@@ -454,10 +454,25 @@
 <script>
 (function(){
   var editing = false;
-  var sel = 'h1,h2,h3,h4,h5,h6,p,li,td,th,blockquote';
+  var SKIP_TAGS = {'SCRIPT':1,'STYLE':1,'HTML':1,'HEAD':1,'BODY':1,'NOSCRIPT':1,'SVG':1,'PATH':1,'BR':1,'HR':1,'IMG':1,'INPUT':1,'BUTTON':1};
+
+  function getEditableEls(){
+    var results = [];
+    document.querySelectorAll('*').forEach(function(el){
+      if (el.closest('#edit-toolbar')) return;
+      if (el.closest('.logo-mark,.fk-f,.fk-c,.fk-i,.sidebar-logo-mark')) return;
+      if (SKIP_TAGS[el.tagName]) return;
+      var hasText = Array.from(el.childNodes).some(function(n){
+        return n.nodeType === 3 && n.textContent.trim().length > 0;
+      });
+      if (hasText) results.push(el);
+    });
+    return results;
+  }
+
   window.toggleEditMode = function(){
     editing = !editing;
-    document.querySelectorAll(sel).forEach(function(el){
+    getEditableEls().forEach(function(el){
       el.contentEditable = editing ? 'true' : 'false';
       el.style.outline = editing ? '1.5px dashed rgba(37,99,235,0.35)' : '';
       el.style.borderRadius = editing ? '3px' : '';
