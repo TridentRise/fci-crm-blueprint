@@ -121,11 +121,17 @@
       font-family: 'Inter Tight', sans-serif;
       font-size: clamp(88px, 14vw, 136px);
       font-weight: 600;
-      letter-spacing: 0.13em;
       color: var(--white);
       line-height: 1;
-      display: block;
+      display: inline-flex;
+      align-items: baseline;
     }
+
+    /* ─── CUSTOM KERNING HELPER ───────────────────── */
+    /* Applied to all logo mark instances              */
+    .fk-f { letter-spacing: 0; }
+    .fk-c { letter-spacing: 0; margin-left: 0.02em; }
+    .fk-i { letter-spacing: 0; margin-left: 0.05em; }
 
     .logo-descriptor {
       font-size: 13px;
@@ -165,6 +171,14 @@
       background: var(--rule);
     }
 
+    .logo-grid-secondary {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3px;
+      margin-top: 3px;
+      background: var(--rule);
+    }
+
     .lv {
       padding: 60px 44px 48px;
       display: flex;
@@ -172,20 +186,25 @@
       gap: 11px;
     }
 
-    .lv-a { background: var(--blue); }
-    .lv-b { background: var(--white); }
-    .lv-c { background: var(--blue-faint); }
+    .lv-a   { background: var(--blue); }
+    .lv-b   { background: var(--white); }
+    .lv-blk { background: #0F172A; }
+    .lv-mid { background: var(--blue-mid); }   /* #3B82F6 — between pale and logo */
+    .lv-c   { background: var(--blue); }       /* Option B — logo blue exactly */
 
     .lv-fci {
       font-family: 'Inter Tight', sans-serif;
       font-size: 48px;
       font-weight: 600;
-      letter-spacing: 0.13em;
       line-height: 1;
+      display: inline-flex;
+      align-items: baseline;
     }
-    .lv-a .lv-fci { color: var(--white); }
-    .lv-b .lv-fci { color: var(--blue); }
-    .lv-c .lv-fci { color: var(--blue-dark); }
+    .lv-a   .lv-fci { color: var(--white); }
+    .lv-b   .lv-fci { color: var(--blue); }
+    .lv-blk .lv-fci { color: var(--white); }
+    .lv-mid .lv-fci { color: var(--white); }
+    .lv-c   .lv-fci { color: var(--white); }
 
     .lv-desc {
       font-size: 9.5px;
@@ -195,17 +214,21 @@
       line-height: 1.65;
       max-width: 180px;
     }
-    .lv-a .lv-desc { color: rgba(255,255,255,0.45); }
-    .lv-b .lv-desc { color: var(--text-muted); }
-    .lv-c .lv-desc { color: #93C5FD; }
+    .lv-a   .lv-desc { color: rgba(255,255,255,0.45); }
+    .lv-b   .lv-desc { color: var(--text-muted); }
+    .lv-blk .lv-desc { color: rgba(255,255,255,0.35); }
+    .lv-mid .lv-desc { color: rgba(255,255,255,0.55); }
+    .lv-c   .lv-desc { color: rgba(255,255,255,0.45); }
 
     .lv-label {
       font-size: 11px;
       margin-top: 12px;
     }
-    .lv-a .lv-label { color: rgba(255,255,255,0.3); }
-    .lv-b .lv-label { color: var(--text-faint); }
-    .lv-c .lv-label { color: #93C5FD; }
+    .lv-a   .lv-label { color: rgba(255,255,255,0.3); }
+    .lv-b   .lv-label { color: var(--text-faint); }
+    .lv-blk .lv-label { color: rgba(255,255,255,0.25); }
+    .lv-mid .lv-label { color: rgba(255,255,255,0.4); }
+    .lv-c   .lv-label { color: rgba(255,255,255,0.3); }
 
     /* clearspace */
     .cs-wrap {
@@ -232,9 +255,10 @@
       font-family: 'Inter Tight', sans-serif;
       font-size: 52px;
       font-weight: 600;
-      letter-spacing: 0.13em;
       color: var(--blue);
       line-height: 1;
+      display: inline-flex;
+      align-items: baseline;
     }
 
     .cs-note {
@@ -246,7 +270,7 @@
     /* ─── TAGLINE ─────────────────────────────────── */
     .tl-grid {
       display: grid;
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: 1fr 1fr 1fr;
       gap: 3px;
       margin-top: 48px;
       background: var(--rule);
@@ -261,6 +285,7 @@
 
     .tl-primary   { background: var(--blue); }
     .tl-secondary { background: var(--white); }
+    .tl-black     { background: #0F172A; }
 
     .tl-type {
       font-size: 10px;
@@ -270,25 +295,28 @@
     }
     .tl-primary   .tl-type { color: rgba(255,255,255,0.45); }
     .tl-secondary .tl-type { color: var(--sky); }
+    .tl-black     .tl-type { color: rgba(255,255,255,0.3); }
 
     .tl-text {
       font-family: 'Inter Tight', sans-serif;
-      font-size: clamp(22px, 2.8vw, 30px);
+      font-size: clamp(18px, 2.2vw, 26px);
       font-weight: 500;
       letter-spacing: -0.018em;
       line-height: 1.28;
     }
     .tl-primary   .tl-text { color: var(--white); }
     .tl-secondary .tl-text { color: var(--text); }
+    .tl-black     .tl-text { color: var(--white); }
 
     .tl-note {
-      font-size: 14px;
+      font-size: 13px;
       line-height: 1.7;
       padding-top: 4px;
       border-top: 1px solid;
     }
     .tl-primary   .tl-note { color: rgba(255,255,255,0.5); border-color: rgba(255,255,255,0.1); }
     .tl-secondary .tl-note { color: var(--text-body); border-color: var(--rule); }
+    .tl-black     .tl-note { color: rgba(255,255,255,0.4); border-color: rgba(255,255,255,0.08); }
 
     /* ─── COLOR ──────────────────────────────────── */
     .color-grid {
@@ -615,8 +643,9 @@
       font-family: 'Inter Tight', sans-serif;
       font-size: 26px;
       font-weight: 600;
-      letter-spacing: 0.12em;
       color: var(--blue);
+      display: inline-flex;
+      align-items: baseline;
     }
 
     .footer-note {
@@ -634,7 +663,7 @@
   <div class="cover">
     <div class="cover-eyebrow">Brand Guidelines — March 2026</div>
     <div class="logo-lockup">
-      <span class="logo-mark">FCI</span>
+      <span class="logo-mark"><span class="fk-f">F</span><span class="fk-c">C</span><span class="fk-i">I</span></span>
       <span class="logo-descriptor">Managed Cybersecurity for Financial Services</span>
     </div>
     <p class="cover-tagline">Built for the way financial firms actually work.</p>
@@ -650,19 +679,32 @@
 
     <div class="logo-grid">
       <div class="lv lv-a">
-        <div class="lv-fci">FCI</div>
+        <div class="lv-fci"><span class="fk-f">F</span><span class="fk-c">C</span><span class="fk-i">I</span></div>
         <div class="lv-desc">Managed Cybersecurity for Financial Services</div>
         <div class="lv-label">Primary — blue background</div>
       </div>
       <div class="lv lv-b">
-        <div class="lv-fci">FCI</div>
+        <div class="lv-fci"><span class="fk-f">F</span><span class="fk-c">C</span><span class="fk-i">I</span></div>
         <div class="lv-desc">Managed Cybersecurity for Financial Services</div>
         <div class="lv-label">Primary — white background</div>
       </div>
-      <div class="lv lv-c">
-        <div class="lv-fci">FCI</div>
+      <div class="lv lv-blk">
+        <div class="lv-fci"><span class="fk-f">F</span><span class="fk-c">C</span><span class="fk-i">I</span></div>
         <div class="lv-desc">Managed Cybersecurity for Financial Services</div>
-        <div class="lv-label">Secondary — light blue background</div>
+        <div class="lv-label">Primary — black background</div>
+      </div>
+    </div>
+
+    <div class="logo-grid-secondary">
+      <div class="lv lv-mid">
+        <div class="lv-fci"><span class="fk-f">F</span><span class="fk-c">C</span><span class="fk-i">I</span></div>
+        <div class="lv-desc">Managed Cybersecurity for Financial Services</div>
+        <div class="lv-label">Secondary option A — mid blue (#3B82F6)</div>
+      </div>
+      <div class="lv lv-c">
+        <div class="lv-fci"><span class="fk-f">F</span><span class="fk-c">C</span><span class="fk-i">I</span></div>
+        <div class="lv-desc">Managed Cybersecurity for Financial Services</div>
+        <div class="lv-label">Secondary option B — logo blue (#2563EB)</div>
       </div>
     </div>
 
@@ -670,7 +712,7 @@
       <p class="lead" style="margin-top: 16px; font-size: 13px; color: var(--text-body);">Clear space — maintain a space equal to the cap-height of the letter C on all four sides. Nothing lives inside that boundary.</p>
       <div class="cs-box">
         <div class="cs-dashed">
-          <div class="cs-fci">FCI</div>
+          <div class="cs-fci"><span class="fk-f">F</span><span class="fk-c">C</span><span class="fk-i">I</span></div>
         </div>
       </div>
       <div class="cs-note">↑ Dashed line represents the minimum clear space boundary</div>
@@ -694,6 +736,11 @@
         <div class="tl-type">Layer 2 — Brand Promise</div>
         <div class="tl-text">Built for the way<br>financial firms actually work.</div>
         <div class="tl-note">Used in the website hero, one-pager openers, sales presentations, and conversations. Answers: why FCI and not a generic MSSP?</div>
+      </div>
+      <div class="tl-card tl-black">
+        <div class="tl-type">On dark / black surface</div>
+        <div class="tl-text">Built for the way<br>financial firms actually work.</div>
+        <div class="tl-note">Used on dark event materials, digital ads, presentation title slides, and any context with a dark or black surface.</div>
       </div>
     </div>
   </section>
@@ -947,7 +994,7 @@
 
   <!-- FOOTER -->
   <div class="doc-footer">
-    <div class="footer-mark">FCI</div>
+    <div class="footer-mark"><span class="fk-f">F</span><span class="fk-c">C</span><span class="fk-i">I</span></div>
     <div class="footer-note">Brand Guidelines — March 2026 — Confidential</div>
   </div>
 
