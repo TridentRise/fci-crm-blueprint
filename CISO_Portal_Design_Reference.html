@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CISO Portal — Design Reference</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@500;600;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+
+  /* ─── FCI BRAND TOKENS ───────────────────────────────────────────────── */
+  :root {
+    --blue:        #2563EB;
+    --blue-dark:   #1D4ED8;
+    --sky:         #0EA5E9;
+    --blue-tint:   #DBEAFE;
+    --blue-faint:  #EFF6FF;
+    --white:       #FFFFFF;
+    --offwhite:    #F8FAFC;
+    --rule:        #E8EEF6;       /* slightly blue-tinted border */
+    --rule-subtle: #F0F5FC;      /* very faint, inside surfaces */
+    --text:        #0F172A;
+    --text-body:   #4A6080;
+    --text-muted:  #8FA3BF;
+    --text-faint:  #BDD0E8;
+
+    --status-critical-bg:   #FEF2F2;
+    --status-critical-text: #B91C1C;
+    --status-critical-dot:  #EF4444;
+    --status-warning-bg:    #FFFBEB;
+    --status-warning-text:  #92400E;
+    --status-warning-dot:   #F59E0B;
+    --status-ok-dot:        #22C55E;
+    --status-ok-text:       #166534;
+  }
+
+  /* ─── RESET ──────────────────────────────────────────────────────────── */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    line-height: 1.5;
+    color: var(--text);
+    background: var(--offwhite);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ─── SHELL ──────────────────────────────────────────────────────────── */
+  .shell { display: flex; height: 100vh; overflow: hidden; }
+
+  /* ─── SIDEBAR ─────────────────────────────────────────────────────────
+     Same color family as the page. No contrast, no darkness.
+     The border is the only thing that defines the edge.
+  ─────────────────────────────────────────────────────────────────────── */
+  .sidebar {
+    width: 216px;
+    flex-shrink: 0;
+    background: var(--blue-faint);         /* #EFF6FF — lightest brand blue */
+    border-right: 1px solid var(--blue-tint); /* #DBEAFE — barely visible */
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+  }
+
+  .sidebar-logo {
+    height: 52px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 0 18px;
+    border-bottom: 1px solid var(--blue-tint);
+    flex-shrink: 0;
+  }
+
+  /* FCI mark in Electric Blue on a light background */
+  .sidebar-logo-mark {
+    font-family: 'Inter Tight', sans-serif;
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--blue);
+    display: inline-flex;
+    align-items: baseline;
+  }
+  .fk-f { letter-spacing: 0; }
+  .fk-c { letter-spacing: 0; margin-left: 0.02em; }
+  .fk-i { letter-spacing: 0; margin-left: 0.05em; }
+
+  .sidebar-logo-sub {
+    font-size: 12px;
+    font-weight: 400;
+    color: var(--text-muted);
+  }
+
+  .sidebar-nav { padding: 10px 0; flex: 1; }
+
+  /* Section labels in Sky Blue — very quiet */
+  .sidebar-section-label {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    color: var(--sky);
+    opacity: 0.7;
+    padding: 18px 18px 5px;
+  }
+
+  .sidebar-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    height: 34px;
+    padding: 0 10px;
+    margin: 1px 8px;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 400;
+    color: var(--text-body);
+    cursor: pointer;
+    text-decoration: none;
+    border-left: 2px solid transparent;
+    transition: background 0.1s, color 0.1s;
+  }
+
+  .sidebar-item:hover {
+    background: rgba(37,99,235,0.06);
+    color: var(--text);
+  }
+
+  /* Active: Electric Blue text + left accent. No filled background. */
+  .sidebar-item.active {
+    color: var(--blue);
+    font-weight: 500;
+    border-left-color: var(--blue);
+    background: rgba(37,99,235,0.08);
+  }
+
+  .sidebar-item svg {
+    width: 14px;
+    height: 14px;
+    flex-shrink: 0;
+    opacity: 0.6;
+  }
+
+  .sidebar-item.active svg { opacity: 1; }
+
+  .sidebar-footer {
+    padding: 12px 18px;
+    border-top: 1px solid var(--blue-tint);
+    font-size: 12px;
+    color: var(--text-faint);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+
+  /* ─── MAIN ───────────────────────────────────────────────────────────── */
+  .main { flex: 1; display: flex; flex-direction: column; overflow: hidden; min-width: 0; }
+
+  /* ─── TOP BAR ─────────────────────────────────────────────────────────
+     Same white as the card surfaces — seamlessly part of the content.
+  ─────────────────────────────────────────────────────────────────────── */
+  .topbar {
+    height: 52px;
+    background: var(--white);
+    border-bottom: 1px solid var(--rule);
+    display: flex;
+    align-items: center;
+    padding: 0 28px;
+    gap: 10px;
+    flex-shrink: 0;
+  }
+
+  .topbar-search { flex: 1; max-width: 260px; }
+
+  .topbar-search input {
+    width: 100%;
+    height: 30px;
+    padding: 0 12px;
+    border: 1px solid var(--rule);
+    border-radius: 6px;
+    background: var(--offwhite);
+    font-family: inherit;
+    font-size: 13px;
+    color: var(--text);
+    outline: none;
+  }
+
+  .topbar-search input::placeholder { color: var(--text-faint); }
+
+  .topbar-spacer { flex: 1; }
+
+  .topbar-select {
+    height: 30px;
+    padding: 0 10px;
+    border: 1px solid var(--rule);
+    border-radius: 6px;
+    background: var(--white);
+    font-family: inherit;
+    font-size: 13px;
+    color: var(--text-body);
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    cursor: pointer;
+  }
+
+  .topbar-icon-btn {
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 6px;
+    cursor: pointer;
+    color: var(--text-faint);
+  }
+
+  .topbar-icon-btn:hover { background: var(--offwhite); color: var(--text-body); }
+
+  .topbar-avatar {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: var(--blue);
+    color: white;
+    font-size: 11px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* ─── PAGE BODY ──────────────────────────────────────────────────────── */
+  .page-body {
+    flex: 1;
+    overflow-y: auto;
+    padding: 36px 32px;
+    background: var(--offwhite);
+  }
+
+  .page-header { margin-bottom: 28px; }
+
+  .page-title {
+    font-family: 'Inter Tight', sans-serif;
+    font-size: 24px;
+    font-weight: 600;
+    color: var(--text);
+    letter-spacing: -0.025em;
+  }
+
+  .page-subtitle {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin-top: 4px;
+  }
+
+  /* ─── KPI CARDS ──────────────────────────────────────────────────────── */
+  .kpi-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+    margin-bottom: 24px;
+  }
+
+  .kpi-card {
+    position: relative;
+    background: var(--white);
+    border: 1px solid var(--rule);
+    border-radius: 10px;
+    padding: 22px 24px 20px;
+    overflow: hidden;
+  }
+
+  /* Barely-there top accent line instead of a colored border-left */
+  .kpi-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 20px; right: 20px;
+    height: 2px;
+    border-radius: 0 0 2px 2px;
+    opacity: 0.5;
+  }
+
+  .kpi-card.critical::before { background: var(--status-critical-dot); }
+  .kpi-card.warning::before  { background: var(--status-warning-dot); }
+  .kpi-card.info::before     { background: var(--sky); }
+
+  .kpi-icon {
+    position: absolute;
+    right: 18px;
+    bottom: 14px;
+    width: 52px;
+    height: 52px;
+    opacity: 0.06;
+    pointer-events: none;
+  }
+
+  .kpi-label {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 14px;
+  }
+
+  .kpi-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .kpi-number {
+    font-family: 'Inter Tight', sans-serif;
+    font-size: 42px;
+    font-weight: 800;
+    color: var(--text);
+    line-height: 1;
+    letter-spacing: -0.03em;
+    margin-bottom: 5px;
+  }
+
+  .kpi-sub {
+    font-size: 12px;
+    color: var(--text-muted);
+  }
+
+  /* ─── FILTER CHIPS ───────────────────────────────────────────────────── */
+  .filter-row {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+  }
+
+  .filter-chip {
+    height: 28px;
+    padding: 0 12px;
+    border: 1px solid var(--rule);
+    border-radius: 6px;
+    background: var(--white);
+    font-family: inherit;
+    font-size: 13px;
+    color: var(--text-body);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+
+  .filter-chip.active {
+    background: var(--blue-faint);
+    border-color: var(--blue-tint);
+    color: var(--blue);
+    font-weight: 500;
+  }
+
+  .chip-count { font-size: 11px; opacity: 0.65; }
+
+  /* ─── TABLE ──────────────────────────────────────────────────────────── */
+  .table-container {
+    background: var(--white);
+    border: 1px solid var(--rule);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+
+  table { width: 100%; border-collapse: collapse; }
+
+  thead th {
+    background: var(--offwhite);
+    padding: 10px 16px;
+    text-align: left;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    border-bottom: 1px solid var(--rule);
+    white-space: nowrap;
+  }
+
+  tbody tr {
+    border-bottom: 1px solid var(--rule-subtle);
+    transition: background 0.08s;
+  }
+
+  tbody tr:last-child { border-bottom: none; }
+  tbody tr:hover { background: #FAFCFF; }
+
+  tbody td {
+    padding: 10px 16px;
+    font-size: 14px;
+    color: var(--text);
+    height: 44px;
+  }
+
+  /* ─── BADGES ─────────────────────────────────────────────────────────── */
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 2px 8px;
+    border-radius: 100px;
+    font-size: 11px;
+    font-weight: 500;
+    white-space: nowrap;
+  }
+
+  .badge-critical { background: var(--status-critical-bg); color: var(--status-critical-text); }
+  .badge-warning  { background: var(--status-warning-bg);  color: var(--status-warning-text); }
+  .badge-info     { background: var(--blue-faint); color: var(--blue-dark); }
+
+  /* ─── PROGRESS BAR ───────────────────────────────────────────────────── */
+  .progress-wrap {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-width: 120px;
+  }
+
+  .progress-track {
+    flex: 1;
+    height: 3px;
+    background: var(--rule);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+
+  .progress-fill {
+    height: 100%;
+    border-radius: 2px;
+    background: var(--blue);
+  }
+
+  .progress-fill.complete { background: var(--status-ok-dot); }
+
+  .progress-pct {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-body);
+    min-width: 34px;
+    text-align: right;
+  }
+
+  .progress-pct.ok { color: var(--status-ok-text); }
+
+  .nc { font-size: 14px; font-weight: 500; color: var(--text); }
+  .nc.zero { color: var(--text-faint); }
+
+  /* ─── TABLE FOOTER ───────────────────────────────────────────────────── */
+  .table-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 16px;
+    border-top: 1px solid var(--rule);
+    font-size: 12px;
+    color: var(--text-muted);
+  }
+
+  .pagination { display: flex; align-items: center; gap: 8px; }
+
+  .pagination-btn {
+    width: 26px;
+    height: 26px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 5px;
+    border: 1px solid var(--rule);
+    background: white;
+    cursor: pointer;
+    color: var(--text-body);
+    font-size: 12px;
+  }
+
+</style>
+</head>
+<body>
+
+<div class="shell">
+
+  <!-- SIDEBAR — light blue-faint, same family as page, no dark contrast -->
+  <aside class="sidebar">
+    <div class="sidebar-logo">
+      <span class="sidebar-logo-mark"><span class="fk-f">F</span><span class="fk-c">C</span><span class="fk-i">I</span></span>
+      <span class="sidebar-logo-sub">CISO Portal</span>
+    </div>
+
+    <nav class="sidebar-nav">
+
+      <a class="sidebar-item active" href="#">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6 6 0 10-12 0v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/></svg>
+        Compliance Alerts
+      </a>
+
+      <div class="sidebar-section-label">Devices</div>
+
+      <a class="sidebar-item" href="#">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+        Active Devices
+      </a>
+
+      <a class="sidebar-item" href="#">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><polyline points="3,6 5,6 21,6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6M14 11v6"/></svg>
+        Decommissioned
+      </a>
+
+      <a class="sidebar-item" href="#">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7,10 12,15 17,10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Installers
+      </a>
+
+      <div class="sidebar-section-label">Policies</div>
+
+      <a class="sidebar-item" href="#">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/></svg>
+        Endpoint Config
+      </a>
+
+      <a class="sidebar-item" href="#">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        Endpoint Control
+      </a>
+
+      <a class="sidebar-item" href="#">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        Exceptions
+      </a>
+
+      <a class="sidebar-item" href="#">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
+        Ticket Management
+      </a>
+
+      <div class="sidebar-section-label">Settings</div>
+
+      <a class="sidebar-item" href="#">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>
+        Alert Settings
+      </a>
+
+      <a class="sidebar-item" href="#">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/></svg>
+        What's New
+      </a>
+
+    </nav>
+
+    <div class="sidebar-footer">
+      <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15,18 9,12 15,6"/></svg>
+      Collapse
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <div class="main">
+
+    <!-- TOP BAR — white, flush with cards below -->
+    <header class="topbar">
+      <div class="topbar-search">
+        <input type="text" placeholder="Search...">
+      </div>
+      <div class="topbar-spacer"></div>
+
+      <div class="topbar-select">
+        All Companies
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6,9 12,15 18,9"/></svg>
+      </div>
+
+      <div class="topbar-select">
+        All Groups
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6,9 12,15 18,9"/></svg>
+      </div>
+
+      <div class="topbar-icon-btn">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6 6 0 10-12 0v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/></svg>
+      </div>
+
+      <div class="topbar-icon-btn">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><polyline points="23,4 23,10 17,10"/><polyline points="1,20 1,14 7,14"/><path d="M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15"/></svg>
+      </div>
+
+      <div class="topbar-avatar">VG</div>
+    </header>
+
+    <!-- PAGE BODY -->
+    <main class="page-body">
+
+      <!-- Page header -->
+      <div class="page-header">
+        <h1 class="page-title">Compliance Alerts</h1>
+        <p class="page-subtitle">Policy compliance status across all enrolled devices.</p>
+      </div>
+
+      <!-- KPI cards -->
+      <div class="kpi-row">
+
+        <div class="kpi-card critical">
+          <div class="kpi-label">
+            <span class="kpi-dot" style="background:var(--status-critical-dot)"></span>
+            High Risk Alerts
+          </div>
+          <div class="kpi-number">7</div>
+          <div class="kpi-sub">devices with issues</div>
+          <svg class="kpi-icon" viewBox="0 0 24 24" fill="none" stroke="#EF4444" stroke-width="1.25">
+            <path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/>
+            <line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/>
+          </svg>
+        </div>
+
+        <div class="kpi-card warning">
+          <div class="kpi-label">
+            <span class="kpi-dot" style="background:var(--status-warning-dot)"></span>
+            Low Risk Alerts
+          </div>
+          <div class="kpi-number">5</div>
+          <div class="kpi-sub">devices with issues</div>
+          <svg class="kpi-icon" viewBox="0 0 24 24" fill="none" stroke="#F59E0B" stroke-width="1.25">
+            <circle cx="12" cy="12" r="10"/>
+            <line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
+          </svg>
+        </div>
+
+        <div class="kpi-card info">
+          <div class="kpi-label">
+            <span class="kpi-dot" style="background:var(--sky)"></span>
+            Informational
+          </div>
+          <div class="kpi-number">2</div>
+          <div class="kpi-sub">devices with issues</div>
+          <svg class="kpi-icon" viewBox="0 0 24 24" fill="none" stroke="#0EA5E9" stroke-width="1.25">
+            <circle cx="12" cy="12" r="10"/>
+            <line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/>
+          </svg>
+        </div>
+
+      </div>
+
+      <!-- Filter chips -->
+      <div class="filter-row">
+        <button class="filter-chip active">All <span class="chip-count">29</span></button>
+        <button class="filter-chip">High Risk <span class="chip-count">13</span></button>
+        <button class="filter-chip">Low Risk <span class="chip-count">3</span></button>
+        <button class="filter-chip">Informational <span class="chip-count">13</span></button>
+        <button class="filter-chip">Hide Inactive</button>
+        <button class="filter-chip">Hide New</button>
+        <button class="filter-chip">Hide 100%</button>
+      </div>
+
+      <!-- Table -->
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th style="width:110px">Risk</th>
+              <th>Alert Name</th>
+              <th style="width:130px">Non-Compliant</th>
+              <th style="width:200px">% Compliant</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="badge badge-critical">High Risk</span></td>
+              <td>Managed Antivirus Missing</td>
+              <td><span class="nc">5</span></td>
+              <td><div class="progress-wrap"><div class="progress-track"><div class="progress-fill" style="width:16%"></div></div><span class="progress-pct">16%</span></div></td>
+            </tr>
+            <tr>
+              <td><span class="badge badge-critical">High Risk</span></td>
+              <td>Unpatched Operating System</td>
+              <td><span class="nc">3</span></td>
+              <td><div class="progress-wrap"><div class="progress-track"><div class="progress-fill" style="width:50%"></div></div><span class="progress-pct">50%</span></div></td>
+            </tr>
+            <tr>
+              <td><span class="badge badge-critical">High Risk</span></td>
+              <td>End of Life Operating System</td>
+              <td><span class="nc">2</span></td>
+              <td><div class="progress-wrap"><div class="progress-track"><div class="progress-fill" style="width:66%"></div></div><span class="progress-pct">66%</span></div></td>
+            </tr>
+            <tr>
+              <td><span class="badge badge-critical">High Risk</span></td>
+              <td>RDP Enabled Without MFA</td>
+              <td><span class="nc">2</span></td>
+              <td><div class="progress-wrap"><div class="progress-track"><div class="progress-fill" style="width:66%"></div></div><span class="progress-pct">66%</span></div></td>
+            </tr>
+            <tr>
+              <td><span class="badge badge-critical">High Risk</span></td>
+              <td>Machine Inactivity Not Set</td>
+              <td><span class="nc">1</span></td>
+              <td><div class="progress-wrap"><div class="progress-track"><div class="progress-fill" style="width:83%"></div></div><span class="progress-pct">83%</span></div></td>
+            </tr>
+            <tr>
+              <td><span class="badge badge-critical">High Risk</span></td>
+              <td>Device Firewall Disabled</td>
+              <td><span class="nc zero">0</span></td>
+              <td><div class="progress-wrap"><div class="progress-track"><div class="progress-fill complete" style="width:100%"></div></div><span class="progress-pct ok">100%</span></div></td>
+            </tr>
+            <tr>
+              <td><span class="badge badge-warning">Low Risk</span></td>
+              <td>Default Workgroup Name Set</td>
+              <td><span class="nc">5</span></td>
+              <td><div class="progress-wrap"><div class="progress-track"><div class="progress-fill" style="width:16%"></div></div><span class="progress-pct">16%</span></div></td>
+            </tr>
+            <tr>
+              <td><span class="badge badge-warning">Low Risk</span></td>
+              <td>Password Complexity Not Set</td>
+              <td><span class="nc">1</span></td>
+              <td><div class="progress-wrap"><div class="progress-track"><div class="progress-fill" style="width:83%"></div></div><span class="progress-pct">83%</span></div></td>
+            </tr>
+            <tr>
+              <td><span class="badge badge-info">Info</span></td>
+              <td>Duplicate Devices</td>
+              <td><span class="nc">2</span></td>
+              <td><div class="progress-wrap"><div class="progress-track"><div class="progress-fill" style="width:66%"></div></div><span class="progress-pct">66%</span></div></td>
+            </tr>
+            <tr>
+              <td><span class="badge badge-info">Info</span></td>
+              <td>Inactive Devices</td>
+              <td><span class="nc">2</span></td>
+              <td><div class="progress-wrap"><div class="progress-track"><div class="progress-fill" style="width:66%"></div></div><span class="progress-pct">66%</span></div></td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="table-footer">
+          <span>29 results</span>
+          <div class="pagination">
+            <button class="pagination-btn">‹</button>
+            <span style="font-size:13px;color:var(--text-body)">1 / 2</span>
+            <button class="pagination-btn">›</button>
+          </div>
+        </div>
+      </div>
+
+    </main>
+  </div>
+</div>
+
+</body>
+</html>

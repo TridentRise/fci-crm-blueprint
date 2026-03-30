@@ -16,7 +16,7 @@
       --white:     #FFFFFF;
       --offwhite:  #F8FAFC;
       --rule:      #E2E8F0;
-      --text:      #1E3A5F;
+      --text:      #0F172A;
       --body:      #475569;
       --muted:     #94A3B8;
       --faint:     #CBD5E1;
@@ -72,10 +72,14 @@
       font-family: 'Inter Tight', sans-serif;
       font-size: 36px;
       font-weight: 600;
-      letter-spacing: 0.12em;
       color: var(--white);
       line-height: 1;
+      display: inline-flex;
+      align-items: baseline;
     }
+    .fk-f { letter-spacing: 0; }
+    .fk-c { letter-spacing: 0; margin-left: 0.02em; }
+    .fk-i { letter-spacing: 0; margin-left: 0.05em; }
     .logo-desc {
       font-size: 10px;
       font-weight: 400;
@@ -341,7 +345,7 @@
   <div class="front">
     <div class="front-top">
       <div class="logo-block">
-        <div class="logo-mark">FCI</div>
+        <div class="logo-mark"><span class="fk-f">F</span><span class="fk-c">C</span><span class="fk-i">I</span></div>
         <div class="logo-desc">Managed Cybersecurity for Financial Services</div>
       </div>
       <div class="persona-tag">For RIA Principals</div>
