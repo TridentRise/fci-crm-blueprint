@@ -158,6 +158,16 @@
     save.style.display = editing ? 'inline-block' : 'none';
   };
   window.saveDoc = function(){
+    // Strip edit-mode attributes before saving so file opens clean
+    getEditableEls().forEach(function(el){
+      el.removeAttribute('contenteditable');
+      el.style.outline = '';
+      el.style.borderRadius = '';
+    });
+    editing = false;
+    document.getElementById('edit-btn').textContent = 'Edit';
+    document.getElementById('edit-btn').style.background = '#2563EB';
+    document.getElementById('save-btn').style.display = 'none';
     var html = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
     var a = document.createElement('a');
     a.href = URL.createObjectURL(new Blob([html],{type:'text/html'}));
