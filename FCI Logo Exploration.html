@@ -304,6 +304,47 @@
       color: var(--text);
       margin-bottom: 4px;
     }
+
+    /* ══════════════════════════════════════════
+       DARK MODE
+    ══════════════════════════════════════════ */
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --white:   #1E293B;
+        --offwhite:#0F172A;
+        --rule:    #334155;
+        --text:    #F1F5F9;
+        --body:    #CBD5E1;
+        --muted:   #94A3B8;
+      }
+      body { background: #0F172A; }
+
+      /* White logo tile must stay truly white in dark mode */
+      .on-white { background: #FFFFFF !important; border-color: #E2E8F0 !important; }
+      .on-white .logo-text { color: var(--blue) !important; }
+
+      /* Research / exploration tiles on white backgrounds */
+      .logo-tile.on-white { background: #FFFFFF !important; }
+
+      /* Back nav link */
+      a[style*="background:#F8FAFC"],
+      a[style*="background: #F8FAFC"] {
+        background: #0F172A !important;
+        border-color: #334155 !important;
+        color: #64748B !important;
+      }
+    }
+
+    /* ══════════════════════════════════════════
+       MOBILE
+    ══════════════════════════════════════════ */
+    @media (max-width: 720px) {
+      .wrap { padding: 40px 20px 80px; }
+      .logo-grid   { grid-template-columns: 1fr 1fr; }
+      .logo-row    { grid-template-columns: 1fr 1fr; }
+      .spacing-row { grid-template-columns: 1fr 1fr; }
+    }
+
   </style>
 </head>
 <body>
