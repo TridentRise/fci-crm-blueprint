@@ -11,6 +11,7 @@
       --blue:      #2563EB;
       --blue-dark: #1D4ED8;
       --sky:       #0EA5E9;
+      --deep-navy: #1E3A6E;
       --blue-tint: #DBEAFE;
       --blue-faint:#EFF6FF;
       --white:     #FFFFFF;
@@ -26,6 +27,20 @@
     body { font-family: 'Inter', sans-serif; background: #E2E8F0; color: var(--text); -webkit-font-smoothing: antialiased; }
 
     /* ── PAGE SHELL ── */
+    .back-nav {
+      display: block;
+      padding: 10px 48px;
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #94A3B8;
+      text-decoration: none;
+      border-bottom: 1px solid #E2E8F0;
+      background: #F8FAFC;
+    }
+
     .page {
       max-width: 780px;
       margin: 48px auto;
@@ -354,7 +369,11 @@
       .stats-row { background: #334155; }
       .back-col-body { color: var(--body); }
       .item-list li { color: var(--body); }
-      a[style] { color: #94A3B8 !important; background: #0F172A !important; border-color: #334155 !important; }
+      .back-nav {
+        background: #0F172A !important;
+        border-bottom-color: #1E293B !important;
+        color: #64748B !important;
+      }
     }
 
     /* ══════════════════════════════════════════
@@ -387,7 +406,7 @@
   </style>
 </head>
 <body>
-<a href="index.html" style="display:block;padding:10px 48px;font-family:'Inter',sans-serif;font-size: 13px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:#94A3B8;text-decoration:none;border-bottom:1px solid #E2E8F0;background:#F8FAFC;">← Brand Hub</a>
+<a href="index.html" class="back-nav">← Brand Hub</a>
 <div class="page">
 
   <!-- ═══ FRONT ═══ -->

@@ -18,6 +18,7 @@
       --body: #475569;
       --muted: #64748B;
       --sky: #0EA5E9;
+      --deep-navy: #1E3A6E;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -29,7 +30,21 @@
       -webkit-font-smoothing: antialiased;
     }
 
-    .page {
+    .back-nav {
+      display: block;
+      padding: 10px 48px;
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #94A3B8;
+      text-decoration: none;
+      border-bottom: 1px solid #E2E8F0;
+      background: #F8FAFC;
+    }
+
+        .page {
       max-width: 1080px;
       margin: 0 auto;
       padding: 72px 48px 120px;
@@ -326,11 +341,9 @@
       /* Research / exploration tiles on white backgrounds */
       .logo-tile.on-white { background: #FFFFFF !important; }
 
-      /* Back nav link */
-      a[style*="background:#F8FAFC"],
-      a[style*="background: #F8FAFC"] {
+      .back-nav {
         background: #0F172A !important;
-        border-color: #334155 !important;
+        border-bottom-color: #1E293B !important;
         color: #64748B !important;
       }
     }
@@ -348,7 +361,7 @@
   </style>
 </head>
 <body>
-<a href="index.html" style="display:block;padding:10px 48px;font-family:'Inter',sans-serif;font-size: 13px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:#94A3B8;text-decoration:none;border-bottom:1px solid #E2E8F0;background:#F8FAFC;">← Brand Hub</a>
+<a href="index.html" class="back-nav">← Brand Hub</a>
 <div class="page">
 
   <!-- HEADER -->
