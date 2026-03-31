@@ -12,6 +12,7 @@
       --blue-dark:   #1D4ED8;
       --blue-mid:    #3B82F6;
       --sky:         #0EA5E9;
+      --deep-navy:   #1E3A6E;
       --sky-light:   #BAE6FD;
       --blue-tint:   #DBEAFE;
       --blue-faint:  #EFF6FF;
@@ -318,7 +319,7 @@
     /* ─── COLOR ──────────────────────────────────── */
     .color-grid {
       display: grid;
-      grid-template-columns: repeat(5, 1fr);
+      grid-template-columns: repeat(6, 1fr);
       gap: 3px;
       margin-top: 48px;
       background: var(--rule);
@@ -725,7 +726,7 @@
       .tl-grid { grid-template-columns: 1fr; }
       .tl-card { padding: 36px 28px; }
 
-      /* Color swatches: 5-col → 2-col */
+      /* Color swatches: 6-col → 2-col */
       .color-grid { grid-template-columns: repeat(2, 1fr); }
 
       /* Typography rows: sidebar + content → stacked */
@@ -1015,7 +1016,7 @@
   <section>
     <div class="section-label">03 — Color</div>
     <h2>The palette</h2>
-    <p class="lead">The palette lives entirely in the blue family. Electric Blue leads — it carries the brand mark, hero surfaces, and all primary actions. Sky Blue accents. Tints and off-whites provide the breathing room.</p>
+    <p class="lead">The palette lives entirely in the blue family. Electric Blue leads — it carries the brand mark, hero surfaces, and all primary actions. Deep Navy anchors dark surfaces and dark mode. Sky Blue accents. Tints and off-whites provide the breathing room.</p>
 
     <div class="color-grid">
       <div class="sw">
@@ -1061,6 +1062,15 @@
           <div class="sw-name">Near Black</div>
           <div class="sw-hex">#0F172A</div>
           <div class="sw-use">All headline and body text. A clean near-black with no blue tint — sharp and neutral on every background.</div>
+        </div>
+      </div>
+      <div class="sw">
+        <div class="sw-block" style="background: #1E3A6E;"></div>
+        <div class="sw-info">
+          <div class="sw-role">Dark Surface</div>
+          <div class="sw-name">Deep Navy</div>
+          <div class="sw-hex">#1E3A6E</div>
+          <div class="sw-use">Dark mode section bands, persona headers, and elevated surfaces. Bridges Electric Blue and Near Black.</div>
         </div>
       </div>
     </div>
