@@ -347,6 +347,34 @@
 
     /* ── PRINT ── */
 
+    /* ── TESTIMONIAL ── */
+    .testimonial-block {
+      border-left: 3px solid var(--blue);
+      padding: 20px 24px;
+      margin: 24px 0;
+      background: var(--blue-faint);
+    }
+    .testimonial-quote {
+      font-size: 15px;
+      font-style: italic;
+      color: var(--text);
+      line-height: 1.7;
+      margin-bottom: 12px;
+    }
+    .testimonial-name {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--blue);
+      letter-spacing: 0.04em;
+    }
+    .testimonial-org {
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 2px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
     /* ══════════════════════════════════════════
        DARK MODE
     ══════════════════════════════════════════ */
@@ -367,6 +395,7 @@
       .band { background: #1e2d4a; border-top-color: var(--blue); }
       .stat-cell { background: #1E293B; }
       .stats-row { background: #334155; }
+      .testimonial-block { background: #1E293B; }
       .back-col-body { color: var(--body); }
       .item-list li { color: var(--body); }
       .back-nav {
@@ -494,6 +523,12 @@
         <div class="stat-num">30+</div>
         <div class="stat-label">years serving financial services exclusively</div>
       </div>
+    </div>
+
+    <div class="testimonial-block">
+      <div class="testimonial-quote">"FCI CEO Brian Edelman is one of the few real cybersecurity experts who understand compliance — a true thought leader."</div>
+      <div class="testimonial-name">Joel Bruckenstein</div>
+      <div class="testimonial-org">Technology Tools for Today (T3)</div>
     </div>
 
     <div class="cta-block">

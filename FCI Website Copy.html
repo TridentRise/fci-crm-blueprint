@@ -226,6 +226,118 @@
     }
     .col-card-body { font-size: 16px; color: var(--body); line-height: 1.7; }
 
+    /* ── TESTIMONIAL BLOCK ── */
+    .testimonial-block {
+      border-left: 3px solid var(--blue);
+      padding: 20px 24px;
+      margin: 24px 0;
+      background: var(--faint);
+    }
+    .testimonial-quote {
+      font-size: 15px;
+      font-style: italic;
+      color: var(--text);
+      line-height: 1.7;
+      margin-bottom: 10px;
+    }
+    .testimonial-name {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--blue);
+      letter-spacing: 0.04em;
+    }
+    .testimonial-org {
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 2px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    /* ── NIST BLOCK ── */
+    .nist-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      margin-top: 20px;
+    }
+    .nist-cell {
+      border-top: 3px solid var(--blue);
+      padding: 16px;
+      background: var(--white);
+      border: 1px solid var(--rule);
+      border-top: 3px solid var(--blue);
+    }
+    .nist-function {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--sky);
+      margin-bottom: 6px;
+    }
+    .nist-title {
+      font-family: 'Inter Tight', sans-serif;
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 6px;
+    }
+    .nist-body {
+      font-size: 13px;
+      color: var(--body);
+      line-height: 1.55;
+    }
+
+    /* ── FOOTER NAV ── */
+    .site-footer {
+      margin-top: 80px;
+      padding: 48px 64px;
+      border-top: 2px solid var(--blue);
+      background: var(--white);
+    }
+    .footer-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 40px;
+    }
+    .footer-col-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--sky);
+      margin-bottom: 14px;
+    }
+    .footer-col a {
+      display: block;
+      font-size: 14px;
+      color: var(--body);
+      text-decoration: none;
+      padding: 4px 0;
+      transition: color 0.15s;
+    }
+    .footer-col a:hover { color: var(--blue); }
+    .footer-bottom {
+      margin-top: 40px;
+      padding-top: 24px;
+      border-top: 1px solid var(--rule);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .footer-logo {
+      font-family: 'Inter Tight', sans-serif;
+      font-size: 22px;
+      font-weight: 600;
+      color: var(--blue);
+      letter-spacing: 0;
+    }
+    .footer-tagline {
+      font-size: 13px;
+      color: var(--muted);
+    }
+
     /* ══════════════════════════════════════════
        DARK MODE
     ══════════════════════════════════════════ */
@@ -241,6 +353,10 @@
         --tint:     #334155;
       }
       body { background: #0F172A; }
+      .testimonial-block { background: #1E293B; }
+      .nist-cell { background: #1E293B; border-color: #334155; }
+      .site-footer { background: #0F172A; border-top-color: var(--blue); }
+      .footer-bottom { border-color: #334155; }
       .nav-wrap { background: #1E293B; border-color: #334155; }
       .module-copy { background: #1E293B; }
       .cta-persona { background: #1E293B; border-color: #334155; }
@@ -268,6 +384,9 @@
       .cta-display .cta-button { width: 100%; text-align: center; }
       .proof-band { flex-direction: column; gap: 16px; padding: 20px 24px; }
       .cta-persona { padding: 20px; flex-direction: column; gap: 16px; }
+      .nist-grid { grid-template-columns: 1fr 1fr; }
+      .footer-grid { grid-template-columns: 1fr 1fr; gap: 24px; }
+      .site-footer { padding: 32px 20px; }
     }
 
   </style>
@@ -296,6 +415,7 @@
     <a href="#zero-trust">Zero Trust / VPN</a>
     <a href="#soc">24x7 SOC</a>
     <a href="#compliance">Compliance Readiness</a>
+    <a href="#security-assessment">Security Assessment</a>
     <a href="#about">About</a>
   </nav>
 </div>
@@ -669,6 +789,12 @@
       </div>
     </div>
 
+    <div class="testimonial-block">
+      <div class="testimonial-quote">"FCI CEO Brian Edelman is one of the few real cybersecurity experts who understand compliance — a true thought leader."</div>
+      <div class="testimonial-name">Joel Bruckenstein</div>
+      <div class="testimonial-org">Technology Tools for Today (T3)</div>
+    </div>
+
     <div class="cta-display">
       <div>
         <div class="cta-label">Next Step</div>
@@ -684,7 +810,7 @@
   ══════════════════════════════════════════════════════════════════════ -->
   <div class="page-section" id="broker-dealer">
     <div class="page-label">Page 3 — Who We Serve</div>
-    <div class="page-title">Broker-Dealers</div>
+    <div class="page-title">Broker-Dealer &amp; Branches</div>
     <div class="page-desc">Audience: CCOs, supervision officers, compliance directors. Core fears: exam deficiency from uncontrolled rep devices, inability to produce FINRA/SEC evidence, network-wide enforcement gaps.</div>
 
     <div class="copy-block">
@@ -859,6 +985,12 @@
       </div>
     </div>
 
+    <div class="testimonial-block">
+      <div class="testimonial-quote">"We strongly recommend FCI to any firm with a desire to get cybersecurity protection and compliance."</div>
+      <div class="testimonial-name">Nash Subotic — Founder &amp; CEO, Westpac Wealth Partners</div>
+      <div class="testimonial-org">Agency of The Guardian Life Insurance Company of America</div>
+    </div>
+
     <div class="cta-display">
       <div>
         <div class="cta-label">Next Step</div>
@@ -868,6 +1000,54 @@
     </div>
   </div><!-- /insurance -->
 
+
+
+
+  <!-- ══════════════════════════════════════════════════════════════════════
+       PAGE 4b: NIST FRAMEWORK EXPLAINER (inline callout on Solutions page)
+  ══════════════════════════════════════════════════════════════════════ -->
+  <div class="page-section" id="nist">
+    <div class="page-label">Page 5 — Solutions · NIST Reference</div>
+    <div class="page-title">FCI and the NIST Framework</div>
+    <div class="page-desc">A brief explainer for visitors who want to understand how FCI's services map to the NIST Cybersecurity Framework. Not required reading — but useful for technical buyers and exam preparation. Sits either as a callout within the Solutions page or as a linked modal.</div>
+
+    <div class="copy-block">
+      <div class="section-label">What Is the NIST Framework?</div>
+      <div class="copy-module">
+        <div class="module-tag">Intro Copy</div>
+        <div class="module-copy">
+          <p>The NIST Cybersecurity Framework (NIST CSF) is the standard that regulators, examiners, and cyber insurers use to evaluate whether a firm's security program is real. SEC examiners reference it. FINRA guidance maps to it. NAIC state examiners expect it. When someone asks if your controls are adequate, the NIST CSF is usually the benchmark they mean.</p>
+          <p>FCI maps every managed control to one of four NIST functions. The CISO Portal shows enforcement status by function — so when your examiner asks which NIST controls you have in place, you have the answer ready.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="copy-block">
+      <div class="section-label">The Four NIST Functions — and What FCI Manages</div>
+      <div class="nist-grid">
+        <div class="nist-cell">
+          <div class="nist-function">Identify</div>
+          <div class="nist-title">Zero Trust Complete · Evidence of Compliance</div>
+          <div class="nist-body">Know every device, every user, and every access path across your distributed network. FCI inventories the full attack surface and documents your compliance posture continuously.</div>
+        </div>
+        <div class="nist-cell">
+          <div class="nist-function">Protect</div>
+          <div class="nist-title">Managed Endpoint &amp; Network Protection · Data Exfiltration Protection</div>
+          <div class="nist-body">Deploy and enforce safeguards across every endpoint — BYOD included — without user involvement. MFA, Always-On VPN, encryption, and EDR enforced automatically.</div>
+        </div>
+        <div class="nist-cell">
+          <div class="nist-function">Detect &amp; Respond</div>
+          <div class="nist-title">Managed Detection &amp; Incident Response</div>
+          <div class="nist-body">FCI's 24x7 SOC monitors every endpoint across your distributed network. When an alert requires a human response, a human responds — not a ticket queue.</div>
+        </div>
+        <div class="nist-cell">
+          <div class="nist-function">Recover</div>
+          <div class="nist-title">Event Recovery &amp; Breach Support</div>
+          <div class="nist-body">When an incident occurs, FCI supports the full recovery process — containment, remediation, and documentation that satisfies both insurers and regulators.</div>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <!-- ══════════════════════════════════════════════════════════════════════
        PAGE 5: SOLUTIONS OVERVIEW
@@ -1282,6 +1462,69 @@
 
 
   <!-- ══════════════════════════════════════════════════════════════════════
+       PAGE 9: SECURITY ASSESSMENT
+  ══════════════════════════════════════════════════════════════════════ -->
+  <div class="page-section" id="security-assessment">
+    <div class="page-label">Page 9 — Security Assessment</div>
+    <div class="page-title">Security Assessment</div>
+    <div class="page-desc">A dedicated entry point for both buyer types: the firm that needs to prove its posture internally, and the C-level that wants independent verification. Simple page — lead with the problem, show the tiers, close with the CTA. Full copy to be provided.</div>
+
+    <div class="copy-block">
+      <div class="section-label">Page Hero</div>
+      <div class="copy-module">
+        <div class="module-tag">H1</div>
+        <div class="module-copy"><p>Know exactly where your firm stands. Before your regulator asks.</p></div>
+      </div>
+      <div class="copy-module">
+        <div class="module-tag">Sub-Head</div>
+        <div class="module-copy"><p>FCI's Security Assessment gives you an objective, third-party picture of your current cybersecurity posture — the gaps your examiner will find, and a clear map of what to do about them. In 60 to 80 percent of assessments, we find compliance gaps the firm did not know existed.</p></div>
+      </div>
+    </div>
+
+    <div class="copy-block">
+      <div class="section-label">Two Reasons Firms Request an Assessment</div>
+      <div class="two-col">
+        <div class="col-card">
+          <div class="col-card-label">Ready to Act</div>
+          <div class="col-card-title">You need evidence to justify the investment internally.</div>
+          <div class="col-card-body">You know your posture needs to improve. The Security Assessment gives your leadership team the objective findings they need to approve a program — and gives you the roadmap to execute it.</div>
+        </div>
+        <div class="col-card">
+          <div class="col-card-label">Seeking Verification</div>
+          <div class="col-card-title">You want independent confirmation of what you have been told.</div>
+          <div class="col-card-body">Your team tells you security is under control. Your regulator expects you to prove it. A third-party assessment gives you the independent evidence that answers both questions.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="copy-block">
+      <div class="section-label">Assessment Tiers</div>
+      <div class="copy-note">Design direction: Three-tier table or card stack. Simple, scannable. No technical jargon in the names — describe the scope.</div>
+      <div class="copy-module">
+        <div class="module-tag">Tier 1 — Foundation (minimum for most RIAs)</div>
+        <div class="module-copy"><p>Network penetration testing and vulnerability scanning. Produces a verified picture of your internal and external attack surface. Required evidence for most regulatory frameworks and cyber insurance renewals.</p></div>
+      </div>
+      <div class="copy-module">
+        <div class="module-tag">Tier 2 — Expanded (public-facing applications)</div>
+        <div class="module-copy"><p>Includes Tier 1 plus assessment of any public-facing applications and external domain exposure. We provide a URL or application access point — FCI tests everything visible from outside the perimeter.</p></div>
+      </div>
+      <div class="copy-module">
+        <div class="module-tag">Tier 3 — Full (cloud and application configuration)</div>
+        <div class="module-copy"><p>Includes Tiers 1 and 2 plus cloud infrastructure hardening review and application configuration assessment. Covers Microsoft 365, Google Workspace, and key cloud services your firm uses. Full-scope evidence package for complex regulatory requirements.</p></div>
+      </div>
+    </div>
+
+    <div class="cta-display">
+      <div>
+        <div class="cta-label">Start Here</div>
+        <div class="cta-text">A Security Assessment takes 30 minutes to scope. Results in two to four weeks.</div>
+      </div>
+      <a href="#" class="cta-button">Request an Assessment</a>
+    </div>
+  </div><!-- /security-assessment -->
+
+
+  <!-- ══════════════════════════════════════════════════════════════════════
        PAGE 10: ABOUT
   ══════════════════════════════════════════════════════════════════════ -->
   <div class="page-section" id="about">
@@ -1353,6 +1596,45 @@
       <a href="#" class="cta-button">Request Assessment</a>
     </div>
   </div><!-- /about -->
+
+
+  <!-- ══════════════════════════════════════════════════════════════════════
+       FOOTER — COMPANY NAVIGATION
+  ══════════════════════════════════════════════════════════════════════ -->
+  <div class="site-footer">
+    <div class="footer-grid">
+      <div class="footer-col">
+        <div class="footer-col-label">Who We Serve</div>
+        <a href="#ria">RIA Principals</a>
+        <a href="#broker-dealer">Broker-Dealer &amp; Branches</a>
+        <a href="#insurance">Insurance Carriers</a>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-label">Solutions</div>
+        <a href="#solutions">Solutions Overview</a>
+        <a href="#nist">NIST Framework</a>
+        <a href="#ciso-portal">The CISO Portal</a>
+        <a href="#security-assessment">Security Assessment</a>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-label">Company</div>
+        <a href="#about">About FCI</a>
+        <a href="#">Team</a>
+        <a href="#">Media &amp; Press Kit</a>
+        <a href="#">Working at FCI</a>
+        <a href="#">News</a>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-label">Privacy</div>
+        <a href="#">Security &amp; Privacy Policy</a>
+        <a href="#">Privacy Notice</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-logo"><span style="letter-spacing:0;">F</span><span style="letter-spacing:0;margin-left:0.02em;">C</span><span style="letter-spacing:0;margin-left:0.05em;">I</span></div>
+      <div class="footer-tagline">Managed Cybersecurity for Financial Services · fcicyber.com</div>
+    </div>
+  </div>
 
 </div><!-- /wrap -->
 
