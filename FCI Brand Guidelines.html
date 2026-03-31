@@ -668,6 +668,23 @@
         --blue-tint:   #172554;
       }
       body { background: #0F172A; color: #F1F5F9; }
+
+      /* Logo tiles on coloured backgrounds must keep true white — never the dark --white variable */
+      .lv-a   .lv-fci,
+      .lv-blk .lv-fci,
+      .lv-mid .lv-fci  { color: #FFFFFF; }
+      .lv-a   .lv-desc,
+      .lv-blk .lv-desc,
+      .lv-mid .lv-desc  { color: rgba(255,255,255,0.70); }
+      .lv-a   .lv-label,
+      .lv-blk .lv-label,
+      .lv-mid .lv-label { color: rgba(255,255,255,0.75); }
+      /* White-background tile stays legible in dark mode */
+      .lv-b { background: #1E293B; }
+      .lv-b .lv-fci  { color: var(--blue); }
+      .lv-b .lv-desc { color: #94A3B8; }
+      .lv-b .lv-label { color: #64748B; }
+
       .vc { background: #1E293B !important; }
       .vc.avoid { background: #2D1A1A !important; }
       .vc.avoid .vc-item { border-color: #4B2020; }
