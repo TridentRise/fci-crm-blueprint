@@ -39,6 +39,32 @@
     .footer { margin-top: 80px; padding-top: 32px; border-top: 1px solid var(--rule); display: flex; justify-content: space-between; align-items: center; }
     .footer-logo { font-family: 'Inter Tight', sans-serif; font-size: 20px; font-weight: 600; letter-spacing: 0.1em; color: var(--blue); }
     .footer-note { font-size: 14px; color: var(--muted); }
+
+    /* ══════════════════════════════════════════
+       DARK MODE
+    ══════════════════════════════════════════ */
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --white: #1E293B;
+        --rule:  #334155;
+        --text:  #F1F5F9;
+        --body:  #CBD5E1;
+      }
+      body { background: #0F172A; }
+      .card { background: #1E293B; border-color: #334155; }
+      .card:hover { border-color: #2563EB; box-shadow: 0 4px 16px rgba(37,99,235,0.15); }
+    }
+
+    /* ══════════════════════════════════════════
+       MOBILE
+    ══════════════════════════════════════════ */
+    @media (max-width: 600px) {
+      .wrap { padding: 40px 20px 80px; }
+      .header { margin: 0 -20px; padding: 40px 20px 36px; margin-bottom: 40px; }
+      .card-grid { grid-template-columns: 1fr; }
+      .card { padding: 24px; }
+    }
+
   </style>
 </head>
 <body>

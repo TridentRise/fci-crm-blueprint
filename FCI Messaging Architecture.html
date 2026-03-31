@@ -358,6 +358,43 @@
       color: var(--faint);
       letter-spacing: 0.04em;
     }
+
+    /* ══════════════════════════════════════════
+       DARK MODE
+    ══════════════════════════════════════════ */
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --white:    #1E293B;
+        --offwhite: #0F172A;
+        --rule:     #334155;
+        --text:     #F1F5F9;
+        --body:     #CBD5E1;
+        --muted:    #94A3B8;
+        --faint:    #64748B;
+      }
+      body { background: #0F172A; }
+      .col-card { background: #1E293B; border-color: #334155; }
+      .persona-block { background: #1E293B; border-color: #334155; }
+      a[style*="background:#F8FAFC"],
+      a[style*="background: #F8FAFC"] {
+        background: #0F172A !important;
+        border-color: #334155 !important;
+        color: #64748B !important;
+      }
+    }
+
+    /* ══════════════════════════════════════════
+       MOBILE
+    ══════════════════════════════════════════ */
+    @media (max-width: 680px) {
+      .wrap { padding: 0 20px 80px; }
+      .col-cards { grid-template-columns: 1fr !important; }
+      .persona-block { flex-direction: column; }
+      .persona-band { padding: 32px 24px; }
+      .callout { padding: 24px; }
+      .part-header { padding: 40px 0 24px; }
+    }
+
   </style>
 </head>
 <body>

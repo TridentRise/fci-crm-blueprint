@@ -210,6 +210,47 @@
       font-weight: 600; color: var(--text); margin-bottom: 10px;
     }
     .col-card-body { font-size: 16px; color: var(--body); line-height: 1.7; }
+
+    /* ══════════════════════════════════════════
+       DARK MODE
+    ══════════════════════════════════════════ */
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --white:    #1E293B;
+        --offwhite: #0F172A;
+        --rule:     #334155;
+        --text:     #F1F5F9;
+        --body:     #CBD5E1;
+        --muted:    #94A3B8;
+      }
+      body { background: #0F172A; }
+      .nav-wrap { background: #1E293B; border-color: #334155; }
+      .module-copy { background: #1E293B; }
+      .cta-persona { background: #1E293B; border-color: #334155; }
+      .proof-band { background: #1E293B; border-color: #334155; }
+      a[style*="background:#F8FAFC"],
+      a[style*="background: #F8FAFC"] {
+        background: #0F172A !important;
+        border-color: #334155 !important;
+        color: #64748B !important;
+      }
+    }
+
+    /* ══════════════════════════════════════════
+       MOBILE
+    ══════════════════════════════════════════ */
+    @media (max-width: 680px) {
+      .hero { padding: 36px 24px 32px; }
+      .nav-wrap { padding: 0 16px; }
+      .nav a { padding: 12px 12px; font-size: 13px; }
+      .wrap { padding: 0 20px 80px; }
+      .two-col { grid-template-columns: 1fr; }
+      .cta-display { padding: 20px; flex-direction: column; gap: 16px; }
+      .cta-display .cta-button { width: 100%; text-align: center; }
+      .proof-band { flex-direction: column; gap: 16px; padding: 20px 24px; }
+      .cta-persona { padding: 20px; flex-direction: column; gap: 16px; }
+    }
+
   </style>
 </head>
 <body>

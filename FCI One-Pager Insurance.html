@@ -331,6 +331,55 @@
     }
 
     /* ── PRINT ── */
+
+    /* ══════════════════════════════════════════
+       DARK MODE
+    ══════════════════════════════════════════ */
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --white:      #1E293B;
+        --offwhite:   #0F172A;
+        --rule:       #334155;
+        --text:       #F1F5F9;
+        --body:       #CBD5E1;
+        --muted:      #94A3B8;
+        --faint:      #64748B;
+        --blue-faint: #1E293B;
+        --blue-tint:  #172554;
+      }
+      body { background: #0F172A; }
+      .back { background: #1E293B; }
+      .band { background: #1e2d4a; border-top-color: var(--blue); }
+      .stat-cell { background: #1E293B; }
+      .stats-row { background: #334155; }
+      .back-col-body { color: var(--body); }
+      .item-list li { color: var(--body); }
+      a[style] { color: #94A3B8 !important; background: #0F172A !important; border-color: #334155 !important; }
+    }
+
+    /* ══════════════════════════════════════════
+       MOBILE
+    ══════════════════════════════════════════ */
+    @media (max-width: 680px) {
+      .page { margin: 0; box-shadow: none; max-width: 100%; border-radius: 0; }
+      .front { padding: 32px 24px 36px; }
+      .front-top { margin-bottom: 28px; flex-wrap: wrap; gap: 12px; }
+      .front-headline { font-size: clamp(22px, 6vw, 32px); margin-bottom: 16px; }
+      .front-sub { font-size: 14px; margin-bottom: 28px; }
+      .front-pillars { grid-template-columns: 1fr; gap: 2px; }
+      .band { padding: 20px 24px; flex-direction: column; gap: 10px; }
+      .back { padding: 32px 24px 40px; }
+      .back-grid { grid-template-columns: 1fr; gap: 32px; }
+      .stats-row { grid-template-columns: 1fr 1fr; }
+      .stat-cell { padding: 16px; }
+      .stat-num { font-size: 22px; }
+      .cta-block { padding: 24px; flex-direction: column; gap: 20px; }
+      .cta-right { text-align: left; }
+      .cta-text { font-size: 15px; }
+      .item-list li { font-size: 14px; }
+      .persona-tag { font-size: 10px; padding: 6px 12px; }
+    }
+
     @media print {
       body { background: white; }
       .page { box-shadow: none; margin: 0; max-width: 100%; }

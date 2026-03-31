@@ -651,6 +651,89 @@
       letter-spacing: 0.04em;
     }
 
+
+    /* ══════════════════════════════════════════
+       DARK MODE
+    ══════════════════════════════════════════ */
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --white:       #1E293B;
+        --offwhite:    #0F172A;
+        --rule:        #334155;
+        --text:        #F1F5F9;
+        --text-body:   #CBD5E1;
+        --text-muted:  #94A3B8;
+        --text-faint:  #64748B;
+        --blue-faint:  #1E293B;
+        --blue-tint:   #172554;
+      }
+      body { background: #0F172A; color: #F1F5F9; }
+      .vc { background: #1E293B !important; }
+      .vc.avoid { background: #2D1A1A !important; }
+      .vc.avoid .vc-item { border-color: #4B2020; }
+      .cs-box { background: #1E293B; border-color: #334155; }
+      .sample-card { background: #1E293B; border-color: #334155; }
+      .sc-body { background: #1E293B; }
+      .sc-stats { border-color: #334155; }
+      .sc-stat { border-color: #334155; }
+      a[style*="background:#F8FAFC"],
+      a[style*="background: #F8FAFC"] {
+        background: #0F172A !important;
+        border-color: #334155 !important;
+        color: #64748B !important;
+      }
+    }
+
+    /* ══════════════════════════════════════════
+       MOBILE
+    ══════════════════════════════════════════ */
+    @media (max-width: 720px) {
+      .page { padding: 0 20px 80px; }
+
+      /* Cover */
+      .cover { margin: 0 -20px; padding: 56px 24px 64px; }
+      .cover-eyebrow { margin-bottom: 36px; }
+      .cover-meta { margin-top: 48px; }
+
+      /* Sections */
+      section { padding-top: 56px; margin-top: 56px; }
+
+      /* Logo grid: 4-col → 2×2 */
+      .logo-grid[style] { grid-template-columns: repeat(2, 1fr) !important; }
+      .logo-grid        { grid-template-columns: repeat(2, 1fr) !important; }
+      .lv { padding: 32px 24px 28px; }
+      .lv-fci { font-size: 36px; }
+
+      /* Tagline grid: 3-col → 1-col */
+      .tl-grid { grid-template-columns: 1fr; }
+      .tl-card { padding: 36px 28px; }
+
+      /* Color swatches: 5-col → 2-col */
+      .color-grid { grid-template-columns: repeat(2, 1fr); }
+
+      /* Typography rows: sidebar + content → stacked */
+      .tr { grid-template-columns: 1fr; gap: 16px; padding: 32px 0; }
+
+      /* Voice grid: 2-col → 1-col */
+      .voice-grid { grid-template-columns: 1fr; }
+      .vc { padding: 32px 24px; }
+
+      /* Imagery grid: 3-col → 2-col */
+      .img-grid { grid-template-columns: repeat(2, 1fr); }
+
+      /* Sample card */
+      .sample-card { max-width: 100%; }
+      .sc-top { padding: 32px 24px 28px; }
+      .sc-body { padding: 28px 24px 32px; }
+      .sc-stats { flex-direction: column; gap: 0; }
+      .sc-stat { padding: 14px 0; border-right: none; border-bottom: 1px solid var(--rule); }
+      .sc-stat:last-child { border-bottom: none; }
+
+      /* Clear space */
+      .cs-box { padding: 32px 24px; }
+      .cs-dashed { padding: 20px 20px; }
+    }
+
   </style>
 <style type="text/css">/* Copyright 2014-present Evernote Corporation. All rights reserved. */
 @keyframes caretBlink {
