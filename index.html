@@ -5,147 +5,547 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>FCI — Brand Hub</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Inter+Tight:wght@600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Inter+Tight:wght@600;700;800&display=swap" rel="stylesheet" />
   <style>
+    *, ::before, ::after { box-sizing: border-box; margin: 0; padding: 0; }
+
     :root {
-      --blue: #2563EB;
-      --sky: #0EA5E9;
-      --deep-navy: #1E3A6E;
-      --offwhite: #F8FAFC;
-      --white: #FFFFFF;
-      --rule: #E2E8F0;
-      --text: #0F172A;
-      --body: #475569;
-      --muted: #64748B;
-    }
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: 'Inter', sans-serif; background: var(--offwhite); color: var(--text); -webkit-font-smoothing: antialiased; }
-    .wrap { max-width: 760px; margin: 0 auto; padding: 80px 48px 120px; }
-    .header { background: var(--blue); margin: 0 -48px; padding: 64px 48px 56px; margin-bottom: 64px; }
-    .logo { font-family: 'Inter Tight', sans-serif; font-size: 52px; font-weight: 600; color: white; line-height: 1; display: inline-flex; align-items: baseline; }
-    .fk-f { letter-spacing: 0; }
-    .fk-c { letter-spacing: 0; margin-left: 0.02em; }
-    .fk-i { letter-spacing: 0; margin-left: 0.05em; }
-    .descriptor { font-size: 14px; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(255,255,255,0.75); margin-top: 12px; }
-    .hub-title { font-family: 'Inter Tight', sans-serif; font-size: 22px; font-weight: 600; color: white; margin-top: 28px; letter-spacing: -0.01em; }
-    .hub-sub { font-size: 14px; color: rgba(255,255,255,0.78); margin-top: 8px; }
-    .label { font-size: 13px; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; color: var(--sky); margin-bottom: 20px; }
-    .card-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-    .card { background: var(--white); border: 1px solid var(--rule); padding: 32px; text-decoration: none; display: flex; flex-direction: column; gap: 12px; transition: border-color 0.15s, box-shadow 0.15s; }
-    .card:hover { border-color: #BFDBFE; box-shadow: 0 4px 16px rgba(37, 99, 235, 0.08); }
-    .card-tag { font-size: 12px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--sky); }
-    .card-title { font-family: 'Inter Tight', sans-serif; font-size: 18px; font-weight: 600; color: var(--text); letter-spacing: -0.01em; line-height: 1.25; }
-    .card-desc { font-size: 16px; color: var(--body); line-height: 1.65; }
-    .card-link { font-size: 14px; font-weight: 500; color: var(--blue); margin-top: auto; padding-top: 8px; }
-    .footer { margin-top: 80px; padding-top: 32px; border-top: 1px solid var(--rule); display: flex; justify-content: space-between; align-items: center; }
-    .footer-logo { font-family: 'Inter Tight', sans-serif; font-size: 20px; font-weight: 600; letter-spacing: 0.1em; color: var(--blue); }
-    .footer-note { font-size: 14px; color: var(--muted); }
-
-    /* ══════════════════════════════════════════
-       DARK MODE
-    ══════════════════════════════════════════ */
-    @media (prefers-color-scheme: dark) {
-      :root {
-        --white: #1E293B;
-        --rule:  #334155;
-        --text:  #F1F5F9;
-        --body:  #CBD5E1;
-      }
-      body { background: #0F172A; }
-      .card { background: #1E293B; border-color: #334155; }
-      .card:hover { border-color: #2563EB; box-shadow: 0 4px 16px rgba(37,99,235,0.15); }
+      --bg:       #060B14;
+      --surface:  #0D1626;
+      --surface2: #111F33;
+      --blue:     #2563EB;
+      --blue2:    rgba(37,99,235,0.12);
+      --sky:      #0EA5E9;
+      --sky2:     rgba(14,165,233,0.12);
+      --indigo:   #818CF8;
+      --indigo2:  rgba(129,140,248,0.12);
+      --emerald:  #10B981;
+      --emerald2: rgba(16,185,129,0.10);
+      --amber:    #F59E0B;
+      --amber2:   rgba(245,158,11,0.10);
+      --violet:   #A855F7;
+      --violet2:  rgba(168,85,247,0.10);
+      --text1:    #F1F5F9;
+      --text2:    #94A3B8;
+      --text3:    #475569;
+      --rule:     #1A2B40;
     }
 
-    /* ══════════════════════════════════════════
-       MOBILE
-    ══════════════════════════════════════════ */
-    @media (max-width: 600px) {
-      .wrap { padding: 40px 20px 80px; }
-      .header { margin: 0 -20px; padding: 40px 20px 36px; margin-bottom: 40px; }
-      .card-grid { grid-template-columns: 1fr; }
-      .card { padding: 24px; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text1);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      -webkit-font-smoothing: antialiased;
     }
 
+    ::selection { background: var(--blue); color: #fff; }
+
+    /* ── Background glow ── */
+    .bg-glow {
+      position: fixed; inset: 0; pointer-events: none; z-index: 0;
+      background:
+        radial-gradient(80% 50% at 50% -10%, rgba(37,99,235,0.15) 0%, transparent 65%),
+        radial-gradient(35% 28% at 6% 88%,  rgba(168,85,247,0.07) 0%, transparent 55%),
+        radial-gradient(35% 28% at 94% 82%, rgba(16,185,129,0.06) 0%, transparent 55%);
+    }
+
+    /* ── Top nav ── */
+    .topnav {
+      position: fixed; top: 0; left: 0; right: 0; height: 56px;
+      background: rgba(6,11,20,0.88);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--rule);
+      display: flex; align-items: center; padding: 0 48px; z-index: 100;
+    }
+
+    .nav-logo {
+      font-family: 'Inter Tight', sans-serif;
+      font-size: 20px; font-weight: 800;
+      color: var(--text1); text-decoration: none;
+      letter-spacing: -0.02em;
+      display: inline-flex; align-items: baseline; gap: 1px;
+    }
+    .nav-logo .accent { color: var(--sky); }
+
+    /* ── Header ── */
+    header {
+      position: relative; z-index: 1;
+      text-align: center; padding: 128px 24px 72px;
+    }
+
+    .header-eyebrow {
+      display: inline-block;
+      font-size: 10px; font-weight: 700;
+      letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--sky);
+      border: 1px solid rgba(14,165,233,0.28);
+      background: rgba(14,165,233,0.07);
+      padding: 5px 16px; border-radius: 100px;
+      margin-bottom: 28px;
+    }
+
+    header h1 {
+      font-family: 'Inter Tight', sans-serif;
+      font-size: clamp(44px, 7vw, 72px);
+      font-weight: 800; letter-spacing: -0.035em; line-height: 1;
+      color: var(--text1); margin-bottom: 20px;
+    }
+    header h1 em { color: var(--sky); font-style: normal; }
+
+    header p {
+      font-size: 17px; color: var(--text2);
+      line-height: 1.7; max-width: 480px; margin: 0 auto;
+    }
+
+    /* ── Divider ── */
+    .divider {
+      position: relative; z-index: 1;
+      display: flex; align-items: center; gap: 20px;
+      max-width: 1080px; margin: 0 auto 40px; padding: 0 32px;
+    }
+    .divider + .divider { margin-top: 64px; }
+    .divider-line { flex: 1; height: 1px; background: var(--rule); }
+    .divider-label {
+      font-size: 11px; font-weight: 600; letter-spacing: 0.14em;
+      color: var(--text3); text-transform: uppercase; white-space: nowrap;
+    }
+
+    /* ── Cards section ── */
+    .cards-section {
+      position: relative; z-index: 1; flex: 1;
+      max-width: 1080px; width: 100%; margin: 0 auto; padding: 0 32px 112px;
+    }
+
+    .cards-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 24px;
+    }
+    .cards-grid.single { grid-template-columns: 1fr; }
+    .cards-grid.compact { gap: 16px; }
+
+    /* ── Hub card ── */
+    .hub-card {
+      position: relative;
+      background: var(--surface);
+      border: 1px solid var(--rule);
+      border-radius: 16px;
+      padding: 40px 36px 32px;
+      text-decoration: none;
+      display: flex; flex-direction: column;
+      overflow: hidden; min-height: 360px;
+      transition:
+        transform 0.25s cubic-bezier(0.16,1,0.3,1),
+        box-shadow 0.25s,
+        border-color 0.2s;
+    }
+    .hub-card.compact-card { min-height: 260px; }
+
+    .hub-card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0;
+      height: 3px; border-radius: 16px 16px 0 0;
+    }
+    .hub-card::after {
+      content: ''; position: absolute; inset: 0; border-radius: 16px;
+      opacity: 0; transition: opacity 0.3s; pointer-events: none;
+    }
+    .hub-card:hover { transform: translateY(-4px); }
+
+    /* Accent: blue */
+    .c-blue::before  { background: linear-gradient(90deg, var(--blue), rgba(37,99,235,0.25)); }
+    .c-blue:hover    { border-color: rgba(37,99,235,0.45); box-shadow: 0 24px 60px rgba(37,99,235,0.16), 0 4px 16px rgba(0,0,0,0.45); }
+    .c-blue::after   { background: radial-gradient(80% 60% at 50% 0%, rgba(37,99,235,0.09) 0%, transparent 60%); }
+    .c-blue:hover::after { opacity: 1; }
+
+    /* Accent: sky */
+    .c-sky::before  { background: linear-gradient(90deg, var(--sky), rgba(14,165,233,0.25)); }
+    .c-sky:hover    { border-color: rgba(14,165,233,0.45); box-shadow: 0 24px 60px rgba(14,165,233,0.14), 0 4px 16px rgba(0,0,0,0.45); }
+    .c-sky::after   { background: radial-gradient(80% 60% at 50% 0%, rgba(14,165,233,0.09) 0%, transparent 60%); }
+    .c-sky:hover::after { opacity: 1; }
+
+    /* Accent: indigo */
+    .c-indigo::before  { background: linear-gradient(90deg, var(--indigo), rgba(129,140,248,0.25)); }
+    .c-indigo:hover    { border-color: rgba(129,140,248,0.45); box-shadow: 0 24px 60px rgba(129,140,248,0.14), 0 4px 16px rgba(0,0,0,0.45); }
+    .c-indigo::after   { background: radial-gradient(80% 60% at 50% 0%, rgba(129,140,248,0.09) 0%, transparent 60%); }
+    .c-indigo:hover::after { opacity: 1; }
+
+    /* Accent: emerald */
+    .c-emerald::before  { background: linear-gradient(90deg, var(--emerald), rgba(16,185,129,0.25)); }
+    .c-emerald:hover    { border-color: rgba(16,185,129,0.45); box-shadow: 0 24px 60px rgba(16,185,129,0.13), 0 4px 16px rgba(0,0,0,0.45); }
+    .c-emerald::after   { background: radial-gradient(80% 60% at 50% 0%, rgba(16,185,129,0.08) 0%, transparent 60%); }
+    .c-emerald:hover::after { opacity: 1; }
+
+    /* Accent: amber */
+    .c-amber::before  { background: linear-gradient(90deg, var(--amber), rgba(245,158,11,0.25)); }
+    .c-amber:hover    { border-color: rgba(245,158,11,0.45); box-shadow: 0 24px 60px rgba(245,158,11,0.13), 0 4px 16px rgba(0,0,0,0.45); }
+    .c-amber::after   { background: radial-gradient(80% 60% at 50% 0%, rgba(245,158,11,0.08) 0%, transparent 60%); }
+    .c-amber:hover::after { opacity: 1; }
+
+    /* Accent: violet */
+    .c-violet::before  { background: linear-gradient(90deg, var(--violet), rgba(168,85,247,0.25)); }
+    .c-violet:hover    { border-color: rgba(168,85,247,0.45); box-shadow: 0 24px 60px rgba(168,85,247,0.13), 0 4px 16px rgba(0,0,0,0.45); }
+    .c-violet::after   { background: radial-gradient(80% 60% at 50% 0%, rgba(168,85,247,0.08) 0%, transparent 60%); }
+    .c-violet:hover::after { opacity: 1; }
+
+    /* ── Card internals ── */
+    .card-cat {
+      font-size: 10px; font-weight: 700;
+      letter-spacing: 0.2em; text-transform: uppercase;
+      margin-bottom: 14px;
+    }
+    .c-blue   .card-cat { color: var(--blue); }
+    .c-sky    .card-cat { color: var(--sky); }
+    .c-indigo .card-cat { color: var(--indigo); }
+    .c-emerald .card-cat { color: var(--emerald); }
+    .c-amber  .card-cat { color: var(--amber); }
+    .c-violet .card-cat { color: var(--violet); }
+
+    .card-name {
+      font-family: 'Inter Tight', sans-serif;
+      font-size: 26px; font-weight: 700;
+      letter-spacing: -0.02em; line-height: 1.1;
+      color: var(--text1); margin-bottom: 14px;
+    }
+    .compact-card .card-name { font-size: 20px; }
+
+    .card-desc {
+      font-size: 14px; color: var(--text2);
+      line-height: 1.75; margin-bottom: 24px;
+    }
+
+    .card-tags {
+      display: flex; flex-wrap: wrap; gap: 8px;
+      margin-top: auto; margin-bottom: 28px;
+    }
+    .compact-card .card-tags { margin-bottom: 20px; }
+
+    .card-tags span {
+      font-size: 11px; font-weight: 600; letter-spacing: 0.05em;
+      padding: 4px 10px; border-radius: 6px;
+      background: var(--surface2); color: var(--text3); border: 1px solid var(--rule);
+    }
+    .c-blue   .card-tags span { background: var(--blue2);    color: var(--blue);    border-color: rgba(37,99,235,0.2); }
+    .c-sky    .card-tags span { background: var(--sky2);     color: var(--sky);     border-color: rgba(14,165,233,0.2); }
+    .c-indigo .card-tags span { background: var(--indigo2);  color: var(--indigo);  border-color: rgba(129,140,248,0.2); }
+    .c-emerald .card-tags span { background: var(--emerald2); color: var(--emerald); border-color: rgba(16,185,129,0.2); }
+    .c-amber  .card-tags span { background: var(--amber2);   color: var(--amber);   border-color: rgba(245,158,11,0.2); }
+    .c-violet .card-tags span { background: var(--violet2);  color: var(--violet);  border-color: rgba(168,85,247,0.2); }
+
+    .cta-row {
+      display: flex; align-items: center; gap: 12px; margin-top: auto;
+    }
+    .cta-arrow {
+      width: 30px; height: 30px; border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 14px; font-weight: 700;
+      transition: transform 0.2s, background 0.2s;
+      flex-shrink: 0;
+    }
+    .c-blue   .cta-arrow { background: var(--blue2);    color: var(--blue); }
+    .c-sky    .cta-arrow { background: var(--sky2);     color: var(--sky); }
+    .c-indigo .cta-arrow { background: var(--indigo2);  color: var(--indigo); }
+    .c-emerald .cta-arrow { background: var(--emerald2); color: var(--emerald); }
+    .c-amber  .cta-arrow { background: var(--amber2);   color: var(--amber); }
+    .c-violet .cta-arrow { background: var(--violet2);  color: var(--violet); }
+    .hub-card:hover .cta-arrow { transform: translateX(3px); }
+
+    .cta-text { font-size: 13px; font-weight: 600; color: var(--text2); }
+
+    /* ── Footer ── */
+    footer {
+      position: relative; z-index: 1;
+      text-align: center; padding: 0 24px 52px;
+    }
+    .footer-inner { display: inline-flex; align-items: center; gap: 14px; }
+    .footer-dot { width: 3px; height: 3px; border-radius: 50%; background: var(--text3); }
+    footer span { font-size: 12px; color: var(--text3); }
+    .footer-logo {
+      font-family: 'Inter Tight', sans-serif;
+      font-size: 15px; font-weight: 700;
+      color: var(--text3); letter-spacing: -0.01em;
+    }
+
+    /* ── Mobile ── */
+    @media (max-width: 720px) {
+      .topnav { padding: 0 24px; }
+      header { padding: 96px 20px 56px; }
+      .cards-section { padding: 0 20px 80px; }
+      .cards-grid { grid-template-columns: 1fr; }
+      .hub-card { padding: 32px 28px 28px; min-height: unset; }
+      .hub-card.compact-card { min-height: unset; }
+    }
   </style>
 </head>
 <body>
-<div class="wrap">
-  <div class="header">
-    <div class="logo"><span class="fk-f">F</span><span class="fk-c">C</span><span class="fk-i">I</span></div>
-    <div class="descriptor">Managed Cybersecurity for Financial Services</div>
-    <div class="hub-title">Brand Hub</div>
-    <div class="hub-sub">Internal reference — not for distribution</div>
+
+<div class="bg-glow"></div>
+
+<nav class="topnav">
+  <a class="nav-logo" href="index.html">F<span class="accent">C</span>I</a>
+</nav>
+
+<header>
+  <div class="header-eyebrow">Brand Hub &middot; Internal Reference</div>
+  <h1>FCI <em>Brand</em> Hub</h1>
+  <p>One place for everything — brand identity, messaging, website copy, sales collateral, and portal design. Not for distribution.</p>
+</header>
+
+<section class="cards-section">
+
+  <!-- ── Brand Foundation ── -->
+  <div class="divider">
+    <div class="divider-line"></div>
+    <div class="divider-label">Brand Foundation</div>
+    <div class="divider-line"></div>
   </div>
 
-  <div class="label">Logo Development</div>
-  <div class="card-grid">
-    <a class="card" href="FCI Logo Exploration.html">
-      <div class="card-tag">Wordmark</div>
-      <div class="card-title">Logo Exploration</div>
-      <div class="card-desc">10 font directions, letter-spacing progression, and custom kerning research. Final mark: Inter Tight 600, F·CI = 0.02em, C·I = 0.05em.</div>
-      <div class="card-link">Open exploration →</div>
+  <div class="cards-grid">
+
+    <a class="hub-card c-blue" href="FCI Brand Guidelines.html">
+      <div class="card-cat">Brand Identity</div>
+      <div class="card-name">Brand Guidelines</div>
+      <div class="card-desc">The authoritative reference for how FCI looks, sounds, and communicates. Logo rules, color palette, typography, voice, imagery direction, and sample applications.</div>
+      <div class="card-tags">
+        <span>Logo</span>
+        <span>Color</span>
+        <span>Typography</span>
+        <span>Voice</span>
+        <span>Imagery</span>
+      </div>
+      <div class="cta-row">
+        <div class="cta-arrow">→</div>
+        <span class="cta-text">Open Brand Guidelines</span>
+      </div>
     </a>
+
+    <a class="hub-card c-sky" href="FCI Logo Exploration.html">
+      <div class="card-cat">Wordmark &middot; Development</div>
+      <div class="card-name">Logo Exploration</div>
+      <div class="card-desc">10 font directions, letter-spacing progression, and custom kerning research. Final mark: Inter Tight 600, tracked for clarity at every size. The full rationale for the current wordmark.</div>
+      <div class="card-tags">
+        <span>Wordmark</span>
+        <span>10 Directions</span>
+        <span>Kerning</span>
+        <span>Final Mark</span>
+      </div>
+      <div class="cta-row">
+        <div class="cta-arrow">→</div>
+        <span class="cta-text">Open Exploration</span>
+      </div>
+    </a>
+
   </div>
 
-  <div class="label" style="margin-top: 48px;">Brand Documents</div>
-  <div class="card-grid">
-    <a class="card" href="FCI Brand Guidelines.html">
-      <div class="card-tag">Brand Identity</div>
-      <div class="card-title">Brand Guidelines</div>
-      <div class="card-desc">Logo, color palette, typography, voice rules, imagery direction, and sample applications.</div>
-      <div class="card-link">Open document →</div>
-    </a>
-    <a class="card" href="FCI Messaging Architecture.html">
-      <div class="card-tag">Messaging</div>
-      <div class="card-title">Messaging Architecture</div>
-      <div class="card-desc">Universal messages, persona profiles, objection responses, and vocabulary reference for all three markets.</div>
-      <div class="card-link">Open document →</div>
-    </a>
+  <!-- ── Messaging & Copy ── -->
+  <div class="divider">
+    <div class="divider-line"></div>
+    <div class="divider-label">Messaging &amp; Copy</div>
+    <div class="divider-line"></div>
   </div>
 
-  <div class="label" style="margin-top: 48px;">Website Copy</div>
-  <div class="card-grid">
-    <a class="card" href="FCI Website Copy.html">
-      <div class="card-tag">Section E</div>
-      <div class="card-title">Website Copy — All Pages</div>
-      <div class="card-desc">Complete copy for fcicyber.com — homepage, three persona pages, six solution pages, and About. Navigable and ready for developer handoff.</div>
-      <div class="card-link">Open document →</div>
+  <div class="cards-grid">
+
+    <a class="hub-card c-indigo" href="FCI Messaging Architecture.html">
+      <div class="card-cat">Strategy &middot; Messaging</div>
+      <div class="card-name">Messaging Architecture</div>
+      <div class="card-desc">Universal messages, persona profiles, objection responses, and vocabulary reference for all three markets — RIA, broker-dealer, and insurance. The ground truth for all copy.</div>
+      <div class="card-tags">
+        <span>Personas</span>
+        <span>Value Props</span>
+        <span>Objections</span>
+        <span>Vocabulary</span>
+        <span>3 Markets</span>
+      </div>
+      <div class="cta-row">
+        <div class="cta-arrow">→</div>
+        <span class="cta-text">Open Messaging</span>
+      </div>
     </a>
-    <a class="card" href="FCI Executive Overview.pptx">
-      <div class="card-tag">Section D</div>
-      <div class="card-title">Executive Overview Deck</div>
-      <div class="card-desc">10-slide executive presentation. Cover, challenge, stakes, three pillars, how it works, CISO Portal, who we serve, differentiation, proof, and closing CTA.</div>
-      <div class="card-link">Download deck →</div>
+
+    <a class="hub-card c-emerald" href="FCI Website Copy.html">
+      <div class="card-cat">Website &middot; Copy</div>
+      <div class="card-name">Website Copy</div>
+      <div class="card-desc">Complete copy for fcicyber.com — homepage, three persona pages, six solution pages, and About. Navigable and ready for developer handoff. All sections, CTAs, and headlines included.</div>
+      <div class="card-tags">
+        <span>Homepage</span>
+        <span>RIA</span>
+        <span>Broker-Dealer</span>
+        <span>Insurance</span>
+        <span>6 Solutions</span>
+      </div>
+      <div class="cta-row">
+        <div class="cta-arrow">→</div>
+        <span class="cta-text">Open Website Copy</span>
+      </div>
     </a>
+
   </div>
 
-  <div class="label" style="margin-top: 48px;">Client One-Pagers</div>
-  <div class="card-grid">
-    <a class="card" href="FCI One-Pager RIA.html">
-      <div class="card-tag">RIA Principals</div>
-      <div class="card-title">RIA Principals</div>
+  <!-- ── Sales Collateral ── -->
+  <div class="divider">
+    <div class="divider-line"></div>
+    <div class="divider-label">Sales Collateral &middot; One-Pagers</div>
+    <div class="divider-line"></div>
+  </div>
+
+  <div class="cards-grid compact">
+
+    <a class="hub-card c-amber compact-card" href="FCI One-Pager RIA.html">
+      <div class="card-cat">RIA Principals</div>
+      <div class="card-name">RIA One-Pager</div>
       <div class="card-desc">For RIA principals managing distributed advisor teams. Focuses on exam readiness, BYOD enforcement, and advisor-transparent compliance.</div>
-      <div class="card-link">Open one-pager →</div>
+      <div class="card-tags">
+        <span>SEC</span>
+        <span>Exam Readiness</span>
+        <span>BYOD</span>
+        <span>Distributed Teams</span>
+      </div>
+      <div class="cta-row">
+        <div class="cta-arrow">→</div>
+        <span class="cta-text">Open RIA One-Pager</span>
+      </div>
     </a>
-    <a class="card" href="FCI One-Pager Broker-Dealer.html">
-      <div class="card-tag">Broker-Dealer &amp; Branches</div>
-      <div class="card-title">Broker-Dealer &amp; Branches — Compliance</div>
-      <div class="card-desc">For CCOs and supervision officers at broker-dealers. Focuses on network-wide rep coverage, FINRA/SEC evidence, and WSP enforcement.</div>
-      <div class="card-link">Open one-pager →</div>
+
+    <a class="hub-card c-amber compact-card" href="FCI One-Pager Broker-Dealer.html">
+      <div class="card-cat">Broker-Dealer &amp; Branches</div>
+      <div class="card-name">Broker-Dealer One-Pager</div>
+      <div class="card-desc">For CCOs and supervision officers. Focuses on network-wide rep coverage, FINRA/SEC evidence production, and WSP enforcement across branches.</div>
+      <div class="card-tags">
+        <span>FINRA</span>
+        <span>SEC</span>
+        <span>WSP</span>
+        <span>Branch Coverage</span>
+      </div>
+      <div class="cta-row">
+        <div class="cta-arrow">→</div>
+        <span class="cta-text">Open Broker-Dealer One-Pager</span>
+      </div>
     </a>
-    <a class="card" href="FCI One-Pager Insurance.html">
-      <div class="card-tag">Insurance Carriers &amp; Agencies</div>
-      <div class="card-title">Insurance Carriers &amp; Agencies</div>
-      <div class="card-desc">For operations and compliance leaders at carriers and agency networks. Focuses on NAIC compliance, field agent cybersecurity oversight, and state examiner documentation.</div>
-      <div class="card-link">Open one-pager →</div>
+
+    <a class="hub-card c-amber compact-card" href="FCI One-Pager Insurance.html">
+      <div class="card-cat">Insurance Carriers &amp; Agencies</div>
+      <div class="card-name">Insurance One-Pager</div>
+      <div class="card-desc">For operations and compliance leaders at carriers and agency networks. Covers NAIC compliance, field agent oversight, and state examiner documentation.</div>
+      <div class="card-tags">
+        <span>NAIC</span>
+        <span>Field Agents</span>
+        <span>State Exams</span>
+        <span>BYOD</span>
+      </div>
+      <div class="cta-row">
+        <div class="cta-arrow">→</div>
+        <span class="cta-text">Open Insurance One-Pager</span>
+      </div>
     </a>
+
+    <a class="hub-card c-amber compact-card" href="FCI One-Pager End-Client.html">
+      <div class="card-cat">End-Client &middot; White-Label</div>
+      <div class="card-name">End-Client Overview</div>
+      <div class="card-desc">For firms to share with their own clients. Plain-language explanation of the cybersecurity program. Generic version + Sanctuary Wealth branded version available.</div>
+      <div class="card-tags">
+        <span>Client-Facing</span>
+        <span>White-Label</span>
+        <span>Plain Language</span>
+        <span>Sanctuary Wealth</span>
+      </div>
+      <div class="cta-row">
+        <div class="cta-arrow">→</div>
+        <span class="cta-text">Open End-Client Overview</span>
+      </div>
+    </a>
+
   </div>
 
-  <div class="footer">
-    <div class="footer-logo" style="display:inline-flex;align-items:baseline;"><span class="fk-f">F</span><span class="fk-c">C</span><span class="fk-i">I</span></div>
-    <div class="footer-note">Brand Hub — March 2026 — Internal use only</div>
+  <!-- ── Product & Executive ── -->
+  <div class="divider">
+    <div class="divider-line"></div>
+    <div class="divider-label">Product &amp; Executive</div>
+    <div class="divider-line"></div>
   </div>
-</div>
+
+  <div class="cards-grid">
+
+    <a class="hub-card c-violet" href="CISO_Portal_Design_Reference.html">
+      <div class="card-cat">Product &middot; Portal Design</div>
+      <div class="card-name">CISO Portal Design</div>
+      <div class="card-desc">Design reference and brief for the FCI CISO Portal — evidence dashboards, endpoint visibility, compliance mapping, and the audit-ready reporting interface. Includes design brief and direction rationale.</div>
+      <div class="card-tags">
+        <span>Dashboard</span>
+        <span>Evidence</span>
+        <span>Endpoint Visibility</span>
+        <span>Compliance Map</span>
+        <span>Design Brief</span>
+      </div>
+      <div class="cta-row">
+        <div class="cta-arrow">→</div>
+        <span class="cta-text">Open Portal Design</span>
+      </div>
+    </a>
+
+    <a class="hub-card c-violet" href="FCI Executive Overview.pptx">
+      <div class="card-cat">Executive &middot; Presentation</div>
+      <div class="card-name">Executive Overview Deck</div>
+      <div class="card-desc">10-slide executive presentation. Cover, challenge, stakes, three pillars, how it works, CISO Portal, who we serve, differentiation, proof, and closing CTA. Ready for board-level delivery.</div>
+      <div class="card-tags">
+        <span>10 Slides</span>
+        <span>Board-Ready</span>
+        <span>3 Pillars</span>
+        <span>CISO Portal</span>
+        <span>.pptx</span>
+      </div>
+      <div class="cta-row">
+        <div class="cta-arrow">→</div>
+        <span class="cta-text">Download Deck</span>
+      </div>
+    </a>
+
+  </div>
+
+  <!-- ── Website Design ── -->
+  <div class="divider">
+    <div class="divider-line"></div>
+    <div class="divider-label">Website Design &middot; Hero Proposals</div>
+    <div class="divider-line"></div>
+  </div>
+
+  <div class="cards-grid single">
+
+    <a class="hub-card c-sky" href="FCI Hero Gallery.html">
+      <div class="card-cat">Visual Direction &middot; 29 Proposals</div>
+      <div class="card-name">Hero Direction Gallery</div>
+      <div class="card-desc">Seven groups of visual directions for the fcicyber.com homepage — abstract &amp; animated, photography-based, cybersecurity concept, editorial, technical, modern high-end, and CISO Portal. All 29 proposals support light and dark mode with a live toggle.</div>
+      <div class="card-tags">
+        <span>7 Groups</span>
+        <span>29 Proposals</span>
+        <span>Abstract &amp; Animated</span>
+        <span>Photography</span>
+        <span>Editorial</span>
+        <span>Technical</span>
+        <span>Light &amp; Dark Toggle</span>
+      </div>
+      <div class="cta-row">
+        <div class="cta-arrow">→</div>
+        <span class="cta-text">Open Hero Gallery</span>
+      </div>
+    </a>
+
+  </div>
+
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <span class="footer-logo">FCI</span>
+    <div class="footer-dot"></div>
+    <span>Brand Hub</span>
+    <div class="footer-dot"></div>
+    <span>Internal &middot; 2026</span>
+  </div>
+</footer>
 
 </body>
 </html>

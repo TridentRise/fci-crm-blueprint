@@ -1,0 +1,910 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FCI — Hero Group 02 · Photography</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Inter+Tight:wght@600&display=swap" rel="stylesheet">
+  <style>
+
+    /* ════════════════════════════════════════════════
+       THEME VARIABLES — same pattern as Group 01
+    ════════════════════════════════════════════════ */
+
+    body {
+      /* Light mode defaults */
+      --c-logo:    #1E3A6E;
+      --c-h1:      #0F172A;
+      --c-sub:     rgba(15,23,42,0.55);
+      --c-eyebrow: #0EA5E9;
+      --c-badge:   rgba(15,23,42,0.13);
+
+      --btn-ghost-bd:          rgba(15,23,42,0.2);
+      --btn-ghost-text:        rgba(15,23,42,0.62);
+      --btn-ghost-hover-bd:    rgba(15,23,42,0.48);
+      --btn-ghost-hover-text:  #0F172A;
+
+      --page-bg:  #E8F2FF;
+
+      /* Per-hero base background colors — the color that shows before the photo */
+      --bg-h1: #EBF3FF;
+      --bg-h2: #EFF7FF;
+      --bg-h3: #ECF4FF;
+      --bg-h4: #E8F0FF;
+
+      /* Fade gradient RGB components per hero */
+      --fade1: 235,243,255;
+      --fade2: 239,247,255;
+      --fade3: 236,244,255;
+      --fade4: 232,240,255;
+
+      /* Photo overlay in light mode */
+      --overlay1-light: rgba(235,243,255,0.80);
+      --overlay2-split: rgba(235,243,255,0.0); /* window approach uses gradient not solid */
+      --overlay3-light: rgba(235,244,255,0.0);
+      --overlay4-blue:  rgba(37,99,235,0.52);
+
+      /* Rationale */
+      --bg-rationale:        #F5F9FF;
+      --c-rationale-title:   #0F172A;
+      --c-rationale-body:    rgba(15,23,42,0.52);
+      --c-rationale-mood:    rgba(15,23,42,0.32);
+      --c-rationale-accent:  rgba(14,165,233,0.85);
+
+      /* Nav */
+      --nav-bg:        rgba(235,243,255,0.92);
+      --nav-border:    rgba(15,23,42,0.07);
+      --nav-brand:     #1E3A6E;
+      --nav-link:      rgba(15,23,42,0.46);
+      --nav-link-bg:   rgba(15,23,42,0.06);
+      --nav-divider:   rgba(15,23,42,0.12);
+      --back-link:     rgba(15,23,42,0.46);
+
+      --toggle-bd:          rgba(15,23,42,0.14);
+      --toggle-text:        rgba(15,23,42,0.48);
+      --toggle-active-bg:   #1E3A6E;
+      --toggle-active-text: white;
+
+      /* Photo filter treatments per mode */
+      --photo-mist-filter:     blur(14px) brightness(1.05) saturate(0.6);
+      --photo-window-filter:   saturate(0.45) brightness(1.02);
+      --photo-wash-opacity:    0.17;
+      --photo-wash-filter:     saturate(0.4) brightness(1.08);
+      --photo-duotone-filter:  grayscale(1) brightness(0.62) contrast(1.1);
+      --duotone-overlay:       rgba(37,99,235,0.56);
+    }
+
+    @media (prefers-color-scheme: dark) {
+      body {
+        --c-logo:    rgba(255,255,255,0.85);
+        --c-h1:      white;
+        --c-sub:     rgba(255,255,255,0.58);
+        --c-badge:   rgba(255,255,255,0.15);
+
+        --btn-ghost-bd:         rgba(255,255,255,0.18);
+        --btn-ghost-text:       rgba(255,255,255,0.65);
+        --btn-ghost-hover-bd:   rgba(255,255,255,0.45);
+        --btn-ghost-hover-text: white;
+
+        --page-bg: #0A0F1E;
+
+        --bg-h1: #060C1A;
+        --bg-h2: #050D1B;
+        --bg-h3: #06101E;
+        --bg-h4: #040912;
+
+        --fade1: 6,12,26;
+        --fade2: 5,13,27;
+        --fade3: 6,16,30;
+        --fade4: 4,9,18;
+
+        --bg-rationale:       #0D1421;
+        --c-rationale-title:  rgba(255,255,255,0.9);
+        --c-rationale-body:   rgba(255,255,255,0.48);
+        --c-rationale-mood:   rgba(255,255,255,0.3);
+        --c-rationale-accent: rgba(14,165,233,0.7);
+
+        --nav-bg:       rgba(6,10,22,0.9);
+        --nav-border:   rgba(255,255,255,0.07);
+        --nav-brand:    white;
+        --nav-link:     rgba(255,255,255,0.45);
+        --nav-link-bg:  rgba(255,255,255,0.08);
+        --nav-divider:  rgba(255,255,255,0.12);
+        --back-link:    rgba(255,255,255,0.45);
+
+        --toggle-bd:          rgba(255,255,255,0.14);
+        --toggle-text:        rgba(255,255,255,0.45);
+        --toggle-active-bg:   white;
+        --toggle-active-text: #0F172A;
+
+        --photo-mist-filter:     blur(14px) brightness(0.65) saturate(0.55);
+        --photo-window-filter:   saturate(0.4) brightness(0.72);
+        --photo-wash-opacity:    0.22;
+        --photo-wash-filter:     saturate(0.35) brightness(0.85);
+        --photo-duotone-filter:  grayscale(1) brightness(0.5) contrast(1.15);
+        --duotone-overlay:       rgba(20,60,160,0.62);
+      }
+    }
+
+    body.theme-dark {
+      --c-logo:    rgba(255,255,255,0.85);
+      --c-h1:      white;
+      --c-sub:     rgba(255,255,255,0.58);
+      --c-badge:   rgba(255,255,255,0.15);
+      --btn-ghost-bd:         rgba(255,255,255,0.18);
+      --btn-ghost-text:       rgba(255,255,255,0.65);
+      --btn-ghost-hover-bd:   rgba(255,255,255,0.45);
+      --btn-ghost-hover-text: white;
+      --page-bg: #0A0F1E;
+      --bg-h1: #060C1A;
+      --bg-h2: #050D1B;
+      --bg-h3: #06101E;
+      --bg-h4: #040912;
+      --fade1: 6,12,26;
+      --fade2: 5,13,27;
+      --fade3: 6,16,30;
+      --fade4: 4,9,18;
+      --bg-rationale:       #0D1421;
+      --c-rationale-title:  rgba(255,255,255,0.9);
+      --c-rationale-body:   rgba(255,255,255,0.48);
+      --c-rationale-mood:   rgba(255,255,255,0.3);
+      --c-rationale-accent: rgba(14,165,233,0.7);
+      --nav-bg:       rgba(6,10,22,0.9);
+      --nav-border:   rgba(255,255,255,0.07);
+      --nav-brand:    white;
+      --nav-link:     rgba(255,255,255,0.45);
+      --nav-link-bg:  rgba(255,255,255,0.08);
+      --nav-divider:  rgba(255,255,255,0.12);
+      --back-link:    rgba(255,255,255,0.45);
+      --toggle-bd:          rgba(255,255,255,0.14);
+      --toggle-text:        rgba(255,255,255,0.45);
+      --toggle-active-bg:   white;
+      --toggle-active-text: #0F172A;
+      --photo-mist-filter:     blur(14px) brightness(0.65) saturate(0.55);
+      --photo-window-filter:   saturate(0.4) brightness(0.72);
+      --photo-wash-opacity:    0.22;
+      --photo-wash-filter:     saturate(0.35) brightness(0.85);
+      --photo-duotone-filter:  grayscale(1) brightness(0.5) contrast(1.15);
+      --duotone-overlay:       rgba(20,60,160,0.62);
+    }
+
+    body.theme-light {
+      --c-logo:    #1E3A6E;
+      --c-h1:      #0F172A;
+      --c-sub:     rgba(15,23,42,0.55);
+      --c-badge:   rgba(15,23,42,0.13);
+      --btn-ghost-bd:         rgba(15,23,42,0.2);
+      --btn-ghost-text:       rgba(15,23,42,0.62);
+      --btn-ghost-hover-bd:   rgba(15,23,42,0.48);
+      --btn-ghost-hover-text: #0F172A;
+      --page-bg: #E8F2FF;
+      --bg-h1: #EBF3FF;
+      --bg-h2: #EFF7FF;
+      --bg-h3: #ECF4FF;
+      --bg-h4: #E8F0FF;
+      --fade1: 235,243,255;
+      --fade2: 239,247,255;
+      --fade3: 236,244,255;
+      --fade4: 232,240,255;
+      --bg-rationale:       #F5F9FF;
+      --c-rationale-title:  #0F172A;
+      --c-rationale-body:   rgba(15,23,42,0.52);
+      --c-rationale-mood:   rgba(15,23,42,0.32);
+      --c-rationale-accent: rgba(14,165,233,0.85);
+      --nav-bg:       rgba(235,243,255,0.92);
+      --nav-border:   rgba(15,23,42,0.07);
+      --nav-brand:    #1E3A6E;
+      --nav-link:     rgba(15,23,42,0.46);
+      --nav-link-bg:  rgba(15,23,42,0.06);
+      --nav-divider:  rgba(15,23,42,0.12);
+      --back-link:    rgba(15,23,42,0.46);
+      --toggle-bd:          rgba(15,23,42,0.14);
+      --toggle-text:        rgba(15,23,42,0.48);
+      --toggle-active-bg:   #1E3A6E;
+      --toggle-active-text: white;
+      --photo-mist-filter:     blur(14px) brightness(1.05) saturate(0.6);
+      --photo-window-filter:   saturate(0.45) brightness(1.02);
+      --photo-wash-opacity:    0.17;
+      --photo-wash-filter:     saturate(0.4) brightness(1.08);
+      --photo-duotone-filter:  grayscale(1) brightness(0.62) contrast(1.1);
+      --duotone-overlay:       rgba(37,99,235,0.56);
+    }
+
+
+    /* ════════════════════════════════════════════════
+       GLOBAL
+    ════════════════════════════════════════════════ */
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--page-bg);
+      -webkit-font-smoothing: antialiased;
+      transition: background 0.3s;
+    }
+
+
+    /* ════════════════════════════════════════════════
+       NAVIGATION
+    ════════════════════════════════════════════════ */
+
+    .nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 200;
+      background: var(--nav-bg);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--nav-border);
+      display: flex;
+      align-items: center;
+      height: 54px;
+      padding: 0 32px;
+      gap: 0;
+      transition: background 0.3s;
+    }
+
+    .nav-brand {
+      font-family: 'Inter Tight', sans-serif;
+      font-size: 17px;
+      font-weight: 600;
+      color: var(--nav-brand);
+      letter-spacing: 0.1em;
+      margin-right: 20px;
+      flex-shrink: 0;
+      transition: color 0.25s;
+    }
+
+    .nav-divider {
+      width: 1px; height: 18px;
+      background: var(--nav-divider);
+      margin-right: 16px;
+      flex-shrink: 0;
+    }
+
+    .nav-back {
+      font-size: 12px;
+      color: var(--back-link);
+      text-decoration: none;
+      margin-right: 20px;
+      white-space: nowrap;
+      flex-shrink: 0;
+      transition: color 0.15s;
+    }
+    .nav-back:hover { color: var(--nav-brand); }
+
+    .nav-links {
+      display: flex;
+      gap: 2px;
+      flex: 1;
+    }
+
+    .nav a.jump {
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--nav-link);
+      text-decoration: none;
+      padding: 5px 10px;
+      border-radius: 5px;
+      white-space: nowrap;
+      transition: color 0.15s, background 0.15s;
+    }
+    .nav a.jump:hover {
+      color: var(--nav-brand);
+      background: var(--nav-link-bg);
+    }
+
+    .theme-toggle {
+      display: flex;
+      gap: 2px;
+      border: 1px solid var(--toggle-bd);
+      border-radius: 6px;
+      padding: 3px;
+      flex-shrink: 0;
+    }
+
+    .theme-btn {
+      font-family: 'Inter', sans-serif;
+      font-size: 11px;
+      font-weight: 500;
+      padding: 4px 10px;
+      border: none;
+      background: transparent;
+      color: var(--toggle-text);
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background 0.15s, color 0.15s;
+    }
+    .theme-btn.active {
+      background: var(--toggle-active-bg);
+      color: var(--toggle-active-text);
+    }
+
+
+    /* ════════════════════════════════════════════════
+       HERO SHARED
+    ════════════════════════════════════════════════ */
+
+    .hero {
+      width: 100%;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+      transition: background 0.3s;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 10;
+      padding: 120px 88px;
+      max-width: 680px;
+    }
+
+    .hero-logo {
+      font-family: 'Inter Tight', sans-serif;
+      font-size: 19px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      color: var(--c-logo);
+      margin-bottom: 68px;
+      transition: color 0.25s;
+    }
+
+    .hero-eyebrow {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.26em;
+      text-transform: uppercase;
+      color: var(--c-eyebrow);
+      margin-bottom: 20px;
+    }
+
+    .hero-h1 {
+      font-family: 'Inter Tight', sans-serif;
+      font-size: clamp(44px, 5.8vw, 70px);
+      font-weight: 600;
+      line-height: 1.05;
+      letter-spacing: -0.032em;
+      color: var(--c-h1);
+      margin-bottom: 26px;
+      transition: color 0.25s;
+    }
+
+    .hero-sub {
+      font-size: 17px;
+      line-height: 1.72;
+      color: var(--c-sub);
+      max-width: 490px;
+      margin-bottom: 44px;
+      transition: color 0.25s;
+    }
+
+    .hero-cta {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .btn-primary {
+      font-size: 13px;
+      font-weight: 500;
+      padding: 12px 26px;
+      background: #2563EB;
+      color: white;
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+      letter-spacing: 0.015em;
+      transition: background 0.15s;
+      display: inline-block;
+    }
+    .btn-primary:hover { background: #1D4ED8; }
+
+    .btn-ghost {
+      font-size: 13px;
+      font-weight: 500;
+      padding: 11px 26px;
+      background: transparent;
+      color: var(--btn-ghost-text);
+      border: 1px solid var(--btn-ghost-bd);
+      cursor: pointer;
+      text-decoration: none;
+      letter-spacing: 0.015em;
+      transition: border-color 0.15s, color 0.15s;
+      display: inline-block;
+    }
+    .btn-ghost:hover {
+      border-color: var(--btn-ghost-hover-bd);
+      color: var(--btn-ghost-hover-text);
+    }
+
+    .option-badge {
+      position: absolute;
+      bottom: 40px; right: 52px;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--c-badge);
+      z-index: 20;
+      pointer-events: none;
+      transition: color 0.25s;
+    }
+
+
+    /* ════════════════════════════════════════════════
+       RATIONALE CARDS
+    ════════════════════════════════════════════════ */
+
+    .rationale {
+      background: var(--bg-rationale);
+      padding: 44px 88px;
+      border-top: 1px solid rgba(128,128,128,0.07);
+      border-bottom: 3px solid #2563EB;
+      transition: background 0.3s;
+    }
+
+    .rationale-eyebrow {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--c-eyebrow);
+      margin-bottom: 9px;
+    }
+
+    .rationale-title {
+      font-family: 'Inter Tight', sans-serif;
+      font-size: 19px;
+      font-weight: 600;
+      color: var(--c-rationale-title);
+      margin-bottom: 13px;
+      letter-spacing: -0.015em;
+      transition: color 0.25s;
+    }
+
+    .rationale-body {
+      font-size: 15px;
+      line-height: 1.75;
+      color: var(--c-rationale-body);
+      max-width: 680px;
+      transition: color 0.25s;
+    }
+
+    .rationale-mood {
+      margin-top: 16px;
+      font-size: 12px;
+      color: var(--c-rationale-mood);
+      letter-spacing: 0.04em;
+    }
+    .rationale-mood em {
+      color: var(--c-rationale-accent);
+      font-style: normal;
+    }
+
+
+    /* ════════════════════════════════════════════════
+       PROPOSAL 2A — THE MIST
+       Full bleed, heavy blur + color overlay.
+       Photo barely visible — warmth felt, not seen.
+    ════════════════════════════════════════════════ */
+
+    .hero-2a { background: var(--bg-h1); }
+
+    .mist-photo {
+      position: absolute; inset: 0;
+      background-image: url('https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=1600&auto=format&fit=crop&q=75');
+      background-size: cover;
+      background-position: center 30%;
+      filter: var(--photo-mist-filter);
+      transform: scale(1.07); /* prevent blur edge artifacts */
+      z-index: 1;
+      transition: filter 0.4s;
+    }
+
+    .mist-overlay {
+      position: absolute; inset: 0;
+      z-index: 2;
+      pointer-events: none;
+      transition: background 0.4s;
+    }
+
+    /* In light mode: pale blue-white wash that almost whites out the photo */
+    body:not(.theme-dark) .mist-overlay,
+    @media not all and (prefers-color-scheme: dark) {
+      .mist-overlay { background: rgba(235,243,255,0.78); }
+    }
+
+    /* Additional gradient for text readability */
+    .mist-fade {
+      position: absolute; inset: 0;
+      background: linear-gradient(
+        to right,
+        rgba(var(--fade1),0.9) 0%,
+        rgba(var(--fade1),0.6) 45%,
+        rgba(var(--fade1),0.1) 100%
+      );
+      z-index: 3;
+      pointer-events: none;
+    }
+
+
+    /* ════════════════════════════════════════════════
+       PROPOSAL 2B — THE WINDOW
+       Photo on right half, sharp but desaturated,
+       fades to clean brand color on left.
+       Like looking through a half-open door.
+    ════════════════════════════════════════════════ */
+
+    .hero-2b { background: var(--bg-h2); }
+
+    /* Clean panel on the left — just the background color */
+    .window-left {
+      position: absolute;
+      top: 0; left: 0;
+      width: 45%;
+      height: 100%;
+      background: var(--bg-h2);
+      z-index: 2;
+    }
+
+    /* Photo panel on the right */
+    .window-photo {
+      position: absolute;
+      top: 0; right: 0;
+      width: 62%; height: 100%;
+      background-image: url('https://images.unsplash.com/photo-1517048676732-d65bc937f952?w=1400&auto=format&fit=crop&q=75');
+      background-size: cover;
+      background-position: left center;
+      filter: var(--photo-window-filter);
+      z-index: 1;
+      transition: filter 0.4s;
+    }
+
+    /* Gradient that fades the photo into the background on the left edge */
+    .window-fade {
+      position: absolute;
+      top: 0; right: 0;
+      width: 62%; height: 100%;
+      background: linear-gradient(
+        to right,
+        rgba(var(--fade2),1.0) 0%,
+        rgba(var(--fade2),0.75) 22%,
+        rgba(var(--fade2),0.2) 48%,
+        transparent 70%
+      );
+      z-index: 3;
+      pointer-events: none;
+    }
+
+    /* Top & bottom vignette on photo */
+    .window-vignette {
+      position: absolute;
+      top: 0; right: 0;
+      width: 62%; height: 100%;
+      background: linear-gradient(
+        to bottom,
+        rgba(var(--fade2),0.35) 0%,
+        transparent 20%,
+        transparent 80%,
+        rgba(var(--fade2),0.35) 100%
+      );
+      z-index: 4;
+      pointer-events: none;
+    }
+
+    /* Color tone overlay on photo to tie it to brand palette */
+    .window-tone {
+      position: absolute;
+      top: 0; right: 0;
+      width: 62%; height: 100%;
+      z-index: 5;
+      pointer-events: none;
+      transition: background 0.4s;
+    }
+
+
+    /* ════════════════════════════════════════════════
+       PROPOSAL 2C — THE WATERMARK
+       Full bleed, very low opacity, no blur.
+       Photo becomes pure texture — faces discernible
+       only when you look for them.
+    ════════════════════════════════════════════════ */
+
+    .hero-2c { background: var(--bg-h3); }
+
+    .wash-photo {
+      position: absolute; inset: 0;
+      background-image: url('https://images.unsplash.com/photo-1521737604893-d14cc237f11d?w=1600&auto=format&fit=crop&q=75');
+      background-size: cover;
+      background-position: center 25%;
+      opacity: var(--photo-wash-opacity);
+      filter: var(--photo-wash-filter);
+      z-index: 1;
+      transition: opacity 0.4s, filter 0.4s;
+    }
+
+    /* Gradient to ensure clean text area on left */
+    .wash-fade {
+      position: absolute; inset: 0;
+      background: linear-gradient(
+        to right,
+        rgba(var(--fade3),0.95) 0%,
+        rgba(var(--fade3),0.72) 38%,
+        rgba(var(--fade3),0.18) 68%,
+        transparent 100%
+      );
+      z-index: 2;
+      pointer-events: none;
+    }
+
+
+    /* ════════════════════════════════════════════════
+       PROPOSAL 2D — THE DUOTONE
+       Full bleed photo → grayscale → deep navy/blue
+       color overlay = monochromatic blue duotone.
+       Very editorial, completely on-brand.
+    ════════════════════════════════════════════════ */
+
+    .hero-2d { background: var(--bg-h4); }
+
+    .duotone-photo {
+      position: absolute; inset: 0;
+      background-image: url('https://images.unsplash.com/photo-1552664730-d307ca884978?w=1600&auto=format&fit=crop&q=75');
+      background-size: cover;
+      background-position: center 20%;
+      filter: var(--photo-duotone-filter);
+      z-index: 1;
+      transition: filter 0.4s;
+    }
+
+    /* Blue color overlay — creates the duotone effect */
+    .duotone-tint {
+      position: absolute; inset: 0;
+      background: var(--duotone-overlay);
+      z-index: 2;
+      pointer-events: none;
+      transition: background 0.4s;
+    }
+
+    /* Gradient: darker on left for text, lighter on right where photo shows */
+    .duotone-fade {
+      position: absolute; inset: 0;
+      background: linear-gradient(
+        to right,
+        rgba(var(--fade4),0.82) 0%,
+        rgba(var(--fade4),0.52) 35%,
+        rgba(var(--fade4),0.08) 65%,
+        transparent 100%
+      );
+      z-index: 3;
+      pointer-events: none;
+    }
+
+
+    /* ════════════════════════════════════════════════
+       DYNAMIC OVERLAY — JS-controlled for light/dark
+    ════════════════════════════════════════════════ */
+
+    .mist-overlay-js {
+      position: absolute; inset: 0;
+      z-index: 2;
+      pointer-events: none;
+      transition: background 0.4s;
+    }
+
+    .window-tone-js {
+      position: absolute;
+      top: 0; right: 0;
+      width: 62%; height: 100%;
+      z-index: 5;
+      pointer-events: none;
+      transition: background 0.4s;
+    }
+
+  </style>
+</head>
+<body>
+
+<!-- ─── NAVIGATION ─────────────────────────────────── -->
+<nav class="nav">
+  <div class="nav-brand">FCI</div>
+  <div class="nav-divider"></div>
+  <a class="nav-back" href="FCI Hero Gallery.html">← Gallery</a>
+  <div class="nav-links">
+    <a class="jump" href="#opt2a">2A &nbsp;The Mist</a>
+    <a class="jump" href="#opt2b">2B &nbsp;The Window</a>
+    <a class="jump" href="#opt2c">2C &nbsp;The Watermark</a>
+    <a class="jump" href="#opt2d">2D &nbsp;The Duotone</a>
+  </div>
+  <div class="theme-toggle">
+    <button class="theme-btn" id="btn-system" onclick="setTheme('system')">System</button>
+    <button class="theme-btn" id="btn-light"  onclick="setTheme('light')">Light</button>
+    <button class="theme-btn" id="btn-dark"   onclick="setTheme('dark')">Dark</button>
+  </div>
+</nav>
+
+
+<!-- ════════════════════════════════════════════════
+     PROPOSAL 2A — THE MIST
+════════════════════════════════════════════════ -->
+<section id="opt2a">
+  <div class="hero hero-2a">
+
+    <div class="mist-photo"></div>
+    <div class="mist-overlay-js" id="mist-overlay"></div>
+    <div class="mist-fade"></div>
+
+    <div class="hero-content">
+      <div class="hero-logo">FCI</div>
+      <div class="hero-eyebrow">Managed Cybersecurity · Financial Services</div>
+      <h1 class="hero-h1">Your field<br>is covered.</h1>
+      <p class="hero-sub">Continuous compliance enforcement, endpoint visibility, and 24×7 SOC protection — built for the way financial firms actually operate.</p>
+      <div class="hero-cta">
+        <a href="#" class="btn-primary">Request a pilot</a>
+        <a href="#" class="btn-ghost">See how it works</a>
+      </div>
+    </div>
+    <div class="option-badge">Proposal 2A</div>
+  </div>
+  <div class="rationale">
+    <div class="rationale-eyebrow">Proposal 2A · Group 02 Photography</div>
+    <div class="rationale-title">The Mist — Full bleed, heavy blur, felt not seen</div>
+    <p class="rationale-body">A full-bleed photo of people in a casual business setting sits behind a heavy blur filter and a strong color overlay — so strong that you only feel the human presence rather than see it. In dark mode the overlay is deep navy at 78% opacity; in light mode it shifts to pale blue-white at 80%. What comes through is warmth: the suggestion of movement, the glow of ambient light, the unmistakable feeling that there are real people behind this. No face is readable. Nothing is literal. The brand color and typography take complete precedence. This is the most conservative photo treatment — the safest choice if the concern is being too obviously "stock photo."</p>
+    <p class="rationale-mood">Mood: <em>warmth underneath precision · human-backed · subtle presence</em></p>
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════════════════════
+     PROPOSAL 2B — THE WINDOW
+════════════════════════════════════════════════ -->
+<section id="opt2b">
+  <div class="hero hero-2b">
+
+    <div class="window-photo"></div>
+    <div class="window-left"></div>
+    <div class="window-fade"></div>
+    <div class="window-vignette"></div>
+    <div class="window-tone-js" id="window-tone"></div>
+
+    <div class="hero-content" style="position:relative;z-index:10;">
+      <div class="hero-logo">FCI</div>
+      <div class="hero-eyebrow">Managed Cybersecurity · Financial Services</div>
+      <h1 class="hero-h1">Your field<br>is covered.</h1>
+      <p class="hero-sub">Continuous compliance enforcement, endpoint visibility, and 24×7 SOC protection — built for the way financial firms actually operate.</p>
+      <div class="hero-cta">
+        <a href="#" class="btn-primary">Request a pilot</a>
+        <a href="#" class="btn-ghost">See how it works</a>
+      </div>
+    </div>
+    <div class="option-badge">Proposal 2B</div>
+  </div>
+  <div class="rationale">
+    <div class="rationale-eyebrow">Proposal 2B · Group 02 Photography</div>
+    <div class="rationale-title">The Window — Half-reveal, sharp, desaturated</div>
+    <p class="rationale-body">The left half of the hero is pure brand color — a clean canvas for the wordmark and copy. The right half gradually reveals a desaturated photo of people in a team setting, fading in smoothly from the left edge. The photo is sharp but stripped of most color so it harmonizes with the palette rather than competing with it. In dark mode it reads as deep and architectural; in light mode the people are more visible on the pale background — closer to a magazine editorial layout. The composition creates a natural left-right reading path: message first, human context second. This is the most structured and readable direction.</p>
+    <p class="rationale-mood">Mood: <em>editorial clarity · structured humanity · message-first</em></p>
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════════════════════
+     PROPOSAL 2C — THE WATERMARK
+════════════════════════════════════════════════ -->
+<section id="opt2c">
+  <div class="hero hero-2c">
+
+    <div class="wash-photo"></div>
+    <div class="wash-fade"></div>
+
+    <div class="hero-content" style="position:relative;z-index:10;">
+      <div class="hero-logo">FCI</div>
+      <div class="hero-eyebrow">Managed Cybersecurity · Financial Services</div>
+      <h1 class="hero-h1">Your field<br>is covered.</h1>
+      <p class="hero-sub">Continuous compliance enforcement, endpoint visibility, and 24×7 SOC protection — built for the way financial firms actually operate.</p>
+      <div class="hero-cta">
+        <a href="#" class="btn-primary">Request a pilot</a>
+        <a href="#" class="btn-ghost">See how it works</a>
+      </div>
+    </div>
+    <div class="option-badge">Proposal 2C</div>
+  </div>
+  <div class="rationale">
+    <div class="rationale-eyebrow">Proposal 2C · Group 02 Photography</div>
+    <div class="rationale-title">The Watermark — Ghost presence, almost invisible</div>
+    <p class="rationale-body">No blur this time — the photo sits at full resolution at 17–22% opacity, so heavily desaturated it reads as pure texture. Faces are discernible only if you look for them; the dominant experience is color field, not photography. This creates a layered effect: at a glance it's a clean brand page; on closer inspection there's a human scene embedded in the background like a watermark. The light-mode version is more ghost-like; dark mode brings slightly more of the scene through. A very restrained and Zen treatment — the closest to having no photo at all, while still being warmer than a pure abstract hero.</p>
+    <p class="rationale-mood">Mood: <em>ghost warmth · layered depth · Zen restraint</em></p>
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════════════════════
+     PROPOSAL 2D — THE DUOTONE
+════════════════════════════════════════════════ -->
+<section id="opt2d">
+  <div class="hero hero-2d">
+
+    <div class="duotone-photo"></div>
+    <div class="duotone-tint"></div>
+    <div class="duotone-fade"></div>
+
+    <div class="hero-content" style="position:relative;z-index:10;">
+      <div class="hero-logo">FCI</div>
+      <div class="hero-eyebrow">Managed Cybersecurity · Financial Services</div>
+      <h1 class="hero-h1">Your field<br>is covered.</h1>
+      <p class="hero-sub">Continuous compliance enforcement, endpoint visibility, and 24×7 SOC protection — built for the way financial firms actually operate.</p>
+      <div class="hero-cta">
+        <a href="#" class="btn-primary">Request a pilot</a>
+        <a href="#" class="btn-ghost">See how it works</a>
+      </div>
+    </div>
+    <div class="option-badge">Proposal 2D</div>
+  </div>
+  <div class="rationale">
+    <div class="rationale-eyebrow">Proposal 2D · Group 02 Photography</div>
+    <div class="rationale-title">The Duotone — Monochromatic blue, fully brand-matched</div>
+    <p class="rationale-body">The photo is converted to grayscale via CSS filter, then a deep navy or electric blue overlay shifts everything into a monochromatic blue palette — the same blue as FCI's brand. The result is unmistakably a photo (you can see people, movement, depth) but it reads entirely as color rather than image. In dark mode the overlay is near-navy, very architectural and serious. In light mode the overlay is electric blue at a lighter opacity, and the people come through with more warmth and visibility — almost like a blue-tinted glass wall. This is the most visually distinctive approach: boldest, most brand-committed, and — once it becomes the site identity — the most recognizable.</p>
+    <p class="rationale-mood">Mood: <em>bold identity · human through the brand · visually unforgettable</em></p>
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════════════════════
+     JAVASCRIPT — THEME TOGGLE + DYNAMIC OVERLAYS
+════════════════════════════════════════════════ -->
+<script>
+
+  let currentTheme = 'system';
+
+  function isDark() {
+    if (currentTheme === 'dark') return true;
+    if (currentTheme === 'light') return false;
+    return window.matchMedia('(prefers-color-scheme: dark)').matches;
+  }
+
+  function updateOverlays() {
+    const dark = isDark();
+
+    // Mist overlay: strong background color wash
+    const mist = document.getElementById('mist-overlay');
+    if (mist) {
+      mist.style.background = dark
+        ? 'rgba(6,12,26,0.76)'
+        : 'rgba(235,243,255,0.78)';
+    }
+
+    // Window tone: subtle brand color tint over the photo
+    const tone = document.getElementById('window-tone');
+    if (tone) {
+      tone.style.background = dark
+        ? 'rgba(6,18,50,0.42)'
+        : 'rgba(219,234,254,0.28)';
+    }
+  }
+
+  function setTheme(t) {
+    currentTheme = t;
+    document.body.classList.remove('theme-light', 'theme-dark');
+    if (t === 'light') document.body.classList.add('theme-light');
+    if (t === 'dark')  document.body.classList.add('theme-dark');
+    document.querySelectorAll('.theme-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('btn-' + t).classList.add('active');
+    updateOverlays();
+  }
+
+  document.getElementById('btn-system').classList.add('active');
+  updateOverlays();
+
+  window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
+    if (currentTheme === 'system') updateOverlays();
+  });
+
+</script>
+
+</body>
+</html>

@@ -289,6 +289,47 @@
       line-height: 1.55;
     }
 
+    /* ── CLIENT STORIES ── */
+    .case-studies-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      margin-top: 24px;
+    }
+    @media (max-width: 860px) { .case-studies-grid { grid-template-columns: 1fr; } }
+
+    .case-card {
+      background: var(--white);
+      border: 1px solid var(--rule);
+      border-top: 3px solid var(--blue);
+      padding: 24px;
+    }
+    .case-card-market {
+      font-size: 11px; font-weight: 700; letter-spacing: 0.2em;
+      text-transform: uppercase; color: var(--sky); margin-bottom: 6px;
+    }
+    .case-card-firm {
+      font-family: 'Inter Tight', sans-serif; font-size: 15px;
+      font-weight: 600; color: var(--text); margin-bottom: 14px;
+      padding-bottom: 14px; border-bottom: 1px solid var(--rule);
+    }
+    .case-card-label {
+      font-size: 10px; font-weight: 700; letter-spacing: 0.16em;
+      text-transform: uppercase; color: var(--muted);
+      margin-top: 14px; margin-bottom: 5px;
+    }
+    .case-card-text {
+      font-size: 14px; color: var(--body); line-height: 1.65;
+    }
+    .case-card-quote {
+      font-size: 13px; font-style: italic; color: var(--text);
+      border-left: 2px solid var(--sky); padding-left: 12px;
+      margin-top: 16px; line-height: 1.6;
+    }
+    .case-card-attribution {
+      font-size: 12px; color: var(--muted); margin-top: 6px;
+    }
+
     /* ── FOOTER NAV ── */
     .site-footer {
       margin-top: 80px;
@@ -354,6 +395,7 @@
       }
       body { background: #0F172A; }
       .testimonial-block { background: #1E293B; }
+      .case-card { background: #1E293B; border-color: #334155; }
       .nist-cell { background: #1E293B; border-color: #334155; }
       .site-footer { background: #0F172A; border-top-color: var(--blue); }
       .footer-bottom { border-color: #334155; }
@@ -412,10 +454,11 @@
     <a href="#insurance">Insurance Page</a>
     <a href="#solutions">Solutions Overview</a>
     <a href="#ciso-portal">CISO Portal</a>
-    <a href="#zero-trust">Zero Trust / VPN</a>
+    <a href="#zero-trust">Zero Trust</a>
     <a href="#soc">24x7 SOC</a>
     <a href="#compliance">Compliance Readiness</a>
     <a href="#security-assessment">Security Assessment</a>
+    <a href="#client-stories">Client Stories</a>
     <a href="#about">About</a>
   </nav>
 </div>
@@ -987,8 +1030,18 @@
 
     <div class="testimonial-block">
       <div class="testimonial-quote">"We strongly recommend FCI to any firm with a desire to get cybersecurity protection and compliance."</div>
-      <div class="testimonial-name">Nash Subotic — Founder &amp; CEO, Westpac Wealth Partners</div>
-      <div class="testimonial-org">Agency of The Guardian Life Insurance Company of America</div>
+      <div style="display:flex; align-items:center; gap:12px; margin-top:12px;">
+        <svg width="36" height="36" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0;">
+          <rect x="1" y="1" width="38" height="38" fill="none" stroke="#1B3A6E" stroke-width="2.5"/>
+          <rect x="8" y="24" width="5" height="10" fill="#1B3A6E"/>
+          <rect x="16" y="17" width="5" height="17" fill="#1B3A6E"/>
+          <rect x="24" y="10" width="5" height="24" fill="#1B3A6E"/>
+        </svg>
+        <div>
+          <div class="testimonial-name">Nash Subotic — Founder &amp; CEO, Westpac Wealth Partners</div>
+          <div class="testimonial-org">Agency of The Guardian Life Insurance Company of America</div>
+        </div>
+      </div>
     </div>
 
     <div class="cta-display">
@@ -1257,7 +1310,7 @@
   ══════════════════════════════════════════════════════════════════════ -->
   <div class="page-section" id="zero-trust">
     <div class="page-label">Page 7 — Solutions</div>
-    <div class="page-title">Zero Trust / Always-On VPN</div>
+    <div class="page-title">Zero Trust</div>
     <div class="page-desc">Explains Zero Trust in plain language for financial firm executives. Focuses on containing field exposure — not technical architecture.</div>
 
     <div class="copy-block">
@@ -1265,7 +1318,7 @@
 
       <div class="copy-module">
         <div class="module-tag">H1</div>
-        <div class="module-copy"><p>Verify every user. Verify every device. Before they reach anything.</p></div>
+        <div class="module-copy"><p>Verify every user, device, and network. Before they reach anything.</p></div>
       </div>
 
       <div class="copy-module">
@@ -1522,6 +1575,85 @@
       <a href="#" class="cta-button">Request an Assessment</a>
     </div>
   </div><!-- /security-assessment -->
+
+
+  <!-- ══════════════════════════════════════════════════════════════════════
+       CLIENT STORIES
+  ══════════════════════════════════════════════════════════════════════ -->
+  <div class="page-section" id="client-stories">
+    <div class="page-label">Client Stories</div>
+    <div class="page-title">What changes when a firm works with FCI</div>
+    <div class="page-desc">Three markets. Three different compliance environments. The same outcome: every endpoint covered, every exam ready, every year.</div>
+
+    <div class="case-studies-grid">
+
+      <!-- RIA -->
+      <div class="case-card">
+        <div class="case-card-market">Registered Investment Advisor</div>
+        <div class="case-card-firm">Portland Private Wealth Management, Inc. — Portland / Bend / Eugene, Oregon</div>
+        <div class="case-card-label">The situation</div>
+        <div class="case-card-text">The firm had advisors working across multiple locations on a mix of firm and personal devices. A scheduled SEC examination under the new cybersecurity rules created urgency. The compliance officer needed to demonstrate consistent controls across every endpoint — but had no systematic way to enforce or document them.</div>
+        <div class="case-card-label">What changed</div>
+        <div class="case-card-text">FCI deployed Zero Trust, Always-On VPN, and endpoint protection across every advisor device. The CISO Portal produced the complete exam evidence package — every control documented, every device accounted for — before the examination date.</div>
+        <div class="case-card-label">The outcome</div>
+        <div class="case-card-text">The firm entered its SEC examination fully prepared, with no cybersecurity deficiencies cited.</div>
+        <div style="margin-top:16px; padding-top:14px; border-top:1px solid var(--rule); display:flex; align-items:center; gap:12px;">
+          <svg width="36" height="36" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0;">
+            <rect x="0" y="0" width="19" height="19" fill="#E8732A"/>
+            <text x="9.5" y="13.5" font-family="Arial,sans-serif" font-size="11" font-weight="700" fill="white" text-anchor="middle">P</text>
+            <rect x="21" y="0" width="19" height="19" fill="#E8732A"/>
+            <text x="30.5" y="13.5" font-family="Arial,sans-serif" font-size="11" font-weight="700" fill="white" text-anchor="middle">P</text>
+            <rect x="0" y="21" width="19" height="19" fill="#2D6B55"/>
+            <text x="9.5" y="34.5" font-family="Arial,sans-serif" font-size="11" font-weight="700" fill="white" text-anchor="middle">W</text>
+            <rect x="21" y="21" width="19" height="19" fill="#2D6B55"/>
+            <text x="30.5" y="34.5" font-family="Arial,sans-serif" font-size="11" font-weight="700" fill="white" text-anchor="middle">M</text>
+          </svg>
+          <div>
+            <div class="case-card-attribution" style="font-weight:600; color:var(--blue); margin-top:0;">Jacob Becker</div>
+            <div class="case-card-attribution">President, COO &amp; Co-CIO — Portland Private Wealth Management, Inc.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Broker-Dealer -->
+      <div class="case-card">
+        <div class="case-card-market">Broker-Dealer &amp; Branches</div>
+        <div class="case-card-firm">Regional Broker-Dealer — Independent Branch Offices, FINRA Examination Pressure</div>
+        <div class="case-card-label">The situation</div>
+        <div class="case-card-text">FINRA examiners were asking registered representatives for cybersecurity documentation the firm could not consistently produce. Branch managers were attempting to self-manage compliance — with uneven results across locations. Some branches had controls in place; others did not.</div>
+        <div class="case-card-label">What changed</div>
+        <div class="case-card-text">FCI standardized cybersecurity controls across every branch and home office through the CISO Portal, giving compliance officers real-time visibility into every representative's device posture and a consistent evidence record across the network.</div>
+        <div class="case-card-label">The outcome</div>
+        <div class="case-card-text">Branch-level inconsistency eliminated. Every representative's posture documented and available for examination at any time.</div>
+      </div>
+
+      <!-- Insurance -->
+      <div class="case-card">
+        <div class="case-card-market">Insurance Agency — Guardian Life</div>
+        <div class="case-card-firm">Westpac Wealth Partners — One of the Fastest-Growing Agencies in the Guardian Life Network</div>
+        <div class="case-card-label">The situation</div>
+        <div class="case-card-text">Westpac was growing fast — and an external IT firm was already in place to support them. The gap was cybersecurity. As the agency expanded its appointed agent base, the volume of onboarding, device provisioning, and compliance implementation requests grew beyond what a general IT firm could handle at the regulatory depth Guardian Life and state regulators required.</div>
+        <div class="case-card-label">What changed</div>
+        <div class="case-card-text">FCI brought the specialized cybersecurity expertise the IT firm was not positioned to provide. Using automation, FCI absorbed the growing implementation load — covering every new agent, every device, every requirement — at a scale and pace the agency could not have reached manually. The annual security assessment became a routine deliverable rather than a yearly effort.</div>
+        <div class="case-card-label">The outcome</div>
+        <div class="case-card-text">The IT firm kept doing what it does well. FCI handled the cyber layer. The agency kept growing without compliance holding it back.</div>
+        <div class="case-card-quote">"We strongly recommend FCI to any firm with a desire to get cybersecurity protection and compliance."</div>
+        <div style="margin-top:12px; display:flex; align-items:center; gap:10px;">
+          <svg width="32" height="32" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0;">
+            <rect x="1" y="1" width="38" height="38" fill="none" stroke="#1B3A6E" stroke-width="2.5"/>
+            <rect x="8" y="24" width="5" height="10" fill="#1B3A6E"/>
+            <rect x="16" y="17" width="5" height="17" fill="#1B3A6E"/>
+            <rect x="24" y="10" width="5" height="24" fill="#1B3A6E"/>
+          </svg>
+          <div>
+            <div class="case-card-attribution" style="font-weight:600; color:var(--blue); margin-top:0;">Nash Subotic</div>
+            <div class="case-card-attribution">Founder &amp; CEO — Westpac Wealth Partners</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div><!-- /client-stories -->
 
 
   <!-- ══════════════════════════════════════════════════════════════════════

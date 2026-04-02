@@ -1,0 +1,866 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FCI Hero Directions — Group 06: Modern</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Inter+Tight:wght@500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+
+    /* ══════════════════════════════════════════════════════
+       FCI BRAND PALETTE
+    ══════════════════════════════════════════════════════ */
+    :root {
+      --bg:        #05091A;
+      --blue:      #2563EB;
+      --sky:       #0EA5E9;
+      --navy:      #1E3A6E;
+      --blue-mid:  #3B82F6;
+      --sky-lt:    #BAE6FD;
+      --text-hi:   #F0F8FF;
+      --text:      #7EAED8;
+      --text-sub:  #3B6EAA;
+      --ruler:     rgba(37,99,235,0.14);
+      --nav-bg:    rgba(5,9,26,0.94);
+      --nav-border:rgba(37,99,235,0.20);
+    }
+
+    body.theme-light {
+      --bg:        #EEF5FF;
+      --text-hi:   #0C1830;
+      --text:      #1E3A6E;
+      --text-sub:  #3B6EAA;
+      --ruler:     rgba(37,99,235,0.15);
+      --nav-bg:    rgba(238,245,255,0.94);
+      --nav-border:rgba(37,99,235,0.18);
+    }
+
+    /* ══════════════════════════════════════════════════════
+       RESET + BASE
+    ══════════════════════════════════════════════════════ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      font-weight: 300;
+      overflow-x: hidden;
+      transition: background .4s, color .4s;
+    }
+
+    /* ══════════════════════════════════════════════════════
+       NAV
+    ══════════════════════════════════════════════════════ */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 48px; height: 52px;
+      background: var(--nav-bg);
+      border-bottom: 1px solid var(--nav-border);
+      backdrop-filter: blur(18px);
+    }
+    .nav-logo {
+      font-family: 'Inter Tight', sans-serif;
+      font-size: 18px; font-weight: 800; letter-spacing: .06em;
+      color: var(--sky);
+    }
+    .nav-links { display: flex; gap: 28px; }
+    .nav-links a {
+      font-size: 11px; font-weight: 500; letter-spacing: .12em;
+      text-transform: uppercase; color: var(--text-sub);
+      text-decoration: none; transition: color .2s;
+    }
+    .nav-links a:hover { color: var(--sky); }
+    .theme-toggle {
+      display: flex; gap: 4px;
+      background: rgba(37,99,235,0.12);
+      border-radius: 5px; padding: 3px;
+    }
+    .theme-btn {
+      padding: 4px 10px; border-radius: 3px; border: none; cursor: pointer;
+      font-size: 10px; font-weight: 600; letter-spacing: .10em;
+      text-transform: uppercase;
+      background: transparent; color: var(--text-sub);
+      transition: background .2s, color .2s;
+    }
+    .theme-btn.active { background: var(--blue); color: #fff; }
+
+    /* ══════════════════════════════════════════════════════
+       INTRO
+    ══════════════════════════════════════════════════════ */
+    .intro-panel {
+      padding: calc(52px + 64px) 56px 60px;
+      border-bottom: 1px solid var(--ruler);
+      max-width: 900px;
+    }
+    .intro-eyebrow {
+      font-size: 11px; font-weight: 600; letter-spacing: .20em;
+      text-transform: uppercase; color: var(--sky);
+      margin-bottom: 16px; opacity: .72;
+    }
+    .intro-title {
+      font-family: 'Inter Tight', sans-serif;
+      font-size: clamp(22px, 2.4vw, 34px); font-weight: 700;
+      color: var(--text-hi); letter-spacing: -.025em; margin-bottom: 16px;
+    }
+    .intro-body {
+      font-size: 14px; color: var(--text); opacity: .72;
+      max-width: 620px; line-height: 1.78;
+    }
+
+    /* ══════════════════════════════════════════════════════
+       HERO LAYOUT — full-bleed canvas, text overlay
+    ══════════════════════════════════════════════════════ */
+    .hero-section {
+      min-height: 100vh;
+      position: relative;
+      overflow: hidden;
+      border-bottom: 1px solid var(--ruler);
+    }
+
+    .canvas-wrap {
+      position: absolute; inset: 0; z-index: 0;
+    }
+    .canvas-wrap canvas {
+      width: 100%; height: 100%; display: block;
+    }
+
+    .content-side {
+      position: relative; z-index: 2;
+      width: 44%; min-height: 100vh;
+      display: flex; flex-direction: column; justify-content: center;
+      padding: 88px 72px 88px 56px;
+    }
+    /* Gradient fade: solid left → transparent right */
+    .content-side::before {
+      content: '';
+      position: absolute; inset: 0; z-index: -1;
+      background: linear-gradient(to right, #05091A 50%, rgba(5,9,26,0) 100%);
+    }
+    body.theme-light .content-side::before {
+      background: linear-gradient(to right, #EEF5FF 50%, rgba(238,245,255,0) 100%);
+    }
+
+    /* Section number — faint, decorative */
+    .section-num {
+      font-family: 'Inter Tight', sans-serif;
+      font-size: 110px; font-weight: 800; line-height: 1;
+      color: rgba(37,99,235,0.07);
+      position: absolute; top: 56px; left: 44px;
+      letter-spacing: -.04em; user-select: none; pointer-events: none;
+    }
+
+    .section-eyebrow {
+      font-size: 10px; font-weight: 600; letter-spacing: .22em;
+      text-transform: uppercase; color: var(--sky);
+      opacity: .68; margin-bottom: 18px;
+    }
+
+    h2 {
+      font-family: 'Inter Tight', sans-serif;
+      font-size: clamp(34px, 4.2vw, 64px);
+      font-weight: 800; line-height: 1.04; letter-spacing: -.035em;
+      color: var(--text-hi); margin-bottom: 22px;
+    }
+
+    .body-text {
+      font-size: 15px; line-height: 1.72;
+      color: var(--text); opacity: .84;
+      max-width: 360px; margin-bottom: 32px;
+    }
+
+    .meta-list { display: flex; flex-direction: column; gap: 9px; margin-bottom: 36px; }
+    .meta-item {
+      font-size: 12px; font-weight: 500; letter-spacing: .05em;
+      color: var(--text-sub);
+      display: flex; align-items: center; gap: 10px;
+    }
+    .meta-item::before {
+      content: ''; display: block;
+      width: 4px; height: 4px;
+      border-radius: 50%; background: var(--sky); opacity: .85;
+    }
+
+    .btn-row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+
+    .cta-btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 12px 26px;
+      background: var(--blue); color: #fff;
+      font-size: 12px; font-weight: 600; letter-spacing: .08em;
+      text-transform: uppercase; text-decoration: none;
+      border-radius: 2px;
+      transition: background .2s, transform .15s;
+    }
+    .cta-btn:hover { background: var(--sky); transform: translateY(-1px); }
+
+    .cta-ghost {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 11px 22px;
+      border: 1px solid rgba(37,99,235,0.40);
+      color: var(--text); font-size: 12px; font-weight: 500;
+      letter-spacing: .08em; text-transform: uppercase;
+      text-decoration: none; border-radius: 2px;
+      transition: border-color .2s, color .2s;
+    }
+    .cta-ghost:hover { border-color: var(--sky); color: var(--sky); }
+
+    /* ══════════════════════════════════════════════════════
+       STAT BADGE  (used in 6B)
+    ══════════════════════════════════════════════════════ */
+    .stat-row {
+      display: flex; gap: 32px; margin-bottom: 36px;
+    }
+    .stat-block { display: flex; flex-direction: column; gap: 3px; }
+    .stat-num {
+      font-family: 'Inter Tight', sans-serif;
+      font-size: clamp(26px, 3vw, 42px); font-weight: 800;
+      color: var(--text-hi); letter-spacing: -.03em; line-height: 1;
+    }
+    .stat-label {
+      font-size: 10px; font-weight: 600; letter-spacing: .15em;
+      text-transform: uppercase; color: var(--text-sub);
+    }
+
+    /* ══════════════════════════════════════════════════════
+       FOOTER
+    ══════════════════════════════════════════════════════ */
+    footer {
+      padding: 36px 56px;
+      border-top: 1px solid var(--ruler);
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .footer-text {
+      font-size: 10px; font-weight: 500; letter-spacing: .12em;
+      text-transform: uppercase; color: var(--text-sub); opacity: .45;
+    }
+
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <span class="nav-logo">FCI</span>
+  <div class="nav-links">
+    <a href="#6a">6A · Mesh</a>
+    <a href="#6b">6B · Aurora</a>
+    <a href="#6c">6C · Graph</a>
+    <a href="#6d">6D · Sphere</a>
+  </div>
+  <div class="theme-toggle">
+    <button class="theme-btn" id="btn-system" onclick="setTheme('system')">SYS</button>
+    <button class="theme-btn" id="btn-light"  onclick="setTheme('light')">LGT</button>
+    <button class="theme-btn" id="btn-dark"   onclick="setTheme('dark')">DRK</button>
+  </div>
+</nav>
+
+<!-- INTRO -->
+<div class="intro-panel">
+  <div class="intro-eyebrow">FCI Cybersecurity · Group 06 · Modern Series</div>
+  <div class="intro-title">High-end visual directions for the category leader.</div>
+  <div class="intro-body">Four premium hero concepts drawn from the visual language of Nvidia, Stripe, CrowdStrike, and IBM — reinterpreted for FCI's position as the defining firm in financial field compliance.</div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════
+     6A — PARTICLE MESH  (Nvidia-inspired)
+══════════════════════════════════════════════════════ -->
+<section class="hero-section" id="6a">
+  <div class="canvas-wrap"><canvas id="c-mesh"></canvas></div>
+  <div class="content-side">
+    <div class="section-num" aria-hidden="true">6A</div>
+    <div class="section-eyebrow">Direction 6A · Particle Mesh</div>
+    <h2>Visibility at the speed of threat.</h2>
+    <p class="body-text">FCI monitors every node, every connection, every field device — in real time. No gaps. No blind spots. 40,000+ endpoints, continuously swept.</p>
+    <div class="meta-list">
+      <div class="meta-item">Always-On endpoint monitoring</div>
+      <div class="meta-item">Zero-gap network visibility</div>
+      <div class="meta-item">24×7 SOC response</div>
+    </div>
+    <div class="btn-row">
+      <a class="cta-btn" href="#">See the platform</a>
+      <a class="cta-ghost" href="#">Request a demo</a>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════
+     6B — AURORA GRADIENT  (Stripe / Linear-inspired)
+══════════════════════════════════════════════════════ -->
+<section class="hero-section" id="6b">
+  <div class="canvas-wrap"><canvas id="c-aurora"></canvas></div>
+  <div class="content-side">
+    <div class="section-num" aria-hidden="true">6B</div>
+    <div class="section-eyebrow">Direction 6B · Aurora</div>
+    <h2>Compliance made continuous.</h2>
+    <p class="body-text">The CISO Portal delivers real-time compliance posture, automated evidence, and audit-ready reporting — for every advisor, every office, every device.</p>
+    <div class="stat-row">
+      <div class="stat-block">
+        <div class="stat-num">80%</div>
+        <div class="stat-label">Less monthly task time</div>
+      </div>
+      <div class="stat-block">
+        <div class="stat-num">90%</div>
+        <div class="stat-label">Faster implementation</div>
+      </div>
+      <div class="stat-block">
+        <div class="stat-num">40K+</div>
+        <div class="stat-label">Endpoints managed</div>
+      </div>
+    </div>
+    <div class="btn-row">
+      <a class="cta-btn" href="#">Explore CISO Portal</a>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════
+     6C — LIVE NETWORK GRAPH  (CrowdStrike-inspired)
+══════════════════════════════════════════════════════ -->
+<section class="hero-section" id="6c">
+  <div class="canvas-wrap"><canvas id="c-graph"></canvas></div>
+  <div class="content-side">
+    <div class="section-num" aria-hidden="true">6C</div>
+    <div class="section-eyebrow">Direction 6C · Network Graph</div>
+    <h2>Every threat. Tracked.</h2>
+    <p class="body-text">FCI maps the full topology of your distributed environment. When a threat emerges anywhere in the network, the SOC sees it — and acts within minutes.</p>
+    <div class="meta-list">
+      <div class="meta-item">Live threat topology</div>
+      <div class="meta-item">Behavioral anomaly detection</div>
+      <div class="meta-item">Incident response SLA</div>
+    </div>
+    <div class="btn-row">
+      <a class="cta-btn" href="#">How FCI responds</a>
+      <a class="cta-ghost" href="#">View case studies</a>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════
+     6D — WIREFRAME SPHERE  (IBM-inspired)
+══════════════════════════════════════════════════════ -->
+<section class="hero-section" id="6d">
+  <div class="canvas-wrap"><canvas id="c-sphere"></canvas></div>
+  <div class="content-side">
+    <div class="section-num" aria-hidden="true">6D</div>
+    <div class="section-eyebrow">Direction 6D · Global Reach</div>
+    <h2>Wherever your workforce operates.</h2>
+    <p class="body-text">From RIA home offices to broker-dealer branch networks — FCI's field compliance framework wraps around distributed workforces, securing every point of presence.</p>
+    <div class="meta-list">
+      <div class="meta-item">RIAs · Broker-Dealers · Insurance</div>
+      <div class="meta-item">BYOD + mobile workforce</div>
+      <div class="meta-item">Zero Trust · Always-On VPN</div>
+    </div>
+    <div class="btn-row">
+      <a class="cta-btn" href="#">Field compliance →</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span class="footer-text">FCI Cybersecurity — Group 06: Modern Series — Hero Direction Exploration</span>
+  <span class="footer-text">Draft · Internal Use Only · 2026</span>
+</footer>
+
+<script>
+/* ══════════════════════════════════════════════════════
+   THEME
+══════════════════════════════════════════════════════ */
+let currentTheme = localStorage.getItem('fci-theme') || 'system';
+function isDark() {
+  if (currentTheme === 'dark')  return true;
+  if (currentTheme === 'light') return false;
+  return window.matchMedia('(prefers-color-scheme: dark)').matches;
+}
+function setTheme(t) {
+  currentTheme = t;
+  localStorage.setItem('fci-theme', t);
+  applyTheme();
+}
+function applyTheme() {
+  document.body.classList.remove('theme-light','theme-dark');
+  if (currentTheme === 'light') document.body.classList.add('theme-light');
+  if (currentTheme === 'dark')  document.body.classList.add('theme-dark');
+  ['system','light','dark'].forEach(id => {
+    document.getElementById('btn-'+id)?.classList.toggle('active', currentTheme===id);
+  });
+}
+applyTheme();
+window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
+  if (currentTheme === 'system') applyTheme();
+});
+
+/* ══════════════════════════════════════════════════════
+   CANVAS HELPER
+══════════════════════════════════════════════════════ */
+function fitCanvas(canvas) {
+  const rect = canvas.parentElement.getBoundingClientRect();
+  const dpr  = window.devicePixelRatio || 1;
+  const W = rect.width, H = rect.height;
+  if (canvas.width  !== Math.round(W*dpr) ||
+      canvas.height !== Math.round(H*dpr)) {
+    canvas.width  = Math.round(W*dpr);
+    canvas.height = Math.round(H*dpr);
+    canvas.getContext('2d').setTransform(dpr,0,0,dpr,0,0);
+    return {W, H, resized: true};
+  }
+  return {W, H, resized: false};
+}
+
+/* ══════════════════════════════════════════════════════
+   6A — PARTICLE MESH  (Nvidia-style)
+══════════════════════════════════════════════════════ */
+(function(){
+  const canvas = document.getElementById('c-mesh');
+  let t = 0;
+  const N = 130;
+  let particles = [];
+  let W = 0, H = 0;
+
+  function initParticles(w, h) {
+    particles = Array.from({length: N}, () => ({
+      x:  Math.random() * w,
+      y:  Math.random() * h,
+      vx: (Math.random() - 0.5) * 0.28,
+      vy: (Math.random() - 0.5) * 0.22,
+      r:  0.8 + Math.random() * 1.8,
+      depth: 0.2 + Math.random() * 0.8,   /* 0 = near, 1 = far */
+    }));
+  }
+
+  function draw() {
+    const fit = fitCanvas(canvas);
+    if (fit.W !== W || fit.H !== H || fit.resized) {
+      W = fit.W; H = fit.H;
+      initParticles(W, H);
+    }
+    const ctx = canvas.getContext('2d');
+    const dk  = isDark();
+
+    /* background with center glow */
+    ctx.fillStyle = dk ? '#04081A' : '#EEF5FF';
+    ctx.fillRect(0, 0, W, H);
+
+    /* radial background glow (off-center, right side) */
+    const glowX = W * 0.70, glowY = H * 0.45;
+    const glow = ctx.createRadialGradient(glowX, glowY, 0, glowX, glowY, W * 0.55);
+    glow.addColorStop(0, dk ? 'rgba(37,99,235,0.14)'  : 'rgba(37,99,235,0.09)');
+    glow.addColorStop(0.5,'rgba(14,165,233,0.04)');
+    glow.addColorStop(1,  'rgba(14,165,233,0)');
+    ctx.fillStyle = glow;
+    ctx.fillRect(0, 0, W, H);
+
+    /* move + wrap particles */
+    particles.forEach(p => {
+      p.x += p.vx; p.y += p.vy;
+      if (p.x < -10) p.x = W + 10;
+      if (p.x > W+10) p.x = -10;
+      if (p.y < -10) p.y = H + 10;
+      if (p.y > H+10) p.y = -10;
+    });
+
+    /* connections */
+    const MAX = 110;
+    for (let i = 0; i < N; i++) {
+      for (let j = i + 1; j < N; j++) {
+        const dx = particles[i].x - particles[j].x;
+        const dy = particles[i].y - particles[j].y;
+        const d2 = dx*dx + dy*dy;
+        if (d2 < MAX*MAX) {
+          const d    = Math.sqrt(d2);
+          const fade = (1 - d/MAX);
+          const depthFade = 1 - (particles[i].depth + particles[j].depth) * 0.3;
+          const alpha = fade * fade * depthFade * (dk ? 0.28 : 0.18);
+          ctx.beginPath();
+          ctx.moveTo(particles[i].x, particles[i].y);
+          ctx.lineTo(particles[j].x, particles[j].y);
+          ctx.strokeStyle = `rgba(37,99,235,${alpha})`;
+          ctx.lineWidth = 0.6;
+          ctx.stroke();
+        }
+      }
+    }
+
+    /* dots */
+    particles.forEach(p => {
+      const nearFactor = 1 - p.depth * 0.6;
+      const alpha = 0.25 + nearFactor * 0.65;
+      const r     = p.r * nearFactor;
+
+      /* glow halo */
+      ctx.save();
+      ctx.shadowBlur  = 8 * nearFactor;
+      ctx.shadowColor = dk ? `rgba(14,165,233,${alpha*0.5})` : `rgba(37,99,235,${alpha*0.4})`;
+      ctx.beginPath(); ctx.arc(p.x, p.y, r, 0, Math.PI*2);
+      ctx.fillStyle = dk
+        ? `rgba(14,165,233,${alpha})`
+        : `rgba(37,99,235,${alpha})`;
+      ctx.fill();
+      ctx.restore();
+    });
+  }
+
+  function loop(ts) { t = ts * 0.001; draw(); requestAnimationFrame(loop); }
+  requestAnimationFrame(loop);
+})();
+
+/* ══════════════════════════════════════════════════════
+   6B — AURORA GRADIENT  (Stripe/Linear-inspired)
+══════════════════════════════════════════════════════ */
+(function(){
+  const canvas = document.getElementById('c-aurora');
+  let t = 0;
+
+  /* Orb definitions: normalized pos, size, color, drift phase+speed */
+  const orbs = [
+    { x:0.78, y:0.38, r:0.48, col:[37,99,235],   ph:0.0, spd:0.18 },
+    { x:0.62, y:0.72, r:0.38, col:[14,165,233],  ph:1.8, spd:0.22 },
+    { x:0.90, y:0.55, r:0.32, col:[59,130,246],  ph:3.4, spd:0.15 },
+    { x:0.55, y:0.20, r:0.30, col:[30,58,110],   ph:2.1, spd:0.28 },
+    { x:0.72, y:0.85, r:0.26, col:[96,165,250],  ph:4.7, spd:0.20 },
+  ];
+
+  function draw() {
+    const {W,H} = fitCanvas(canvas);
+    const ctx   = canvas.getContext('2d');
+    const dk    = isDark();
+
+    ctx.fillStyle = dk ? '#040810' : '#EAF2FF';
+    ctx.fillRect(0,0,W,H);
+
+    /* draw each orb as a drifting radial gradient */
+    orbs.forEach(orb => {
+      const ox = (orb.x + Math.sin(t * orb.spd + orb.ph) * 0.10) * W;
+      const oy = (orb.y + Math.cos(t * orb.spd * 0.7 + orb.ph) * 0.08) * H;
+      const R  = orb.r * Math.min(W, H);
+      const [r,g,b] = orb.col;
+      const g2 = ctx.createRadialGradient(ox, oy, 0, ox, oy, R);
+      const alpha = dk ? 0.32 : 0.20;
+      g2.addColorStop(0,   `rgba(${r},${g},${b},${alpha})`);
+      g2.addColorStop(0.5, `rgba(${r},${g},${b},${alpha*0.4})`);
+      g2.addColorStop(1,   `rgba(${r},${g},${b},0)`);
+      ctx.fillStyle = g2;
+      ctx.fillRect(0,0,W,H);
+    });
+
+    /* subtle horizontal scan lines — very faint grid feel */
+    ctx.strokeStyle = dk ? 'rgba(37,99,235,0.04)' : 'rgba(37,99,235,0.05)';
+    ctx.lineWidth = 1;
+    const lineSpacing = 36;
+    for (let y = 0; y < H; y += lineSpacing) {
+      ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(W, y); ctx.stroke();
+    }
+
+    /* bright highlight streak across the top-right */
+    const streak = ctx.createLinearGradient(W*0.4, 0, W, H*0.3);
+    streak.addColorStop(0, 'rgba(14,165,233,0)');
+    streak.addColorStop(0.5, dk ? 'rgba(14,165,233,0.06)' : 'rgba(14,165,233,0.04)');
+    streak.addColorStop(1, 'rgba(14,165,233,0)');
+    ctx.fillStyle = streak;
+    ctx.fillRect(0, 0, W, H);
+  }
+
+  function loop(ts) { t = ts * 0.001; draw(); requestAnimationFrame(loop); }
+  requestAnimationFrame(loop);
+})();
+
+/* ══════════════════════════════════════════════════════
+   6C — LIVE NETWORK GRAPH  (CrowdStrike-inspired)
+══════════════════════════════════════════════════════ */
+(function(){
+  const canvas = document.getElementById('c-graph');
+  let t = 0;
+  const NODE_COUNT = 58;
+  let nodes = [], packets = [];
+  let W = 0, H = 0;
+
+  function initNodes(w, h) {
+    /* cluster most nodes on right 2/3 of screen */
+    nodes = Array.from({length: NODE_COUNT}, (_, i) => {
+      const type = i < 2 ? 'threat' : i < 7 ? 'alert' : 'normal';
+      return {
+        x:  w * 0.35 + Math.random() * w * 0.60,
+        y:  h * 0.08 + Math.random() * h * 0.84,
+        vx: (Math.random() - 0.5) * 0.12,
+        vy: (Math.random() - 0.5) * 0.10,
+        r:  type === 'threat' ? 6 : type === 'alert' ? 4.5 : 2 + Math.random() * 2,
+        type,
+        pulse: Math.random() * Math.PI * 2,
+      };
+    });
+    packets = [];
+  }
+
+  /* Spawn a data packet travelling from node A to node B */
+  function spawnPacket(ni, nj) {
+    packets.push({ ni, nj, progress: 0, speed: 0.006 + Math.random() * 0.008 });
+  }
+
+  function draw() {
+    const fit = fitCanvas(canvas);
+    if (fit.W !== W || fit.H !== H || fit.resized) {
+      W = fit.W; H = fit.H;
+      initNodes(W, H);
+    }
+    const ctx = canvas.getContext('2d');
+    const dk  = isDark();
+
+    ctx.fillStyle = dk ? '#040912' : '#EEF5FF';
+    ctx.fillRect(0,0,W,H);
+
+    /* subtle radial bg */
+    const bg = ctx.createRadialGradient(W*0.72, H*0.5, 0, W*0.72, H*0.5, W*0.5);
+    bg.addColorStop(0, dk ? 'rgba(37,99,235,0.08)' : 'rgba(37,99,235,0.05)');
+    bg.addColorStop(1, 'rgba(37,99,235,0)');
+    ctx.fillStyle = bg; ctx.fillRect(0,0,W,H);
+
+    /* move nodes (gentle drift, wall bounce) */
+    nodes.forEach(n => {
+      n.x += n.vx; n.y += n.vy;
+      if (n.x < W*0.30) { n.x = W*0.30; n.vx *= -1; }
+      if (n.x > W*0.98) { n.x = W*0.98; n.vx *= -1; }
+      if (n.y < H*0.04) { n.y = H*0.04; n.vy *= -1; }
+      if (n.y > H*0.96) { n.y = H*0.96; n.vy *= -1; }
+      n.pulse += 0.02;
+    });
+
+    /* edges (dynamic proximity) */
+    const EDGE_DIST = 130;
+    const edges = [];
+    for (let i = 0; i < NODE_COUNT; i++) {
+      for (let j = i+1; j < NODE_COUNT; j++) {
+        const dx = nodes[i].x - nodes[j].x, dy = nodes[i].y - nodes[j].y;
+        const d  = Math.sqrt(dx*dx+dy*dy);
+        if (d < EDGE_DIST) {
+          edges.push({i, j, d});
+          /* randomly spawn packets */
+          if (Math.random() < 0.0004) spawnPacket(i, j);
+        }
+      }
+    }
+
+    /* draw edges */
+    edges.forEach(({i, j, d}) => {
+      const ni = nodes[i], nj = nodes[j];
+      const threatEdge = ni.type==='threat' || nj.type==='threat' ||
+                         ni.type==='alert'  || nj.type==='alert';
+      const alpha = (1 - d/EDGE_DIST) * (threatEdge ? 0.25 : 0.12);
+      ctx.beginPath();
+      ctx.moveTo(ni.x, ni.y); ctx.lineTo(nj.x, nj.y);
+      ctx.strokeStyle = threatEdge
+        ? `rgba(239,68,68,${alpha})`
+        : `rgba(37,99,235,${dk ? alpha : alpha*0.8})`;
+      ctx.lineWidth = 0.6;
+      ctx.stroke();
+    });
+
+    /* draw packets */
+    packets = packets.filter(p => p.progress <= 1);
+    packets.forEach(p => {
+      p.progress += p.speed;
+      const ni = nodes[p.ni], nj = nodes[p.nj];
+      const px = ni.x + (nj.x - ni.x) * p.progress;
+      const py = ni.y + (nj.y - ni.y) * p.progress;
+      ctx.save();
+      ctx.shadowBlur  = 6;
+      ctx.shadowColor = 'rgba(14,165,233,0.8)';
+      ctx.beginPath(); ctx.arc(px, py, 2, 0, Math.PI*2);
+      ctx.fillStyle = 'rgba(14,165,233,0.90)'; ctx.fill();
+      ctx.restore();
+    });
+
+    /* draw nodes */
+    nodes.forEach(n => {
+      const isThreat = n.type === 'threat';
+      const isAlert  = n.type === 'alert';
+      const pulse    = 0.7 + Math.sin(n.pulse) * 0.3;
+
+      if (isThreat || isAlert) {
+        /* pulse ring */
+        const ringR = n.r * (1.8 + Math.sin(n.pulse) * 0.5);
+        ctx.beginPath(); ctx.arc(n.x, n.y, ringR, 0, Math.PI*2);
+        ctx.strokeStyle = isThreat
+          ? `rgba(239,68,68,${0.25 * pulse})`
+          : `rgba(251,146,60,${0.25 * pulse})`;
+        ctx.lineWidth = 1; ctx.stroke();
+      }
+
+      ctx.save();
+      if (isThreat) {
+        ctx.shadowBlur = 14; ctx.shadowColor = 'rgba(239,68,68,0.7)';
+      } else if (isAlert) {
+        ctx.shadowBlur = 10; ctx.shadowColor = 'rgba(251,146,60,0.6)';
+      } else {
+        ctx.shadowBlur = 6;  ctx.shadowColor = 'rgba(37,99,235,0.5)';
+      }
+      ctx.beginPath(); ctx.arc(n.x, n.y, n.r, 0, Math.PI*2);
+      ctx.fillStyle = isThreat ? 'rgba(239,68,68,0.88)'
+                    : isAlert  ? 'rgba(251,146,60,0.82)'
+                    :             'rgba(59,130,246,0.80)';
+      ctx.fill();
+      ctx.restore();
+    });
+
+    /* Legend */
+    ctx.font = '11px Inter, sans-serif';
+    ctx.fillStyle = dk ? 'rgba(148,192,232,0.35)' : 'rgba(30,58,110,0.35)';
+    ctx.textAlign = 'right'; ctx.textBaseline = 'bottom';
+    ctx.fillText(`${NODE_COUNT} nodes · ${edges.length} active connections`, W - 20, H - 16);
+  }
+
+  function loop(ts) { t = ts * 0.001; draw(); requestAnimationFrame(loop); }
+  requestAnimationFrame(loop);
+})();
+
+/* ══════════════════════════════════════════════════════
+   6D — WIREFRAME SPHERE  (IBM-inspired)
+══════════════════════════════════════════════════════ */
+(function(){
+  const canvas = document.getElementById('c-sphere');
+  let t = 0;
+
+  /* Project 3D point → 2D */
+  function project(x, y, z, cx, cy, R) {
+    /* simple orthographic tilt: rotate around X then Y */
+    return { sx: cx + x * R, sy: cy + y * R, sz: z };
+  }
+
+  /* Sphere point from lat/lon */
+  function sphPt(lat, lon, tiltX, tiltY) {
+    /* lat/lon in radians */
+    let x = Math.cos(lat) * Math.cos(lon);
+    let y = Math.sin(lat);
+    let z = Math.cos(lat) * Math.sin(lon);
+    /* rotate around Y axis (spin) */
+    const cx = x * Math.cos(tiltY) + z * Math.sin(tiltY);
+    const cz = -x * Math.sin(tiltY) + z * Math.cos(tiltY);
+    x = cx; z = cz;
+    /* rotate around X axis (tilt) */
+    const cy2 = y * Math.cos(tiltX) - z * Math.sin(tiltX);
+    const cz2 = y * Math.sin(tiltX) + z * Math.cos(tiltX);
+    return { x, y: cy2, z: cz2 };
+  }
+
+  function draw() {
+    const {W,H} = fitCanvas(canvas);
+    const ctx   = canvas.getContext('2d');
+    const dk    = isDark();
+
+    ctx.fillStyle = dk ? '#030810' : '#EEF5FF';
+    ctx.fillRect(0,0,W,H);
+
+    /* Sphere center: right-center */
+    const cx = W * 0.68;
+    const cy = H * 0.50;
+    const R  = Math.min(W, H) * 0.38;
+
+    /* Very slow rotation + gentle wobble */
+    const spinY = t * 0.14;
+    const tiltX = 0.36 + Math.sin(t * 0.07) * 0.04;
+
+    /* Background glow behind sphere */
+    const bgGlow = ctx.createRadialGradient(cx, cy, 0, cx, cy, R * 1.4);
+    bgGlow.addColorStop(0,   dk ? 'rgba(37,99,235,0.12)'  : 'rgba(37,99,235,0.07)');
+    bgGlow.addColorStop(0.6, dk ? 'rgba(14,165,233,0.04)' : 'rgba(14,165,233,0.03)');
+    bgGlow.addColorStop(1,   'rgba(14,165,233,0)');
+    ctx.fillStyle = bgGlow; ctx.fillRect(0,0,W,H);
+
+    /* Latitude lines */
+    const LAT_LINES = 14;
+    const LON_STEPS = 120;
+    for (let li = 0; li < LAT_LINES; li++) {
+      const lat = -Math.PI/2 + (li + 0.5) * Math.PI / LAT_LINES;
+      ctx.beginPath();
+      let first = true;
+      for (let si = 0; si <= LON_STEPS; si++) {
+        const lon = (si / LON_STEPS) * Math.PI * 2;
+        const p   = sphPt(lat, lon, tiltX, spinY);
+        const sx  = cx + p.x * R;
+        const sy  = cy + p.y * R;
+        /* back-face fade */
+        const alpha = p.z > 0
+          ? (dk ? 0.08 + p.z * 0.32 : 0.06 + p.z * 0.22)
+          : (dk ? 0.04 * (1 + p.z) : 0.02 * (1 + p.z));
+        if (first) { ctx.beginPath(); ctx.moveTo(sx, sy); first = false; }
+        else ctx.lineTo(sx, sy);
+      }
+      /* use average depth for stroke colour (simplified) */
+      const midP = sphPt(lat, spinY, tiltX, spinY);
+      const baseAlpha = midP.z > 0 ? (dk ? 0.22 : 0.15) : (dk ? 0.06 : 0.04);
+      ctx.strokeStyle = `rgba(37,99,235,${baseAlpha})`;
+      ctx.lineWidth = 0.6;
+      ctx.stroke();
+    }
+
+    /* Longitude lines */
+    const LON_LINES = 20;
+    const LAT_STEPS = 100;
+    for (let li = 0; li < LON_LINES; li++) {
+      const lon = (li / LON_LINES) * Math.PI * 2;
+      ctx.beginPath();
+      let first = true;
+      for (let si = 0; si <= LAT_STEPS; si++) {
+        const lat = -Math.PI/2 + (si / LAT_STEPS) * Math.PI;
+        const p   = sphPt(lat, lon, tiltX, spinY);
+        const sx  = cx + p.x * R;
+        const sy  = cy + p.y * R;
+        if (first) { ctx.moveTo(sx, sy); first = false; }
+        else ctx.lineTo(sx, sy);
+      }
+      const midP = sphPt(0, lon, tiltX, spinY);
+      const baseAlpha = midP.z > 0 ? (dk ? 0.18 : 0.12) : (dk ? 0.05 : 0.03);
+      ctx.strokeStyle = `rgba(14,165,233,${baseAlpha})`;
+      ctx.lineWidth = 0.5;
+      ctx.stroke();
+    }
+
+    /* Hotspot dots at key intersections */
+    const hotspots = [
+      [0.4,  0.2], [-0.3, 0.8], [0.9, 1.4],
+      [-0.8, 0.6], [0.2,  2.8], [0.6, 4.1],
+      [-0.5, 3.5], [0.1,  5.2],
+    ];
+    hotspots.forEach(([lat, lon]) => {
+      const p  = sphPt(lat, lon, tiltX, spinY);
+      if (p.z < 0.1) return; /* only front-facing */
+      const sx = cx + p.x * R, sy = cy + p.y * R;
+      const glowAlpha = (0.4 + p.z * 0.5) * (0.7 + Math.sin(t*1.2 + lat*3)*0.3);
+      ctx.save();
+      ctx.shadowBlur  = 14 * p.z;
+      ctx.shadowColor = `rgba(14,165,233,${glowAlpha*0.7})`;
+      ctx.beginPath(); ctx.arc(sx, sy, 3 * p.z + 1, 0, Math.PI*2);
+      ctx.fillStyle = `rgba(14,165,233,${glowAlpha})`; ctx.fill();
+      ctx.restore();
+    });
+
+    /* Equator ring highlight */
+    ctx.save();
+    ctx.shadowBlur  = 12;
+    ctx.shadowColor = dk ? 'rgba(37,99,235,0.4)' : 'rgba(37,99,235,0.3)';
+    ctx.beginPath();
+    for (let si = 0; si <= 200; si++) {
+      const lon = (si / 200) * Math.PI * 2;
+      const p   = sphPt(0, lon, tiltX, spinY);
+      if (p.z < -0.02) continue;
+      const sx = cx + p.x * R, sy = cy + p.y * R;
+      si === 0 ? ctx.moveTo(sx, sy) : ctx.lineTo(sx, sy);
+    }
+    ctx.strokeStyle = dk ? 'rgba(37,99,235,0.45)' : 'rgba(37,99,235,0.35)';
+    ctx.lineWidth = 1.2; ctx.stroke();
+    ctx.restore();
+
+    /* Center core glow */
+    const coreGlow = ctx.createRadialGradient(cx, cy, 0, cx, cy, R * 0.30);
+    coreGlow.addColorStop(0, dk ? 'rgba(59,130,246,0.06)' : 'rgba(59,130,246,0.04)');
+    coreGlow.addColorStop(1, 'rgba(59,130,246,0)');
+    ctx.fillStyle = coreGlow; ctx.fillRect(0,0,W,H);
+  }
+
+  function loop(ts) { t = ts * 0.001; draw(); requestAnimationFrame(loop); }
+  requestAnimationFrame(loop);
+})();
+</script>
+</body>
+</html>

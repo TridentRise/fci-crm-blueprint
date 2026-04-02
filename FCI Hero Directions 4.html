@@ -1,0 +1,1307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FCI — Hero Directions · Group 04</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Inter+Tight:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <style>
+
+  /* ─── THEME VARIABLES ──────────────────────────── */
+  body {
+    --bg:               #F8FAFB;
+    --fg:               #040810;
+    --fg-mid:           rgba(4,8,16,0.52);
+    --fg-sub:           rgba(4,8,16,0.32);
+    --accent:           #2563EB;
+    --sky:              #0EA5E9;
+    --navy:             #1E3A6E;
+    --rule:             rgba(4,8,16,0.09);
+    --nav-bg:           rgba(248,250,251,0.92);
+    --nav-border:       rgba(4,8,16,0.07);
+    --nav-brand:        #1E3A6E;
+    --nav-link:         rgba(4,8,16,0.42);
+    --toggle-bd:        rgba(4,8,16,0.14);
+    --toggle-text:      rgba(4,8,16,0.48);
+    --toggle-active:    #1E3A6E;
+    --toggle-active-fg: #ffffff;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    body {
+      --bg:               #04070F;
+      --fg:               rgba(255,255,255,0.93);
+      --fg-mid:           rgba(255,255,255,0.50);
+      --fg-sub:           rgba(255,255,255,0.28);
+      --rule:             rgba(255,255,255,0.08);
+      --nav-bg:           rgba(4,7,15,0.92);
+      --nav-border:       rgba(255,255,255,0.07);
+      --nav-brand:        #ffffff;
+      --nav-link:         rgba(255,255,255,0.42);
+      --toggle-bd:        rgba(255,255,255,0.12);
+      --toggle-text:      rgba(255,255,255,0.42);
+      --toggle-active:    #ffffff;
+      --toggle-active-fg: #04070F;
+    }
+  }
+
+  body.theme-dark {
+    --bg:               #04070F;
+    --fg:               rgba(255,255,255,0.93);
+    --fg-mid:           rgba(255,255,255,0.50);
+    --fg-sub:           rgba(255,255,255,0.28);
+    --rule:             rgba(255,255,255,0.08);
+    --nav-bg:           rgba(4,7,15,0.92);
+    --nav-border:       rgba(255,255,255,0.07);
+    --nav-brand:        #ffffff;
+    --nav-link:         rgba(255,255,255,0.42);
+    --toggle-bd:        rgba(255,255,255,0.12);
+    --toggle-text:      rgba(255,255,255,0.42);
+    --toggle-active:    #ffffff;
+    --toggle-active-fg: #04070F;
+  }
+
+  body.theme-light {
+    --bg:               #F8FAFB;
+    --fg:               #040810;
+    --fg-mid:           rgba(4,8,16,0.52);
+    --fg-sub:           rgba(4,8,16,0.32);
+    --rule:             rgba(4,8,16,0.09);
+    --nav-bg:           rgba(248,250,251,0.92);
+    --nav-border:       rgba(4,8,16,0.07);
+    --nav-brand:        #1E3A6E;
+    --nav-link:         rgba(4,8,16,0.42);
+    --toggle-bd:        rgba(4,8,16,0.14);
+    --toggle-text:      rgba(4,8,16,0.48);
+    --toggle-active:    #1E3A6E;
+    --toggle-active-fg: #ffffff;
+  }
+
+  /* ─── RESET ──────────────────────────────────── */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--bg);
+    color: var(--fg);
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+    transition: background 0.4s, color 0.4s;
+  }
+
+  /* ─── NAV ─────────────────────────────────────── */
+  .nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 1000;
+    background: var(--nav-bg);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--nav-border);
+    display: flex;
+    align-items: center;
+    height: 52px;
+    padding: 0 36px;
+    transition: background 0.3s, border-color 0.3s;
+  }
+
+  .nav-brand {
+    font-family: 'Inter Tight', sans-serif;
+    font-size: 17px; font-weight: 600;
+    color: var(--nav-brand);
+    letter-spacing: 0.1em;
+    margin-right: 16px;
+    transition: color 0.25s;
+  }
+
+  .nav-divider { width: 1px; height: 16px; background: var(--rule); margin-right: 16px; }
+
+  .nav-back {
+    font-size: 12px; color: var(--nav-link);
+    text-decoration: none; letter-spacing: 0.01em;
+    margin-right: 12px; transition: color 0.2s;
+  }
+  .nav-back:hover { color: var(--fg); }
+
+  .nav-sep { font-size: 12px; color: var(--fg-sub); margin-right: 12px; }
+
+  .nav-title { font-size: 12px; color: var(--nav-link); flex: 1; }
+
+  .theme-toggle {
+    display: flex; gap: 2px;
+    border: 1px solid var(--toggle-bd);
+    border-radius: 6px; padding: 3px;
+    transition: border-color 0.3s;
+  }
+
+  .theme-btn {
+    font-family: 'Inter', sans-serif;
+    font-size: 11px; font-weight: 500;
+    padding: 4px 10px;
+    border: none; background: transparent;
+    color: var(--toggle-text);
+    border-radius: 4px; cursor: pointer;
+    transition: background 0.15s, color 0.15s;
+  }
+
+  .theme-btn.active {
+    background: var(--toggle-active);
+    color: var(--toggle-active-fg);
+  }
+
+  /* ─── HERO SHELL ──────────────────────────────── */
+  .hero {
+    position: relative;
+    width: 100%; height: 100vh;
+    min-height: 640px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+  }
+
+  .hero canvas.bg-canvas {
+    position: absolute; inset: 0;
+    width: 100%; height: 100%;
+  }
+
+  .hero-inner {
+    position: relative; z-index: 10;
+    width: 100%; max-width: 1240px;
+    margin: 0 auto;
+    padding: 0 80px;
+  }
+
+  .proposal-tag {
+    position: absolute;
+    top: 68px; right: 80px;
+    font-size: 10px; font-weight: 600;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--fg-sub);
+    z-index: 20;
+    transition: color 0.3s;
+  }
+
+  .scroll-hint {
+    position: absolute;
+    bottom: 26px; left: 50%;
+    transform: translateX(-50%);
+    font-size: 10px; font-weight: 500;
+    letter-spacing: 0.28em; text-transform: uppercase;
+    color: var(--fg-sub);
+    z-index: 20;
+    display: flex; flex-direction: column;
+    align-items: center; gap: 6px;
+    transition: color 0.3s;
+  }
+
+  .scroll-hint::after {
+    content: ''; display: block;
+    width: 1px; height: 32px;
+    background: var(--rule);
+    animation: scrollLine 2.4s ease-in-out infinite;
+  }
+
+  @keyframes scrollLine {
+    0%   { transform: scaleY(0); transform-origin: top; opacity: 0; }
+    15%  { opacity: 1; }
+    50%  { transform: scaleY(1); transform-origin: top; }
+    51%  { transform: scaleY(1); transform-origin: bottom; }
+    100% { transform: scaleY(0); transform-origin: bottom; opacity: 0; }
+  }
+
+  /* ─── SHARED KEYFRAMES ────────────────────────── */
+  @keyframes revealLR {
+    from { clip-path: inset(0 100% 0 0); }
+    to   { clip-path: inset(0 0% 0 0); }
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes scaleInX {
+    from { transform: scaleX(0); }
+    to   { transform: scaleX(1); }
+  }
+
+  @keyframes blink {
+    0%, 48% { opacity: 1; }
+    52%, 100% { opacity: 0; }
+  }
+
+  /* ══════════════════════════════════════════════
+     4A — MANIFESTO
+  ══════════════════════════════════════════════ */
+
+  #h4a { background: var(--bg); transition: background 0.4s; }
+
+  .h4a-glow {
+    position: absolute;
+    width: 800px; height: 800px;
+    top: -200px; right: -200px;
+    background: radial-gradient(circle, rgba(37,99,235,0.08) 0%, transparent 68%);
+    pointer-events: none;
+  }
+
+  .h4a-glow2 {
+    position: absolute;
+    width: 500px; height: 500px;
+    bottom: -100px; left: 0;
+    background: radial-gradient(circle, rgba(14,165,233,0.05) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  body.theme-light .h4a-glow  { opacity: 0.5; }
+  body.theme-light .h4a-glow2 { opacity: 0.4; }
+
+  .m-eyebrow {
+    font-size: 11px; font-weight: 600;
+    letter-spacing: 0.32em; text-transform: uppercase;
+    color: #0EA5E9;
+    margin-bottom: 30px;
+    opacity: 0;
+    animation: fadeUp 0.5s 0.2s ease both;
+  }
+
+  .m-wordmark {
+    font-family: 'Inter Tight', sans-serif;
+    font-size: clamp(96px, 16vw, 210px);
+    font-weight: 700;
+    letter-spacing: -0.045em;
+    line-height: 0.82;
+    color: var(--fg);
+    clip-path: inset(0 100% 0 0);
+    animation: revealLR 1.1s 0.4s cubic-bezier(0.77, 0, 0.18, 1) both;
+    transition: color 0.4s;
+    user-select: none;
+  }
+
+  .m-rule-wrap { margin: 34px 0 30px; overflow: hidden; }
+
+  .m-rule-line {
+    display: block; height: 1px;
+    background: var(--rule);
+    transform: scaleX(0); transform-origin: left;
+    animation: scaleInX 0.9s 1.4s cubic-bezier(0.77, 0, 0.18, 1) both;
+    transition: background 0.3s;
+  }
+
+  .m-tagline {
+    font-family: 'Inter Tight', sans-serif;
+    font-size: clamp(22px, 3.2vw, 42px);
+    font-weight: 300;
+    letter-spacing: -0.02em;
+    line-height: 1.15;
+    color: var(--fg);
+    min-height: 1.15em;
+    transition: color 0.4s;
+  }
+
+  .m-cursor {
+    display: inline-block;
+    width: 2px; height: 0.88em;
+    background: #2563EB;
+    margin-left: 3px;
+    vertical-align: text-bottom;
+    animation: blink 0.85s infinite;
+  }
+
+  .m-sub {
+    font-size: 15px; line-height: 1.75;
+    color: var(--fg-mid); max-width: 460px;
+    margin-top: 22px;
+    opacity: 0;
+    animation: fadeUp 0.6s 2.3s ease both;
+    transition: color 0.4s;
+  }
+
+  .m-cta-row {
+    display: flex; align-items: center;
+    gap: 28px; margin-top: 40px;
+    opacity: 0;
+    animation: fadeUp 0.6s 2.7s ease both;
+  }
+
+  .m-cta {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 12px; font-weight: 600;
+    letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--fg); text-decoration: none;
+    padding-bottom: 4px;
+    border-bottom: 1px solid var(--fg);
+    transition: color 0.2s, border-color 0.2s;
+  }
+
+  .m-cta:hover { color: var(--accent); border-color: var(--accent); }
+
+  .m-stats {
+    display: flex; align-items: stretch; gap: 0;
+    margin-top: 60px;
+    opacity: 0;
+    animation: fadeUp 0.5s 3.1s ease both;
+  }
+
+  .m-stat {
+    display: flex; flex-direction: column; gap: 4px;
+    padding-right: 32px;
+  }
+
+  .m-stat + .m-stat { padding-left: 32px; padding-right: 32px; }
+
+  .m-stat:last-child { padding-right: 0; }
+
+  .m-stat-div {
+    width: 1px; align-self: stretch;
+    background: var(--rule);
+    transition: background 0.3s;
+  }
+
+  .m-stat-n {
+    font-family: 'Inter Tight', sans-serif;
+    font-size: 22px; font-weight: 600;
+    letter-spacing: -0.02em;
+    color: var(--fg); transition: color 0.4s;
+  }
+
+  .m-stat-l {
+    font-size: 11px; color: var(--fg-sub);
+    letter-spacing: 0.04em; transition: color 0.4s;
+  }
+
+
+  /* ══════════════════════════════════════════════
+     4B — STAGE
+  ══════════════════════════════════════════════ */
+
+  #h4b { background: #04070E; }
+
+  .stage-bg { position: absolute; inset: 0; overflow: hidden; }
+
+  .spot {
+    position: absolute; border-radius: 50%;
+    filter: blur(100px); pointer-events: none;
+  }
+
+  .spot-1 {
+    width: 58vw; height: 72vh;
+    top: -30vh; left: 2vw;
+    background: radial-gradient(ellipse 55% 65% at 50% 0%,
+      rgba(37,99,235,0.50) 0%, transparent 100%);
+    animation: spt1 9s ease-in-out infinite;
+  }
+
+  .spot-2 {
+    width: 46vw; height: 60vh;
+    top: -25vh; right: 6vw;
+    background: radial-gradient(ellipse 55% 65% at 50% 0%,
+      rgba(14,165,233,0.32) 0%, transparent 100%);
+    animation: spt2 13s ease-in-out infinite;
+  }
+
+  .spot-3 {
+    width: 32vw; height: 50vh;
+    top: -15vh; left: 38vw;
+    background: radial-gradient(ellipse 55% 65% at 50% 0%,
+      rgba(99,102,241,0.22) 0%, transparent 100%);
+    animation: spt3 7.5s ease-in-out infinite;
+  }
+
+  .stage-floor {
+    position: absolute; left: 0; right: 0; bottom: 0;
+    height: 40%;
+    background: linear-gradient(to top, rgba(4,7,14,0.95) 0%, transparent 100%);
+  }
+
+  @keyframes spt1 {
+    0%, 100% { transform: translate(0,0) scale(1); }
+    40%       { transform: translate(9vw, 6vh) scale(1.1); }
+    70%       { transform: translate(-5vw, 3vh) scale(0.94); }
+  }
+  @keyframes spt2 {
+    0%, 100% { transform: translate(0,0) scale(1); }
+    35%       { transform: translate(-7vw, 9vh) scale(1.14); }
+    65%       { transform: translate(4vw,-3vh) scale(0.9); }
+  }
+  @keyframes spt3 {
+    0%, 100% { transform: translate(0,0); }
+    50%       { transform: translate(6vw, 11vh); }
+  }
+
+  .stage-inner { text-align: center; }
+
+  .stage-eyebrow {
+    font-size: 11px; font-weight: 600;
+    letter-spacing: 0.30em; text-transform: uppercase;
+    color: rgba(14,165,233,0.75);
+    margin-bottom: 28px;
+    opacity: 0;
+    animation: fadeUp 0.5s 0.3s ease both;
+  }
+
+  .stage-headline {
+    font-family: 'Inter Tight', sans-serif;
+    font-size: clamp(40px, 7vw, 88px);
+    font-weight: 600;
+    letter-spacing: -0.035em;
+    line-height: 1.04;
+    color: rgba(255,255,255,0.92);
+    max-width: 820px; margin: 0 auto;
+    opacity: 0;
+    animation: fadeUp 0.85s 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+
+  .stage-rule {
+    width: 36px; height: 1px;
+    background: rgba(14,165,233,0.55);
+    margin: 30px auto;
+    opacity: 0;
+    transform: scaleX(0); transform-origin: left;
+    animation: scaleInX 0.6s 1.35s ease both;
+  }
+
+  .stage-sub {
+    font-size: 16px; line-height: 1.72;
+    color: rgba(255,255,255,0.46);
+    max-width: 500px; margin: 0 auto;
+    opacity: 0;
+    animation: fadeUp 0.6s 1.55s ease both;
+  }
+
+  .stage-cta {
+    display: inline-flex; align-items: center; gap: 10px;
+    margin-top: 44px;
+    padding: 15px 34px;
+    background: rgba(37,99,235,0.16);
+    border: 1px solid rgba(37,99,235,0.38);
+    border-radius: 2px;
+    color: rgba(255,255,255,0.88);
+    font-size: 12px; font-weight: 600;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    text-decoration: none;
+    backdrop-filter: blur(8px);
+    opacity: 0;
+    animation: fadeUp 0.5s 1.8s ease both;
+    transition: background 0.2s, border-color 0.2s;
+  }
+
+  .stage-cta:hover {
+    background: rgba(37,99,235,0.28);
+    border-color: rgba(37,99,235,0.65);
+  }
+
+  .stage-stats {
+    display: flex; justify-content: center;
+    align-items: stretch; gap: 0;
+    margin-top: 56px;
+    opacity: 0;
+    animation: fadeUp 0.5s 2.1s ease both;
+  }
+
+  .stage-stat {
+    display: flex; flex-direction: column;
+    align-items: center; gap: 4px;
+    padding: 0 36px;
+  }
+
+  .stage-stat-div {
+    width: 1px; align-self: stretch;
+    background: rgba(255,255,255,0.09);
+  }
+
+  .stage-stat-n {
+    font-family: 'Inter Tight', sans-serif;
+    font-size: 26px; font-weight: 600;
+    letter-spacing: -0.02em;
+    color: rgba(255,255,255,0.88);
+  }
+
+  .stage-stat-l {
+    font-size: 10px; font-weight: 500;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    color: rgba(255,255,255,0.32);
+    text-align: center;
+  }
+
+
+  /* ══════════════════════════════════════════════
+     4C — HORIZON
+  ══════════════════════════════════════════════ */
+
+  #h4c { background: var(--bg); transition: background 0.4s; }
+
+  .horizon-eyebrow {
+    font-size: 11px; font-weight: 600;
+    letter-spacing: 0.32em; text-transform: uppercase;
+    color: #0EA5E9;
+    margin-bottom: 22px;
+    opacity: 0;
+    animation: fadeUp 0.5s 0.2s ease both;
+  }
+
+  .horizon-headline {
+    font-family: 'Inter Tight', sans-serif;
+    font-size: clamp(44px, 7vw, 86px);
+    font-weight: 600;
+    letter-spacing: -0.035em;
+    line-height: 1.04;
+    color: var(--fg);
+    max-width: 680px;
+    opacity: 0;
+    animation: fadeUp 0.85s 0.4s cubic-bezier(0.22, 1, 0.36, 1) both;
+    transition: color 0.4s;
+  }
+
+  .horizon-sub {
+    font-size: 16px; line-height: 1.72;
+    color: var(--fg-mid); max-width: 460px;
+    margin-top: 22px;
+    opacity: 0;
+    animation: fadeUp 0.6s 0.9s ease both;
+    transition: color 0.4s;
+  }
+
+  .horizon-cta {
+    display: inline-flex; align-items: center; gap: 8px;
+    margin-top: 36px;
+    font-size: 12px; font-weight: 600;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--accent); text-decoration: none;
+    opacity: 0;
+    animation: fadeUp 0.5s 1.2s ease both;
+    transition: opacity 0.15s;
+  }
+
+  .horizon-cta:hover { opacity: 0.75; }
+  .horizon-cta::after { content: ' →'; }
+
+  .horizon-stats {
+    position: absolute; bottom: 60px;
+    left: 0; right: 0;
+    max-width: 1240px; margin: 0 auto;
+    padding: 0 80px;
+    display: flex; align-items: stretch; gap: 0;
+    opacity: 0;
+    animation: fadeUp 0.5s 1.5s ease both;
+    z-index: 10;
+  }
+
+  .h-stat { display: flex; flex-direction: column; gap: 4px; padding-right: 32px; }
+  .h-stat + .h-stat { padding-left: 32px; }
+  .h-stat:last-child { padding-right: 0; }
+
+  .h-stat-div {
+    width: 1px; align-self: stretch;
+    background: var(--rule);
+    transition: background 0.3s;
+  }
+
+  .h-stat-n {
+    font-family: 'Inter Tight', sans-serif;
+    font-size: 22px; font-weight: 600;
+    letter-spacing: -0.02em;
+    color: var(--fg); transition: color 0.4s;
+  }
+
+  .h-stat-l {
+    font-size: 10px; font-weight: 500;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--fg-sub); transition: color 0.4s;
+  }
+
+
+  /* ══════════════════════════════════════════════
+     4D — CHROMATIC
+  ══════════════════════════════════════════════ */
+
+  #h4d { background: #020509; }
+
+  .chroma-bg {
+    position: absolute; inset: 0; overflow: hidden;
+  }
+
+  .chroma-blob {
+    position: absolute; border-radius: 50%;
+    filter: blur(130px); pointer-events: none;
+    will-change: transform;
+  }
+
+  .chroma-1 {
+    width: 90vw; height: 90vw;
+    top: -30vw; left: -20vw;
+    background: #1E3A6E; opacity: 0.95;
+    animation: cA 17s ease-in-out infinite;
+  }
+
+  .chroma-2 {
+    width: 60vw; height: 60vw;
+    top: -15vw; right: -10vw;
+    background: #2563EB; opacity: 0.55;
+    animation: cB 22s ease-in-out infinite;
+  }
+
+  .chroma-3 {
+    width: 50vw; height: 50vw;
+    bottom: -18vw; left: 18vw;
+    background: #0EA5E9; opacity: 0.30;
+    animation: cC 14s ease-in-out infinite;
+  }
+
+  .chroma-4 {
+    width: 32vw; height: 32vw;
+    top: 28%; right: 12%;
+    background: #6366F1; opacity: 0.18;
+    animation: cD 19s ease-in-out infinite;
+  }
+
+  @keyframes cA {
+    0%,100% { transform: translate(0,0) scale(1); }
+    33%      { transform: translate(8vw,12vh) scale(1.07); }
+    66%      { transform: translate(-5vw,6vh) scale(0.95); }
+  }
+  @keyframes cB {
+    0%,100% { transform: translate(0,0) scale(1); }
+    40%      { transform: translate(-10vw,9vh) scale(1.13); }
+    80%      { transform: translate(5vw,-5vh) scale(0.91); }
+  }
+  @keyframes cC {
+    0%,100% { transform: translate(0,0); }
+    50%      { transform: translate(-14vw,-10vh); }
+  }
+  @keyframes cD {
+    0%,100% { transform: translate(0,0) scale(1); }
+    60%      { transform: translate(-9vw,16vh) scale(1.28); }
+  }
+
+  .chroma-vignette {
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse 85% 85% at 50% 50%,
+      transparent 0%, rgba(2,5,9,0.70) 100%);
+    pointer-events: none;
+  }
+
+  .chroma-inner { text-align: center; }
+
+  .chroma-eyebrow {
+    display: inline-flex; align-items: center; gap: 12px;
+    font-size: 11px; font-weight: 600;
+    letter-spacing: 0.28em; text-transform: uppercase;
+    color: rgba(255,255,255,0.42);
+    margin-bottom: 32px;
+    opacity: 0;
+    animation: fadeUp 0.5s 0.2s ease both;
+  }
+
+  .chroma-eyebrow::before,
+  .chroma-eyebrow::after {
+    content: ''; display: block;
+    height: 1px; width: 24px;
+    background: rgba(255,255,255,0.18);
+  }
+
+  .chroma-headline {
+    font-family: 'Inter Tight', sans-serif;
+    font-size: clamp(44px, 7.5vw, 96px);
+    font-weight: 700;
+    letter-spacing: -0.04em;
+    line-height: 1.0;
+    color: rgba(255,255,255,0.95);
+    max-width: 880px; margin: 0 auto;
+    opacity: 0;
+    animation: fadeUp 0.95s 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+
+  .chroma-sub {
+    font-size: 16px; line-height: 1.75;
+    color: rgba(255,255,255,0.48);
+    max-width: 540px; margin: 26px auto 0;
+    opacity: 0;
+    animation: fadeUp 0.6s 1.1s ease both;
+  }
+
+  .chroma-cta-row {
+    display: flex; align-items: center;
+    justify-content: center; gap: 14px;
+    margin-top: 48px;
+    opacity: 0;
+    animation: fadeUp 0.5s 1.55s ease both;
+  }
+
+  .chroma-cta-primary {
+    padding: 16px 38px;
+    background: rgba(255,255,255,0.95);
+    border-radius: 2px;
+    color: #020509;
+    font-size: 12px; font-weight: 700;
+    letter-spacing: 0.10em; text-transform: uppercase;
+    text-decoration: none;
+    transition: background 0.2s;
+  }
+
+  .chroma-cta-primary:hover { background: #ffffff; }
+
+  .chroma-cta-ghost {
+    padding: 16px 38px;
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(255,255,255,0.18);
+    border-radius: 2px;
+    color: rgba(255,255,255,0.78);
+    font-size: 12px; font-weight: 500;
+    letter-spacing: 0.09em; text-transform: uppercase;
+    text-decoration: none;
+    backdrop-filter: blur(8px);
+    transition: background 0.2s, border-color 0.2s;
+  }
+
+  .chroma-cta-ghost:hover {
+    background: rgba(255,255,255,0.12);
+    border-color: rgba(255,255,255,0.32);
+  }
+
+  .chroma-badges {
+    display: flex; align-items: center;
+    justify-content: center; gap: 20px;
+    margin-top: 52px;
+    opacity: 0;
+    animation: fadeUp 0.5s 1.9s ease both;
+  }
+
+  .chroma-badge {
+    font-size: 10px; font-weight: 500;
+    letter-spacing: 0.14em; text-transform: uppercase;
+    color: rgba(255,255,255,0.28);
+    display: flex; align-items: center; gap: 7px;
+  }
+
+  .chroma-badge::before {
+    content: ''; display: block;
+    width: 4px; height: 4px; border-radius: 50%;
+    background: rgba(14,165,233,0.65);
+  }
+
+  .chroma-badge-sep {
+    width: 1px; height: 14px;
+    background: rgba(255,255,255,0.10);
+  }
+
+  /* ─── FOOTER ──────────────────────────────────── */
+  .page-footer {
+    background: var(--bg);
+    border-top: 1px solid var(--rule);
+    padding: 28px 80px;
+    display: flex; justify-content: space-between; align-items: center;
+    transition: background 0.4s, border-color 0.3s;
+  }
+
+  .footer-brand {
+    font-family: 'Inter Tight', sans-serif;
+    font-size: 17px; font-weight: 600;
+    letter-spacing: 0.12em;
+    color: var(--fg); transition: color 0.4s;
+  }
+
+  .footer-note { font-size: 12px; color: var(--fg-sub); transition: color 0.4s; }
+
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="nav-brand">FCI</div>
+  <div class="nav-divider"></div>
+  <a class="nav-back" href="FCI Hero Gallery.html">← Gallery</a>
+  <span class="nav-sep">/</span>
+  <div class="nav-title">Group 04 — Editorial</div>
+  <div class="theme-toggle">
+    <button class="theme-btn" id="btn-system" onclick="setTheme('system')">System</button>
+    <button class="theme-btn" id="btn-light"  onclick="setTheme('light')">Light</button>
+    <button class="theme-btn" id="btn-dark"   onclick="setTheme('dark')">Dark</button>
+  </div>
+</nav>
+
+
+<!-- ══════════════════════════════════════════════
+     4A — MANIFESTO
+     IBM-level restraint. The logo IS the design.
+     Huge wordmark, typewriter tagline, hard rule.
+════════════════════════════════════════════════ -->
+<section class="hero" id="h4a">
+  <div class="h4a-glow"></div>
+  <div class="h4a-glow2"></div>
+  <canvas class="bg-canvas" id="c4a"></canvas>
+  <span class="proposal-tag">4A — Manifesto</span>
+
+  <div class="hero-inner">
+    <div class="m-eyebrow">Managed cybersecurity · Financial services</div>
+
+    <h1 class="m-wordmark">FCI</h1>
+
+    <div class="m-rule-wrap"><span class="m-rule-line"></span></div>
+
+    <p class="m-tagline" id="tagline4a"><span class="m-cursor" id="cursor4a"></span></p>
+
+    <p class="m-sub">
+      Cybersecurity built for how financial firms actually work —
+      distributed, regulated, and always on. From RIAs to broker-dealers
+      to insurance carriers.
+    </p>
+
+    <div class="m-cta-row">
+      <a class="m-cta" href="#">Request a pilot assessment</a>
+    </div>
+
+    <div class="m-stats">
+      <div class="m-stat">
+        <span class="m-stat-n">40K+</span>
+        <span class="m-stat-l">Endpoints managed</span>
+      </div>
+      <div class="m-stat-div"></div>
+      <div class="m-stat">
+        <span class="m-stat-n">24 × 7</span>
+        <span class="m-stat-l">SOC monitoring</span>
+      </div>
+      <div class="m-stat-div"></div>
+      <div class="m-stat">
+        <span class="m-stat-n">30 yrs</span>
+        <span class="m-stat-l">Financial field security</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="scroll-hint">Scroll</div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════
+     4B — STAGE
+     Three animated spotlights descend on the copy.
+     Dark. Theatrical. Dramatic silence before the headline.
+════════════════════════════════════════════════ -->
+<section class="hero" id="h4b">
+  <div class="stage-bg">
+    <div class="spot spot-1"></div>
+    <div class="spot spot-2"></div>
+    <div class="spot spot-3"></div>
+    <div class="stage-floor"></div>
+  </div>
+  <span class="proposal-tag" style="color:rgba(255,255,255,0.18);">4B — Stage</span>
+
+  <div class="hero-inner stage-inner">
+    <div class="stage-eyebrow">Financial field security</div>
+    <h2 class="stage-headline">Your compliance risk shouldn't keep you up at night.</h2>
+    <div class="stage-rule"></div>
+    <p class="stage-sub">
+      FCI gives financial firms 24×7 managed security and the
+      audit-ready evidence to prove they are protected.
+    </p>
+    <a class="stage-cta" href="#">Get a pilot assessment</a>
+
+    <div class="stage-stats">
+      <div class="stage-stat">
+        <span class="stage-stat-n">40,000+</span>
+        <span class="stage-stat-l">Endpoints under management</span>
+      </div>
+      <div class="stage-stat-div"></div>
+      <div class="stage-stat">
+        <span class="stage-stat-n">SOC 2</span>
+        <span class="stage-stat-l">Type 1 certified</span>
+      </div>
+      <div class="stage-stat-div"></div>
+      <div class="stage-stat">
+        <span class="stage-stat-n">100%</span>
+        <span class="stage-stat-l">SecurityScorecard rating</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="scroll-hint" style="color:rgba(255,255,255,0.18);">Scroll</div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════
+     4C — HORIZON
+     Perspective grid recedes to a vanishing point.
+     Glowing nodes are endpoints. Headline floats above the horizon.
+════════════════════════════════════════════════ -->
+<section class="hero" id="h4c">
+  <canvas class="bg-canvas" id="c4c"></canvas>
+  <span class="proposal-tag">4C — Horizon</span>
+
+  <div class="hero-inner">
+    <div class="horizon-eyebrow">The connected firm</div>
+    <h2 class="horizon-headline">Every device.<br>Every office.<br>Every advisor.</h2>
+    <p class="horizon-sub">
+      FCI maps, manages, and monitors every endpoint across your
+      distributed workforce — so nothing slips through and every
+      exam goes smoothly.
+    </p>
+    <a class="horizon-cta" href="#">See endpoint visibility</a>
+  </div>
+
+  <div class="horizon-stats">
+    <div class="h-stat">
+      <span class="h-stat-n">40,000+</span>
+      <span class="h-stat-l">Endpoints</span>
+    </div>
+    <div class="h-stat-div"></div>
+    <div class="h-stat">
+      <span class="h-stat-n">24 × 7</span>
+      <span class="h-stat-l">SOC</span>
+    </div>
+    <div class="h-stat-div"></div>
+    <div class="h-stat">
+      <span class="h-stat-n">NIST CSF</span>
+      <span class="h-stat-l">Framework mapped</span>
+    </div>
+    <div class="h-stat-div"></div>
+    <div class="h-stat">
+      <span class="h-stat-n">Zero Trust</span>
+      <span class="h-stat-l">Always-on enforcement</span>
+    </div>
+  </div>
+
+  <div class="scroll-hint">Scroll</div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════
+     4D — CHROMATIC
+     Slow fluid gradient blobs bleed across the frame.
+     Deep navy + electric blue + sky. White type. Two CTAs. Trust badges.
+════════════════════════════════════════════════ -->
+<section class="hero" id="h4d">
+  <div class="chroma-bg">
+    <div class="chroma-blob chroma-1"></div>
+    <div class="chroma-blob chroma-2"></div>
+    <div class="chroma-blob chroma-3"></div>
+    <div class="chroma-blob chroma-4"></div>
+  </div>
+  <div class="chroma-vignette"></div>
+  <canvas class="bg-canvas" id="c4d"></canvas>
+  <span class="proposal-tag" style="color:rgba(255,255,255,0.18);">4D — Chromatic</span>
+
+  <div class="hero-inner chroma-inner">
+    <div class="chroma-eyebrow">Built for financial services</div>
+    <h2 class="chroma-headline">Security that works where compliance demands it.</h2>
+    <p class="chroma-sub">
+      From RIAs to broker-dealers to insurance carriers — FCI brings
+      Zero Trust, managed detection, and audit-ready evidence to
+      firms that cannot afford gaps.
+    </p>
+    <div class="chroma-cta-row">
+      <a class="chroma-cta-primary" href="#">Start with a free assessment</a>
+      <a class="chroma-cta-ghost"   href="#">See how it works</a>
+    </div>
+    <div class="chroma-badges">
+      <div class="chroma-badge">SOC 2 Type 1</div>
+      <div class="chroma-badge-sep"></div>
+      <div class="chroma-badge">NIST CSF mapped</div>
+      <div class="chroma-badge-sep"></div>
+      <div class="chroma-badge">SEC · FINRA · NYDFS · NAIC</div>
+      <div class="chroma-badge-sep"></div>
+      <div class="chroma-badge">100% SecurityScorecard</div>
+    </div>
+  </div>
+</section>
+
+
+<!-- FOOTER -->
+<footer class="page-footer">
+  <div class="footer-brand">FCI</div>
+  <div class="footer-note">Internal — Website Redesign 2026 · Group 04</div>
+</footer>
+
+
+<script>
+/* ─── THEME ──────────────────────────────────────── */
+let currentTheme = 'system';
+
+function setTheme(t) {
+  currentTheme = t;
+  document.body.classList.remove('theme-light','theme-dark');
+  if (t === 'light') document.body.classList.add('theme-light');
+  if (t === 'dark')  document.body.classList.add('theme-dark');
+  document.querySelectorAll('.theme-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('btn-'+t).classList.add('active');
+}
+
+function isDark() {
+  if (currentTheme === 'dark')  return true;
+  if (currentTheme === 'light') return false;
+  return window.matchMedia('(prefers-color-scheme: dark)').matches;
+}
+
+document.getElementById('btn-system').classList.add('active');
+
+
+/* ─── 4A: TYPEWRITER ─────────────────────────────── */
+(function() {
+  const phrases = [
+    'Protecting financial services. Everywhere.',
+    'The CISO your firm never had.',
+    'Audit-ready. Always.',
+    'Zero Trust. Zero gaps.',
+  ];
+  let pi = 0, ci = 0, deleting = false;
+  const el = document.getElementById('tagline4a');
+  const cursor = document.getElementById('cursor4a');
+
+  function tick() {
+    const phrase = phrases[pi];
+    if (!deleting) {
+      ci++;
+      el.textContent = phrase.slice(0, ci);
+      el.appendChild(cursor);
+      if (ci === phrase.length) {
+        deleting = true;
+        setTimeout(tick, 2400);
+        return;
+      }
+      setTimeout(tick, 52);
+    } else {
+      ci--;
+      el.textContent = phrase.slice(0, ci);
+      el.appendChild(cursor);
+      if (ci === 0) {
+        deleting = false;
+        pi = (pi + 1) % phrases.length;
+        setTimeout(tick, 340);
+        return;
+      }
+      setTimeout(tick, 26);
+    }
+  }
+
+  setTimeout(tick, 1700);
+})();
+
+
+/* ─── 4A CANVAS: RISING PARTICLES ───────────────── */
+(function() {
+  const cv = document.getElementById('c4a');
+  const cx = cv.getContext('2d');
+  let W, H, pts = [];
+
+  function resize() {
+    W = cv.width  = cv.offsetWidth;
+    H = cv.height = cv.offsetHeight;
+    init();
+  }
+
+  function init() {
+    pts = [];
+    const n = Math.max(20, Math.floor(W * H / 22000));
+    for (let i = 0; i < n; i++) {
+      pts.push({
+        x: Math.random() * W,
+        y: H + Math.random() * H * 0.6,
+        r: Math.random() * 1.4 + 0.2,
+        vy: Math.random() * 0.25 + 0.06,
+        vx: (Math.random() - 0.5) * 0.10,
+        op: Math.random() * 0.22 + 0.04,
+      });
+    }
+  }
+
+  function frame() {
+    cx.clearRect(0, 0, W, H);
+    const col = isDark() ? '14,165,233' : '37,99,235';
+    for (const p of pts) {
+      p.y -= p.vy;
+      p.x += p.vx;
+      if (p.y < -6) { p.y = H + 6; p.x = Math.random() * W; }
+      cx.beginPath();
+      cx.arc(p.x, p.y, p.r, 0, Math.PI*2);
+      cx.fillStyle = `rgba(${col},${p.op})`;
+      cx.fill();
+    }
+    requestAnimationFrame(frame);
+  }
+
+  window.addEventListener('resize', () => { resize(); });
+  resize();
+  frame();
+})();
+
+
+/* ─── 4C CANVAS: PERSPECTIVE GRID ───────────────── */
+(function() {
+  const cv = document.getElementById('c4c');
+  const cx = cv.getContext('2d');
+  let W, H, t = 0, nodes = [];
+
+  function resize() {
+    W = cv.width  = cv.offsetWidth;
+    H = cv.height = cv.offsetHeight;
+    buildNodes();
+  }
+
+  function buildNodes() {
+    nodes = [];
+    const numV = 20, numH = 16;
+    const vpx = W * 0.5, vpy = H * 0.44;
+    const spread = W * 1.35;
+
+    for (let hi = 1; hi < numH; hi++) {
+      const th = Math.pow(hi / numH, 1.75);
+      const y = vpy + th * (H - vpy + 80);
+      if (y > H + 12) continue;
+      const sx = (y - vpy) / (H - vpy);
+
+      for (let vi = 0; vi <= numV; vi++) {
+        const tv = vi / numV;
+        const bx = vpx + (tv - 0.5) * spread;
+        const x  = vpx + (bx - vpx) * sx;
+        if (x < -20 || x > W + 20) continue;
+
+        nodes.push({
+          x, y,
+          active: Math.random() < 0.14,
+          phase:  Math.random() * Math.PI * 2,
+          speed:  Math.random() * 0.5 + 0.5,
+          size:   Math.random() * 2 + 1.5,
+        });
+      }
+    }
+  }
+
+  function frame() {
+    t += 0.020;
+    cx.clearRect(0, 0, W, H);
+
+    const dark = isDark();
+    const vpx = W * 0.5, vpy = H * 0.44;
+    const spread = W * 1.35;
+    const numV = 20, numH = 16;
+
+    const gA = dark ? 'rgba(37,99,235,0.14)' : 'rgba(30,58,110,0.09)';
+    const gB = dark ? 'rgba(14,165,233,0.18)' : 'rgba(37,99,235,0.11)';
+    const nc  = dark ? [14, 165, 233] : [37, 99, 235];
+
+    cx.lineWidth = 0.7;
+
+    // Vertical fan lines from VP
+    cx.strokeStyle = gA;
+    for (let vi = 0; vi <= numV; vi++) {
+      const tv = vi / numV;
+      const bx = vpx + (tv - 0.5) * spread;
+      cx.beginPath();
+      cx.moveTo(vpx, vpy);
+      cx.lineTo(bx, H + 20);
+      cx.stroke();
+    }
+
+    // Horizontal lines (perspective spaced)
+    cx.strokeStyle = gB;
+    for (let hi = 1; hi < numH; hi++) {
+      const th = Math.pow(hi / numH, 1.75);
+      const y = vpy + th * (H - vpy + 80);
+      if (y > H + 12) continue;
+      const sx = (y - vpy) / (H - vpy);
+      const hw = spread * sx * 0.5;
+      cx.beginPath();
+      cx.moveTo(vpx - hw, y);
+      cx.lineTo(vpx + hw, y);
+      cx.stroke();
+    }
+
+    // Horizon atmospheric glow
+    const hgrd = cx.createLinearGradient(0, vpy - 24, 0, vpy + 28);
+    hgrd.addColorStop(0, 'transparent');
+    hgrd.addColorStop(0.5, dark ? 'rgba(37,99,235,0.11)' : 'rgba(37,99,235,0.07)');
+    hgrd.addColorStop(1, 'transparent');
+    cx.fillStyle = hgrd;
+    cx.fillRect(0, vpy - 24, W, 52);
+
+    // Active endpoint nodes — pulse with sine wave
+    for (const nd of nodes) {
+      if (!nd.active) continue;
+      const pulse = 0.45 + 0.55 * (0.5 + 0.5 * Math.sin(t * nd.speed + nd.phase));
+      const grd = cx.createRadialGradient(nd.x, nd.y, 0, nd.x, nd.y, nd.size * 9);
+      grd.addColorStop(0, `rgba(${nc[0]},${nc[1]},${nc[2]},${(0.28 * pulse).toFixed(2)})`);
+      grd.addColorStop(1, 'transparent');
+      cx.beginPath();
+      cx.arc(nd.x, nd.y, nd.size * 9, 0, Math.PI * 2);
+      cx.fillStyle = grd;
+      cx.fill();
+
+      cx.beginPath();
+      cx.arc(nd.x, nd.y, nd.size * pulse, 0, Math.PI * 2);
+      cx.fillStyle = `rgba(${nc[0]},${nc[1]},${nc[2]},${(0.75 * pulse).toFixed(2)})`;
+      cx.fill();
+    }
+
+    // Fade top portion so headline area stays clean
+    const topFade = cx.createLinearGradient(0, 0, 0, H * 0.52);
+    topFade.addColorStop(0, dark ? 'rgba(4,7,15,0.98)' : 'rgba(248,250,251,0.98)');
+    topFade.addColorStop(1, 'transparent');
+    cx.fillStyle = topFade;
+    cx.fillRect(0, 0, W, H * 0.55);
+
+    requestAnimationFrame(frame);
+  }
+
+  window.addEventListener('resize', resize);
+  resize();
+  frame();
+})();
+
+
+/* ─── 4D CANVAS: STAR FIELD ──────────────────────── */
+(function() {
+  const cv = document.getElementById('c4d');
+  const cx = cv.getContext('2d');
+  let W, H, t = 0, stars = [];
+
+  function resize() {
+    W = cv.width  = cv.offsetWidth;
+    H = cv.height = cv.offsetHeight;
+    init();
+  }
+
+  function init() {
+    stars = [];
+    const n = Math.floor(W * H / 5500);
+    for (let i = 0; i < n; i++) {
+      stars.push({
+        x:  Math.random() * W,
+        y:  Math.random() * H,
+        r:  Math.random() * 1.0 + 0.15,
+        vx: (Math.random() - 0.5) * 0.10,
+        vy: (Math.random() - 0.5) * 0.07,
+        op: Math.random() * 0.35 + 0.05,
+        ph: Math.random() * Math.PI * 2,
+      });
+    }
+  }
+
+  function frame() {
+    t += 0.008;
+    cx.clearRect(0, 0, W, H);
+    for (const s of stars) {
+      s.x += s.vx; s.y += s.vy;
+      if (s.x < 0) s.x = W;
+      if (s.x > W) s.x = 0;
+      if (s.y < 0) s.y = H;
+      if (s.y > H) s.y = 0;
+      const op = s.op * (0.55 + 0.45 * Math.sin(t + s.ph));
+      cx.beginPath();
+      cx.arc(s.x, s.y, s.r, 0, Math.PI*2);
+      cx.fillStyle = `rgba(255,255,255,${op.toFixed(2)})`;
+      cx.fill();
+    }
+    requestAnimationFrame(frame);
+  }
+
+  window.addEventListener('resize', resize);
+  resize();
+  frame();
+})();
+</script>
+
+</body>
+</html>

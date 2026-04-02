@@ -1,0 +1,1071 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FCI — Hero Group 03 · Cybersecurity Concept</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Inter+Tight:wght@600&display=swap" rel="stylesheet">
+  <style>
+
+    /* ════════════════════════════════════════════════
+       THEME VARIABLES
+    ════════════════════════════════════════════════ */
+    body {
+      --c-logo:    #1E3A6E;
+      --c-h1:      #0F172A;
+      --c-sub:     rgba(15,23,42,0.55);
+      --c-eyebrow: #0EA5E9;
+      --c-badge:   rgba(15,23,42,0.12);
+
+      --btn-ghost-bd:         rgba(15,23,42,0.2);
+      --btn-ghost-text:       rgba(15,23,42,0.62);
+      --btn-ghost-hover-bd:   rgba(15,23,42,0.48);
+      --btn-ghost-hover-text: #0F172A;
+
+      --page-bg: #E8F2FF;
+      --bg-h1:   #0A1020;
+      --bg-h2:   #080E1C;
+      --bg-h3:   #070D1A;
+      --bg-h4:   #090F1E;
+
+      --fade1: 10,16,32;
+      --fade2: 8,14,28;
+      --fade3: 7,13,26;
+      --fade4: 9,15,30;
+
+      --bg-rationale:       #0D1421;
+      --c-rationale-title:  rgba(255,255,255,0.9);
+      --c-rationale-body:   rgba(255,255,255,0.48);
+      --c-rationale-mood:   rgba(255,255,255,0.3);
+      --c-rationale-accent: rgba(14,165,233,0.75);
+
+      --nav-bg:       rgba(8,14,28,0.9);
+      --nav-border:   rgba(255,255,255,0.07);
+      --nav-brand:    white;
+      --nav-link:     rgba(255,255,255,0.45);
+      --nav-link-bg:  rgba(255,255,255,0.07);
+      --nav-divider:  rgba(255,255,255,0.1);
+      --back-link:    rgba(255,255,255,0.42);
+
+      --toggle-bd:          rgba(255,255,255,0.13);
+      --toggle-text:        rgba(255,255,255,0.42);
+      --toggle-active-bg:   white;
+      --toggle-active-text: #0F172A;
+    }
+
+    /* Group 03 heroes look better dark by default — but light mode still works */
+    @media (prefers-color-scheme: light) {
+      body {
+        --bg-h1:   #EBF3FF;
+        --bg-h2:   #EFF7FF;
+        --bg-h3:   #ECF4FF;
+        --bg-h4:   #E8F0FF;
+        --fade1: 235,243,255;
+        --fade2: 239,247,255;
+        --fade3: 236,244,255;
+        --fade4: 232,240,255;
+        --bg-rationale:       #F5F9FF;
+        --c-rationale-title:  #0F172A;
+        --c-rationale-body:   rgba(15,23,42,0.52);
+        --c-rationale-mood:   rgba(15,23,42,0.32);
+        --c-rationale-accent: rgba(14,165,233,0.85);
+        --nav-bg:       rgba(235,243,255,0.92);
+        --nav-border:   rgba(15,23,42,0.07);
+        --nav-brand:    #1E3A6E;
+        --nav-link:     rgba(15,23,42,0.46);
+        --nav-link-bg:  rgba(15,23,42,0.06);
+        --nav-divider:  rgba(15,23,42,0.12);
+        --back-link:    rgba(15,23,42,0.46);
+        --toggle-bd:          rgba(15,23,42,0.14);
+        --toggle-text:        rgba(15,23,42,0.48);
+        --toggle-active-bg:   #1E3A6E;
+        --toggle-active-text: white;
+        --c-logo:    #1E3A6E;
+        --c-h1:      #0F172A;
+        --c-sub:     rgba(15,23,42,0.55);
+        --c-badge:   rgba(15,23,42,0.12);
+        --btn-ghost-bd:         rgba(15,23,42,0.2);
+        --btn-ghost-text:       rgba(15,23,42,0.62);
+        --btn-ghost-hover-bd:   rgba(15,23,42,0.48);
+        --btn-ghost-hover-text: #0F172A;
+      }
+    }
+
+    body.theme-dark {
+      --c-logo:    rgba(255,255,255,0.85);
+      --c-h1:      white;
+      --c-sub:     rgba(255,255,255,0.58);
+      --c-badge:   rgba(255,255,255,0.15);
+      --btn-ghost-bd:         rgba(255,255,255,0.18);
+      --btn-ghost-text:       rgba(255,255,255,0.65);
+      --btn-ghost-hover-bd:   rgba(255,255,255,0.45);
+      --btn-ghost-hover-text: white;
+      --bg-h1: #0A1020; --bg-h2: #080E1C; --bg-h3: #070D1A; --bg-h4: #090F1E;
+      --fade1: 10,16,32; --fade2: 8,14,28; --fade3: 7,13,26; --fade4: 9,15,30;
+      --bg-rationale: #0D1421;
+      --c-rationale-title: rgba(255,255,255,0.9);
+      --c-rationale-body: rgba(255,255,255,0.48);
+      --c-rationale-mood: rgba(255,255,255,0.3);
+      --c-rationale-accent: rgba(14,165,233,0.75);
+      --nav-bg: rgba(8,14,28,0.9); --nav-border: rgba(255,255,255,0.07);
+      --nav-brand: white; --nav-link: rgba(255,255,255,0.45);
+      --nav-link-bg: rgba(255,255,255,0.07); --nav-divider: rgba(255,255,255,0.1);
+      --back-link: rgba(255,255,255,0.42);
+      --toggle-bd: rgba(255,255,255,0.13); --toggle-text: rgba(255,255,255,0.42);
+      --toggle-active-bg: white; --toggle-active-text: #0F172A;
+    }
+
+    body.theme-light {
+      --c-logo:    #1E3A6E; --c-h1: #0F172A;
+      --c-sub:     rgba(15,23,42,0.55); --c-badge: rgba(15,23,42,0.12);
+      --btn-ghost-bd: rgba(15,23,42,0.2); --btn-ghost-text: rgba(15,23,42,0.62);
+      --btn-ghost-hover-bd: rgba(15,23,42,0.48); --btn-ghost-hover-text: #0F172A;
+      --bg-h1: #EBF3FF; --bg-h2: #EFF7FF; --bg-h3: #ECF4FF; --bg-h4: #E8F0FF;
+      --fade1: 235,243,255; --fade2: 239,247,255; --fade3: 236,244,255; --fade4: 232,240,255;
+      --bg-rationale: #F5F9FF;
+      --c-rationale-title: #0F172A; --c-rationale-body: rgba(15,23,42,0.52);
+      --c-rationale-mood: rgba(15,23,42,0.32); --c-rationale-accent: rgba(14,165,233,0.85);
+      --nav-bg: rgba(235,243,255,0.92); --nav-border: rgba(15,23,42,0.07);
+      --nav-brand: #1E3A6E; --nav-link: rgba(15,23,42,0.46);
+      --nav-link-bg: rgba(15,23,42,0.06); --nav-divider: rgba(15,23,42,0.12);
+      --back-link: rgba(15,23,42,0.46);
+      --toggle-bd: rgba(15,23,42,0.14); --toggle-text: rgba(15,23,42,0.48);
+      --toggle-active-bg: #1E3A6E; --toggle-active-text: white;
+    }
+
+    /* ════════════════════════════════════════════════
+       GLOBAL
+    ════════════════════════════════════════════════ */
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--page-bg);
+      -webkit-font-smoothing: antialiased;
+      transition: background 0.3s;
+    }
+
+    /* ════════════════════════════════════════════════
+       NAV
+    ════════════════════════════════════════════════ */
+    .nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+      background: var(--nav-bg);
+      backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--nav-border);
+      display: flex; align-items: center; height: 54px; padding: 0 32px;
+      transition: background 0.3s;
+    }
+    .nav-brand {
+      font-family: 'Inter Tight', sans-serif; font-size: 17px; font-weight: 600;
+      color: var(--nav-brand); letter-spacing: 0.1em; margin-right: 20px;
+      flex-shrink: 0; transition: color 0.25s;
+    }
+    .nav-divider { width: 1px; height: 18px; background: var(--nav-divider); margin-right: 16px; flex-shrink: 0; }
+    .nav-back {
+      font-size: 12px; color: var(--back-link); text-decoration: none;
+      margin-right: 20px; white-space: nowrap; flex-shrink: 0; transition: color 0.15s;
+    }
+    .nav-back:hover { color: var(--nav-brand); }
+    .nav-links { display: flex; gap: 2px; flex: 1; }
+    .nav a.jump {
+      font-size: 12px; font-weight: 500; color: var(--nav-link);
+      text-decoration: none; padding: 5px 10px; border-radius: 5px;
+      white-space: nowrap; transition: color 0.15s, background 0.15s;
+    }
+    .nav a.jump:hover { color: var(--nav-brand); background: var(--nav-link-bg); }
+    .theme-toggle { display: flex; gap: 2px; border: 1px solid var(--toggle-bd); border-radius: 6px; padding: 3px; flex-shrink: 0; }
+    .theme-btn {
+      font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 500;
+      padding: 4px 10px; border: none; background: transparent; color: var(--toggle-text);
+      border-radius: 4px; cursor: pointer; transition: background 0.15s, color 0.15s;
+    }
+    .theme-btn.active { background: var(--toggle-active-bg); color: var(--toggle-active-text); }
+
+    /* ════════════════════════════════════════════════
+       HERO SHARED
+    ════════════════════════════════════════════════ */
+    .hero {
+      width: 100%; min-height: 100vh;
+      display: flex; align-items: center;
+      position: relative; overflow: hidden;
+      transition: background 0.3s;
+    }
+    .hero-content {
+      position: relative; z-index: 10;
+      padding: 120px 88px; max-width: 680px;
+    }
+    .hero-logo {
+      font-family: 'Inter Tight', sans-serif; font-size: 19px; font-weight: 600;
+      letter-spacing: 0.12em; color: var(--c-logo); margin-bottom: 68px;
+      transition: color 0.25s;
+    }
+    .hero-eyebrow {
+      font-size: 11px; font-weight: 600; letter-spacing: 0.26em;
+      text-transform: uppercase; color: var(--c-eyebrow); margin-bottom: 20px;
+    }
+    .hero-h1 {
+      font-family: 'Inter Tight', sans-serif;
+      font-size: clamp(44px, 5.8vw, 70px); font-weight: 600;
+      line-height: 1.05; letter-spacing: -0.032em;
+      color: var(--c-h1); margin-bottom: 26px; transition: color 0.25s;
+    }
+    .hero-sub {
+      font-size: 17px; line-height: 1.72; color: var(--c-sub);
+      max-width: 490px; margin-bottom: 44px; transition: color 0.25s;
+    }
+    .hero-cta { display: flex; gap: 12px; align-items: center; }
+    .btn-primary {
+      font-size: 13px; font-weight: 500; padding: 12px 26px;
+      background: #2563EB; color: white; border: none; cursor: pointer;
+      text-decoration: none; letter-spacing: 0.015em;
+      transition: background 0.15s; display: inline-block;
+    }
+    .btn-primary:hover { background: #1D4ED8; }
+    .btn-ghost {
+      font-size: 13px; font-weight: 500; padding: 11px 26px;
+      background: transparent; color: var(--btn-ghost-text);
+      border: 1px solid var(--btn-ghost-bd); cursor: pointer;
+      text-decoration: none; letter-spacing: 0.015em;
+      transition: border-color 0.15s, color 0.15s; display: inline-block;
+    }
+    .btn-ghost:hover { border-color: var(--btn-ghost-hover-bd); color: var(--btn-ghost-hover-text); }
+    .option-badge {
+      position: absolute; bottom: 40px; right: 52px;
+      font-size: 10px; font-weight: 600; letter-spacing: 0.28em;
+      text-transform: uppercase; color: var(--c-badge);
+      z-index: 20; pointer-events: none; transition: color 0.25s;
+    }
+    .hero canvas {
+      position: absolute; inset: 0; width: 100%; height: 100%; z-index: 1;
+    }
+    .hero-fade {
+      position: absolute; inset: 0; z-index: 5; pointer-events: none;
+      background: linear-gradient(
+        to right,
+        rgba(var(--fade-rgb),1.0) 0%,
+        rgba(var(--fade-rgb),0.88) 28%,
+        rgba(var(--fade-rgb),0.3) 58%,
+        transparent 100%
+      );
+    }
+
+    /* ════════════════════════════════════════════════
+       HERO BACKGROUNDS
+    ════════════════════════════════════════════════ */
+    .hero-3a { background: var(--bg-h1); --fade-rgb: var(--fade1); }
+    .hero-3b { background: var(--bg-h2); --fade-rgb: var(--fade2); }
+    .hero-3c { background: var(--bg-h3); --fade-rgb: var(--fade3); }
+    .hero-3d { background: var(--bg-h4); --fade-rgb: var(--fade4); }
+
+    /* ════════════════════════════════════════════════
+       RATIONALE CARDS
+    ════════════════════════════════════════════════ */
+    .rationale {
+      background: var(--bg-rationale); padding: 44px 88px;
+      border-top: 1px solid rgba(128,128,128,0.07);
+      border-bottom: 3px solid #2563EB; transition: background 0.3s;
+    }
+    .rationale-eyebrow {
+      font-size: 10px; font-weight: 600; letter-spacing: 0.28em;
+      text-transform: uppercase; color: var(--c-eyebrow); margin-bottom: 9px;
+    }
+    .rationale-title {
+      font-family: 'Inter Tight', sans-serif; font-size: 19px; font-weight: 600;
+      color: var(--c-rationale-title); margin-bottom: 13px;
+      letter-spacing: -0.015em; transition: color 0.25s;
+    }
+    .rationale-body {
+      font-size: 15px; line-height: 1.75; color: var(--c-rationale-body);
+      max-width: 680px; transition: color 0.25s;
+    }
+    .rationale-mood { margin-top: 16px; font-size: 12px; color: var(--c-rationale-mood); letter-spacing: 0.04em; }
+    .rationale-mood em { color: var(--c-rationale-accent); font-style: normal; }
+
+  </style>
+</head>
+<body>
+
+<!-- ─── NAV ────────────────────────────────────────── -->
+<nav class="nav">
+  <div class="nav-brand">FCI</div>
+  <div class="nav-divider"></div>
+  <a class="nav-back" href="FCI Hero Gallery.html">← Gallery</a>
+  <div class="nav-links">
+    <a class="jump" href="#opt3a">3A &nbsp;Globe</a>
+    <a class="jump" href="#opt3b">3B &nbsp;Dashboard</a>
+    <a class="jump" href="#opt3c">3C &nbsp;Radar</a>
+    <a class="jump" href="#opt3d">3D &nbsp;Hex Grid</a>
+  </div>
+  <div class="theme-toggle">
+    <button class="theme-btn" id="btn-system" onclick="setTheme('system')">System</button>
+    <button class="theme-btn" id="btn-light"  onclick="setTheme('light')">Light</button>
+    <button class="theme-btn" id="btn-dark"   onclick="setTheme('dark')">Dark</button>
+  </div>
+</nav>
+
+
+<!-- ════════════════════════════════════════════════
+     PROPOSAL 3A — THE GLOBE
+════════════════════════════════════════════════ -->
+<section id="opt3a">
+<div class="hero hero-3a">
+  <canvas id="canvas-globe"></canvas>
+  <div class="hero-fade"></div>
+  <div class="hero-content">
+    <div class="hero-logo">FCI</div>
+    <div class="hero-eyebrow">Managed Cybersecurity · Financial Services</div>
+    <h1 class="hero-h1">Your field<br>is covered.</h1>
+    <p class="hero-sub">Continuous compliance enforcement, endpoint visibility, and 24×7 SOC protection — built for the way financial firms actually operate.</p>
+    <div class="hero-cta">
+      <a href="#" class="btn-primary">Request a pilot</a>
+      <a href="#" class="btn-ghost">See how it works</a>
+    </div>
+  </div>
+  <div class="option-badge">Proposal 3A</div>
+</div>
+<div class="rationale">
+  <div class="rationale-eyebrow">Proposal 3A · Group 03 Cybersecurity Concept</div>
+  <div class="rationale-title">The Globe — Threat intelligence map, refined</div>
+  <p class="rationale-body">An orthographic globe slowly rotates on the right side of the hero, rendered as latitude and longitude grid lines at low opacity. Connection arcs trace great-circle paths between major financial centres — New York, London, Frankfurt, Singapore, Tokyo, Dubai — and animated data packets travel along each route in real time. The visual language is borrowed from threat intelligence platforms (Akamai, Cloudflare Radar) but stripped of urgency and drama. No red attack lines, no alarming counters. Just quiet evidence of global reach and continuous monitoring. In dark mode it reads as deep space; in light mode as a scientific illustration or cartographic reference.</p>
+  <p class="rationale-mood">Mood: <em>global reach · quiet intelligence · always-on coverage</em></p>
+</div>
+</section>
+
+
+<!-- ════════════════════════════════════════════════
+     PROPOSAL 3B — THE DASHBOARD
+════════════════════════════════════════════════ -->
+<section id="opt3b">
+<div class="hero hero-3b">
+  <canvas id="canvas-dash"></canvas>
+  <div class="hero-fade"></div>
+  <div class="hero-content">
+    <div class="hero-logo">FCI</div>
+    <div class="hero-eyebrow">Managed Cybersecurity · Financial Services</div>
+    <h1 class="hero-h1">Your field<br>is covered.</h1>
+    <p class="hero-sub">Continuous compliance enforcement, endpoint visibility, and 24×7 SOC protection — built for the way financial firms actually operate.</p>
+    <div class="hero-cta">
+      <a href="#" class="btn-primary">Request a pilot</a>
+      <a href="#" class="btn-ghost">See how it works</a>
+    </div>
+  </div>
+  <div class="option-badge">Proposal 3B</div>
+</div>
+<div class="rationale">
+  <div class="rationale-eyebrow">Proposal 3B · Group 03 Cybersecurity Concept</div>
+  <div class="rationale-title">The Dashboard — The CISO Portal, visible behind the headline</div>
+  <p class="rationale-body">A ghost rendering of a security operations dashboard — area charts, status indicators, metric tiles, live log entries — sits at 8–10% opacity across the right portion of the hero. The product is literally behind the message. It answers the implicit question "but what does it look like?" without making a product demo the focal point. The chart data animates slowly: a new data point appearing every few seconds, status dots blinking at irregular intervals. In dark mode the dashboard chrome glows faintly blue-white; in light mode it reads as a precise navy blueprint. The most product-specific direction in this group.</p>
+  <p class="rationale-mood">Mood: <em>product confidence · always-running · evidence of capability</em></p>
+</div>
+</section>
+
+
+<!-- ════════════════════════════════════════════════
+     PROPOSAL 3C — THE RADAR
+════════════════════════════════════════════════ -->
+<section id="opt3c">
+<div class="hero hero-3c">
+  <canvas id="canvas-radar"></canvas>
+  <div class="hero-fade"></div>
+  <div class="hero-content">
+    <div class="hero-logo">FCI</div>
+    <div class="hero-eyebrow">Managed Cybersecurity · Financial Services</div>
+    <h1 class="hero-h1">Your field<br>is covered.</h1>
+    <p class="hero-sub">Continuous compliance enforcement, endpoint visibility, and 24×7 SOC protection — built for the way financial firms actually operate.</p>
+    <div class="hero-cta">
+      <a href="#" class="btn-primary">Request a pilot</a>
+      <a href="#" class="btn-ghost">See how it works</a>
+    </div>
+  </div>
+  <div class="option-badge">Proposal 3C</div>
+</div>
+<div class="rationale">
+  <div class="rationale-eyebrow">Proposal 3C · Group 03 Cybersecurity Concept</div>
+  <div class="rationale-title">The Radar — Detection and coverage made visual</div>
+  <p class="rationale-body">A large radar circle sits on the right side of the hero: four concentric range rings, a thin crosshair, and a slowly rotating sweep arm with a gradient fade trail. As the sweep passes, blips appear — small glowing points that linger and fade, suggesting detections. The metaphor is deliberately universal: everyone understands a radar screen as "scanning" and "finding things." For a 24×7 SOC and continuous monitoring story, it's arguably the most instinctively legible visual in this group. It has no literal cybersecurity reference — no skulls, no locks, no binary — but it communicates "always watching" more cleanly than anything else here.</p>
+  <p class="rationale-mood">Mood: <em>always scanning · instant recognition · calm vigilance</em></p>
+</div>
+</section>
+
+
+<!-- ════════════════════════════════════════════════
+     PROPOSAL 3D — THE HEX GRID
+════════════════════════════════════════════════ -->
+<section id="opt3d">
+<div class="hero hero-3d">
+  <canvas id="canvas-hex"></canvas>
+  <div class="hero-fade"></div>
+  <div class="hero-content">
+    <div class="hero-logo">FCI</div>
+    <div class="hero-eyebrow">Managed Cybersecurity · Financial Services</div>
+    <h1 class="hero-h1">Your field<br>is covered.</h1>
+    <p class="hero-sub">Continuous compliance enforcement, endpoint visibility, and 24×7 SOC protection — built for the way financial firms actually operate.</p>
+    <div class="hero-cta">
+      <a href="#" class="btn-primary">Request a pilot</a>
+      <a href="#" class="btn-ghost">See how it works</a>
+    </div>
+  </div>
+  <div class="option-badge">Proposal 3D</div>
+</div>
+<div class="rationale">
+  <div class="rationale-eyebrow">Proposal 3D · Group 03 Cybersecurity Concept</div>
+  <div class="rationale-title">The Hex Grid — 40,000 endpoints, made architectural</div>
+  <p class="rationale-body">A dense honeycomb of hexagonal cells covers the hero from edge to edge — each cell representing an endpoint, a device, a user, a segment of the network. Most cells are barely-there outlines; a portion are "active" — glowing at varying intensities, pulsing gently, connected to their neighbours by faint lines. The pattern directly references FCI's core claim of 40,000+ endpoints under management. It also resonates with Zero Trust network segmentation: every cell is its own zone, every connection is deliberate. In dark mode it reads as a luminous circuit board; in light mode as a crisp architectural schematic. The most conceptually specific and intellectually interesting direction in this group.</p>
+  <p class="rationale-mood">Mood: <em>systematic coverage · zero trust architecture · every endpoint visible</em></p>
+</div>
+</section>
+
+
+<!-- ════════════════════════════════════════════════
+     JAVASCRIPT
+════════════════════════════════════════════════ -->
+<script>
+
+/* ────────────────────────────────────────────────
+   THEME
+────────────────────────────────────────────────── */
+let currentTheme = 'system';
+
+function isDark() {
+  if (currentTheme === 'dark')  return true;
+  if (currentTheme === 'light') return false;
+  return window.matchMedia('(prefers-color-scheme: dark)').matches;
+}
+
+function setTheme(t) {
+  currentTheme = t;
+  document.body.classList.remove('theme-light', 'theme-dark');
+  if (t === 'light') document.body.classList.add('theme-light');
+  if (t === 'dark')  document.body.classList.add('theme-dark');
+  document.querySelectorAll('.theme-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('btn-' + t).classList.add('active');
+}
+document.getElementById('btn-system').classList.add('active');
+
+
+/* ────────────────────────────────────────────────
+   SHARED: canvas resize helper
+────────────────────────────────────────────────── */
+function fitCanvas(canvas) {
+  const hero = canvas.closest('.hero');
+  canvas.width  = hero.offsetWidth;
+  canvas.height = hero.offsetHeight;
+  return { W: canvas.width, H: canvas.height };
+}
+
+
+/* ════════════════════════════════════════════════
+   PROPOSAL 3A — GLOBE
+════════════════════════════════════════════════ */
+(function() {
+  const canvas = document.getElementById('canvas-globe');
+  const ctx = canvas.getContext('2d');
+  let W, H;
+
+  // Globe centre longitude slowly rotates
+  let lon0 = 10; // degrees
+  const lat0Deg = 25;
+  const lat0 = lat0Deg * Math.PI / 180;
+
+  const cities = [
+    { name: 'New York',   lat: 40.7,   lon: -74.0  },
+    { name: 'Chicago',    lat: 41.9,   lon: -87.6  },
+    { name: 'Toronto',    lat: 43.7,   lon: -79.4  },
+    { name: 'São Paulo',  lat: -23.5,  lon: -46.6  },
+    { name: 'London',     lat: 51.5,   lon: -0.1   },
+    { name: 'Frankfurt',  lat: 50.1,   lon: 8.7    },
+    { name: 'Zurich',     lat: 47.4,   lon: 8.5    },
+    { name: 'Dubai',      lat: 25.2,   lon: 55.3   },
+    { name: 'Singapore',  lat: 1.3,    lon: 103.8  },
+    { name: 'Tokyo',      lat: 35.7,   lon: 139.7  },
+    { name: 'Hong Kong',  lat: 22.3,   lon: 114.2  },
+    { name: 'Sydney',     lat: -33.9,  lon: 151.2  },
+  ];
+
+  const routes = [
+    [0,4],[0,5],[0,2],[0,3],[4,5],[4,7],[4,8],
+    [5,7],[7,8],[8,9],[8,10],[9,10],[1,4],[6,7],[3,4]
+  ];
+
+  // Packets traveling along routes
+  const packets = routes.map(r => ({
+    route: r,
+    t: Math.random(),
+    speed: 0.0012 + Math.random() * 0.0015,
+    dir: Math.random() > 0.5 ? 1 : -1
+  }));
+
+  function project(latDeg, lonDeg, R, cx, cy) {
+    const φ = latDeg * Math.PI / 180;
+    const λ = lonDeg * Math.PI / 180;
+    const λ0 = lon0 * Math.PI / 180;
+    const Δλ = λ - λ0;
+    const cosC = Math.sin(lat0)*Math.sin(φ) + Math.cos(lat0)*Math.cos(φ)*Math.cos(Δλ);
+    if (cosC < 0) return null;
+    return {
+      x: cx + R * Math.cos(φ) * Math.sin(Δλ),
+      y: cy - R * (Math.cos(lat0)*Math.sin(φ) - Math.sin(lat0)*Math.cos(φ)*Math.cos(Δλ)),
+      depth: cosC
+    };
+  }
+
+  function slerp(c1, c2, t) {
+    const φ1 = c1.lat * Math.PI/180, λ1 = c1.lon * Math.PI/180;
+    const φ2 = c2.lat * Math.PI/180, λ2 = c2.lon * Math.PI/180;
+    const x1 = Math.cos(φ1)*Math.cos(λ1), y1 = Math.cos(φ1)*Math.sin(λ1), z1 = Math.sin(φ1);
+    const x2 = Math.cos(φ2)*Math.cos(λ2), y2 = Math.cos(φ2)*Math.sin(λ2), z2 = Math.sin(φ2);
+    const dot = Math.min(1, Math.max(-1, x1*x2+y1*y2+z1*z2));
+    const Ω = Math.acos(dot);
+    if (Ω < 0.001) return c1;
+    const sinΩ = Math.sin(Ω);
+    const a = Math.sin((1-t)*Ω)/sinΩ, b = Math.sin(t*Ω)/sinΩ;
+    const x=a*x1+b*x2, y=a*y1+b*y2, z=a*z1+b*z2;
+    return {
+      lat: Math.atan2(z, Math.sqrt(x*x+y*y)) * 180/Math.PI,
+      lon: Math.atan2(y, x) * 180/Math.PI
+    };
+  }
+
+  function resize() {
+    ({ W, H } = fitCanvas(canvas));
+  }
+
+  function tick() {
+    ctx.clearRect(0, 0, W, H);
+    const dark = isDark();
+    const cx = W * 0.72, cy = H * 0.5;
+    const R = Math.min(W, H) * 0.36;
+
+    // Slow rotation
+    lon0 += 0.008;
+
+    const gridAlpha  = dark ? 0.10 : 0.08;
+    const arcAlpha   = dark ? 0.18 : 0.14;
+    const cityAlpha  = dark ? 0.55 : 0.5;
+    const packetAlpha = dark ? 0.9  : 0.8;
+    const glowR      = dark ? '14,165,233' : '14,130,200';
+    const lineR      = dark ? '37,99,235'  : '30,58,110';
+    const cityR      = dark ? '14,165,233' : '37,99,235';
+
+    // Globe outline
+    ctx.beginPath();
+    ctx.arc(cx, cy, R, 0, Math.PI*2);
+    ctx.strokeStyle = `rgba(${lineR},${dark ? 0.18 : 0.12})`;
+    ctx.lineWidth = 1;
+    ctx.stroke();
+
+    // Latitude lines
+    for (let lat = -60; lat <= 60; lat += 30) {
+      ctx.beginPath();
+      let first = true;
+      for (let lon = -180; lon <= 180; lon += 3) {
+        const p = project(lat, lon, R, cx, cy);
+        if (!p) { first = true; continue; }
+        first ? ctx.moveTo(p.x, p.y) : ctx.lineTo(p.x, p.y);
+        first = false;
+      }
+      ctx.strokeStyle = `rgba(${lineR},${gridAlpha})`;
+      ctx.lineWidth = lat === 0 ? 0.9 : 0.5;
+      ctx.stroke();
+    }
+
+    // Longitude lines
+    for (let lon = -180; lon < 180; lon += 30) {
+      ctx.beginPath();
+      let first = true;
+      for (let lat = -85; lat <= 85; lat += 3) {
+        const p = project(lat, lon, R, cx, cy);
+        if (!p) { first = true; continue; }
+        first ? ctx.moveTo(p.x, p.y) : ctx.lineTo(p.x, p.y);
+        first = false;
+      }
+      ctx.strokeStyle = `rgba(${lineR},${gridAlpha * 0.7})`;
+      ctx.lineWidth = 0.5;
+      ctx.stroke();
+    }
+
+    // Routes (static faint arcs)
+    for (const route of routes) {
+      const c1 = cities[route[0]], c2 = cities[route[1]];
+      ctx.beginPath();
+      let first = true;
+      for (let t = 0; t <= 1; t += 0.02) {
+        const mid = slerp(c1, c2, t);
+        const p = project(mid.lat, mid.lon, R, cx, cy);
+        if (!p) { first = true; continue; }
+        first ? ctx.moveTo(p.x, p.y) : ctx.lineTo(p.x, p.y);
+        first = false;
+      }
+      ctx.strokeStyle = `rgba(${lineR},${arcAlpha})`;
+      ctx.lineWidth = 0.7;
+      ctx.stroke();
+    }
+
+    // Packets (traveling dots)
+    for (const pkt of packets) {
+      pkt.t += pkt.speed * pkt.dir;
+      if (pkt.t > 1) { pkt.t = 1; pkt.dir = -1; }
+      if (pkt.t < 0) { pkt.t = 0; pkt.dir =  1; }
+
+      const c1 = cities[pkt.route[0]], c2 = cities[pkt.route[1]];
+      const mid = slerp(c1, c2, pkt.t);
+      const p = project(mid.lat, mid.lon, R, cx, cy);
+      if (!p) continue;
+
+      // Glow
+      const g = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, 8);
+      g.addColorStop(0, `rgba(${glowR},${packetAlpha})`);
+      g.addColorStop(1, `rgba(${glowR},0)`);
+      ctx.beginPath(); ctx.arc(p.x, p.y, 8, 0, Math.PI*2);
+      ctx.fillStyle = g; ctx.fill();
+
+      // Core dot
+      ctx.beginPath(); ctx.arc(p.x, p.y, 2.5, 0, Math.PI*2);
+      ctx.fillStyle = `rgba(255,255,255,${packetAlpha})`; ctx.fill();
+    }
+
+    // City dots
+    for (const city of cities) {
+      const p = project(city.lat, city.lon, R, cx, cy);
+      if (!p) continue;
+      const g = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, 6);
+      g.addColorStop(0, `rgba(${cityR},${cityAlpha})`);
+      g.addColorStop(1, `rgba(${cityR},0)`);
+      ctx.beginPath(); ctx.arc(p.x, p.y, 6, 0, Math.PI*2);
+      ctx.fillStyle = g; ctx.fill();
+      ctx.beginPath(); ctx.arc(p.x, p.y, 2, 0, Math.PI*2);
+      ctx.fillStyle = `rgba(${cityR},${cityAlpha + 0.2})`; ctx.fill();
+    }
+
+    requestAnimationFrame(tick);
+  }
+
+  resize(); tick();
+  window.addEventListener('resize', resize);
+})();
+
+
+/* ════════════════════════════════════════════════
+   PROPOSAL 3B — DASHBOARD
+════════════════════════════════════════════════ */
+(function() {
+  const canvas = document.getElementById('canvas-dash');
+  const ctx = canvas.getContext('2d');
+  let W, H;
+  let chartData = [];
+  let frameCount = 0;
+
+  // Generate initial chart data
+  function genData(n) {
+    const d = [];
+    let v = 60 + Math.random() * 20;
+    for (let i = 0; i < n; i++) {
+      v = Math.max(20, Math.min(95, v + (Math.random()-0.48)*8));
+      d.push(v);
+    }
+    return d;
+  }
+  chartData = genData(60);
+
+  const statusItems = [
+    { label: 'Endpoint Protection', ok: true  },
+    { label: 'MFA Enforcement',     ok: true  },
+    { label: 'SOC Monitoring',      ok: true  },
+    { label: 'VPN Coverage',        ok: true  },
+    { label: 'Patch Compliance',    ok: false },
+    { label: 'Log Aggregation',     ok: true  },
+  ];
+
+  const metrics = [
+    { label: 'Endpoints',  value: '41,284' },
+    { label: 'Alerts 24h', value: '1,847'  },
+    { label: 'MTTR',       value: '4.2 min'},
+    { label: 'Uptime',     value: '99.97%' },
+  ];
+
+  function resize() {
+    ({ W, H } = fitCanvas(canvas));
+    chartData = genData(60);
+  }
+
+  function tick() {
+    ctx.clearRect(0, 0, W, H);
+    frameCount++;
+    const dark = isDark();
+    const base = dark ? '200,220,255' : '20,40,100';
+    const alpha = dark ? 0.09 : 0.075;
+
+    // Slowly add a data point every 90 frames
+    if (frameCount % 90 === 0) {
+      const last = chartData[chartData.length-1];
+      const next = Math.max(20, Math.min(95, last + (Math.random()-0.45)*10));
+      chartData.push(next);
+      if (chartData.length > 80) chartData.shift();
+    }
+
+    const ox = W * 0.32; // dashboard left edge
+    const pad = 24;
+
+    // ── Main area chart ──────────────────────────────
+    const cx = ox + pad, cy = H * 0.12;
+    const cw = W - cx - pad, ch = H * 0.38;
+
+    // Panel bg
+    ctx.fillStyle = `rgba(${base},${alpha * 0.5})`;
+    ctx.fillRect(cx, cy, cw, ch);
+    ctx.strokeStyle = `rgba(${base},${alpha * 2})`;
+    ctx.lineWidth = 0.75;
+    ctx.strokeRect(cx, cy, cw, ch);
+
+    // Panel label
+    ctx.font = `500 10px Inter, sans-serif`;
+    ctx.fillStyle = `rgba(${base},${alpha * 5})`;
+    ctx.fillText('ENDPOINT ACTIVITY — 60 MIN', cx + 10, cy + 14);
+
+    // Y-axis grid lines
+    for (let g = 0; g <= 4; g++) {
+      const gy = cy + 24 + (ch - 34) * (g / 4);
+      ctx.beginPath(); ctx.moveTo(cx + 4, gy); ctx.lineTo(cx + cw - 4, gy);
+      ctx.strokeStyle = `rgba(${base},${alpha * 1.2})`; ctx.lineWidth = 0.5;
+      ctx.stroke();
+    }
+
+    // Area chart
+    const pts = chartData.slice(-50);
+    const xStep = (cw - 16) / (pts.length - 1);
+    const yScale = (ch - 34) / 100;
+
+    ctx.beginPath();
+    pts.forEach((v, i) => {
+      const px = cx + 8 + i * xStep;
+      const py = cy + 24 + (ch - 34) * (1 - v / 100);
+      i === 0 ? ctx.moveTo(px, py) : ctx.lineTo(px, py);
+    });
+    ctx.strokeStyle = dark ? `rgba(14,165,233,${alpha * 8})` : `rgba(37,99,235,${alpha * 8})`;
+    ctx.lineWidth = 1.5;
+    ctx.stroke();
+
+    // Fill under
+    ctx.lineTo(cx + 8 + (pts.length-1)*xStep, cy + ch - 10);
+    ctx.lineTo(cx + 8, cy + ch - 10);
+    ctx.closePath();
+    ctx.fillStyle = dark ? `rgba(14,165,233,${alpha * 2.5})` : `rgba(37,99,235,${alpha * 2})`;
+    ctx.fill();
+
+    // ── Metric tiles ─────────────────────────────────
+    const ty = cy + ch + 16;
+    const tw = (cw - 3 * pad * 0.5) / 4;
+    metrics.forEach((m, i) => {
+      const tx = cx + i * (tw + pad * 0.5);
+      ctx.fillStyle = `rgba(${base},${alpha * 0.6})`;
+      ctx.fillRect(tx, ty, tw, H * 0.1);
+      ctx.strokeStyle = `rgba(${base},${alpha * 2})`;
+      ctx.lineWidth = 0.75;
+      ctx.strokeRect(tx, ty, tw, H * 0.1);
+
+      ctx.font = `600 16px Inter Tight, sans-serif`;
+      ctx.fillStyle = dark ? `rgba(14,165,233,${alpha * 10})` : `rgba(37,99,235,${alpha * 10})`;
+      ctx.fillText(m.value, tx + 10, ty + H * 0.065);
+
+      ctx.font = `400 9px Inter, sans-serif`;
+      ctx.fillStyle = `rgba(${base},${alpha * 5})`;
+      ctx.fillText(m.label.toUpperCase(), tx + 10, ty + H * 0.088);
+    });
+
+    // ── Status list ──────────────────────────────────
+    const sy = ty + H * 0.12 + 8;
+    const sw = cw;
+    ctx.fillStyle = `rgba(${base},${alpha * 0.5})`;
+    ctx.fillRect(cx, sy, sw, statusItems.length * 22 + 22);
+    ctx.strokeStyle = `rgba(${base},${alpha * 2})`; ctx.lineWidth = 0.75;
+    ctx.strokeRect(cx, sy, sw, statusItems.length * 22 + 22);
+
+    ctx.font = `500 9px Inter, sans-serif`;
+    ctx.fillStyle = `rgba(${base},${alpha * 5})`;
+    ctx.fillText('SAFEGUARD STATUS', cx + 10, sy + 14);
+
+    statusItems.forEach((s, i) => {
+      const iy = sy + 26 + i * 22;
+      // Status dot (blinking for warning items)
+      const blink = !s.ok && Math.sin(frameCount * 0.05) > 0;
+      const dotColor = s.ok
+        ? (dark ? '34,197,94' : '22,163,74')
+        : (blink ? '251,191,36' : '234,179,8');
+      ctx.beginPath(); ctx.arc(cx + 14, iy, 4, 0, Math.PI*2);
+      ctx.fillStyle = `rgba(${dotColor},${alpha * 8})`;
+      ctx.fill();
+
+      ctx.font = `400 10px Inter, sans-serif`;
+      ctx.fillStyle = `rgba(${base},${alpha * 5.5})`;
+      ctx.fillText(s.label, cx + 26, iy + 4);
+
+      const stText = s.ok ? 'ACTIVE' : 'REVIEW';
+      ctx.font = `500 9px Inter, sans-serif`;
+      ctx.fillStyle = s.ok
+        ? `rgba(${dotColor},${alpha * 7})`
+        : `rgba(${dotColor},${alpha * 7})`;
+      const tw2 = ctx.measureText(stText).width;
+      ctx.fillText(stText, cx + sw - tw2 - 14, iy + 4);
+    });
+
+    requestAnimationFrame(tick);
+  }
+
+  resize(); tick();
+  window.addEventListener('resize', () => { resize(); });
+})();
+
+
+/* ════════════════════════════════════════════════
+   PROPOSAL 3C — RADAR
+════════════════════════════════════════════════ */
+(function() {
+  const canvas = document.getElementById('canvas-radar');
+  const ctx = canvas.getContext('2d');
+  let W, H;
+  let angle = 0;
+  const blips = [];
+  let frameCount = 0;
+
+  function resize() {
+    ({ W, H } = fitCanvas(canvas));
+  }
+
+  function tick() {
+    ctx.clearRect(0, 0, W, H);
+    frameCount++;
+    const dark = isDark();
+
+    const cx = W * 0.68, cy = H * 0.5;
+    const R = Math.min(W * 0.36, H * 0.42);
+
+    const ringC  = dark ? '37,99,235'  : '30,58,110';
+    const sweepC = dark ? '14,165,233' : '14,130,200';
+    const blipC  = dark ? '14,165,233' : '37,99,235';
+    const ringA  = dark ? 0.14 : 0.10;
+
+    // Draw range rings
+    for (let r = 1; r <= 4; r++) {
+      ctx.beginPath();
+      ctx.arc(cx, cy, R * r / 4, 0, Math.PI * 2);
+      ctx.strokeStyle = `rgba(${ringC},${ringA * (r === 4 ? 1.4 : 1)})`;
+      ctx.lineWidth = r === 4 ? 1 : 0.6;
+      ctx.stroke();
+    }
+
+    // Crosshairs
+    ctx.save();
+    ctx.strokeStyle = `rgba(${ringC},${ringA * 0.8})`;
+    ctx.lineWidth = 0.5;
+    ctx.setLineDash([4, 6]);
+    ctx.beginPath(); ctx.moveTo(cx - R, cy); ctx.lineTo(cx + R, cy); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(cx, cy - R); ctx.lineTo(cx, cy + R); ctx.stroke();
+    ctx.restore();
+
+    // Sweep sector (gradient fade)
+    const sweepArc = Math.PI * 0.55;
+    const grad = ctx.createConicalGradient
+      ? null  // not standard
+      : null;
+
+    // Fallback: draw multiple thin arc slices to simulate conical gradient
+    const steps = 32;
+    for (let s = 0; s < steps; s++) {
+      const a0 = angle - sweepArc * (s / steps);
+      const a1 = angle - sweepArc * ((s + 1) / steps);
+      const a  = 1 - (s / steps);
+      ctx.beginPath();
+      ctx.moveTo(cx, cy);
+      ctx.arc(cx, cy, R, a0, a1, true);
+      ctx.closePath();
+      ctx.fillStyle = `rgba(${sweepC},${a * (dark ? 0.07 : 0.055)})`;
+      ctx.fill();
+    }
+
+    // Sweep line
+    ctx.beginPath();
+    ctx.moveTo(cx, cy);
+    ctx.lineTo(cx + R * Math.cos(angle), cy + R * Math.sin(angle));
+    ctx.strokeStyle = dark ? `rgba(14,165,233,0.6)` : `rgba(37,99,235,0.5)`;
+    ctx.lineWidth = 1.5;
+    ctx.stroke();
+
+    // Advance sweep
+    angle += 0.012;
+
+    // Spawn blips when sweep passes
+    if (Math.random() < 0.018) {
+      const r = R * (0.25 + Math.random() * 0.72);
+      const a = angle + (Math.random() - 0.5) * 0.3;
+      blips.push({
+        x: cx + r * Math.cos(a),
+        y: cy + r * Math.sin(a),
+        life: 1.0,
+        size: 2 + Math.random() * 2.5
+      });
+    }
+
+    // Draw and age blips
+    for (let i = blips.length - 1; i >= 0; i--) {
+      const b = blips[i];
+      b.life -= 0.006;
+      if (b.life <= 0) { blips.splice(i, 1); continue; }
+
+      // Check if inside radar circle
+      const dx = b.x - cx, dy = b.y - cy;
+      if (dx*dx + dy*dy > R*R) { blips.splice(i, 1); continue; }
+
+      const a = b.life;
+      const g = ctx.createRadialGradient(b.x, b.y, 0, b.x, b.y, b.size * 4);
+      g.addColorStop(0, `rgba(${blipC},${a * 0.9})`);
+      g.addColorStop(1, `rgba(${blipC},0)`);
+      ctx.beginPath(); ctx.arc(b.x, b.y, b.size * 4, 0, Math.PI*2);
+      ctx.fillStyle = g; ctx.fill();
+
+      ctx.beginPath(); ctx.arc(b.x, b.y, b.size, 0, Math.PI*2);
+      ctx.fillStyle = `rgba(${dark ? '200,240,255' : blipC},${a})`;
+      ctx.fill();
+    }
+
+    // Clip to circle
+    ctx.save();
+    ctx.globalCompositeOperation = 'destination-in';
+    ctx.beginPath();
+    ctx.arc(cx, cy, R + 2, 0, Math.PI*2);
+    ctx.fillStyle = 'white';
+    ctx.fill();
+    ctx.restore();
+
+    requestAnimationFrame(tick);
+  }
+
+  resize(); tick();
+  window.addEventListener('resize', resize);
+})();
+
+
+/* ════════════════════════════════════════════════
+   PROPOSAL 3D — HEX GRID
+════════════════════════════════════════════════ */
+(function() {
+  const canvas = document.getElementById('canvas-hex');
+  const ctx = canvas.getContext('2d');
+  let W, H;
+  let cells = [];
+  let frameCount = 0;
+
+  const HEX_SIZE = 28;
+  const HEX_GAP  = 2;
+
+  function hexCorner(cx, cy, size, i) {
+    const a = Math.PI / 180 * (60 * i - 30);
+    return [cx + size * Math.cos(a), cy + size * Math.sin(a)];
+  }
+
+  function buildGrid() {
+    cells = [];
+    const s = HEX_SIZE - HEX_GAP;
+    const cols = Math.ceil(W / (s * 1.5)) + 2;
+    const rows = Math.ceil(H / (s * Math.sqrt(3))) + 2;
+    for (let col = -1; col < cols; col++) {
+      for (let row = -1; row < rows; row++) {
+        const cx = col * s * 1.5;
+        const cy = row * s * Math.sqrt(3) + (col % 2) * s * Math.sqrt(3) / 2;
+        const active = Math.random() < 0.28;
+        cells.push({
+          cx, cy,
+          active,
+          brightness: active ? 0.3 + Math.random() * 0.7 : 0,
+          phase: Math.random() * Math.PI * 2,
+          speed: 0.012 + Math.random() * 0.018,
+          s
+        });
+      }
+    }
+  }
+
+  function resize() {
+    ({ W, H } = fitCanvas(canvas));
+    buildGrid();
+  }
+
+  function tick() {
+    ctx.clearRect(0, 0, W, H);
+    frameCount++;
+    const dark = isDark();
+    const baseC   = dark ? '37,99,235'  : '30,58,110';
+    const activeC = dark ? '14,165,233' : '37,99,235';
+    const glowC   = dark ? '14,165,233' : '14,130,200';
+
+    for (const cell of cells) {
+      const { cx, cy, active, s } = cell;
+
+      // Pulsing brightness for active cells
+      const pulse = active
+        ? cell.brightness * (0.75 + 0.25 * Math.sin(cell.phase + frameCount * cell.speed))
+        : 0;
+
+      // Draw hex
+      ctx.beginPath();
+      for (let i = 0; i < 6; i++) {
+        const [x, y] = hexCorner(cx, cy, s * 0.88, i);
+        i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+      }
+      ctx.closePath();
+
+      if (active) {
+        ctx.fillStyle = `rgba(${activeC},${pulse * (dark ? 0.12 : 0.09)})`;
+        ctx.fill();
+        ctx.strokeStyle = `rgba(${activeC},${pulse * (dark ? 0.45 : 0.35)})`;
+      } else {
+        ctx.strokeStyle = `rgba(${baseC},${dark ? 0.06 : 0.05})`;
+      }
+      ctx.lineWidth = active ? 0.75 : 0.5;
+      ctx.stroke();
+
+      // Glow dot on bright active cells
+      if (active && pulse > 0.65) {
+        const g = ctx.createRadialGradient(cx, cy, 0, cx, cy, s * 0.4);
+        g.addColorStop(0, `rgba(${glowC},${pulse * (dark ? 0.5 : 0.4)})`);
+        g.addColorStop(1, `rgba(${glowC},0)`);
+        ctx.beginPath();
+        ctx.arc(cx, cy, s * 0.4, 0, Math.PI*2);
+        ctx.fillStyle = g;
+        ctx.fill();
+
+        ctx.beginPath();
+        ctx.arc(cx, cy, 2, 0, Math.PI*2);
+        ctx.fillStyle = `rgba(${dark ? '200,240,255' : glowC},${pulse * 0.9})`;
+        ctx.fill();
+      }
+
+      // Edge connections between nearby active cells
+      if (active && pulse > 0.4) {
+        for (const other of cells) {
+          if (!other.active) continue;
+          const dx = other.cx - cx, dy = other.cy - cy;
+          const d = Math.sqrt(dx*dx + dy*dy);
+          if (d > s * 2.2 || d < 1) continue;
+          const otherPulse = other.brightness * (0.75 + 0.25 * Math.sin(other.phase + frameCount * other.speed));
+          if (otherPulse < 0.4) continue;
+          const lineA = Math.min(pulse, otherPulse) * (dark ? 0.15 : 0.10);
+          ctx.beginPath();
+          ctx.moveTo(cx, cy); ctx.lineTo(other.cx, other.cy);
+          ctx.strokeStyle = `rgba(${activeC},${lineA})`;
+          ctx.lineWidth = 0.6;
+          ctx.stroke();
+        }
+      }
+    }
+
+    requestAnimationFrame(tick);
+  }
+
+  resize(); tick();
+  window.addEventListener('resize', resize);
+})();
+
+</script>
+</body>
+</html>

@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sanctuary Wealth — Client Security Overview</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      /* Sanctuary Wealth brand palette */
+      --sw-navy:      #001930;
+      --sw-navy-mid:  #002C4D;
+      --sw-gold:      #FCAA4A;
+      --sw-gold-dark: #D4892E;
+      --sw-cream:     #ECEAE6;
+      --sw-cream-mid: #E0DDD6;
+      --sw-warm-text: #5A5344;
+      --sw-white:     #FFFFFF;
+      --sw-rule:      #D4D0C8;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { font-size: 16px; }
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background: #D4D0C8;
+      color: var(--sw-navy-mid);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── PAGE SHELL ── */
+    .back-nav {
+      display: block;
+      padding: 10px 48px;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #94A3B8;
+      text-decoration: none;
+      border-bottom: 1px solid #E2E8F0;
+      background: #F8FAFC;
+    }
+
+    .page {
+      max-width: 780px;
+      margin: 48px auto;
+      background: var(--sw-white);
+      box-shadow: 0 8px 48px rgba(0,0,0,0.18);
+    }
+
+    /* ── FRONT PANEL ── */
+    .front {
+      background: var(--sw-navy);
+      padding: 60px 64px 52px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Decorative arcs — Sanctuary Wealth's signature motif */
+    .front::before {
+      content: '';
+      position: absolute;
+      top: -120px; right: -100px;
+      width: 420px; height: 420px;
+      border-radius: 50%;
+      border: 40px solid rgba(252, 170, 74, 0.06);
+      pointer-events: none;
+    }
+    .front::after {
+      content: '';
+      position: absolute;
+      bottom: -100px; left: -80px;
+      width: 320px; height: 320px;
+      border-radius: 50%;
+      border: 30px solid rgba(252, 170, 74, 0.05);
+      pointer-events: none;
+    }
+
+    .front-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 52px;
+      position: relative; z-index: 1;
+    }
+
+    /* Sanctuary Wealth logo — reconstructed */
+    .sw-logo {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .sw-logo-mark {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      border: 1.5px solid rgba(236, 234, 230, 0.7);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .sw-logo-s {
+      font-family: 'Playfair Display', serif;
+      font-size: 30px;
+      font-weight: 400;
+      color: var(--sw-cream);
+      line-height: 1;
+      font-style: italic;
+    }
+    .sw-logo-text {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .sw-logo-name {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 19px;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--sw-cream);
+      line-height: 1;
+    }
+    .sw-logo-sub {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(236, 234, 230, 0.5);
+      line-height: 1;
+    }
+
+    .persona-tag {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--sw-gold);
+      background: rgba(252, 170, 74, 0.10);
+      padding: 8px 16px;
+      align-self: flex-start;
+      border: 1px solid rgba(252, 170, 74, 0.2);
+    }
+
+    .front-headline {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(26px, 3.6vw, 36px);
+      font-weight: 400;
+      color: var(--sw-cream);
+      letter-spacing: -0.01em;
+      line-height: 1.2;
+      max-width: 560px;
+      margin-bottom: 22px;
+      position: relative; z-index: 1;
+    }
+
+    .front-sub {
+      font-size: 14px;
+      font-weight: 300;
+      color: rgba(236, 234, 230, 0.78);
+      line-height: 1.75;
+      max-width: 540px;
+      margin-bottom: 44px;
+      position: relative; z-index: 1;
+    }
+
+    .front-pillars {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 2px;
+      position: relative; z-index: 1;
+    }
+
+    .pillar {
+      background: rgba(255,255,255,0.05);
+      padding: 20px 20px 22px;
+      border-top: 2px solid rgba(252, 170, 74, 0.35);
+    }
+
+    .pillar-num {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      color: var(--sw-gold);
+      margin-bottom: 10px;
+      text-transform: uppercase;
+    }
+
+    .pillar-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--sw-cream);
+      line-height: 1.3;
+      margin-bottom: 8px;
+    }
+
+    .pillar-desc {
+      font-size: 13px;
+      font-weight: 300;
+      color: rgba(236, 234, 230, 0.72);
+      line-height: 1.65;
+    }
+
+    /* ── DIVIDER BAND ── */
+    .band {
+      background: var(--sw-cream);
+      border-top: 3px solid var(--sw-gold);
+      padding: 22px 64px;
+      display: flex;
+      align-items: center;
+      gap: 28px;
+    }
+
+    .band-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--sw-gold-dark);
+      white-space: nowrap;
+    }
+
+    .band-rule {
+      width: 1px;
+      height: 32px;
+      background: var(--sw-gold);
+      opacity: 0.4;
+      flex-shrink: 0;
+    }
+
+    .band-quote {
+      font-family: 'Playfair Display', serif;
+      font-size: 14.5px;
+      font-weight: 400;
+      font-style: italic;
+      color: var(--sw-navy-mid);
+      letter-spacing: 0em;
+      line-height: 1.5;
+    }
+
+    /* ── BACK PANEL ── */
+    .back {
+      padding: 52px 64px 60px;
+      background: var(--sw-cream);
+    }
+
+    .back-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      margin-bottom: 44px;
+    }
+
+    .back-col-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--sw-gold-dark);
+      margin-bottom: 18px;
+      padding-bottom: 10px;
+      border-bottom: 1.5px solid var(--sw-gold);
+    }
+
+    .back-col-body {
+      font-size: 13px;
+      font-weight: 400;
+      color: var(--sw-warm-text);
+      line-height: 1.78;
+      margin-bottom: 18px;
+    }
+
+    .item-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .item-list li {
+      font-size: 13px;
+      font-weight: 400;
+      color: var(--sw-navy-mid);
+      padding: 9px 0 9px 18px;
+      border-bottom: 1px solid var(--sw-cream-mid);
+      line-height: 1.5;
+      position: relative;
+    }
+    .item-list li:last-child { border-bottom: none; }
+    .item-list li::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 17px;
+      width: 6px; height: 1.5px;
+      background: var(--sw-gold);
+    }
+
+    /* ── STATS HEADER ── */
+    .stats-header {
+      background: var(--sw-navy);
+      padding: 12px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2px;
+    }
+    .stats-header-label {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(236, 234, 230, 0.45);
+    }
+    .stats-header-fci {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 17px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      color: var(--sw-cream);
+      line-height: 1;
+    }
+    .stats-header-fci span {
+      font-size: 10px;
+      font-weight: 400;
+      letter-spacing: 0.1em;
+      color: var(--sw-gold);
+      margin-left: 10px;
+      vertical-align: middle;
+      text-transform: uppercase;
+    }
+
+    /* ── STATS ROW ── */
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 2px;
+      margin-bottom: 36px;
+      background: var(--sw-cream-mid);
+    }
+
+    .stat-cell {
+      background: var(--sw-white);
+      padding: 16px 14px 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .stat-logo {
+      margin-bottom: 6px;
+      line-height: 0;
+    }
+
+    .stat-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 24px;
+      font-weight: 500;
+      color: var(--sw-navy);
+      letter-spacing: -0.01em;
+      line-height: 1;
+    }
+
+    .stat-label {
+      font-size: 10px;
+      font-weight: 400;
+      color: var(--sw-warm-text);
+      letter-spacing: 0.04em;
+      line-height: 1.4;
+    }
+
+    /* ── FOOTER BLOCK ── */
+    .footer-block {
+      background: var(--sw-navy);
+      padding: 28px 40px;
+      display: grid;
+      grid-template-columns: 3fr 2fr;
+      gap: 32px;
+      align-items: center;
+    }
+
+    .footer-left {}
+    .footer-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--sw-gold);
+      margin-bottom: 8px;
+    }
+    .footer-text {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 13px;
+      font-weight: 300;
+      color: rgba(236, 234, 230, 0.82);
+      line-height: 1.6;
+    }
+
+    /* Footer credential strip */
+    .footer-creds {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 10px;
+      padding-left: 32px;
+      border-left: 1px solid rgba(252, 170, 74, 0.2);
+    }
+    .footer-creds-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 26px;
+      font-weight: 400;
+      color: var(--sw-cream);
+      letter-spacing: -0.01em;
+      line-height: 1;
+      text-align: right;
+    }
+    .footer-creds-label {
+      font-size: 10px;
+      font-weight: 600;
+      text-align: right;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(236, 234, 230, 0.4);
+    }
+    .footer-creds-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      justify-content: flex-end;
+    }
+    .cred-tag {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--sw-gold);
+      border: 1px solid rgba(252, 170, 74, 0.3);
+      padding: 4px 9px;
+      white-space: nowrap;
+    }
+
+    /* ══════════════════════════════════════════
+       DARK MODE
+    ══════════════════════════════════════════ */
+    @media (prefers-color-scheme: dark) {
+      body { background: #0A0F18; }
+      .back { background: #0F1922; }
+      .stat-cell { background: #0F1922; }
+      .stats-row { background: #0A0F18; }
+      .band { background: #0F1922; }
+      .back-col-body { color: #A89E92; }
+      .item-list li { color: #C8C4BC; border-bottom-color: #1A2535; }
+      .back-nav { background: #0A0F18 !important; border-bottom-color: #1A2535 !important; }
+    }
+
+    /* ══════════════════════════════════════════
+       MOBILE
+    ══════════════════════════════════════════ */
+    @media (max-width: 680px) {
+      .page { margin: 0; box-shadow: none; max-width: 100%; }
+      .front { padding: 32px 24px 36px; }
+      .front-top { margin-bottom: 28px; flex-wrap: wrap; gap: 12px; }
+      .front-headline { font-size: clamp(22px, 6vw, 30px); margin-bottom: 14px; }
+      .front-sub { font-size: 13px; margin-bottom: 28px; }
+      .front-pillars { grid-template-columns: 1fr; gap: 2px; }
+      .band { padding: 18px 24px; flex-direction: column; gap: 10px; }
+      .band-rule { display: none; }
+      .back { padding: 32px 24px 40px; }
+      .back-grid { grid-template-columns: 1fr; gap: 32px; }
+      .stats-row { grid-template-columns: 1fr 1fr 1fr; }
+      .stat-cell { padding: 14px; }
+      .stat-num { font-size: 22px; }
+      .footer-block { padding: 24px; grid-template-columns: 1fr; }
+      .footer-creds { align-items: flex-start; border-left: none; border-top: 1px solid rgba(252,170,74,0.25); padding-left: 0; padding-top: 16px; }
+      .footer-creds-title { font-size: 20px; text-align: left; }
+      .footer-creds-tags { justify-content: flex-start; }
+      .persona-tag { font-size: 10px; padding: 6px 12px; }
+      .sw-logo-name { font-size: 13px; }
+    }
+
+    @media print {
+      body { background: white; }
+      .page { box-shadow: none; margin: 0; max-width: 100%; }
+      .back-nav { display: none; }
+    }
+  </style>
+</head>
+<body>
+<a href="index.html" class="back-nav">← Brand Hub</a>
+<div class="page">
+
+  <!-- ═══ FRONT ═══ -->
+  <div class="front">
+    <div class="front-top">
+      <div class="sw-logo">
+        <div class="sw-logo-mark">
+          <span class="sw-logo-s">S</span>
+        </div>
+        <div class="sw-logo-text">
+          <div class="sw-logo-name">Sanctuary</div>
+          <div class="sw-logo-sub">Wealth</div>
+        </div>
+      </div>
+      <div class="persona-tag">Client Security Overview</div>
+    </div>
+
+    <div class="front-headline">Your accounts and data are protected by a security program built exclusively for financial services.</div>
+
+    <div class="front-sub">We partner with FCI — a managed cybersecurity firm with more than 30 years serving financial firms — to maintain continuous security controls across our entire practice. This document explains what is in place to protect your information, how it is monitored, and what happens if something goes wrong.</div>
+
+    <div class="front-pillars">
+      <div class="pillar">
+        <div class="pillar-num">01</div>
+        <div class="pillar-title">Devices and connections secured</div>
+        <div class="pillar-desc">Every device used to access your accounts is protected, encrypted, and monitored — whether in the office, at home, or on the go.</div>
+      </div>
+      <div class="pillar">
+        <div class="pillar-num">02</div>
+        <div class="pillar-title">Identity verified at every access point</div>
+        <div class="pillar-desc">Multi-factor authentication and Zero Trust controls ensure that only authorized individuals and devices can reach sensitive systems and data.</div>
+      </div>
+      <div class="pillar">
+        <div class="pillar-num">03</div>
+        <div class="pillar-title">Monitored around the clock</div>
+        <div class="pillar-desc">FCI's security operations center watches our environment 24 hours a day, 7 days a week — detecting and containing threats before they reach you.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ BAND ═══ -->
+  <div class="band">
+    <div class="band-label">Our commitment</div>
+    <div class="band-rule"></div>
+    <div class="band-quote">"We do not wait for an incident to take security seriously. The controls protecting your data are active, enforced, and verified every day — not assembled after the fact."</div>
+  </div>
+
+  <!-- ═══ BACK ═══ -->
+  <div class="back">
+
+    <div class="back-grid">
+      <div>
+        <div class="back-col-label">What protects your data</div>
+        <div class="back-col-body">FCI enforces a layered set of controls across every device and connection in our practice. These safeguards run continuously and are designed to require minimal action from our team or yours to remain effective.</div>
+        <ul class="item-list">
+          <li>Endpoint protection and detection on every device that touches client data</li>
+          <li>Full-disk encryption so data on lost or stolen devices stays inaccessible</li>
+          <li>Always-On VPN and multi-factor authentication for every access point</li>
+          <li>Cloud application hardening and data loss prevention controls</li>
+          <li>Off-site and off-line backup with tested recovery procedures</li>
+          <li>Encrypted connectivity across all remote and office environments</li>
+        </ul>
+      </div>
+      <div>
+        <div class="back-col-label">How we stay accountable</div>
+        <div class="back-col-body">Security that cannot be verified provides little assurance. FCI provides continuous monitoring, evidence of control operation, and independent assessments so our program can be audited — and so we can demonstrate to you that it works.</div>
+        <ul class="item-list">
+          <li>24x7 SOC monitoring with real-time alerting and incident documentation</li>
+          <li>Annual network penetration testing and vulnerability assessments</li>
+          <li>SOC 2 Type 1 attestation from FCI as our cybersecurity provider</li>
+          <li>Proof of cybersecurity insurance coverage maintained by FCI</li>
+          <li>FINRA and SEC cybersecurity framework alignment reporting</li>
+          <li>Forensic analysis and evidence preservation in the event of an incident</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="stats-header">
+      <div class="stats-header-label">About our cybersecurity partner</div>
+      <div class="stats-header-fci">FCI<span>fcicyber.com</span></div>
+    </div>
+    <div class="stats-row">
+
+      <div class="stat-cell">
+        <div class="stat-num">30+</div>
+        <div class="stat-label">years serving financial services exclusively</div>
+      </div>
+
+      <div class="stat-cell">
+        <div class="stat-num">40,000+</div>
+        <div class="stat-label">endpoints under active management</div>
+      </div>
+
+      <div class="stat-cell">
+        <div class="stat-num">24x7</div>
+        <div class="stat-label">security operations center coverage</div>
+      </div>
+
+      <!-- SOC 2 tile with logo -->
+      <div class="stat-cell">
+        <div class="stat-logo">
+          <!-- AICPA SOC badge — matches actual circular badge -->
+          <svg width="52" height="52" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <!-- Cyan top-left → deep navy bottom-right gradient, as on real badge -->
+              <radialGradient id="socG" cx="38%" cy="28%" r="72%">
+                <stop offset="0%"   stop-color="#2ECFEC"/>
+                <stop offset="40%"  stop-color="#0091C8"/>
+                <stop offset="100%" stop-color="#003082"/>
+              </radialGradient>
+              <!-- Path for "Service Organizations" on right outer ring -->
+              <path id="svcOrg" d="M50,4 A46,46 0 0,1 96,50" fill="none"/>
+              <!-- Path for "SOC for Service Organizations" top arc -->
+              <path id="socFor" d="M8,50 A42,42 0 0,1 92,50" fill="none"/>
+            </defs>
+            <!-- Outer teal ring -->
+            <circle cx="50" cy="50" r="49" fill="#0099C8"/>
+            <!-- Inner gradient circle -->
+            <circle cx="50" cy="50" r="43" fill="url(#socG)"/>
+            <!-- "Service Organizations" curved on right side of outer ring -->
+            <text font-family="Arial, sans-serif" font-size="5.8" font-weight="400" fill="white" opacity="0.9" letter-spacing="0.3">
+              <textPath href="#svcOrg" startOffset="12%">Service Organizations</textPath>
+            </text>
+            <!-- "SOC for Service Organizations" arc across top -->
+            <text font-family="Arial, sans-serif" font-size="5.2" font-weight="400" fill="white" opacity="0.85" letter-spacing="0.4">
+              <textPath href="#socFor" startOffset="5%">SOC for Service Organizations</textPath>
+            </text>
+            <!-- AICPA — light weight, spaced -->
+            <text x="50" y="43" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="14" font-weight="300" fill="white" letter-spacing="2.5">AICPA</text>
+            <!-- Thin horizontal rule -->
+            <line x1="23" y1="48" x2="77" y2="48" stroke="white" stroke-width="0.7" opacity="0.7"/>
+            <!-- SOC — large, light weight -->
+            <text x="50" y="72" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="28" font-weight="300" fill="white" letter-spacing="4">SOC</text>
+            <!-- aicpa.org/soc4so -->
+            <text x="50" y="82" text-anchor="middle" font-family="Arial, sans-serif" font-size="4.5" font-weight="400" fill="rgba(255,255,255,0.82)" letter-spacing="0.2">aicpa.org/soc4so</text>
+          </svg>
+        </div>
+        <div class="stat-num">SOC 2</div>
+        <div class="stat-label">Type 1 certified</div>
+      </div>
+
+      <!-- SecurityScorecard tile with logo -->
+      <div class="stat-cell">
+        <div class="stat-logo">
+          <!-- SecurityScorecard logo: aperture/iris icon + wordmark -->
+          <svg width="100" height="28" viewBox="0 0 100 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <clipPath id="ssc-clip"><circle cx="14" cy="14" r="12.5"/></clipPath>
+            </defs>
+            <!-- Dark circle background -->
+            <circle cx="14" cy="14" r="12.5" fill="#180B2E"/>
+            <!-- 6 aperture blades clipped to circle -->
+            <g clip-path="url(#ssc-clip)">
+              <ellipse cx="14" cy="7" rx="4" ry="8" fill="#9333EA" transform="rotate(0,14,14)"/>
+              <ellipse cx="14" cy="7" rx="4" ry="8" fill="#7C3AED" transform="rotate(60,14,14)"/>
+              <ellipse cx="14" cy="7" rx="4" ry="8" fill="#9333EA" transform="rotate(120,14,14)"/>
+              <ellipse cx="14" cy="7" rx="4" ry="8" fill="#7C3AED" transform="rotate(180,14,14)"/>
+              <ellipse cx="14" cy="7" rx="4" ry="8" fill="#9333EA" transform="rotate(240,14,14)"/>
+              <ellipse cx="14" cy="7" rx="4" ry="8" fill="#7C3AED" transform="rotate(300,14,14)"/>
+              <!-- Centre aperture hole -->
+              <circle cx="14" cy="14" r="3.5" fill="#180B2E"/>
+            </g>
+            <!-- Wordmark -->
+            <text x="31" y="12" font-family="Arial, sans-serif" font-size="8.5" font-weight="700" fill="#1E1B4B">Security</text>
+            <text x="31" y="23" font-family="Arial, sans-serif" font-size="8.5" font-weight="700" fill="#1E1B4B">Scorecard</text>
+          </svg>
+        </div>
+        <div class="stat-num">100%</div>
+        <div class="stat-label">SecurityScorecard rating</div>
+      </div>
+
+    </div>
+
+    <div class="footer-block">
+      <div class="footer-left">
+        <div class="footer-label">Questions about our security program?</div>
+        <div class="footer-text">Reach out to your advisor, who will be happy to discuss how we are secure and compliant with applicable cybersecurity regulation in financial services.</div>
+      </div>
+      <div class="footer-creds">
+        <div class="footer-creds-title">Zero Trust</div>
+        <div class="footer-creds-label">Regulatory alignment</div>
+        <div class="footer-creds-tags">
+          <div class="cred-tag">FINRA</div>
+          <div class="cred-tag">SEC</div>
+          <div class="cred-tag">NYDFS</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+</body>
+</html>

@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>FCI — For Insurance Carriers &amp; Agencies</title>
+  <title>FCI — Client Security Overview</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Inter+Tight:wght@500;600;700&display=swap" rel="stylesheet" />
   <style>
@@ -82,26 +82,30 @@
       position: relative; z-index: 1;
     }
 
-    .logo-block {}
-    .logo-mark {
+    /* Client logo placeholder */
+    .client-logo-block {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .client-logo-placeholder {
       font-family: 'Inter Tight', sans-serif;
-      font-size: 36px;
+      font-size: 22px;
       font-weight: 600;
       color: var(--white);
+      letter-spacing: -0.01em;
       line-height: 1;
-      display: inline-flex;
-      align-items: baseline;
+      padding: 8px 0;
+      border-bottom: 2px solid rgba(255,255,255,0.25);
     }
-    .fk-f { letter-spacing: 0; }
-    .fk-c { letter-spacing: 0; margin-left: 0.02em; }
-    .fk-i { letter-spacing: 0; margin-left: 0.05em; }
-    .logo-desc {
-      font-size: 12px;
+
+    .client-logo-note {
+      font-size: 11px;
       font-weight: 400;
-      letter-spacing: 0.1em;
+      letter-spacing: 0.08em;
       text-transform: uppercase;
-      color: rgba(255,255,255,0.75);
-      margin-top: 8px;
+      color: rgba(255,255,255,0.45);
     }
 
     .persona-tag {
@@ -132,7 +136,7 @@
       font-weight: 300;
       color: rgba(255,255,255,0.82);
       line-height: 1.7;
-      max-width: 520px;
+      max-width: 540px;
       margin-bottom: 48px;
       position: relative; z-index: 1;
     }
@@ -249,7 +253,7 @@
     }
 
     .item-list li {
-      font-size: 16px;
+      font-size: 14px;
       color: var(--body);
       padding: 10px 0;
       border-bottom: 1px solid var(--rule);
@@ -265,6 +269,40 @@
       width: 5px; height: 5px;
       border-radius: 50%;
       background: var(--sky);
+    }
+
+    /* ── STATS HEADER ── */
+    .stats-header {
+      background: var(--deep-navy);
+      padding: 12px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2px;
+    }
+    .stats-header-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.5);
+    }
+    .stats-header-fci {
+      font-family: 'Inter Tight', sans-serif;
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      color: var(--white);
+      line-height: 1;
+    }
+    .stats-header-fci span {
+      font-size: 10px;
+      font-weight: 400;
+      letter-spacing: 0.1em;
+      color: var(--sky);
+      margin-left: 10px;
+      vertical-align: middle;
+      text-transform: uppercase;
     }
 
     /* ── STATS ROW ── */
@@ -300,9 +338,9 @@
       line-height: 1.4;
     }
 
-    /* ── CTA BLOCK ── */
-    .cta-block {
-      background: var(--blue);
+    /* ── FOOTER BLOCK ── */
+    .footer-block {
+      background: var(--deep-navy);
       padding: 32px 40px;
       display: flex;
       justify-content: space-between;
@@ -310,69 +348,54 @@
       gap: 32px;
     }
 
-    .cta-left {}
-    .cta-label {
+    .footer-left {}
+    .footer-label {
       font-size: 12px;
       font-weight: 700;
       letter-spacing: 0.2em;
       text-transform: uppercase;
-      color: rgba(255,255,255,0.70);
+      color: rgba(255,255,255,0.55);
       margin-bottom: 8px;
     }
-    .cta-text {
+    .footer-text {
       font-family: 'Inter Tight', sans-serif;
-      font-size: 17px;
-      font-weight: 500;
-      color: var(--white);
+      font-size: 15px;
+      font-weight: 400;
+      color: rgba(255,255,255,0.85);
       letter-spacing: -0.01em;
-      line-height: 1.4;
+      line-height: 1.5;
     }
 
-    .cta-right {
-      text-align: right;
+    /* FCI powered-by badge */
+    .powered-by {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 4px;
       flex-shrink: 0;
     }
-    .cta-contact {
-      font-size: 14px;
-      color: rgba(255,255,255,0.75);
-      letter-spacing: 0.04em;
-      line-height: 1.8;
-    }
-    .cta-contact strong {
-      display: block;
-      font-size: 14px;
-      font-weight: 500;
-      color: var(--white);
-    }
-
-    /* ── PRINT ── */
-
-    /* ── TESTIMONIAL ── */
-    .testimonial-block {
-      border-left: 3px solid var(--blue);
-      padding: 20px 24px;
-      margin: 24px 0;
-      background: var(--blue-faint);
-    }
-    .testimonial-quote {
-      font-size: 15px;
-      font-style: italic;
-      color: var(--text);
-      line-height: 1.7;
-      margin-bottom: 12px;
-    }
-    .testimonial-name {
-      font-size: 13px;
-      font-weight: 600;
-      color: var(--blue);
-      letter-spacing: 0.04em;
-    }
-    .testimonial-org {
-      font-size: 12px;
-      color: var(--muted);
-      margin-top: 2px;
-      letter-spacing: 0.06em;
+    .powered-label {
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: 0.12em;
       text-transform: uppercase;
+      color: rgba(255,255,255,0.4);
+    }
+    .powered-logo {
+      font-family: 'Inter Tight', sans-serif;
+      font-size: 24px;
+      font-weight: 600;
+      color: var(--white);
+      letter-spacing: -0.01em;
+      line-height: 1;
+    }
+    .powered-desc {
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.45);
+      text-align: right;
     }
 
     /* ══════════════════════════════════════════
@@ -395,7 +418,6 @@
       .band { background: #1e2d4a; border-top-color: var(--blue); }
       .stat-cell { background: #1E293B; }
       .stats-row { background: #334155; }
-      .testimonial-block { background: #1E293B; }
       .back-col-body { color: var(--body); }
       .item-list li { color: var(--body); }
       .back-nav {
@@ -421,16 +443,18 @@
       .stats-row { grid-template-columns: 1fr 1fr; }
       .stat-cell { padding: 16px; }
       .stat-num { font-size: 22px; }
-      .cta-block { padding: 24px; flex-direction: column; gap: 20px; }
-      .cta-right { text-align: left; }
-      .cta-text { font-size: 15px; }
-      .item-list li { font-size: 14px; }
+      .footer-block { padding: 24px; flex-direction: column; gap: 20px; }
+      .powered-by { align-items: flex-start; }
+      .powered-desc { text-align: left; }
+      .footer-text { font-size: 14px; }
+      .item-list li { font-size: 13px; }
       .persona-tag { font-size: 10px; padding: 6px 12px; }
     }
 
     @media print {
       body { background: white; }
       .page { box-shadow: none; margin: 0; max-width: 100%; }
+      .back-nav { display: none; }
     }
   </style>
 </head>
@@ -441,40 +465,40 @@
   <!-- ═══ FRONT ═══ -->
   <div class="front">
     <div class="front-top">
-      <div class="logo-block">
-        <div class="logo-mark"><span class="fk-f">F</span><span class="fk-c">C</span><span class="fk-i">I</span></div>
-        <div class="logo-desc">Managed Cybersecurity for Financial Services</div>
+      <div class="client-logo-block">
+        <div class="client-logo-placeholder">Acme Company</div>
+        <div class="client-logo-note">Logo placeholder</div>
       </div>
-      <div class="persona-tag">For Insurance Carriers &amp; Agencies</div>
+      <div class="persona-tag">Client Security Overview</div>
     </div>
 
-    <div class="front-headline">Security controls that reach<br>every appointed agent.<br>Evidence your regulator will accept.</div>
+    <div class="front-headline">Your accounts and data are protected by a program built exclusively for financial services.</div>
 
-    <div class="front-sub">Your appointed agents and independent field offices operate outside your direct IT control — but inside your regulatory perimeter. State regulators under NAIC Model Law expect proof that controls extend to every field location. FCI delivers that proof, continuously, without requiring your agents to manage anything themselves.</div>
+    <div class="front-sub">We partner with FCI — a managed cybersecurity firm with more than 30 years serving financial firms — to maintain continuous security controls across our entire practice. This document explains what is in place to protect your information, how it is monitored, and what happens if something goes wrong.</div>
 
     <div class="front-pillars">
       <div class="pillar">
         <div class="pillar-num">01</div>
-        <div class="pillar-title">Controls to the field edge</div>
-        <div class="pillar-desc">NAIC-aligned safeguards deployed to every appointed agent and independent office — automatically, without burdening field staff.</div>
+        <div class="pillar-title">Devices and connections secured</div>
+        <div class="pillar-desc">Every device used to access your accounts is protected, encrypted, and monitored — whether in the office, at home, or on the go.</div>
       </div>
       <div class="pillar">
         <div class="pillar-num">02</div>
-        <div class="pillar-title">Regulator-ready evidence</div>
-        <div class="pillar-desc">The CISO Portal produces the exact documentation state examiners request under NAIC Model Law — cybersecurity program records, agent device logs, and control enforcement history.</div>
+        <div class="pillar-title">Identity verified at every access point</div>
+        <div class="pillar-desc">Multi-factor authentication and Zero Trust controls ensure that only authorized individuals and devices can reach sensitive systems and data.</div>
       </div>
       <div class="pillar">
         <div class="pillar-num">03</div>
-        <div class="pillar-title">Contained field exposure</div>
-        <div class="pillar-desc">Zero Trust access controls ensure a compromise in one field agency cannot reach carrier systems or spread across the agent network.</div>
+        <div class="pillar-title">Monitored around the clock</div>
+        <div class="pillar-desc">FCI's security operations center watches our environment 24 hours a day, 7 days a week — detecting and containing threats before they reach you.</div>
       </div>
     </div>
   </div>
 
   <!-- ═══ BAND ═══ -->
   <div class="band">
-    <div class="band-label">The difference</div>
-    <div class="band-quote">"State examiners will ask what controls you had in place across your agent network. FCI makes sure you have an answer before they ask."</div>
+    <div class="band-label">Our commitment</div>
+    <div class="band-quote">"We do not wait for an incident to take security seriously. The controls protecting your data are active, enforced, and verified every day — not assembled after the fact."</div>
   </div>
 
   <!-- ═══ BACK ═══ -->
@@ -482,77 +506,63 @@
 
     <div class="back-grid">
       <div>
-        <div class="back-col-label">What changes on day one</div>
-        <div class="back-col-body">FCI maps the full scope of your agency network — appointed agents, their devices, and every connection to carrier systems. Operations leaders often see, for the first time, the full extent of exposure the field model creates. Controls begin deploying immediately. Your NAIC compliance posture improves from the first week.</div>
+        <div class="back-col-label">What protects your data</div>
+        <div class="back-col-body">FCI enforces a layered set of controls across every device and connection in our practice. These safeguards run continuously and are designed to require minimal action from our team or yours to remain effective.</div>
         <ul class="item-list">
-          <li>Complete inventory of appointed agent devices and connections</li>
-          <li>NAIC Model Law-aligned controls deployed across the field network</li>
-          <li>Zero Trust access controls active between agents and carrier systems</li>
-          <li>Always-On VPN and MFA enforced for all field users</li>
-          <li>24x7 SOC monitoring extended across the full agent network</li>
+          <li>Endpoint protection and detection on every device that touches client data</li>
+          <li>Full-disk encryption so data on lost or stolen devices stays inaccessible</li>
+          <li>Always-On VPN and multi-factor authentication for every access point</li>
+          <li>Cloud application hardening and data loss prevention controls</li>
+          <li>Off-site and off-line backup with tested recovery procedures</li>
+          <li>Encrypted connectivity across all remote and office environments</li>
         </ul>
       </div>
       <div>
-        <div class="back-col-label">What you can hand to a state examiner</div>
-        <div class="back-col-body">When a state regulator requests your cybersecurity program documentation — or your own leadership needs a field compliance review — the evidence is already assembled. The CISO Portal produces it in minutes, not weeks.</div>
+        <div class="back-col-label">How we stay accountable</div>
+        <div class="back-col-body">Security that cannot be verified provides little assurance. FCI provides continuous monitoring, evidence of control operation, and independent assessments so our program can be audited — and so we can demonstrate to you that it works.</div>
         <ul class="item-list">
-          <li>NAIC Model Law cybersecurity program documentation</li>
-          <li>Appointed agent device inventory and control enforcement log</li>
-          <li>Field network access records showing agent and device permissions</li>
-          <li>Zero Trust access records showing agent and device permissions</li>
-          <li>Incident and response log for the full field network</li>
-          <li>Annual cybersecurity review documentation required under state law</li>
+          <li>24x7 SOC monitoring with real-time alerting and incident documentation</li>
+          <li>Annual network penetration testing and vulnerability assessments</li>
+          <li>SOC 2 Type 1 attestation from FCI as our cybersecurity provider</li>
+          <li>Proof of cybersecurity insurance coverage maintained by FCI</li>
+          <li>FINRA and SEC cybersecurity framework alignment reporting</li>
+          <li>Forensic analysis and evidence preservation in the event of an incident</li>
         </ul>
       </div>
     </div>
 
+    <div class="stats-header">
+      <div class="stats-header-label">About our cybersecurity partner</div>
+      <div class="stats-header-fci">FCI<span>fcicyber.com</span></div>
+    </div>
     <div class="stats-row">
-      <div class="stat-cell">
-        <div class="stat-num">40,000+</div>
-        <div class="stat-label">endpoints under management</div>
-      </div>
-      <div class="stat-cell">
-        <div class="stat-num">90%</div>
-        <div class="stat-label">faster implementation via CISO Portal</div>
-      </div>
-      <div class="stat-cell">
-        <div class="stat-num">80%</div>
-        <div class="stat-label">less monthly device lifecycle management time</div>
-      </div>
       <div class="stat-cell">
         <div class="stat-num">30+</div>
         <div class="stat-label">years serving financial services exclusively</div>
       </div>
-    </div>
-
-    <div class="testimonial-block">
-      <div class="testimonial-quote">"We strongly recommend FCI to any firm with a desire to get cybersecurity protection and compliance."</div>
-      <div style="display:flex; align-items:center; gap:12px; margin-top:12px;">
-        <svg width="36" height="36" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0;">
-          <rect x="1" y="1" width="38" height="38" fill="none" stroke="#1B3A6E" stroke-width="2.5"/>
-          <rect x="8" y="24" width="5" height="10" fill="#1B3A6E"/>
-          <rect x="16" y="17" width="5" height="17" fill="#1B3A6E"/>
-          <rect x="24" y="10" width="5" height="24" fill="#1B3A6E"/>
-        </svg>
-        <div>
-          <div class="testimonial-name">Nash Subotic — Founder &amp; CEO, Westpac Wealth Partners</div>
-          <div class="testimonial-org">Agency of The Guardian Life Insurance Company of America</div>
-        </div>
+      <div class="stat-cell">
+        <div class="stat-num">40,000+</div>
+        <div class="stat-label">endpoints under active management</div>
+      </div>
+      <div class="stat-cell">
+        <div class="stat-num">24x7</div>
+        <div class="stat-label">security operations center coverage</div>
+      </div>
+      <div class="stat-cell">
+        <div class="stat-num">SOC 2</div>
+        <div class="stat-label">Type 1 certified cybersecurity partner</div>
       </div>
     </div>
 
-    <div class="cta-block">
-      <div class="cta-left">
-        <div class="cta-label">Next step</div>
-        <div class="cta-text">Request a 30-minute Security Assessment. You will see where your field network is exposed and what your next NAIC examination or state filing will require.</div>
+    <div class="footer-block">
+      <div class="footer-left">
+        <div class="footer-label">Questions about our security program?</div>
+        <div class="footer-text">Reach out to your advisor. We are happy to share our full vendor due diligence package, including our cybersecurity assessment report, FCI's SOC 2 attestation, and insurance documentation.</div>
       </div>
-      <div class="cta-right">
-        <div class="cta-contact">
-          <strong>fcicyber.com</strong>
-          SOC 2 Type 1 Certified<br>
-          100% SecurityScorecard<br>
-          NIST CSF · NAIC · NYDFS
-        </div>
+      <div class="powered-by">
+        <div class="powered-label">Cybersecurity powered by</div>
+        <div class="powered-logo">FCI</div>
+        <div class="powered-desc">fcicyber.com · FINRA · SEC · NIST CSF</div>
       </div>
     </div>
 

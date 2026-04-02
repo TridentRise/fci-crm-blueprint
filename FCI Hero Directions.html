@@ -1,0 +1,1243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FCI — Hero Visual Directions</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Inter+Tight:wght@600&display=swap" rel="stylesheet">
+  <style>
+
+    /* ════════════════════════════════════════════════
+       THEME VARIABLES
+       Defaults = light. Dark overrides via media query
+       + body.theme-dark. body.theme-light forces light.
+    ════════════════════════════════════════════════ */
+
+    body {
+      /* Text */
+      --c-logo:    #1E3A6E;
+      --c-h1:      #0F172A;
+      --c-sub:     rgba(15,23,42,0.55);
+      --c-eyebrow: #0EA5E9;
+      --c-badge:   rgba(15,23,42,0.12);
+
+      /* Buttons */
+      --btn-ghost-bd:          rgba(15,23,42,0.2);
+      --btn-ghost-text:        rgba(15,23,42,0.62);
+      --btn-ghost-hover-bd:    rgba(15,23,42,0.48);
+      --btn-ghost-hover-text:  #0F172A;
+
+      /* Page background */
+      --page-bg:  #E8F2FF;
+
+      /* Hero backgrounds */
+      --bg-h1: #EBF3FF;
+      --bg-h2: #EFF6FF;
+      --bg-h3: #F0F7FF;
+      --bg-h4: #F3F8FF;
+      --bg-h5: #ECF3FF;
+
+      /* Fade overlay RGB components (used in rgba(var(--fade),x)) */
+      --fade2: 239,246,255;
+      --fade3: 240,247,255;
+      --fade4: 243,248,255;
+      --fade5: 236,243,255;
+
+      /* Orb opacities — light mode: much softer */
+      --orb-a: rgba(37,99,235,0.16);
+      --orb-a-mid: rgba(37,99,235,0.05);
+      --orb-b: rgba(14,165,233,0.11);
+      --orb-b-mid: rgba(14,165,233,0.03);
+      --orb-c: rgba(99,102,241,0.09);
+
+      /* Prism grid + beam light */
+      --prism-grid: rgba(30,58,110,0.05);
+      --prism-fill-mid: rgba(37,99,235,0.06);
+      --prism-fill-peak: rgba(14,165,233,0.09);
+      --beam1-a: rgba(37,99,235,0.0);
+      --beam1-b: rgba(37,99,235,0.48);
+      --beam1-c: rgba(14,165,233,0.62);
+      --beam1-d: rgba(37,99,235,0.36);
+      --beam1-e: rgba(37,99,235,0.0);
+      --beam2-a: rgba(14,165,233,0.0);
+      --beam2-b: rgba(99,102,241,0.28);
+      --beam2-c: rgba(14,165,233,0.0);
+      --glow-core: white;
+      --glow-shadow: 0 0 0 2px rgba(30,58,110,0.25), 0 0 16px 6px rgba(14,165,233,0.5), 0 0 40px 14px rgba(37,99,235,0.25), 0 0 90px 30px rgba(37,99,235,0.1);
+      --prism-halo: rgba(14,165,233,0.07);
+
+      /* Rationale card */
+      --bg-rationale:        #F5F9FF;
+      --c-rationale-title:   #0F172A;
+      --c-rationale-body:    rgba(15,23,42,0.52);
+      --c-rationale-mood:    rgba(15,23,42,0.32);
+      --c-rationale-accent:  rgba(14,165,233,0.8);
+
+      /* Nav */
+      --nav-bg:        rgba(235,243,255,0.9);
+      --nav-border:    rgba(15,23,42,0.07);
+      --nav-brand:     #1E3A6E;
+      --nav-link:      rgba(15,23,42,0.46);
+      --nav-link-bg:   rgba(15,23,42,0.06);
+      --nav-divider:   rgba(15,23,42,0.12);
+
+      /* Toggle buttons */
+      --toggle-bd:         rgba(15,23,42,0.14);
+      --toggle-text:       rgba(15,23,42,0.5);
+      --toggle-active-bg:  #1E3A6E;
+      --toggle-active-text: white;
+    }
+
+    /* ─── DARK MODE ─────────────────────────── */
+    @media (prefers-color-scheme: dark) {
+      body {
+        --c-logo:    rgba(255,255,255,0.85);
+        --c-h1:      white;
+        --c-sub:     rgba(255,255,255,0.58);
+        --c-badge:   rgba(255,255,255,0.15);
+
+        --btn-ghost-bd:         rgba(255,255,255,0.18);
+        --btn-ghost-text:       rgba(255,255,255,0.65);
+        --btn-ghost-hover-bd:   rgba(255,255,255,0.45);
+        --btn-ghost-hover-text: white;
+
+        --page-bg:  #0A0F1E;
+
+        --bg-h1: #060C1A;
+        --bg-h2: #050D1B;
+        --bg-h3: #060F20;
+        --bg-h4: #040810;
+        --bg-h5: #050B17;
+
+        --fade2: 5,13,27;
+        --fade3: 6,15,32;
+        --fade4: 4,8,16;
+        --fade5: 5,11,23;
+
+        --orb-a: rgba(37,99,235,0.42);
+        --orb-a-mid: rgba(37,99,235,0.12);
+        --orb-b: rgba(14,165,233,0.28);
+        --orb-b-mid: rgba(14,165,233,0.08);
+        --orb-c: rgba(99,102,241,0.22);
+
+        --prism-grid: rgba(37,99,235,0.04);
+        --prism-fill-mid: rgba(37,99,235,0.06);
+        --prism-fill-peak: rgba(14,165,233,0.07);
+        --beam1-a: rgba(37,99,235,0.0);
+        --beam1-b: rgba(37,99,235,0.5);
+        --beam1-c: rgba(14,165,233,0.7);
+        --beam1-d: rgba(37,99,235,0.4);
+        --beam1-e: rgba(37,99,235,0.0);
+        --beam2-a: rgba(14,165,233,0.0);
+        --beam2-b: rgba(99,102,241,0.35);
+        --beam2-c: rgba(14,165,233,0.0);
+        --glow-core: white;
+        --glow-shadow: 0 0 0 2px rgba(255,255,255,0.4), 0 0 16px 6px rgba(14,165,233,0.55), 0 0 40px 14px rgba(37,99,235,0.3), 0 0 90px 30px rgba(37,99,235,0.12);
+        --prism-halo: rgba(14,165,233,0.08);
+
+        --bg-rationale:       #0D1421;
+        --c-rationale-title:  rgba(255,255,255,0.9);
+        --c-rationale-body:   rgba(255,255,255,0.48);
+        --c-rationale-mood:   rgba(255,255,255,0.3);
+        --c-rationale-accent: rgba(14,165,233,0.7);
+
+        --nav-bg:       rgba(6,10,22,0.88);
+        --nav-border:   rgba(255,255,255,0.07);
+        --nav-brand:    white;
+        --nav-link:     rgba(255,255,255,0.45);
+        --nav-link-bg:  rgba(255,255,255,0.08);
+        --nav-divider:  rgba(255,255,255,0.12);
+
+        --toggle-bd:          rgba(255,255,255,0.14);
+        --toggle-text:        rgba(255,255,255,0.45);
+        --toggle-active-bg:   white;
+        --toggle-active-text: #0F172A;
+      }
+    }
+
+    /* ─── FORCED DARK ───────────────────────── */
+    body.theme-dark {
+      --c-logo:    rgba(255,255,255,0.85);
+      --c-h1:      white;
+      --c-sub:     rgba(255,255,255,0.58);
+      --c-badge:   rgba(255,255,255,0.15);
+
+      --btn-ghost-bd:         rgba(255,255,255,0.18);
+      --btn-ghost-text:       rgba(255,255,255,0.65);
+      --btn-ghost-hover-bd:   rgba(255,255,255,0.45);
+      --btn-ghost-hover-text: white;
+
+      --page-bg: #0A0F1E;
+
+      --bg-h1: #060C1A;
+      --bg-h2: #050D1B;
+      --bg-h3: #060F20;
+      --bg-h4: #040810;
+      --bg-h5: #050B17;
+
+      --fade2: 5,13,27;
+      --fade3: 6,15,32;
+      --fade4: 4,8,16;
+      --fade5: 5,11,23;
+
+      --orb-a: rgba(37,99,235,0.42);
+      --orb-a-mid: rgba(37,99,235,0.12);
+      --orb-b: rgba(14,165,233,0.28);
+      --orb-b-mid: rgba(14,165,233,0.08);
+      --orb-c: rgba(99,102,241,0.22);
+
+      --prism-grid: rgba(37,99,235,0.04);
+      --prism-fill-mid: rgba(37,99,235,0.06);
+      --prism-fill-peak: rgba(14,165,233,0.07);
+      --beam1-b: rgba(37,99,235,0.5);
+      --beam1-c: rgba(14,165,233,0.7);
+      --beam1-d: rgba(37,99,235,0.4);
+      --beam2-b: rgba(99,102,241,0.35);
+      --glow-shadow: 0 0 0 2px rgba(255,255,255,0.4), 0 0 16px 6px rgba(14,165,233,0.55), 0 0 40px 14px rgba(37,99,235,0.3), 0 0 90px 30px rgba(37,99,235,0.12);
+      --prism-halo: rgba(14,165,233,0.08);
+
+      --bg-rationale:       #0D1421;
+      --c-rationale-title:  rgba(255,255,255,0.9);
+      --c-rationale-body:   rgba(255,255,255,0.48);
+      --c-rationale-mood:   rgba(255,255,255,0.3);
+      --c-rationale-accent: rgba(14,165,233,0.7);
+
+      --nav-bg:       rgba(6,10,22,0.88);
+      --nav-border:   rgba(255,255,255,0.07);
+      --nav-brand:    white;
+      --nav-link:     rgba(255,255,255,0.45);
+      --nav-link-bg:  rgba(255,255,255,0.08);
+      --nav-divider:  rgba(255,255,255,0.12);
+
+      --toggle-bd:          rgba(255,255,255,0.14);
+      --toggle-text:        rgba(255,255,255,0.45);
+      --toggle-active-bg:   white;
+      --toggle-active-text: #0F172A;
+    }
+
+    /* ─── FORCED LIGHT ──────────────────────── */
+    body.theme-light {
+      --c-logo:    #1E3A6E;
+      --c-h1:      #0F172A;
+      --c-sub:     rgba(15,23,42,0.55);
+      --c-badge:   rgba(15,23,42,0.12);
+
+      --btn-ghost-bd:         rgba(15,23,42,0.2);
+      --btn-ghost-text:       rgba(15,23,42,0.62);
+      --btn-ghost-hover-bd:   rgba(15,23,42,0.48);
+      --btn-ghost-hover-text: #0F172A;
+
+      --page-bg: #E8F2FF;
+
+      --bg-h1: #EBF3FF;
+      --bg-h2: #EFF6FF;
+      --bg-h3: #F0F7FF;
+      --bg-h4: #F3F8FF;
+      --bg-h5: #ECF3FF;
+
+      --fade2: 239,246,255;
+      --fade3: 240,247,255;
+      --fade4: 243,248,255;
+      --fade5: 236,243,255;
+
+      --orb-a: rgba(37,99,235,0.16);
+      --orb-a-mid: rgba(37,99,235,0.05);
+      --orb-b: rgba(14,165,233,0.11);
+      --orb-b-mid: rgba(14,165,233,0.03);
+      --orb-c: rgba(99,102,241,0.09);
+
+      --prism-grid: rgba(30,58,110,0.05);
+      --prism-fill-mid: rgba(37,99,235,0.06);
+      --prism-fill-peak: rgba(14,165,233,0.09);
+      --beam1-b: rgba(37,99,235,0.48);
+      --beam1-c: rgba(14,165,233,0.62);
+      --beam1-d: rgba(37,99,235,0.36);
+      --beam2-b: rgba(99,102,241,0.28);
+      --glow-shadow: 0 0 0 2px rgba(30,58,110,0.25), 0 0 16px 6px rgba(14,165,233,0.5), 0 0 40px 14px rgba(37,99,235,0.25), 0 0 90px 30px rgba(37,99,235,0.1);
+      --prism-halo: rgba(14,165,233,0.07);
+
+      --bg-rationale:       #F5F9FF;
+      --c-rationale-title:  #0F172A;
+      --c-rationale-body:   rgba(15,23,42,0.52);
+      --c-rationale-mood:   rgba(15,23,42,0.32);
+      --c-rationale-accent: rgba(14,165,233,0.8);
+
+      --nav-bg:       rgba(235,243,255,0.9);
+      --nav-border:   rgba(15,23,42,0.07);
+      --nav-brand:    #1E3A6E;
+      --nav-link:     rgba(15,23,42,0.46);
+      --nav-link-bg:  rgba(15,23,42,0.06);
+      --nav-divider:  rgba(15,23,42,0.12);
+
+      --toggle-bd:          rgba(15,23,42,0.14);
+      --toggle-text:        rgba(15,23,42,0.5);
+      --toggle-active-bg:   #1E3A6E;
+      --toggle-active-text: white;
+    }
+
+
+    /* ════════════════════════════════════════════════
+       GLOBAL
+    ════════════════════════════════════════════════ */
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--page-bg);
+      -webkit-font-smoothing: antialiased;
+      transition: background 0.3s;
+    }
+
+
+    /* ════════════════════════════════════════════════
+       NAVIGATION
+    ════════════════════════════════════════════════ */
+
+    .nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 200;
+      background: var(--nav-bg);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--nav-border);
+      display: flex;
+      align-items: center;
+      height: 54px;
+      padding: 0 32px;
+      gap: 0;
+    }
+
+    .nav-brand {
+      font-family: 'Inter Tight', sans-serif;
+      font-size: 17px;
+      font-weight: 600;
+      color: var(--nav-brand);
+      letter-spacing: 0.1em;
+      margin-right: 24px;
+      flex-shrink: 0;
+      transition: color 0.25s;
+    }
+
+    .nav-divider {
+      width: 1px; height: 18px;
+      background: var(--nav-divider);
+      margin-right: 20px;
+      flex-shrink: 0;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2px;
+      flex: 1;
+    }
+
+    .nav a {
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--nav-link);
+      text-decoration: none;
+      padding: 5px 11px;
+      border-radius: 5px;
+      white-space: nowrap;
+      transition: color 0.15s, background 0.15s;
+    }
+    .nav a:hover {
+      color: var(--nav-brand);
+      background: var(--nav-link-bg);
+    }
+
+    /* Theme toggle */
+    .theme-toggle {
+      display: flex;
+      gap: 2px;
+      border: 1px solid var(--toggle-bd);
+      border-radius: 6px;
+      padding: 3px;
+      flex-shrink: 0;
+    }
+
+    .theme-btn {
+      font-family: 'Inter', sans-serif;
+      font-size: 11px;
+      font-weight: 500;
+      padding: 4px 10px;
+      border: none;
+      background: transparent;
+      color: var(--toggle-text);
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background 0.15s, color 0.15s;
+      white-space: nowrap;
+    }
+
+    .theme-btn.active {
+      background: var(--toggle-active-bg);
+      color: var(--toggle-active-text);
+    }
+
+
+    /* ════════════════════════════════════════════════
+       HERO SHARED STYLES
+    ════════════════════════════════════════════════ */
+
+    .hero {
+      width: 100%;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+      transition: background 0.3s;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 10;
+      padding: 120px 88px;
+      max-width: 700px;
+    }
+
+    .hero-logo {
+      font-family: 'Inter Tight', sans-serif;
+      font-size: 19px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      color: var(--c-logo);
+      margin-bottom: 68px;
+      transition: color 0.25s;
+    }
+
+    .hero-eyebrow {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.26em;
+      text-transform: uppercase;
+      color: var(--c-eyebrow);
+      margin-bottom: 20px;
+    }
+
+    .hero-h1 {
+      font-family: 'Inter Tight', sans-serif;
+      font-size: clamp(44px, 5.8vw, 70px);
+      font-weight: 600;
+      line-height: 1.05;
+      letter-spacing: -0.032em;
+      color: var(--c-h1);
+      margin-bottom: 26px;
+      transition: color 0.25s;
+    }
+
+    .hero-sub {
+      font-size: 17px;
+      line-height: 1.72;
+      color: var(--c-sub);
+      max-width: 490px;
+      margin-bottom: 44px;
+      transition: color 0.25s;
+    }
+
+    .hero-cta {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .btn-primary {
+      font-size: 13px;
+      font-weight: 500;
+      padding: 12px 26px;
+      background: #2563EB;
+      color: white;
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+      letter-spacing: 0.015em;
+      transition: background 0.15s;
+      display: inline-block;
+    }
+    .btn-primary:hover { background: #1D4ED8; }
+
+    .btn-ghost {
+      font-size: 13px;
+      font-weight: 500;
+      padding: 11px 26px;
+      background: transparent;
+      color: var(--btn-ghost-text);
+      border: 1px solid var(--btn-ghost-bd);
+      cursor: pointer;
+      text-decoration: none;
+      letter-spacing: 0.015em;
+      transition: border-color 0.15s, color 0.15s;
+      display: inline-block;
+    }
+    .btn-ghost:hover {
+      border-color: var(--btn-ghost-hover-bd);
+      color: var(--btn-ghost-hover-text);
+    }
+
+    .option-badge {
+      position: absolute;
+      bottom: 40px; right: 52px;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--c-badge);
+      z-index: 20;
+      pointer-events: none;
+    }
+
+
+    /* ════════════════════════════════════════════════
+       RATIONALE CARDS
+    ════════════════════════════════════════════════ */
+
+    .rationale {
+      background: var(--bg-rationale);
+      padding: 44px 88px;
+      border-top: 1px solid rgba(128,128,128,0.08);
+      border-bottom: 3px solid #2563EB;
+      transition: background 0.3s;
+    }
+
+    .rationale-eyebrow {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--c-eyebrow);
+      margin-bottom: 9px;
+    }
+
+    .rationale-title {
+      font-family: 'Inter Tight', sans-serif;
+      font-size: 19px;
+      font-weight: 600;
+      color: var(--c-rationale-title);
+      margin-bottom: 13px;
+      letter-spacing: -0.015em;
+      transition: color 0.25s;
+    }
+
+    .rationale-body {
+      font-size: 15px;
+      line-height: 1.75;
+      color: var(--c-rationale-body);
+      max-width: 680px;
+      transition: color 0.25s;
+    }
+
+    .rationale-mood {
+      margin-top: 16px;
+      font-size: 12px;
+      color: var(--c-rationale-mood);
+      letter-spacing: 0.04em;
+    }
+    .rationale-mood em {
+      color: var(--c-rationale-accent);
+      font-style: normal;
+    }
+
+
+    /* ════════════════════════════════════════════════
+       OPTION 1 — AURORA ORBS
+    ════════════════════════════════════════════════ */
+
+    .hero-1 { background: var(--bg-h1); }
+
+    .orb {
+      position: absolute;
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    .orb-a {
+      width: 760px; height: 760px;
+      top: -240px; right: -160px;
+      background: radial-gradient(circle at 40% 40%,
+        var(--orb-a) 0%,
+        var(--orb-a-mid) 40%,
+        transparent 68%);
+      filter: blur(60px);
+      animation: drift-a 20s ease-in-out infinite alternate;
+    }
+    .orb-b {
+      width: 560px; height: 560px;
+      bottom: -140px; left: 26%;
+      background: radial-gradient(circle at 55% 55%,
+        var(--orb-b) 0%,
+        var(--orb-b-mid) 45%,
+        transparent 68%);
+      filter: blur(75px);
+      animation: drift-b 24s ease-in-out infinite alternate;
+    }
+    .orb-c {
+      width: 360px; height: 360px;
+      top: 32%; left: -70px;
+      background: radial-gradient(circle, var(--orb-c) 0%, transparent 68%);
+      filter: blur(65px);
+      animation: drift-c 17s ease-in-out infinite alternate;
+    }
+
+    @keyframes drift-a {
+      from { transform: translate(0,0) scale(1); }
+      to   { transform: translate(-45px,65px) scale(1.06); }
+    }
+    @keyframes drift-b {
+      from { transform: translate(0,0) scale(1); }
+      to   { transform: translate(55px,-42px) scale(1.05); }
+    }
+    @keyframes drift-c {
+      from { transform: translate(0,0) scale(1); }
+      to   { transform: translate(32px,55px) scale(0.94); }
+    }
+
+
+    /* ════════════════════════════════════════════════
+       OPTION 2 — NETWORK MESH
+    ════════════════════════════════════════════════ */
+
+    .hero-2 { background: var(--bg-h2); }
+
+    #canvas-net {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      z-index: 1;
+    }
+
+    .hero-2::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(
+        to right,
+        rgba(var(--fade2),1.0) 0%,
+        rgba(var(--fade2),0.88) 28%,
+        rgba(var(--fade2),0.32) 58%,
+        transparent 100%
+      );
+      z-index: 5;
+      pointer-events: none;
+    }
+
+
+    /* ════════════════════════════════════════════════
+       OPTION 3 — TOPOGRAPHIC
+    ════════════════════════════════════════════════ */
+
+    .hero-3 { background: var(--bg-h3); }
+
+    #canvas-topo {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      z-index: 1;
+    }
+
+    .hero-3::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(
+        to right,
+        rgba(var(--fade3),1.0) 0%,
+        rgba(var(--fade3),0.82) 32%,
+        rgba(var(--fade3),0.22) 62%,
+        transparent 100%
+      );
+      z-index: 5;
+      pointer-events: none;
+    }
+
+
+    /* ════════════════════════════════════════════════
+       OPTION 4 — DATA STREAM
+    ════════════════════════════════════════════════ */
+
+    .hero-4 { background: var(--bg-h4); }
+
+    #canvas-stream {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      z-index: 1;
+    }
+
+    .hero-4::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(
+        to right,
+        rgba(var(--fade4),1.0) 0%,
+        rgba(var(--fade4),0.96) 25%,
+        rgba(var(--fade4),0.72) 48%,
+        rgba(var(--fade4),0.22) 72%,
+        transparent 100%
+      );
+      z-index: 5;
+      pointer-events: none;
+    }
+
+
+    /* ════════════════════════════════════════════════
+       OPTION 5 — PRISM / CRYSTALLINE
+    ════════════════════════════════════════════════ */
+
+    .hero-5 { background: var(--bg-h5); }
+
+    .prism-grid {
+      position: absolute; inset: 0;
+      background-image:
+        linear-gradient(var(--prism-grid) 1px, transparent 1px),
+        linear-gradient(90deg, var(--prism-grid) 1px, transparent 1px);
+      background-size: 56px 56px;
+      z-index: 1;
+    }
+
+    .prism-fill {
+      position: absolute;
+      top: -60%; left: 49%;
+      width: 200px; height: 300%;
+      transform: rotate(20deg);
+      transform-origin: top left;
+      background: linear-gradient(
+        to right,
+        transparent,
+        var(--prism-fill-mid) 30%,
+        var(--prism-fill-peak) 50%,
+        var(--prism-fill-mid) 70%,
+        transparent
+      );
+      z-index: 2;
+      pointer-events: none;
+    }
+
+    .prism-beam-1 {
+      position: absolute;
+      top: -60%; left: 62%;
+      width: 1.5px; height: 300%;
+      transform: rotate(20deg);
+      transform-origin: top left;
+      background: linear-gradient(
+        to bottom,
+        transparent 5%,
+        var(--beam1-b) 25%,
+        var(--beam1-c) 42%,
+        var(--beam1-d) 56%,
+        transparent 80%
+      );
+      z-index: 3;
+      pointer-events: none;
+    }
+
+    .prism-beam-2 {
+      position: absolute;
+      top: -60%; left: 63.4%;
+      width: 1px; height: 300%;
+      transform: rotate(20deg);
+      transform-origin: top left;
+      background: linear-gradient(
+        to bottom,
+        transparent 12%,
+        var(--beam2-b) 40%,
+        transparent 72%
+      );
+      z-index: 3;
+      pointer-events: none;
+    }
+
+    .prism-origin {
+      position: absolute;
+      width: 4px; height: 4px;
+      border-radius: 50%;
+      background: var(--glow-core);
+      left: calc(62% - 1px);
+      top: 29%;
+      box-shadow: var(--glow-shadow);
+      z-index: 4;
+      pointer-events: none;
+      transition: box-shadow 0.3s;
+    }
+
+    .prism-halo {
+      position: absolute;
+      width: 340px; height: 340px;
+      border-radius: 50%;
+      left: calc(62% - 170px);
+      top: calc(29% - 170px);
+      background: radial-gradient(circle, var(--prism-halo) 0%, transparent 70%);
+      z-index: 2;
+      pointer-events: none;
+    }
+
+    .hero-5::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(
+        to right,
+        rgba(var(--fade5),1.0) 0%,
+        rgba(var(--fade5),0.88) 30%,
+        rgba(var(--fade5),0.28) 56%,
+        transparent 100%
+      );
+      z-index: 6;
+      pointer-events: none;
+    }
+
+
+  </style>
+</head>
+<body>
+
+<!-- ─── NAVIGATION ───────────────────────────────── -->
+<nav class="nav">
+  <div class="nav-brand">FCI</div>
+  <div class="nav-divider"></div>
+  <div class="nav-links">
+    <a href="#opt1">01 &nbsp;Aurora Orbs</a>
+    <a href="#opt2">02 &nbsp;Network Mesh</a>
+    <a href="#opt3">03 &nbsp;Topographic</a>
+    <a href="#opt4">04 &nbsp;Data Stream</a>
+    <a href="#opt5">05 &nbsp;Prism Light</a>
+  </div>
+  <div class="theme-toggle">
+    <button class="theme-btn" id="btn-system" onclick="setTheme('system')">System</button>
+    <button class="theme-btn" id="btn-light"  onclick="setTheme('light')">Light</button>
+    <button class="theme-btn" id="btn-dark"   onclick="setTheme('dark')">Dark</button>
+  </div>
+</nav>
+
+
+<!-- ════════════════════════════════════════════════
+     OPTION 01 — AURORA ORBS
+════════════════════════════════════════════════ -->
+<section id="opt1">
+  <div class="hero hero-1">
+    <div class="orb orb-a"></div>
+    <div class="orb orb-b"></div>
+    <div class="orb orb-c"></div>
+    <div class="hero-content">
+      <div class="hero-logo">FCI</div>
+      <div class="hero-eyebrow">Managed Cybersecurity · Financial Services</div>
+      <h1 class="hero-h1">Your field<br>is covered.</h1>
+      <p class="hero-sub">Continuous compliance enforcement, endpoint visibility, and 24×7 SOC protection — built for the way financial firms actually operate.</p>
+      <div class="hero-cta">
+        <a href="#" class="btn-primary">Request a pilot</a>
+        <a href="#" class="btn-ghost">See how it works</a>
+      </div>
+    </div>
+    <div class="option-badge">Option 01</div>
+  </div>
+  <div class="rationale">
+    <div class="rationale-eyebrow">Option 01</div>
+    <div class="rationale-title">Aurora Orbs — Soft gradient atmosphere</div>
+    <p class="rationale-body">Three large, deeply blurred color volumes — electric blue, sky, indigo — float behind the content with zero hard edges. In dark mode the effect references the aurora borealis: calm, enveloping, slightly mysterious. In light mode it shifts to a soft watercolor wash on pale paper — airy and clean, the aesthetic language of Stripe and Linear. The animation is continuous and subtle, giving the hero a sense of life without distraction. Stays entirely within the FCI palette. The lightest lift to implement.</p>
+    <p class="rationale-mood">Mood: <em>invisible protection · always present · modern premium</em></p>
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════════════════════
+     OPTION 02 — NETWORK MESH
+════════════════════════════════════════════════ -->
+<section id="opt2">
+  <div class="hero hero-2">
+    <canvas id="canvas-net"></canvas>
+    <div class="hero-content" style="position:relative;z-index:10;">
+      <div class="hero-logo">FCI</div>
+      <div class="hero-eyebrow">Managed Cybersecurity · Financial Services</div>
+      <h1 class="hero-h1">Your field<br>is covered.</h1>
+      <p class="hero-sub">Continuous compliance enforcement, endpoint visibility, and 24×7 SOC protection — built for the way financial firms actually operate.</p>
+      <div class="hero-cta">
+        <a href="#" class="btn-primary">Request a pilot</a>
+        <a href="#" class="btn-ghost">See how it works</a>
+      </div>
+    </div>
+    <div class="option-badge">Option 02</div>
+  </div>
+  <div class="rationale">
+    <div class="rationale-eyebrow">Option 02</div>
+    <div class="rationale-title">Network Mesh — Living topology</div>
+    <p class="rationale-body">Small glowing nodes drift slowly across the field. When two approach each other, a hairline edge forms between them — a living network graph in perpetual slow motion. Dark mode: deep space, glowing blue nodes, very cybersecurity-editorial. Light mode: pale background, navy nodes — reads immediately as a network architecture diagram or blueprint. The animation is meditative: nothing flashes, nothing demands attention. Directly renders FCI's core concept of endpoint visibility without a single literal image.</p>
+    <p class="rationale-mood">Mood: <em>interconnected · always-on · watchful</em></p>
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════════════════════
+     OPTION 03 — TOPOGRAPHIC
+════════════════════════════════════════════════ -->
+<section id="opt3">
+  <div class="hero hero-3">
+    <canvas id="canvas-topo"></canvas>
+    <div class="hero-content" style="position:relative;z-index:10;">
+      <div class="hero-logo">FCI</div>
+      <div class="hero-eyebrow">Managed Cybersecurity · Financial Services</div>
+      <h1 class="hero-h1">Your field<br>is covered.</h1>
+      <p class="hero-sub">Continuous compliance enforcement, endpoint visibility, and 24×7 SOC protection — built for the way financial firms actually operate.</p>
+      <div class="hero-cta">
+        <a href="#" class="btn-primary">Request a pilot</a>
+        <a href="#" class="btn-ghost">See how it works</a>
+      </div>
+    </div>
+    <div class="option-badge">Option 03</div>
+  </div>
+  <div class="rationale">
+    <div class="rationale-eyebrow">Option 03</div>
+    <div class="rationale-title">Topographic — Contour lines, slow drift</div>
+    <p class="rationale-body">Organic contour lines drift slowly across the right portion of the hero — like a surveyor's terrain map in motion. Dark mode: barely-there blue lines on near-black, very editorial. Light mode: deep navy lines on cream paper — looks like a beautiful cartographic reference, natural and precise. The metaphor pays off completely: "field," "terrain," "coverage," "knowing your exposure." Every word in FCI's vocabulary maps to cartography. Used by high-end data firms and editorial brands like Bloomberg. The most distinctive direction on this list.</p>
+    <p class="rationale-mood">Mood: <em>systematic · field-aware · editorial precision</em></p>
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════════════════════
+     OPTION 04 — DATA STREAM
+════════════════════════════════════════════════ -->
+<section id="opt4">
+  <div class="hero hero-4">
+    <canvas id="canvas-stream"></canvas>
+    <div class="hero-content" style="position:relative;z-index:10;">
+      <div class="hero-logo">FCI</div>
+      <div class="hero-eyebrow">Managed Cybersecurity · Financial Services</div>
+      <h1 class="hero-h1">Your field<br>is covered.</h1>
+      <p class="hero-sub">Continuous compliance enforcement, endpoint visibility, and 24×7 SOC protection — built for the way financial firms actually operate.</p>
+      <div class="hero-cta">
+        <a href="#" class="btn-primary">Request a pilot</a>
+        <a href="#" class="btn-ghost">See how it works</a>
+      </div>
+    </div>
+    <div class="option-badge">Option 04</div>
+  </div>
+  <div class="rationale">
+    <div class="rationale-eyebrow">Option 04</div>
+    <div class="rationale-title">Data Stream — Compliance vocabulary as texture</div>
+    <p class="rationale-body">Columns of slowly falling text — NIST, FINRA, SEC, MFA, EDR, hex codes, log identifiers — wash across the right half of the hero at 6% opacity. The intent is texture, not readability. The background whispers "constant monitoring, evidence at every level." Dark mode renders closer to the classic cybersecurity aesthetic but at a fraction of the opacity, refined rather than clichéd. Light mode is subtler still: faint navy on pale blue-white, almost like watermarked paper. A strong gradient keeps the foreground completely clean in both modes.</p>
+    <p class="rationale-mood">Mood: <em>deep intelligence · constant monitoring · expert-level evidence</em></p>
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════════════════════
+     OPTION 05 — PRISM / CRYSTALLINE
+════════════════════════════════════════════════ -->
+<section id="opt5">
+  <div class="hero hero-5">
+    <div class="prism-grid"></div>
+    <div class="prism-fill"></div>
+    <div class="prism-beam-1"></div>
+    <div class="prism-beam-2"></div>
+    <div class="prism-halo"></div>
+    <div class="prism-origin"></div>
+    <div class="hero-content" style="position:relative;z-index:10;">
+      <div class="hero-logo">FCI</div>
+      <div class="hero-eyebrow">Managed Cybersecurity · Financial Services</div>
+      <h1 class="hero-h1">Your field<br>is covered.</h1>
+      <p class="hero-sub">Continuous compliance enforcement, endpoint visibility, and 24×7 SOC protection — built for the way financial firms actually operate.</p>
+      <div class="hero-cta">
+        <a href="#" class="btn-primary">Request a pilot</a>
+        <a href="#" class="btn-ghost">See how it works</a>
+      </div>
+    </div>
+    <div class="option-badge">Option 05</div>
+  </div>
+  <div class="rationale">
+    <div class="rationale-eyebrow">Option 05</div>
+    <div class="rationale-title">Prism Light — Crystalline geometry, single source</div>
+    <p class="rationale-body">A single point of pure light emits two razor-sharp diagonal beams — like light splitting through the edge of cut glass or a crystal prism. A precision grid underlays the whole field. Pure CSS, zero images. Dark mode: electric beams of blue-white cutting through near-black — high drama, very controlled. Light mode: the beams become like sunlight through a window into a pale room, the grid like faint graph paper — architectural, quiet, precise. The metaphor: the moment a hidden risk becomes visible. Clarity from darkness. The most abstract and the most conceptually resonant direction here.</p>
+    <p class="rationale-mood">Mood: <em>revelatory · architectural precision · clarity from darkness</em></p>
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════════════════════
+     JAVASCRIPT
+════════════════════════════════════════════════ -->
+<script>
+
+  /* ──────────────────────────────────────────────
+     THEME TOGGLE
+  ────────────────────────────────────────────── */
+
+  let currentTheme = 'system';
+
+  function isDark() {
+    if (currentTheme === 'dark') return true;
+    if (currentTheme === 'light') return false;
+    return window.matchMedia('(prefers-color-scheme: dark)').matches;
+  }
+
+  function setTheme(t) {
+    currentTheme = t;
+    document.body.classList.remove('theme-light', 'theme-dark');
+    if (t === 'light') document.body.classList.add('theme-light');
+    if (t === 'dark')  document.body.classList.add('theme-dark');
+    // Update button states
+    document.querySelectorAll('.theme-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('btn-' + t).classList.add('active');
+    // Clear canvases so they repaint with new colors
+    clearCanvas('canvas-net');
+    clearCanvas('canvas-topo');
+    clearCanvas('canvas-stream');
+  }
+
+  function clearCanvas(id) {
+    const c = document.getElementById(id);
+    if (c) c.getContext('2d').clearRect(0, 0, c.width, c.height);
+  }
+
+  // Set initial active state
+  document.getElementById('btn-system').classList.add('active');
+
+  // Watch for system preference change
+  window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
+    if (currentTheme === 'system') {
+      clearCanvas('canvas-net');
+      clearCanvas('canvas-topo');
+      clearCanvas('canvas-stream');
+    }
+  });
+
+
+  /* ──────────────────────────────────────────────
+     OPTION 02 — NETWORK MESH
+  ────────────────────────────────────────────── */
+  (function () {
+    const canvas = document.getElementById('canvas-net');
+    const hero   = canvas.closest('.hero');
+    const ctx    = canvas.getContext('2d');
+
+    const N    = 72;
+    const DIST = 165;
+    const SPD  = 0.2;
+
+    let W, H, nodes;
+
+    function resize() {
+      W = canvas.width  = hero.offsetWidth;
+      H = canvas.height = hero.offsetHeight;
+    }
+
+    function mkNodes() {
+      nodes = Array.from({ length: N }, () => ({
+        x: Math.random() * W,
+        y: Math.random() * H,
+        vx: (Math.random() - 0.5) * SPD,
+        vy: (Math.random() - 0.5) * SPD,
+        r: Math.random() * 1.3 + 0.8,
+      }));
+    }
+
+    function tick() {
+      ctx.clearRect(0, 0, W, H);
+      const dark = isDark();
+
+      const edgeR   = dark ? 37  : 30;
+      const edgeG   = dark ? 99  : 58;
+      const edgeB   = dark ? 235 : 110;
+      const nodeC   = dark ? 'rgba(148,210,255,0.85)' : 'rgba(37,99,235,0.7)';
+      const glowC0  = dark ? 'rgba(14,165,233,0.18)'  : 'rgba(37,99,235,0.12)';
+
+      for (const n of nodes) {
+        n.x += n.vx; n.y += n.vy;
+        if (n.x < 0 || n.x > W) n.vx *= -1;
+        if (n.y < 0 || n.y > H) n.vy *= -1;
+      }
+
+      for (let i = 0; i < nodes.length; i++) {
+        for (let j = i + 1; j < nodes.length; j++) {
+          const dx = nodes[i].x - nodes[j].x;
+          const dy = nodes[i].y - nodes[j].y;
+          const d  = Math.sqrt(dx*dx + dy*dy);
+          if (d < DIST) {
+            const a = (1 - d / DIST) * (dark ? 0.2 : 0.12);
+            ctx.beginPath();
+            ctx.moveTo(nodes[i].x, nodes[i].y);
+            ctx.lineTo(nodes[j].x, nodes[j].y);
+            ctx.strokeStyle = `rgba(${edgeR},${edgeG},${edgeB},${a})`;
+            ctx.lineWidth = 0.7;
+            ctx.stroke();
+          }
+        }
+      }
+
+      for (const n of nodes) {
+        const g = ctx.createRadialGradient(n.x, n.y, 0, n.x, n.y, n.r * 8);
+        g.addColorStop(0, glowC0);
+        g.addColorStop(1, 'transparent');
+        ctx.beginPath();
+        ctx.arc(n.x, n.y, n.r * 8, 0, Math.PI * 2);
+        ctx.fillStyle = g;
+        ctx.fill();
+
+        ctx.beginPath();
+        ctx.arc(n.x, n.y, n.r, 0, Math.PI * 2);
+        ctx.fillStyle = nodeC;
+        ctx.fill();
+      }
+
+      requestAnimationFrame(tick);
+    }
+
+    resize(); mkNodes(); tick();
+    window.addEventListener('resize', () => { resize(); mkNodes(); });
+  })();
+
+
+  /* ──────────────────────────────────────────────
+     OPTION 03 — TOPOGRAPHIC
+  ────────────────────────────────────────────── */
+  (function () {
+    const canvas = document.getElementById('canvas-topo');
+    const hero   = canvas.closest('.hero');
+    const ctx    = canvas.getContext('2d');
+
+    let W, H, t = 0;
+
+    function resize() {
+      W = canvas.width  = hero.offsetWidth;
+      H = canvas.height = hero.offsetHeight;
+    }
+
+    function field(x, y, t) {
+      return (
+          Math.sin(x * 0.0055 + y * 0.0040 + t * 0.18) * 0.35
+        + Math.sin(x * 0.0092 - y * 0.0062 + t * 0.13) * 0.28
+        + Math.sin(x * 0.0033 + y * 0.0108 + t * 0.09) * 0.22
+        + Math.sin(x * 0.0148 - y * 0.0028 - t * 0.07) * 0.15
+      );
+    }
+
+    function drawContour(threshold, dark) {
+      const STEP = 26;
+      ctx.beginPath();
+      let pen = false;
+      for (let row = 0; row <= H; row += STEP) {
+        for (let col = 0; col <= W; col += STEP) {
+          const v0 = field(col, row, t);
+          const v1 = field(col + STEP, row, t);
+          if ((v0 < threshold) !== (v1 < threshold)) {
+            const px = col + STEP * (threshold - v0) / (v1 - v0);
+            pen ? ctx.lineTo(px, row) : ctx.moveTo(px, row);
+            pen = true;
+          }
+          const v2 = field(col, row + STEP, t);
+          if ((v0 < threshold) !== (v2 < threshold)) {
+            const py = row + STEP * (threshold - v0) / (v2 - v0);
+            pen ? ctx.lineTo(col, py) : ctx.moveTo(col, py);
+            pen = true;
+          }
+        }
+        pen = false;
+      }
+      ctx.stroke();
+    }
+
+    function tick() {
+      ctx.clearRect(0, 0, W, H);
+      const dark = isDark();
+
+      const LEVELS = 18;
+      for (let i = 0; i < LEVELS; i++) {
+        const threshold = -0.88 + (i / LEVELS) * 1.76;
+        const isMajor   = (i % 5 === 0);
+        ctx.lineWidth   = isMajor ? 1.1 : 0.55;
+        ctx.strokeStyle = isMajor
+          ? (dark ? 'rgba(37,99,235,0.14)' : 'rgba(30,58,110,0.11)')
+          : (dark ? 'rgba(37,99,235,0.07)' : 'rgba(30,58,110,0.06)');
+        drawContour(threshold, dark);
+      }
+
+      t += 0.004;
+      requestAnimationFrame(tick);
+    }
+
+    resize(); tick();
+    window.addEventListener('resize', resize);
+  })();
+
+
+  /* ──────────────────────────────────────────────
+     OPTION 04 — DATA STREAM
+  ────────────────────────────────────────────── */
+  (function () {
+    const canvas = document.getElementById('canvas-stream');
+    const hero   = canvas.closest('.hero');
+    const ctx    = canvas.getContext('2d');
+
+    const TERMS = [
+      'NIST','CSF','SEC','FINRA','NYDFS','NAIC','MFA','EDR','SOC','VPN',
+      'RIA','CCO','BYOD','ZTA','IAM','MDR','XDR','SIEM','SOAR','TLS',
+      '2FA','PKI','AES','SHA','RSA','CIS','RISK','EXAM','CTRL','CERT',
+      'EVID','AUDIT','LOG','RULE','TRAP','0x4F','0xA2','0xE1','0xC7',
+      '0','1','0','1','1','0','1','0','1','0',
+      'F4A','9BE','C73','3D8','A21',
+    ];
+
+    const COL_W = 22;
+    const FPX   = 12;
+    const SPD   = 0.42;
+
+    let W, H, cols, drops;
+
+    function resize() {
+      W = canvas.width  = hero.offsetWidth;
+      H = canvas.height = hero.offsetHeight;
+      cols  = Math.ceil(W / COL_W);
+      drops = Array.from({ length: cols }, () => Math.random() * -(H / FPX));
+    }
+
+    function tick() {
+      const dark = isDark();
+
+      // Fade trail
+      if (dark) {
+        ctx.fillStyle = 'rgba(4,8,16,0.07)';
+      } else {
+        ctx.fillStyle = 'rgba(243,248,255,0.07)';
+      }
+      ctx.fillRect(0, 0, W, H);
+
+      ctx.font = `${FPX}px 'Inter', monospace`;
+
+      for (let i = 0; i < cols; i++) {
+        const x = i * COL_W + 6;
+        if (x < W * 0.28) { drops[i] += SPD; continue; }
+
+        const y    = drops[i] * FPX;
+        const pos  = (x - W * 0.28) / (W * 0.72);
+        const hA   = Math.min(1, pos * 2.2) * Math.max(0, 1 - (pos - 0.65) * 3.5);
+        const base = (dark ? 0.055 : 0.048) * hA;
+
+        if (base < 0.003) { drops[i] += SPD; continue; }
+
+        const term = TERMS[Math.floor(Math.random() * TERMS.length)];
+
+        // Lead character slightly brighter
+        if (dark) {
+          ctx.fillStyle = `rgba(14,165,233,${base * 2.4})`;
+        } else {
+          ctx.fillStyle = `rgba(14,105,190,${base * 2.4})`;
+        }
+        ctx.fillText(term[0], x, y);
+
+        if (dark) {
+          ctx.fillStyle = `rgba(37,99,235,${base})`;
+        } else {
+          ctx.fillStyle = `rgba(30,58,110,${base * 0.85})`;
+        }
+        if (term.length > 1) ctx.fillText(term.slice(1), x + 8, y);
+
+        if (y > H && Math.random() > 0.977) drops[i] = 0;
+        drops[i] += SPD;
+      }
+
+      requestAnimationFrame(tick);
+    }
+
+    resize(); tick();
+    window.addEventListener('resize', () => resize());
+  })();
+
+</script>
+</body>
+</html>

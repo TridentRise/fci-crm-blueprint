@@ -1,0 +1,991 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FCI Hero Directions — Group 05: Technical</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Inter+Tight:wght@600;700&display=swap" rel="stylesheet" />
+  <style>
+
+    /* ══════════════════════════════════════════════════════
+       THEME — FCI BRAND PALETTE (DEEP NAVY + ELECTRIC BLUE)
+    ══════════════════════════════════════════════════════ */
+    :root {
+      --bg:           #060C1A;
+      --panel:        #080F20;
+      --blue:         #2563EB;
+      --blue-hi:      #0EA5E9;
+      --blue-lo:      rgba(37,99,235,0.18);
+      --blue-glow:    rgba(37,99,235,0.08);
+      --navy:         #1E3A6E;
+      --green:        #2D7040;
+      --green-hi:     rgba(45,112,64,0.70);
+      --warm:         #7CB8E8;
+      --dim:          #2A4A7A;
+      --screen:       #040810;
+      --nav-bg:       rgba(6,12,26,0.95);
+      --nav-border:   rgba(37,99,235,0.22);
+      --text-main:    #7EB8E8;
+      --text-sub:     #3B6EAA;
+      --text-hi:      #BAE6FD;
+      --ruler:        rgba(37,99,235,0.18);
+    }
+
+    body.theme-light {
+      --bg:           #EEF5FF;
+      --panel:        #E4EFFC;
+      --blue:         #2563EB;
+      --blue-hi:      #0EA5E9;
+      --blue-lo:      rgba(37,99,235,0.14);
+      --blue-glow:    rgba(37,99,235,0.06);
+      --navy:         #1E3A6E;
+      --green:        #1E5028;
+      --green-hi:     rgba(30,80,40,0.50);
+      --warm:         #1E3A6E;
+      --dim:          #3B6EAA;
+      --screen:       #D8E8FA;
+      --nav-bg:       rgba(238,245,255,0.95);
+      --nav-border:   rgba(37,99,235,0.20);
+      --text-main:    #1E3A6E;
+      --text-sub:     #3B6EAA;
+      --text-hi:      #0F172A;
+      --ruler:        rgba(37,99,235,0.18);
+    }
+
+    /* ══════════════════════════════════════════════════════
+       RESET + BASE
+    ══════════════════════════════════════════════════════ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--text-main);
+      font-family: 'Inter', sans-serif;
+      font-weight: 300;
+      overflow-x: hidden;
+      transition: background .4s, color .4s;
+    }
+
+    /* ══════════════════════════════════════════════════════
+       NAV
+    ══════════════════════════════════════════════════════ */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 40px; height: 52px;
+      background: var(--nav-bg);
+      border-bottom: 1px solid var(--nav-border);
+      backdrop-filter: blur(14px);
+    }
+    .nav-logo {
+      font-family: 'Inter Tight', sans-serif;
+      font-size: 17px; font-weight: 700; letter-spacing: .10em;
+      color: var(--blue-hi);
+    }
+    .nav-links { display: flex; gap: 26px; }
+    .nav-links a {
+      font-size: 10px; letter-spacing: .15em; text-transform: uppercase;
+      color: var(--text-sub); text-decoration: none;
+      font-family: 'Courier New', monospace;
+      transition: color .2s;
+    }
+    .nav-links a:hover { color: var(--amber-hi); }
+    .theme-toggle {
+      display: flex; gap: 4px;
+      background: var(--blue-lo);
+      border-radius: 4px; padding: 3px;
+    }
+    .theme-btn {
+      padding: 4px 10px; border-radius: 3px; border: none; cursor: pointer;
+      font-size: 10px; letter-spacing: .10em; text-transform: uppercase;
+      font-family: 'Courier New', monospace;
+      background: transparent; color: var(--text-sub);
+      transition: background .2s, color .2s;
+    }
+    .theme-btn.active { background: var(--blue); color: var(--bg); }
+
+    /* ══════════════════════════════════════════════════════
+       INTRO
+    ══════════════════════════════════════════════════════ */
+    .intro-panel {
+      padding: calc(52px + 56px) 56px 50px;
+      border-bottom: 1px solid var(--ruler);
+      max-width: 860px;
+    }
+    .intro-label {
+      font-family: 'Courier New', monospace;
+      font-size: 10px; letter-spacing: .22em; text-transform: uppercase;
+      color: var(--blue-hi); opacity: .65; margin-bottom: 14px;
+    }
+    .intro-title {
+      font-family: 'Inter Tight', sans-serif;
+      font-size: clamp(20px, 2vw, 30px); font-weight: 600;
+      color: var(--text-hi); letter-spacing: -.01em; margin-bottom: 14px;
+    }
+    .intro-body {
+      font-size: 14px; color: var(--warm); opacity: .75;
+      max-width: 620px; line-height: 1.72;
+    }
+
+    /* ══════════════════════════════════════════════════════
+       HERO SECTION LAYOUT — full-bleed canvas, text overlay
+    ══════════════════════════════════════════════════════ */
+    .hero-section {
+      min-height: 100vh;
+      position: relative;
+      border-bottom: 1px solid var(--ruler);
+      overflow: hidden;
+    }
+
+    /* Canvas fills the entire section */
+    .canvas-wrap {
+      position: absolute; inset: 0; z-index: 0;
+    }
+    .canvas-wrap canvas {
+      width: 100%; height: 100%; display: block;
+    }
+
+    /* Content floats left, fades into the animation */
+    .content-side {
+      position: relative; z-index: 2;
+      width: 42%; min-height: 100vh;
+      display: flex; flex-direction: column; justify-content: center;
+      padding: 80px 64px 80px 56px;
+    }
+    /* Left-to-transparent gradient mask — dark mode */
+    .content-side::before {
+      content: '';
+      position: absolute; inset: 0; z-index: -1;
+      background: linear-gradient(to right, #060C1A 52%, transparent 100%);
+    }
+    body.theme-light .content-side::before {
+      background: linear-gradient(to right, #EEF5FF 52%, transparent 100%);
+    }
+
+    .section-tag {
+      font-family: 'Courier New', monospace;
+      font-size: 10px; letter-spacing: .20em; text-transform: uppercase;
+      color: var(--blue-hi); opacity: .72; margin-bottom: 22px;
+    }
+    .section-num {
+      font-family: 'Courier New', monospace;
+      font-size: 72px; font-weight: 700; line-height: 1;
+      color: var(--blue-lo);
+      position: absolute; top: 68px; left: 56px;
+      letter-spacing: -.02em; user-select: none;
+    }
+    h2 {
+      font-family: 'Inter Tight', sans-serif;
+      font-size: clamp(26px, 2.8vw, 44px);
+      font-weight: 600; line-height: 1.12; letter-spacing: -.02em;
+      color: var(--text-hi); margin-bottom: 18px;
+    }
+    .body-text {
+      font-size: 14.5px; line-height: 1.68;
+      color: var(--warm); opacity: .80;
+      max-width: 340px; margin-bottom: 30px;
+    }
+    .meta-row { display: flex; flex-direction: column; gap: 9px; margin-bottom: 32px; }
+    .meta-item {
+      font-family: 'Courier New', monospace;
+      font-size: 10px; letter-spacing: .13em;
+      color: var(--text-sub);
+      display: flex; align-items: center; gap: 10px;
+    }
+    .meta-item::before {
+      content: ''; display: block;
+      width: 16px; height: 1px;
+      background: var(--blue); opacity: .55;
+    }
+    .cta-btn {
+      display: inline-block; padding: 10px 22px;
+      border: 1px solid var(--blue);
+      color: var(--blue-hi);
+      font-family: 'Courier New', monospace;
+      font-size: 10px; letter-spacing: .16em; text-transform: uppercase;
+      text-decoration: none;
+      transition: background .2s, color .2s;
+    }
+    .cta-btn:hover { background: var(--blue); color: var(--bg); }
+
+    /* scanlines */
+    .canvas-wrap::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: repeating-linear-gradient(
+        0deg, transparent, transparent 3px,
+        rgba(0,0,0,0.065) 3px, rgba(0,0,0,0.065) 4px
+      );
+      pointer-events: none; z-index: 10;
+    }
+    /* vignette */
+    .canvas-wrap::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse 88% 78% at 55% 50%, transparent 45%, rgba(0,0,0,0.42) 100%);
+      pointer-events: none; z-index: 11;
+    }
+
+    /* ══════════════════════════════════════════════════════
+       FOOTER
+    ══════════════════════════════════════════════════════ */
+    footer {
+      padding: 36px 56px;
+      border-top: 1px solid var(--ruler);
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .footer-text {
+      font-family: 'Courier New', monospace;
+      font-size: 9px; letter-spacing: .14em;
+      color: var(--text-sub); opacity: .55;
+    }
+
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <span class="nav-logo">FCI</span>
+  <div class="nav-links">
+    <a href="#5a">5A · RADAR</a>
+    <a href="#5b">5B · PANEL</a>
+    <a href="#5c">5C · SIGNAL</a>
+    <a href="#5d">5D · ORBIT</a>
+  </div>
+  <div class="theme-toggle">
+    <button class="theme-btn" id="btn-system" onclick="setTheme('system')">SYS</button>
+    <button class="theme-btn" id="btn-light"  onclick="setTheme('light')">LGT</button>
+    <button class="theme-btn" id="btn-dark"   onclick="setTheme('dark')">DRK</button>
+  </div>
+</nav>
+
+<!-- INTRO -->
+<div class="intro-panel">
+  <div class="intro-label">FCI Cybersecurity · Group 05 · Technical Series</div>
+  <div class="intro-title">Mission control for financial field compliance.</div>
+  <div class="intro-body">Four visual directions built around precision instrumentation and atmospheric depth — drawing from Soviet mission control, analog telemetry, and the calm authority of a system that has never gone dark.</div>
+</div>
+
+<!-- 5A — RADAR PPI -->
+<section class="hero-section" id="5a">
+  <div class="canvas-wrap"><canvas id="c-radar"></canvas></div>
+  <div class="content-side">
+    <div class="section-num" aria-hidden="true">5A</div>
+    <div class="section-tag">Direction 5A · Radar / Sweep</div>
+    <h2>No threat goes undetected.</h2>
+    <p class="body-text">FCI maintains a continuous sweep across every endpoint, user, and field device. Every anomaly is logged and timestamped — before it becomes a breach.</p>
+    <div class="meta-row">
+      <div class="meta-item">24×7 active SOC monitoring</div>
+      <div class="meta-item">40,000+ endpoints under watch</div>
+      <div class="meta-item">SEC · FINRA · NYDFS coverage</div>
+    </div>
+    <a class="cta-btn" href="#">Explore the platform →</a>
+  </div>
+</section>
+
+<!-- 5B — INSTRUMENT PANEL -->
+<section class="hero-section" id="5b">
+  <div class="canvas-wrap"><canvas id="c-panel"></canvas></div>
+  <div class="content-side">
+    <div class="section-num" aria-hidden="true">5B</div>
+    <div class="section-tag">Direction 5B · Control Panel</div>
+    <h2>Everything in view. All the time.</h2>
+    <p class="body-text">The CISO Portal consolidates compliance posture, endpoint health, and audit-ready evidence into a single operational console — reducing monthly task time by 80%.</p>
+    <div class="meta-row">
+      <div class="meta-item">Real-time compliance posture</div>
+      <div class="meta-item">Automated evidence collection</div>
+      <div class="meta-item">90% faster implementation</div>
+    </div>
+    <a class="cta-btn" href="#">See the CISO Portal →</a>
+  </div>
+</section>
+
+<!-- 5C — OSCILLOSCOPE -->
+<section class="hero-section" id="5c">
+  <div class="canvas-wrap"><canvas id="c-scope"></canvas></div>
+  <div class="content-side">
+    <div class="section-num" aria-hidden="true">5C</div>
+    <div class="section-tag">Direction 5C · Signal Analysis</div>
+    <h2>Every signal. Every deviation.</h2>
+    <p class="body-text">FCI's SOC reads the frequency of your environment — network traffic, device telemetry, user behavior — and responds to the patterns others miss.</p>
+    <div class="meta-row">
+      <div class="meta-item">Behavioral anomaly detection</div>
+      <div class="meta-item">Always-On VPN + EDR</div>
+      <div class="meta-item">NIST CSF-mapped controls</div>
+    </div>
+    <a class="cta-btn" href="#">How it works →</a>
+  </div>
+</section>
+
+<!-- 5D — ORBITAL -->
+<section class="hero-section" id="5d">
+  <div class="canvas-wrap"><canvas id="c-orbit"></canvas></div>
+  <div class="content-side">
+    <div class="section-num" aria-hidden="true">5D</div>
+    <div class="section-tag">Direction 5D · Orbital / Field</div>
+    <h2>Wherever your workforce operates.</h2>
+    <p class="body-text">Distributed field advisors, BYOD devices, independent branch offices — FCI's protection follows your people, not your perimeter.</p>
+    <div class="meta-row">
+      <div class="meta-item">Field compliance at scale</div>
+      <div class="meta-item">BYOD + mobile workforce</div>
+      <div class="meta-item">Zero Trust · Always-On VPN</div>
+    </div>
+    <a class="cta-btn" href="#">Field compliance →</a>
+  </div>
+</section>
+
+<footer>
+  <span class="footer-text">FCI CYBERSECURITY — GROUP 05: TECHNICAL — HERO DIRECTION EXPLORATION</span>
+  <span class="footer-text">DRAFT / INTERNAL USE ONLY · 2026</span>
+</footer>
+
+<script>
+/* ══════════════════════════════════════════════════════
+   THEME
+══════════════════════════════════════════════════════ */
+let currentTheme = localStorage.getItem('fci-theme') || 'system';
+function isDark() {
+  if (currentTheme === 'dark')  return true;
+  if (currentTheme === 'light') return false;
+  return window.matchMedia('(prefers-color-scheme: dark)').matches;
+}
+function setTheme(t) {
+  currentTheme = t;
+  localStorage.setItem('fci-theme', t);
+  applyTheme();
+}
+function applyTheme() {
+  document.body.classList.remove('theme-light','theme-dark');
+  if (currentTheme === 'light') document.body.classList.add('theme-light');
+  if (currentTheme === 'dark')  document.body.classList.add('theme-dark');
+  ['system','light','dark'].forEach(id => {
+    document.getElementById('btn-'+id)?.classList.toggle('active', currentTheme===id);
+  });
+}
+applyTheme();
+window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
+  if (currentTheme === 'system') applyTheme();
+});
+
+/* ══════════════════════════════════════════════════════
+   CANVAS + COLOR HELPERS
+══════════════════════════════════════════════════════ */
+function fitCanvas(canvas) {
+  const rect = canvas.parentElement.getBoundingClientRect();
+  const dpr  = window.devicePixelRatio || 1;
+  const W = rect.width, H = rect.height;
+  if (canvas.width  !== Math.round(W*dpr) ||
+      canvas.height !== Math.round(H*dpr)) {
+    canvas.width  = Math.round(W*dpr);
+    canvas.height = Math.round(H*dpr);
+    canvas.getContext('2d').setTransform(dpr,0,0,dpr,0,0);
+  }
+  return {W,H};
+}
+
+/* deterministic pseudo-noise — no Math.random flicker */
+function hash(n) { const s=Math.sin(n*127.1)*43758.5453; return s-Math.floor(s); }
+function noise(x,seed) { return hash(x*1.9+seed*113.7)*2-1; }
+
+/* rgba builders — FCI brand palette */
+const A = {
+  hi:  d => d ? 'rgba(14,165,233,'   : 'rgba(14,165,233,',   /* sky #0EA5E9     */
+  mid: d => d ? 'rgba(37,99,235,'    : 'rgba(37,99,235,',    /* blue #2563EB    */
+  dim: d => d ? 'rgba(30,58,110,'    : 'rgba(30,58,110,',    /* deep navy       */
+  grn: d => d ? 'rgba(55,175,80,'    : 'rgba(28,120,45,',    /* status green    */
+  red: d => d ? 'rgba(220,60,40,'    : 'rgba(180,40,20,',    /* status red      */
+};
+const c = (fn,d,a) => fn(d)+a+')';
+
+/* ══════════════════════════════════════════════════════
+   5A — RADAR PPI
+══════════════════════════════════════════════════════ */
+(function(){
+  const canvas = document.getElementById('c-radar');
+  let t = 0;
+  const SPEED = 0.40;   /* rad/s — one revolution ~15.7 s */
+  const FADE  = 2.8;    /* seconds contact glows after sweep */
+
+  /* fixed contacts: [angle_rad, radius_fraction, label] */
+  const contacts = [
+    [0.48,0.54,'TGT-07'],[1.92,0.38,'TGT-12'],[2.74,0.66,'TGT-03'],
+    [3.88,0.44,'TGT-19'],[5.06,0.75,'TGT-21'],[0.92,0.82,'TGT-08'],
+    [4.35,0.29,'TGT-14'],[6.00,0.58,'TGT-06'],
+  ];
+
+  /* pre-baked stars */
+  const STARS = Array.from({length:140},(_,i)=>({
+    x:hash(i*7.19), y:hash(i*13.37+0.5),
+    r:i%9===0?1.1:i%3===0?0.6:0.32,
+    a:0.04+hash(i*2.3)*0.07,
+  }));
+
+  function draw() {
+    const {W,H} = fitCanvas(canvas);
+    const ctx   = canvas.getContext('2d');
+    const dk    = isDark();
+
+    /* background */
+    ctx.fillStyle = dk ? '#060C1A' : '#EEF5FF';
+    ctx.fillRect(0,0,W,H);
+
+    /* star field */
+    if (dk) STARS.forEach(s=>{
+      ctx.beginPath(); ctx.arc(s.x*W,s.y*H,s.r,0,Math.PI*2);
+      ctx.fillStyle=`rgba(148,196,255,${s.a})`; ctx.fill();
+    });
+
+    const cx=W*0.52, cy=H*0.50, R=Math.min(W,H)*0.39;
+
+    /* outer bezels */
+    [R+20,R+12].forEach((r,i)=>{
+      ctx.beginPath(); ctx.arc(cx,cy,r,0,Math.PI*2);
+      ctx.strokeStyle=c(A.mid,dk,i===0?'0.30':'0.16');
+      ctx.lineWidth=i===0?1:0.5; ctx.stroke();
+    });
+
+    /* clip to disk */
+    ctx.save();
+    ctx.beginPath(); ctx.arc(cx,cy,R,0,Math.PI*2); ctx.clip();
+
+    ctx.fillStyle = dk ? '#040A18' : '#DCE9F8';
+    ctx.fillRect(cx-R,cy-R,R*2,R*2);
+
+    /* range rings */
+    for(let i=1;i<=5;i++){
+      ctx.beginPath(); ctx.arc(cx,cy,R*i/5,0,Math.PI*2);
+      ctx.strokeStyle=c(A.mid,dk,(0.06+i*0.022)+'');
+      ctx.lineWidth=i===5?0.8:0.35; ctx.stroke();
+    }
+
+    /* azimuth spokes */
+    for(let d=0;d<360;d+=30){
+      const a=d*Math.PI/180;
+      ctx.beginPath(); ctx.moveTo(cx,cy);
+      ctx.lineTo(cx+Math.cos(a)*R, cy+Math.sin(a)*R);
+      ctx.strokeStyle=c(A.mid,dk,'0.08'); ctx.lineWidth=0.35; ctx.stroke();
+    }
+
+    /* crosshair */
+    ctx.strokeStyle=c(A.mid,dk,'0.16'); ctx.lineWidth=0.5;
+    ctx.beginPath(); ctx.moveTo(cx,cy-R); ctx.lineTo(cx,cy+R); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(cx-R,cy); ctx.lineTo(cx+R,cy); ctx.stroke();
+
+    /* sweep */
+    const sa=(t*SPEED)%(Math.PI*2);
+
+    /* trail — filled sectors */
+    const TRAIL=Math.PI*0.52;
+    for(let i=0;i<64;i++){
+      const frac=(i+1)/64;
+      ctx.beginPath(); ctx.moveTo(cx,cy);
+      ctx.arc(cx,cy,R, sa-TRAIL*(1-i/64), sa-TRAIL*(1-frac));
+      ctx.closePath();
+      ctx.fillStyle=c(A.mid,dk,(frac*frac*0.19)+''); ctx.fill();
+    }
+
+    /* sweep line */
+    ctx.save();
+    ctx.shadowBlur=18; ctx.shadowColor=c(A.hi,dk,'0.65');
+    ctx.beginPath(); ctx.moveTo(cx,cy);
+    ctx.lineTo(cx+Math.cos(sa)*R,cy+Math.sin(sa)*R);
+    ctx.strokeStyle=c(A.hi,dk,'0.95'); ctx.lineWidth=1.7; ctx.stroke();
+    ctx.restore();
+
+    /* center pip */
+    ctx.beginPath(); ctx.arc(cx,cy,2.5,0,Math.PI*2);
+    ctx.fillStyle=c(A.hi,dk,'0.85'); ctx.fill();
+
+    /* contacts */
+    contacts.forEach(([ca,cr,lbl])=>{
+      const delta=(sa-ca+Math.PI*2)%(Math.PI*2);
+      const age=delta/SPEED;
+      if(age<FADE){
+        const alpha=Math.pow(1-age/FADE,1.4);
+        const bx=cx+Math.cos(ca)*R*cr, by=cy+Math.sin(ca)*R*cr;
+        ctx.save();
+        ctx.shadowBlur=14*alpha; ctx.shadowColor=c(A.hi,dk,alpha*0.80+'');
+        ctx.beginPath(); ctx.arc(bx,by,3.5,0,Math.PI*2);
+        ctx.fillStyle=c(A.hi,dk,alpha*0.92+''); ctx.fill();
+        ctx.restore();
+        if(alpha>0.28){
+          ctx.font=`8px 'Courier New',monospace`;
+          ctx.fillStyle=c(A.mid,dk,alpha*0.62+'');
+          ctx.textAlign='left'; ctx.textBaseline='middle';
+          ctx.fillText(lbl,bx+7,by-3);
+        }
+      }
+    });
+
+    ctx.restore(); /* end clip */
+
+    /* azimuth ticks + labels */
+    for(let d=0;d<360;d+=5){
+      const a=d*Math.PI/180;
+      const inner=R+3, outer=R+(d%30===0?16:d%10===0?10:6);
+      ctx.beginPath();
+      ctx.moveTo(cx+Math.cos(a)*inner,cy+Math.sin(a)*inner);
+      ctx.lineTo(cx+Math.cos(a)*outer,cy+Math.sin(a)*outer);
+      ctx.strokeStyle=c(A.mid,dk,d%30===0?'0.52':'0.22');
+      ctx.lineWidth=d%30===0?0.9:0.4; ctx.stroke();
+    }
+    for(let d=0;d<360;d+=30){
+      const a=d*Math.PI/180, lr=R+26;
+      ctx.font=`8px 'Courier New',monospace`;
+      ctx.fillStyle=c(A.mid,dk,'0.45');
+      ctx.textAlign='center'; ctx.textBaseline='middle';
+      ctx.fillText(d.toString().padStart(3,'0'), cx+Math.cos(a)*lr, cy+Math.sin(a)*lr);
+    }
+
+    /* HUD */
+    ctx.textAlign='left'; ctx.textBaseline='top';
+    ctx.font=`9px 'Courier New',monospace`;
+    ctx.fillStyle=c(A.dim,dk,'0.42');
+    ctx.fillText('SECTOR-7 / CONTINUOUS SWEEP', 18, 18);
+    ctx.fillText(`T+ ${t.toFixed(1).padStart(7,' ')}s`, 18, 32);
+
+    /* status LEDs */
+    const leds=[
+      ['RDR', true],
+      ['IFF', true],
+      ['LINK', Math.floor(t*1.5)%9!==0],
+      ['JAM',  false],
+    ];
+    leds.forEach(([lbl,ok],i)=>{
+      const lx=18, ly=H-20-i*16;
+      ctx.save();
+      ctx.shadowBlur=6; ctx.shadowColor=ok?c(A.grn,dk,'0.8'):c(A.red,dk,'0.9');
+      ctx.beginPath(); ctx.arc(lx+4,ly-3,3.5,0,Math.PI*2);
+      ctx.fillStyle=ok?c(A.grn,dk,'0.78'):c(A.red,dk,'0.86'); ctx.fill();
+      ctx.restore();
+      ctx.font=`8px 'Courier New',monospace`;
+      ctx.fillStyle=c(A.dim,dk,'0.38');
+      ctx.fillText(lbl,lx+12,ly-8);
+    });
+  }
+
+  function loop(ts){ t=ts*0.001; draw(); requestAnimationFrame(loop); }
+  requestAnimationFrame(loop);
+})();
+
+/* ══════════════════════════════════════════════════════
+   5B — INSTRUMENT PANEL
+══════════════════════════════════════════════════════ */
+(function(){
+  const canvas = document.getElementById('c-panel');
+  let t = 0;
+
+  function drawGauge(ctx,cx,cy,R,val,lo,hi,label,dk){
+    const norm=(Math.max(lo,Math.min(hi,val))-lo)/(hi-lo);
+    const SA=Math.PI*0.75, sweep=Math.PI*1.5, VA=SA+norm*sweep;
+
+    /* track */
+    ctx.beginPath(); ctx.arc(cx,cy,R,SA,SA+sweep);
+    ctx.strokeStyle=c(A.mid,dk,'0.15'); ctx.lineWidth=2.5; ctx.stroke();
+
+    /* ticks */
+    for(let i=0;i<=10;i++){
+      const a=SA+(i/10)*sweep, major=i%5===0;
+      const len=major?R*0.19:R*0.10;
+      ctx.beginPath();
+      ctx.moveTo(cx+Math.cos(a)*(R-2),cy+Math.sin(a)*(R-2));
+      ctx.lineTo(cx+Math.cos(a)*(R-2-len),cy+Math.sin(a)*(R-2-len));
+      ctx.strokeStyle=c(A.mid,dk,major?'0.28':'0.12');
+      ctx.lineWidth=major?0.8:0.4; ctx.stroke();
+    }
+
+    /* value arc glow */
+    ctx.save();
+    ctx.shadowBlur=10; ctx.shadowColor=c(A.hi,dk,'0.42');
+    ctx.beginPath(); ctx.arc(cx,cy,R,SA,VA);
+    ctx.strokeStyle=c(A.mid,dk,'0.68'); ctx.lineWidth=2.2; ctx.stroke();
+    ctx.restore();
+
+    /* value arc crisp */
+    ctx.beginPath(); ctx.arc(cx,cy,R-1,SA,VA);
+    ctx.strokeStyle=c(A.hi,dk,'0.84'); ctx.lineWidth=1.2; ctx.stroke();
+
+    /* needle */
+    ctx.save();
+    ctx.shadowBlur=8; ctx.shadowColor=c(A.hi,dk,'0.52');
+    ctx.beginPath();
+    ctx.moveTo(cx-Math.cos(VA)*R*0.14,cy-Math.sin(VA)*R*0.14);
+    ctx.lineTo(cx+Math.cos(VA)*R*0.80,cy+Math.sin(VA)*R*0.80);
+    ctx.strokeStyle=c(A.hi,dk,'0.88'); ctx.lineWidth=1.4; ctx.stroke();
+    ctx.restore();
+
+    /* hub */
+    const g=ctx.createRadialGradient(cx,cy,0,cx,cy,R*0.11);
+    g.addColorStop(0,c(A.hi,dk,'0.72'));
+    g.addColorStop(1,c(A.mid,dk,'0.38'));
+    ctx.beginPath(); ctx.arc(cx,cy,R*0.10,0,Math.PI*2);
+    ctx.fillStyle=g; ctx.fill();
+
+    /* value readout */
+    ctx.font=`bold ${R*0.22}px 'Courier New',monospace`;
+    ctx.fillStyle=c(A.mid,dk,'0.62');
+    ctx.textAlign='center'; ctx.textBaseline='middle';
+    ctx.fillText(val.toFixed(0),cx,cy+R*0.30);
+    ctx.font=`${R*0.15}px 'Courier New',monospace`;
+    ctx.fillStyle=c(A.dim,dk,'0.40');
+    ctx.fillText(label,cx,cy+R*0.53);
+  }
+
+  function drawBar(ctx,x,y,w,h,val,label,dk){
+    const fill=Math.max(0,Math.min(1,val));
+    ctx.fillStyle=c(A.mid,dk,'0.07'); ctx.fillRect(x,y,w,h);
+    ctx.strokeStyle=c(A.mid,dk,'0.18'); ctx.lineWidth=0.5; ctx.strokeRect(x,y,w,h);
+    /* fill bottom-up */
+    const fh=h*fill;
+    const fc=fill>0.82?c(A.hi,dk,'0.72'):fill>0.50?c(A.mid,dk,'0.62'):c(A.dim,dk,'0.48');
+    ctx.fillStyle=fc; ctx.fillRect(x,y+h-fh,w,fh);
+    /* division lines */
+    for(let i=1;i<4;i++){
+      const ty=y+h*i/4;
+      ctx.beginPath(); ctx.moveTo(x-2,ty); ctx.lineTo(x+w+2,ty);
+      ctx.strokeStyle=c(A.mid,dk,'0.16'); ctx.lineWidth=0.4; ctx.stroke();
+    }
+    ctx.font=`7.5px 'Courier New',monospace`;
+    ctx.fillStyle=c(A.dim,dk,'0.38');
+    ctx.textAlign='center'; ctx.textBaseline='top';
+    ctx.fillText(label,x+w/2,y+h+4);
+  }
+
+  function draw(){
+    const {W,H}=fitCanvas(canvas);
+    const ctx=canvas.getContext('2d');
+    const dk=isDark();
+
+    ctx.fillStyle=dk?'#060C1A':'#EEF5FF';
+    ctx.fillRect(0,0,W,H);
+
+    /* dot matrix background */
+    for(let gx=22;gx<W;gx+=26) for(let gy=22;gy<H;gy+=26){
+      ctx.beginPath(); ctx.arc(gx,gy,0.55,0,Math.PI*2);
+      ctx.fillStyle=c(A.mid,dk,'0.055'); ctx.fill();
+    }
+
+    /* outer bezel */
+    const px=28,py=28,pw=W-56,ph=H-56;
+    ctx.strokeStyle=c(A.mid,dk,'0.18'); ctx.lineWidth=1; ctx.strokeRect(px,py,pw,ph);
+    ctx.strokeStyle=c(A.mid,dk,'0.09'); ctx.lineWidth=0.5; ctx.strokeRect(px+7,py+7,pw-14,ph-14);
+
+    /* corner brackets */
+    const bs=20;
+    [[px,py],[px+pw,py],[px,py+ph],[px+pw,py+ph]].forEach(([bx,by],qi)=>{
+      const sx=qi%2===0?1:-1, sy=qi<2?1:-1;
+      ctx.strokeStyle=c(A.hi,dk,'0.48'); ctx.lineWidth=1.5;
+      ctx.beginPath();
+      ctx.moveTo(bx+sx*bs,by); ctx.lineTo(bx,by); ctx.lineTo(bx,by+sy*bs);
+      ctx.stroke();
+    });
+
+    /* oscillating gauge values */
+    const gv1=62+Math.sin(t*0.33)*18+Math.sin(t*1.07)*5;
+    const gv2=45+Math.sin(t*0.21+1.1)*24+Math.sin(t*0.68)*7;
+    const gv3=74+Math.sin(t*0.40+2.2)*14+Math.sin(t*1.3+0.5)*3;
+
+    const gR=Math.min(W,H)*0.108;
+    const gyC=H*0.37;
+    drawGauge(ctx,W*0.22,gyC,gR,gv1,0,100,'ALERTS',dk);
+    drawGauge(ctx,W*0.50,gyC,gR,gv2,0,100,'SECURITY',dk);
+    drawGauge(ctx,W*0.78,gyC,gR,gv3,0,100,'COMPLIANCE',dk);
+
+    /* bar meters */
+    const bH=H*0.25, bW=16, bY=H*0.60;
+    const bN=9, bSp=(W-80)/bN;
+    const bLabels=['Ф-1','Ф-2','Ф-3','Ф-4','Ф-5','Ф-6','Ф-7','Ф-8','Ф-9'];
+    for(let i=0;i<bN;i++){
+      const bv=0.28+0.54*Math.abs(Math.sin(t*(0.13+i*0.06)+i*1.1))+0.08*Math.sin(t*0.85+i);
+      drawBar(ctx,40+i*bSp+bSp*0.5-bW*0.5,bY,bW,bH,Math.min(0.98,Math.max(0.04,bv)),bLabels[i],dk);
+    }
+
+    /* LED strip */
+    const ledY=H*0.89;
+    const LEDS=['СИС','ЦПУ','МЕМ','СЕТЬ','БЕЗ','СОЦ','IDS','VPN','КЛЮ'];
+    LEDS.forEach((lbl,i)=>{
+      const lx=40+i*(W-80)/LEDS.length+(W-80)/(LEDS.length*2);
+      const ok=!(i===3&&Math.floor(t*1.4+i)%8===0)&&!(i===6&&Math.floor(t*0.35+i)%14===0);
+      ctx.save();
+      ctx.shadowBlur=7; ctx.shadowColor=ok?c(A.grn,dk,'0.8'):c(A.red,dk,'0.9');
+      ctx.beginPath(); ctx.arc(lx,ledY,4,0,Math.PI*2);
+      ctx.fillStyle=ok?c(A.grn,dk,'0.76'):c(A.red,dk,'0.86'); ctx.fill();
+      ctx.restore();
+      ctx.font=`7.5px 'Courier New',monospace`;
+      ctx.fillStyle=c(A.dim,dk,'0.36');
+      ctx.textAlign='center'; ctx.textBaseline='top';
+      ctx.fillText(lbl,lx,ledY+7);
+    });
+
+    /* header / clock */
+    ctx.font=`9px 'Courier New',monospace`;
+    ctx.textAlign='left'; ctx.textBaseline='top';
+    ctx.fillStyle=c(A.dim,dk,'0.36');
+    ctx.fillText('CONSOLE А-7 · SYSTEMS STATUS', px+12, py+12);
+    const now=new Date();
+    const ts=`${now.getHours().toString().padStart(2,'0')}:${now.getMinutes().toString().padStart(2,'0')}:${now.getSeconds().toString().padStart(2,'0')} UTC`;
+    ctx.textAlign='right';
+    ctx.fillText(ts,px+pw-12,py+12);
+  }
+
+  function loop(ts){ t=ts*0.001; draw(); requestAnimationFrame(loop); }
+  requestAnimationFrame(loop);
+})();
+
+/* ══════════════════════════════════════════════════════
+   5C — OSCILLOSCOPE ARRAY
+══════════════════════════════════════════════════════ */
+(function(){
+  const canvas = document.getElementById('c-scope');
+  let t = 0;
+
+  const WAVES = [
+    (x,t) => Math.sin(x*3.0+t*2.1),
+    (x,t) => Math.sin(x*2.4+t*1.7)*0.58+Math.sin(x*7.2+t*3.3)*0.24+Math.sin(x*0.85+t*0.6)*0.18,
+    (x,t) => { const s=Math.floor(t*18); return Math.sin(x*5.4+t*4.0)*0.50+Math.sin(x*11.1+t*7.1)*0.28+noise(x,s)*0.22; },
+    (x,t) => Math.sin(x*1.1+t*0.55)*0.68+Math.sin(x*3.9+t*1.4)*0.28+Math.sin(x*9.0+t*5.0)*0.08,
+  ];
+  const LABELS  = ['CH-1 · NETWORK','CH-2 · THREAT INTEL','CH-3 · DEVICE NOISE','CH-4 · BASELINE'];
+  const FREQS   = ['Δf 2.18 MHz','Δf 1.73 MHz','Δf 8.30 MHz','Δf 0.92 MHz'];
+
+  function drawScope(ctx,sx,sy,sw,sh,waveFn,lbl,flbl,dk){
+    /* bezel */
+    ctx.fillStyle=dk?'#030810':'#D8E8FA'; ctx.fillRect(sx,sy,sw,sh);
+    ctx.strokeStyle=c(A.mid,dk,'0.26'); ctx.lineWidth=0.8; ctx.strokeRect(sx,sy,sw,sh);
+
+    /* inner border */
+    ctx.strokeStyle=c(A.mid,dk,'0.10'); ctx.lineWidth=0.4;
+    ctx.strokeRect(sx+3,sy+3,sw-6,sh-6);
+
+    /* calibration grid */
+    const COLS=8, ROWS=5;
+    for(let ci=1;ci<COLS;ci++){
+      ctx.beginPath(); ctx.moveTo(sx+sw*ci/COLS,sy+3); ctx.lineTo(sx+sw*ci/COLS,sy+sh-3);
+      ctx.strokeStyle=c(A.mid,dk,'0.08'); ctx.lineWidth=0.35; ctx.stroke();
+    }
+    for(let ri=1;ri<ROWS;ri++){
+      ctx.beginPath(); ctx.moveTo(sx+3,sy+sh*ri/ROWS); ctx.lineTo(sx+sw-3,sy+sh*ri/ROWS);
+      ctx.strokeStyle=c(A.mid,dk,ri===Math.floor(ROWS/2)?'0.18':'0.08');
+      ctx.lineWidth=ri===Math.floor(ROWS/2)?0.7:0.35; ctx.stroke();
+    }
+
+    /* glow pass */
+    const N=Math.floor(sw*1.8);
+    ctx.save(); ctx.filter='blur(2.5px)';
+    ctx.beginPath();
+    for(let i=0;i<=N;i++){
+      const px=sx+sw*i/N, vy=waveFn((i/N)*Math.PI*2,t);
+      const py=sy+sh*0.5-vy*sh*0.38;
+      i===0?ctx.moveTo(px,py):ctx.lineTo(px,py);
+    }
+    ctx.strokeStyle=c(A.mid,dk,'0.28'); ctx.lineWidth=3; ctx.stroke();
+    ctx.filter='none'; ctx.restore();
+
+    /* crisp pass */
+    ctx.beginPath();
+    for(let i=0;i<=N;i++){
+      const px=sx+sw*i/N, vy=waveFn((i/N)*Math.PI*2,t);
+      const py=sy+sh*0.5-vy*sh*0.38;
+      i===0?ctx.moveTo(px,py):ctx.lineTo(px,py);
+    }
+    ctx.strokeStyle=c(A.hi,dk,'0.80'); ctx.lineWidth=1.1; ctx.stroke();
+
+    /* labels */
+    ctx.font=`8px 'Courier New',monospace`;
+    ctx.fillStyle=c(A.mid,dk,'0.50');
+    ctx.textAlign='left'; ctx.textBaseline='top';
+    ctx.fillText(lbl,sx+6,sy+5);
+    ctx.textAlign='right';
+    ctx.fillText(flbl,sx+sw-6,sy+5);
+
+    /* trigger marker */
+    ctx.fillStyle=c(A.mid,dk,'0.52');
+    ctx.beginPath();
+    ctx.moveTo(sx+2,sy+sh*0.5-4);
+    ctx.lineTo(sx+8,sy+sh*0.5);
+    ctx.lineTo(sx+2,sy+sh*0.5+4);
+    ctx.fill();
+
+    /* value readout bottom-right */
+    const curVal=waveFn(Math.PI*1.5,t);
+    ctx.font=`7.5px 'Courier New',monospace`;
+    ctx.fillStyle=c(A.mid,dk,'0.40');
+    ctx.textAlign='right'; ctx.textBaseline='bottom';
+    ctx.fillText(curVal.toFixed(3),sx+sw-5,sy+sh-4);
+  }
+
+  function draw(){
+    const {W,H}=fitCanvas(canvas);
+    const ctx=canvas.getContext('2d');
+    const dk=isDark();
+    ctx.fillStyle=dk?'#060C1A':'#EEF5FF'; ctx.fillRect(0,0,W,H);
+
+    const pad=22,gap=14;
+    const sw=(W-pad*2-gap)/2, sh=(H-pad*2-gap)/2;
+    for(let r=0;r<2;r++) for(let cc=0;cc<2;cc++){
+      const idx=r*2+cc;
+      drawScope(ctx, pad+cc*(sw+gap), pad+r*(sh+gap), sw, sh,
+        WAVES[idx], LABELS[idx], FREQS[idx], dk);
+    }
+
+    /* watermark */
+    ctx.font=`8px 'Courier New',monospace`;
+    ctx.fillStyle=c(A.dim,dk,'0.26');
+    ctx.textAlign='center'; ctx.textBaseline='bottom';
+    ctx.fillText(`SIGNAL ANALYSIS UNIT MKT-4 · ${new Date().toISOString().slice(0,10)}`,W*0.5,H-4);
+  }
+
+  function loop(ts){ t=ts*0.001; draw(); requestAnimationFrame(loop); }
+  requestAnimationFrame(loop);
+})();
+
+/* ══════════════════════════════════════════════════════
+   5D — ORBITAL MECHANICS
+══════════════════════════════════════════════════════ */
+(function(){
+  const canvas = document.getElementById('c-orbit');
+  let t = 0;
+  const TRAIL = 92;
+
+  const BODIES = [
+    {sma:0.17,ecc:0.07,spd:2.30,ph:0.0, sz:3.5,col:'hi', lbl:'А-1'},
+    {sma:0.26,ecc:0.04,spd:1.50,ph:1.3, sz:3.0,col:'mid',lbl:'Б-2'},
+    {sma:0.35,ecc:0.11,spd:0.92,ph:2.7, sz:2.8,col:'grn',lbl:'В-3'},
+    {sma:0.46,ecc:0.06,spd:0.58,ph:0.6, sz:2.6,col:'hi', lbl:'Г-4'},
+    {sma:0.57,ecc:0.14,spd:0.34,ph:4.1, sz:2.4,col:'mid',lbl:'Д-5'},
+  ];
+  const trails = BODIES.map(()=>[]);
+
+  /* pre-baked stars */
+  const STARS = Array.from({length:200},(_,i)=>({
+    x:hash(i*9.13), y:hash(i*17.41+0.6),
+    r:i%9===0?1.0:i%3===0?0.55:0.28,
+    a:0.03+hash(i*4.1)*0.06,
+  }));
+
+  function bPos(b,cx,cy,R,time){
+    const angle=b.ph+time*b.spd;
+    const r=b.sma*R*(1-b.ecc*Math.cos(angle));
+    return {x:cx+Math.cos(angle)*r, y:cy+Math.sin(angle)*r*0.78};
+  }
+
+  function draw(){
+    const {W,H}=fitCanvas(canvas);
+    const ctx=canvas.getContext('2d');
+    const dk=isDark();
+
+    ctx.fillStyle=dk?'#060C1A':'#EEF5FF'; ctx.fillRect(0,0,W,H);
+
+    if(dk) STARS.forEach(s=>{
+      ctx.beginPath(); ctx.arc(s.x*W,s.y*H,s.r,0,Math.PI*2);
+      ctx.fillStyle=`rgba(148,196,255,${s.a})`; ctx.fill();
+    });
+
+    const cx=W*0.52, cy=H*0.50, R=Math.min(W,H)*0.43;
+
+    /* polar grid ellipses */
+    for(let i=1;i<=5;i++){
+      ctx.beginPath();
+      ctx.ellipse(cx,cy,R*i/5,R*i/5*0.78,0,0,Math.PI*2);
+      ctx.strokeStyle=c(A.mid,dk,(0.038+i*0.013)+'');
+      ctx.lineWidth=0.32; ctx.stroke();
+    }
+
+    /* spokes */
+    for(let i=0;i<6;i++){
+      const a=i*Math.PI/3;
+      ctx.beginPath(); ctx.moveTo(cx,cy);
+      ctx.lineTo(cx+Math.cos(a)*R,cy+Math.sin(a)*R*0.78);
+      ctx.strokeStyle=c(A.mid,dk,'0.055'); ctx.lineWidth=0.28; ctx.stroke();
+    }
+
+    /* orbital paths */
+    BODIES.forEach((b,bi)=>{
+      ctx.beginPath();
+      ctx.ellipse(cx+b.ecc*b.sma*R*0.45, cy, b.sma*R, b.sma*R*0.78, 0, 0, Math.PI*2);
+      ctx.strokeStyle=c(A.mid,dk,(0.10+bi*0.023)+'');
+      ctx.lineWidth=0.45; ctx.stroke();
+    });
+
+    /* Earth core */
+    const eR=R*0.052;
+    const eg=ctx.createRadialGradient(cx,cy,0,cx,cy,eR);
+    eg.addColorStop(0, 'rgba(186,230,253,0.95)');   /* sky-light */
+    eg.addColorStop(0.5,c(A.hi,dk,'0.80'));
+    eg.addColorStop(1, c(A.mid,dk,'0.40'));
+    ctx.save();
+    ctx.shadowBlur=28; ctx.shadowColor=c(A.hi,dk,'0.42');
+    ctx.beginPath(); ctx.arc(cx,cy,eR,0,Math.PI*2);
+    ctx.fillStyle=eg; ctx.fill();
+    ctx.restore();
+
+    /* Earth crosshair */
+    ctx.strokeStyle=c(A.mid,dk,'0.20'); ctx.lineWidth=0.5;
+    ctx.beginPath(); ctx.moveTo(cx-eR*1.9,cy); ctx.lineTo(cx+eR*1.9,cy); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(cx,cy-eR*1.9); ctx.lineTo(cx,cy+eR*1.9); ctx.stroke();
+
+    /* bodies + trails */
+    BODIES.forEach((b,bi)=>{
+      const pos=bPos(b,cx,cy,R,t);
+      trails[bi].push({...pos});
+      if(trails[bi].length>TRAIL) trails[bi].shift();
+
+      const trail=trails[bi];
+      for(let ti=1;ti<trail.length;ti++){
+        const alpha=(ti/trail.length)*0.38;
+        ctx.beginPath();
+        ctx.moveTo(trail[ti-1].x,trail[ti-1].y);
+        ctx.lineTo(trail[ti].x,trail[ti].y);
+        ctx.strokeStyle=c(A.mid,dk,alpha+'');
+        ctx.lineWidth=(ti/trail.length)*1.3; ctx.stroke();
+      }
+
+      const bc=b.col==='hi'  ? c(A.hi,dk,'0.90')
+             : b.col==='grn' ? c(A.grn,dk,'0.80')
+             :                  c(A.mid,dk,'0.82');
+      ctx.save();
+      ctx.shadowBlur=12; ctx.shadowColor=bc;
+      ctx.beginPath(); ctx.arc(pos.x,pos.y,b.sz,0,Math.PI*2);
+      ctx.fillStyle=bc; ctx.fill();
+      ctx.restore();
+
+      ctx.font=`8px 'Courier New',monospace`;
+      ctx.fillStyle=c(A.dim,dk,'0.46');
+      ctx.textAlign='left'; ctx.textBaseline='middle';
+      ctx.fillText(b.lbl,pos.x+b.sz+5,pos.y);
+    });
+
+    /* HUD */
+    ctx.font=`9px 'Courier New',monospace`;
+    ctx.fillStyle=c(A.dim,dk,'0.36');
+    ctx.textAlign='left'; ctx.textBaseline='top';
+    ctx.fillText('ORBITAL TRACK — SECTOR ALPHA',18,18);
+    ctx.fillText(`T+ ${t.toFixed(2)}`,18,32);
+
+    /* compass rose */
+    const crx=W-48, cry=H-48, crR=20;
+    for(let i=0;i<4;i++){
+      const a=i*Math.PI/2-Math.PI/2;
+      ctx.beginPath(); ctx.moveTo(crx,cry);
+      ctx.lineTo(crx+Math.cos(a)*crR,cry+Math.sin(a)*crR);
+      ctx.strokeStyle=c(A.mid,dk,'0.20'); ctx.lineWidth=0.5; ctx.stroke();
+    }
+    ctx.beginPath(); ctx.arc(crx,cry,crR,0,Math.PI*2);
+    ctx.strokeStyle=c(A.mid,dk,'0.18'); ctx.lineWidth=0.4; ctx.stroke();
+    ['С','В','Ю','З'].forEach((ltr,i)=>{
+      const a=i*Math.PI/2-Math.PI/2;
+      ctx.font=`8px 'Courier New',monospace`;
+      ctx.fillStyle=c(A.dim,dk,'0.32');
+      ctx.textAlign='center'; ctx.textBaseline='middle';
+      ctx.fillText(ltr,crx+Math.cos(a)*(crR+10),cry+Math.sin(a)*(crR+10));
+    });
+  }
+
+  function loop(ts){ t=ts*0.001; draw(); requestAnimationFrame(loop); }
+  requestAnimationFrame(loop);
+})();
+</script>
+</body>
+</html>

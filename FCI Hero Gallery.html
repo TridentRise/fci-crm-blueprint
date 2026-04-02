@@ -1,0 +1,1195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FCI — Hero Direction Gallery</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Inter+Tight:wght@600&display=swap" rel="stylesheet">
+  <style>
+
+    /* ─── THEME VARIABLES ─────────────────────────── */
+    body {
+      --page-bg:        #EEF5FF;
+      --card-bg:        #FFFFFF;
+      --card-border:    rgba(15,23,42,0.09);
+      --card-hover-bd:  rgba(37,99,235,0.35);
+      --card-shadow:    0 4px 24px rgba(37,99,235,0.07);
+      --card-tag:       #0EA5E9;
+      --card-h:         #0F172A;
+      --card-p:         rgba(15,23,42,0.56);
+      --card-link:      #2563EB;
+      --label:          rgba(15,23,42,0.38);
+      --rule:           rgba(15,23,42,0.07);
+
+      --nav-bg:         rgba(238,245,255,0.92);
+      --nav-border:     rgba(15,23,42,0.07);
+      --nav-brand:      #1E3A6E;
+      --nav-link:       rgba(15,23,42,0.45);
+      --nav-link-hover: #0F172A;
+      --nav-link-bg:    rgba(15,23,42,0.06);
+      --nav-divider:    rgba(15,23,42,0.12);
+
+      --hero-bg:        #EBF3FF;
+      --hero-h:         #0F172A;
+      --hero-sub:       rgba(15,23,42,0.52);
+      --hero-eyebrow:   #0EA5E9;
+
+      --toggle-bd:          rgba(15,23,42,0.14);
+      --toggle-text:        rgba(15,23,42,0.48);
+      --toggle-active-bg:   #1E3A6E;
+      --toggle-active-text: white;
+
+      --preview-1-a:    rgba(37,99,235,0.18);
+      --preview-1-b:    rgba(14,165,233,0.14);
+      --preview-1-c:    rgba(99,102,241,0.12);
+      --preview-1-bg:   #101A30;
+      --preview-2-bg:   #0D1826;
+
+      --footer-text:    rgba(15,23,42,0.35);
+    }
+
+    @media (prefers-color-scheme: dark) {
+      body {
+        --page-bg:       #080E1C;
+        --card-bg:       #0F1829;
+        --card-border:   rgba(255,255,255,0.07);
+        --card-hover-bd: rgba(37,99,235,0.5);
+        --card-shadow:   0 4px 24px rgba(0,0,0,0.3);
+        --card-tag:      #0EA5E9;
+        --card-h:        rgba(255,255,255,0.9);
+        --card-p:        rgba(255,255,255,0.48);
+        --card-link:     #60A5FA;
+        --label:         rgba(255,255,255,0.28);
+        --rule:          rgba(255,255,255,0.06);
+
+        --nav-bg:         rgba(8,14,28,0.9);
+        --nav-border:     rgba(255,255,255,0.07);
+        --nav-brand:      white;
+        --nav-link:       rgba(255,255,255,0.42);
+        --nav-link-hover: white;
+        --nav-link-bg:    rgba(255,255,255,0.07);
+        --nav-divider:    rgba(255,255,255,0.1);
+
+        --hero-bg:      #060C1A;
+        --hero-h:       white;
+        --hero-sub:     rgba(255,255,255,0.5);
+        --hero-eyebrow: #0EA5E9;
+
+        --toggle-bd:          rgba(255,255,255,0.12);
+        --toggle-text:        rgba(255,255,255,0.42);
+        --toggle-active-bg:   white;
+        --toggle-active-text: #0F172A;
+
+        --footer-text: rgba(255,255,255,0.28);
+      }
+    }
+
+    body.theme-dark {
+      --page-bg:       #080E1C;
+      --card-bg:       #0F1829;
+      --card-border:   rgba(255,255,255,0.07);
+      --card-hover-bd: rgba(37,99,235,0.5);
+      --card-shadow:   0 4px 24px rgba(0,0,0,0.3);
+      --card-tag:      #0EA5E9;
+      --card-h:        rgba(255,255,255,0.9);
+      --card-p:        rgba(255,255,255,0.48);
+      --card-link:     #60A5FA;
+      --label:         rgba(255,255,255,0.28);
+      --rule:          rgba(255,255,255,0.06);
+      --nav-bg:         rgba(8,14,28,0.9);
+      --nav-border:     rgba(255,255,255,0.07);
+      --nav-brand:      white;
+      --nav-link:       rgba(255,255,255,0.42);
+      --nav-link-hover: white;
+      --nav-link-bg:    rgba(255,255,255,0.07);
+      --nav-divider:    rgba(255,255,255,0.1);
+      --hero-bg:      #060C1A;
+      --hero-h:       white;
+      --hero-sub:     rgba(255,255,255,0.5);
+      --toggle-bd:          rgba(255,255,255,0.12);
+      --toggle-text:        rgba(255,255,255,0.42);
+      --toggle-active-bg:   white;
+      --toggle-active-text: #0F172A;
+      --footer-text: rgba(255,255,255,0.28);
+    }
+
+    body.theme-light {
+      --page-bg:        #EEF5FF;
+      --card-bg:        #FFFFFF;
+      --card-border:    rgba(15,23,42,0.09);
+      --card-hover-bd:  rgba(37,99,235,0.35);
+      --card-shadow:    0 4px 24px rgba(37,99,235,0.07);
+      --card-tag:       #0EA5E9;
+      --card-h:         #0F172A;
+      --card-p:         rgba(15,23,42,0.56);
+      --card-link:      #2563EB;
+      --label:          rgba(15,23,42,0.38);
+      --rule:           rgba(15,23,42,0.07);
+      --nav-bg:         rgba(238,245,255,0.92);
+      --nav-border:     rgba(15,23,42,0.07);
+      --nav-brand:      #1E3A6E;
+      --nav-link:       rgba(15,23,42,0.45);
+      --nav-link-hover: #0F172A;
+      --nav-link-bg:    rgba(15,23,42,0.06);
+      --nav-divider:    rgba(15,23,42,0.12);
+      --hero-bg:      #EBF3FF;
+      --hero-h:       #0F172A;
+      --hero-sub:     rgba(15,23,42,0.52);
+      --toggle-bd:          rgba(15,23,42,0.14);
+      --toggle-text:        rgba(15,23,42,0.48);
+      --toggle-active-bg:   #1E3A6E;
+      --toggle-active-text: white;
+      --footer-text: rgba(15,23,42,0.35);
+    }
+
+
+    /* ─── GLOBAL ──────────────────────────────────── */
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--page-bg);
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+      transition: background 0.3s;
+    }
+
+
+    /* ─── NAV ─────────────────────────────────────── */
+    .nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      background: var(--nav-bg);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--nav-border);
+      display: flex;
+      align-items: center;
+      height: 54px;
+      padding: 0 40px;
+      gap: 0;
+      transition: background 0.3s, border-color 0.3s;
+    }
+
+    .nav-brand {
+      font-family: 'Inter Tight', sans-serif;
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--nav-brand);
+      letter-spacing: 0.1em;
+      margin-right: 20px;
+      transition: color 0.25s;
+    }
+
+    .nav-divider {
+      width: 1px; height: 18px;
+      background: var(--nav-divider);
+      margin-right: 20px;
+    }
+
+    .nav-title {
+      font-size: 13px;
+      color: var(--nav-link);
+      flex: 1;
+      transition: color 0.25s;
+    }
+
+    .theme-toggle {
+      display: flex;
+      gap: 2px;
+      border: 1px solid var(--toggle-bd);
+      border-radius: 6px;
+      padding: 3px;
+    }
+
+    .theme-btn {
+      font-family: 'Inter', sans-serif;
+      font-size: 11px;
+      font-weight: 500;
+      padding: 4px 10px;
+      border: none;
+      background: transparent;
+      color: var(--toggle-text);
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background 0.15s, color 0.15s;
+    }
+
+    .theme-btn.active {
+      background: var(--toggle-active-bg);
+      color: var(--toggle-active-text);
+    }
+
+
+    /* ─── PAGE LAYOUT ─────────────────────────────── */
+    .page {
+      padding: 108px 64px 96px;
+      max-width: 1040px;
+      margin: 0 auto;
+    }
+
+    .page-eyebrow {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.26em;
+      text-transform: uppercase;
+      color: #0EA5E9;
+      margin-bottom: 18px;
+    }
+
+    .page-h1 {
+      font-family: 'Inter Tight', sans-serif;
+      font-size: clamp(32px, 4.5vw, 52px);
+      font-weight: 600;
+      letter-spacing: -0.028em;
+      color: var(--hero-h);
+      line-height: 1.1;
+      margin-bottom: 16px;
+      transition: color 0.25s;
+    }
+
+    .page-sub {
+      font-size: 16px;
+      line-height: 1.72;
+      color: var(--hero-sub);
+      max-width: 540px;
+      margin-bottom: 64px;
+      transition: color 0.25s;
+    }
+
+    .section-rule {
+      border: none;
+      border-top: 1px solid var(--rule);
+      margin-bottom: 40px;
+    }
+
+    .section-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      color: var(--label);
+      margin-bottom: 24px;
+      transition: color 0.25s;
+    }
+
+
+    /* ─── CARDS ───────────────────────────────────── */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 18px;
+      margin-bottom: 80px;
+    }
+
+    @media (max-width: 1400px) {
+      .card-grid { grid-template-columns: repeat(4, 1fr); }
+    }
+    @media (max-width: 1100px) {
+      .card-grid { grid-template-columns: repeat(3, 1fr); }
+    }
+    @media (max-width: 760px) {
+      .card-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 520px) {
+      .card-grid { grid-template-columns: 1fr; }
+    }
+
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      text-decoration: none;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      transition: border-color 0.2s, box-shadow 0.2s, background 0.3s;
+    }
+
+    .card:hover {
+      border-color: var(--card-hover-bd);
+      box-shadow: var(--card-shadow);
+    }
+
+    /* Visual preview area inside each card */
+    .card-preview {
+      height: 200px;
+      position: relative;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+
+    /* Preview 1 — abstract animated orbs (static representation) */
+    .preview-1 {
+      background: #090F20;
+    }
+    .preview-1::before {
+      content: '';
+      position: absolute;
+      width: 280px; height: 280px;
+      top: -80px; right: -60px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(37,99,235,0.5) 0%, rgba(37,99,235,0.15) 45%, transparent 70%);
+      filter: blur(40px);
+    }
+    .preview-1::after {
+      content: '';
+      position: absolute;
+      width: 200px; height: 200px;
+      bottom: -60px; left: 30%;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(14,165,233,0.35) 0%, transparent 70%);
+      filter: blur(50px);
+    }
+    .preview-1-extra {
+      position: absolute;
+      width: 160px; height: 160px;
+      top: 40%; left: -30px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(99,102,241,0.28) 0%, transparent 70%);
+      filter: blur(40px);
+    }
+    .preview-1-text {
+      position: absolute;
+      bottom: 20px; left: 24px;
+      font-family: 'Inter Tight', sans-serif;
+      font-size: 28px;
+      font-weight: 600;
+      color: rgba(255,255,255,0.88);
+      letter-spacing: 0.06em;
+      z-index: 2;
+    }
+    .preview-1-sub {
+      position: absolute;
+      bottom: 46px; left: 24px;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: #0EA5E9;
+      z-index: 2;
+    }
+    .preview-1-line {
+      position: absolute;
+      top: 22px; right: 20px;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.2);
+      z-index: 2;
+    }
+
+    /* Preview 2 — photo blurred */
+    .preview-2 {
+      background: #0A1428;
+      overflow: hidden;
+    }
+    .preview-2-photo {
+      position: absolute;
+      inset: 0;
+      background-image: url('https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=800&auto=format&fit=crop&q=60');
+      background-size: cover;
+      background-position: center;
+      filter: blur(6px) brightness(0.4) saturate(0.5);
+      transform: scale(1.06);
+    }
+    .preview-2-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(6,12,26,0.7) 0%, rgba(37,99,235,0.15) 100%);
+      z-index: 2;
+    }
+    .preview-2-text {
+      position: absolute;
+      bottom: 20px; left: 24px;
+      font-family: 'Inter Tight', sans-serif;
+      font-size: 28px;
+      font-weight: 600;
+      color: rgba(255,255,255,0.88);
+      letter-spacing: 0.06em;
+      z-index: 3;
+    }
+    .preview-2-sub {
+      position: absolute;
+      bottom: 46px; left: 24px;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: #0EA5E9;
+      z-index: 3;
+    }
+    .preview-2-line {
+      position: absolute;
+      top: 22px; right: 20px;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.2);
+      z-index: 3;
+    }
+
+    /* Preview 3 — cyber concept (globe/dashboard) */
+    .preview-3 {
+      background: #060C1A;
+      overflow: hidden;
+      position: relative;
+    }
+    .preview-3-grid {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(14,165,233,0.07) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(14,165,233,0.07) 1px, transparent 1px);
+      background-size: 28px 28px;
+    }
+    .preview-3-globe {
+      position: absolute;
+      width: 160px; height: 160px;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      border-radius: 50%;
+      border: 1px solid rgba(14,165,233,0.18);
+      box-shadow:
+        0 0 0 28px rgba(14,165,233,0.04),
+        0 0 0 56px rgba(14,165,233,0.025),
+        inset 0 0 40px rgba(37,99,235,0.2);
+    }
+    .preview-3-globe::before {
+      content: '';
+      position: absolute;
+      inset: 15%;
+      border-radius: 50%;
+      border: 1px solid rgba(14,165,233,0.12);
+    }
+    .preview-3-globe::after {
+      content: '';
+      position: absolute;
+      top: 0; bottom: 0; left: 50%;
+      width: 1px;
+      background: rgba(14,165,233,0.14);
+      transform: translateX(-50%);
+    }
+    .preview-3-arc {
+      position: absolute;
+      width: 80px; height: 40px;
+      top: calc(50% - 55px); left: calc(50% - 5px);
+      border-top: 1px solid rgba(14,165,233,0.45);
+      border-radius: 50% 50% 0 0;
+    }
+    .preview-3-arc2 {
+      position: absolute;
+      width: 60px; height: 30px;
+      top: calc(50% + 5px); left: calc(50% - 55px);
+      border-bottom: 1px solid rgba(37,99,235,0.4);
+      border-radius: 0 0 50% 50%;
+    }
+    .preview-3-dot {
+      position: absolute;
+      width: 4px; height: 4px;
+      border-radius: 50%;
+      background: #0EA5E9;
+      box-shadow: 0 0 6px #0EA5E9;
+    }
+    .preview-3-text {
+      position: absolute;
+      bottom: 20px; left: 24px;
+      font-family: 'Inter Tight', sans-serif;
+      font-size: 28px;
+      font-weight: 600;
+      color: rgba(255,255,255,0.88);
+      letter-spacing: 0.06em;
+      z-index: 2;
+    }
+    .preview-3-sub {
+      position: absolute;
+      bottom: 46px; left: 24px;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: #0EA5E9;
+      z-index: 2;
+    }
+    .preview-3-line {
+      position: absolute;
+      top: 22px; right: 20px;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.2);
+      z-index: 2;
+    }
+
+    /* Preview 4 — editorial (manifesto style) */
+    .preview-4 {
+      background: #02040A;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .preview-4-glow {
+      position: absolute;
+      width: 220px; height: 220px;
+      top: -60px; right: -50px;
+      background: radial-gradient(circle, rgba(37,99,235,0.22) 0%, transparent 70%);
+    }
+
+    .preview-4-glow2 {
+      position: absolute;
+      width: 160px; height: 160px;
+      bottom: -50px; left: 10px;
+      background: radial-gradient(circle, rgba(14,165,233,0.12) 0%, transparent 70%);
+    }
+
+    .preview-4-label {
+      position: absolute;
+      top: 22px; right: 20px;
+      font-size: 11px; font-weight: 600;
+      letter-spacing: 0.2em; text-transform: uppercase;
+      color: rgba(255,255,255,0.18);
+      z-index: 2;
+    }
+
+    .preview-4-eyebrow {
+      position: absolute;
+      top: 44px; left: 24px;
+      font-size: 9px; font-weight: 600;
+      letter-spacing: 0.26em; text-transform: uppercase;
+      color: #0EA5E9;
+      z-index: 2;
+    }
+
+    .preview-4-wordmark {
+      position: absolute;
+      bottom: 52px; left: 22px;
+      font-family: 'Inter Tight', sans-serif;
+      font-size: 64px; font-weight: 700;
+      letter-spacing: -0.04em; line-height: 0.85;
+      color: rgba(255,255,255,0.90);
+      z-index: 2;
+    }
+
+    .preview-4-rule {
+      position: absolute;
+      bottom: 42px; left: 22px; right: 22px;
+      height: 1px;
+      background: rgba(255,255,255,0.09);
+      z-index: 2;
+    }
+
+    .preview-4-tag {
+      position: absolute;
+      bottom: 26px; left: 24px;
+      font-size: 9px; font-weight: 500;
+      letter-spacing: 0.18em; text-transform: uppercase;
+      color: rgba(255,255,255,0.32);
+      z-index: 2;
+    }
+
+    /* Preview 5 — technical / FCI instrument */
+    .preview-5 {
+      background: #060C1A;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .preview-5-grid {
+      position: absolute; inset: 0;
+      background-image:
+        linear-gradient(rgba(37,99,235,0.10) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(37,99,235,0.10) 1px, transparent 1px);
+      background-size: 22px 22px;
+    }
+
+    /* Mini gauge drawing */
+    .preview-5-gauge {
+      position: absolute;
+      width: 72px; height: 72px;
+      top: 24px; right: 20px;
+      border-radius: 50%;
+      border: 1px solid rgba(37,99,235,0.30);
+      box-shadow:
+        0 0 0 6px rgba(37,99,235,0.05),
+        inset 0 0 16px rgba(37,99,235,0.12);
+    }
+
+    .preview-5-gauge::before {
+      content: '';
+      position: absolute;
+      width: 48px; height: 48px;
+      top: 50%; left: 50%;
+      transform: translate(-50%,-50%);
+      border-radius: 50%;
+      border: 1px solid rgba(245,158,11,0.13);
+    }
+
+    /* Needle line */
+    .preview-5-needle {
+      position: absolute;
+      top: 50%; left: 50%;
+      width: 28px; height: 1px;
+      background: rgba(255,255,255,0.70);
+      transform-origin: left center;
+      transform: rotate(-40deg);
+    }
+
+    /* Small gauge 2 */
+    .preview-5-g2 {
+      position: absolute;
+      width: 44px; height: 44px;
+      bottom: 44px; right: 28px;
+      border-radius: 50%;
+      border: 1px solid rgba(14,165,233,0.22);
+      box-shadow: 0 0 0 4px rgba(14,165,233,0.04);
+    }
+
+    /* Oscilloscope mini */
+    .preview-5-scope {
+      position: absolute;
+      left: 20px; bottom: 24px;
+      width: 100px; height: 30px;
+      border: 1px solid rgba(37,99,235,0.22);
+      background: rgba(4,10,24,0.60);
+      overflow: hidden;
+    }
+
+    .preview-5-scope::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        repeating-linear-gradient(
+          90deg,
+          transparent 0,
+          transparent 11px,
+          rgba(37,99,235,0.08) 11px,
+          rgba(37,99,235,0.08) 12px
+        ),
+        repeating-linear-gradient(
+          0deg,
+          transparent 0,
+          transparent 7px,
+          rgba(37,99,235,0.08) 7px,
+          rgba(37,99,235,0.08) 8px
+        );
+    }
+
+    /* Scope wave — SVG-like path via clip/shape */
+    .preview-5-wave {
+      position: absolute;
+      bottom: 14px; left: 0;
+      width: 100px; height: 14px;
+      background: transparent;
+      /* Approximate sine via border-radius trick */
+    }
+
+    .preview-5-status-row {
+      position: absolute;
+      left: 20px; bottom: 64px;
+      display: flex; gap: 8px; align-items: center;
+    }
+
+    .preview-5-dot {
+      width: 5px; height: 5px; border-radius: 50%;
+    }
+
+    .preview-5-text {
+      position: absolute;
+      top: 24px; left: 20px;
+      font-family: 'Courier New', monospace;
+      font-size: 9px; font-weight: 600;
+      letter-spacing: 0.20em; text-transform: uppercase;
+      color: rgba(14,165,233,0.65);
+      z-index: 2;
+    }
+
+    .preview-5-headline {
+      position: absolute;
+      top: 42px; left: 20px;
+      font-family: 'Inter Tight', sans-serif;
+      font-size: 26px; font-weight: 700;
+      letter-spacing: -0.03em;
+      color: rgba(255,255,255,0.88);
+      z-index: 2;
+    }
+
+    .preview-5-label {
+      position: absolute;
+      top: 22px; right: 20px;
+      font-family: 'Courier New', monospace;
+      font-size: 9px; font-weight: 600;
+      letter-spacing: 0.20em; text-transform: uppercase;
+      color: rgba(37,99,235,0.30);
+      z-index: 2;
+    }
+
+    /* Preview 6 — modern / high-end */
+    .preview-6 {
+      background: #05091A;
+      overflow: hidden;
+      position: relative;
+    }
+    /* Particle mesh suggestion via radial gradient + dots */
+    .preview-6::before {
+      content: '';
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 72% 45%, rgba(37,99,235,0.20) 0%, transparent 70%),
+        radial-gradient(ellipse 50% 40% at 55% 70%, rgba(14,165,233,0.12) 0%, transparent 60%);
+    }
+    /* Simulated particle dots */
+    .preview-6-dots {
+      position: absolute; inset: 0;
+      background-image:
+        radial-gradient(circle, rgba(14,165,233,0.70) 1px, transparent 1px),
+        radial-gradient(circle, rgba(37,99,235,0.50) 1px, transparent 1px);
+      background-size: 22px 22px, 37px 37px;
+      background-position: 4px 4px, 14px 18px;
+      opacity: 0.55;
+    }
+    /* Connection lines via gradient */
+    .preview-6-lines {
+      position: absolute; inset: 0;
+      background:
+        linear-gradient(128deg, transparent 48%, rgba(37,99,235,0.14) 50%, transparent 52%),
+        linear-gradient(52deg,  transparent 44%, rgba(14,165,233,0.10) 46%, transparent 48%),
+        linear-gradient(100deg, transparent 55%, rgba(37,99,235,0.09) 57%, transparent 59%);
+    }
+    .preview-6-label {
+      position: absolute;
+      top: 14px; right: 14px;
+      font-size: 8px; font-weight: 700; letter-spacing: .18em;
+      text-transform: uppercase; color: rgba(14,165,233,0.50);
+      z-index: 2;
+    }
+    .preview-6-headline {
+      position: absolute;
+      bottom: 18px; left: 14px;
+      font-family: 'Inter Tight', sans-serif;
+      font-size: 17px; font-weight: 800; letter-spacing: -0.04em;
+      color: rgba(240,248,255,0.82); z-index: 2;
+      line-height: 1.1;
+    }
+    .preview-6-sub {
+      position: absolute;
+      bottom: 8px; left: 14px;
+      font-size: 7.5px; letter-spacing: .10em; text-transform: uppercase;
+      color: rgba(14,165,233,0.55); z-index: 2;
+    }
+
+    /* Preview 7 — CISO Portal hero */
+    .preview-7 {
+      background: #050A1C;
+      overflow: hidden;
+      position: relative;
+    }
+    /* Subtle grid */
+    .preview-7::before {
+      content: '';
+      position: absolute; inset: 0;
+      background-image:
+        linear-gradient(rgba(37,99,235,0.06) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(37,99,235,0.06) 1px, transparent 1px);
+      background-size: 18px 18px;
+    }
+    /* Atmospheric glow */
+    .preview-7::after {
+      content: '';
+      position: absolute;
+      width: 200px; height: 200px;
+      top: -60px; right: -40px;
+      background: radial-gradient(circle, rgba(37,99,235,0.28) 0%, transparent 70%);
+      filter: blur(30px);
+    }
+    /* Mini browser/portal mockup */
+    .preview-7-browser {
+      position: absolute;
+      right: 10px; top: 12px;
+      width: 110px; height: 140px;
+      border: 1px solid rgba(37,99,235,0.30);
+      background: rgba(8,14,34,0.92);
+      box-shadow: 0 0 20px rgba(37,99,235,0.12);
+      transform: perspective(400px) rotateY(-10deg) rotateX(3deg);
+      transform-origin: right center;
+      z-index: 3;
+    }
+    .preview-7-topbar {
+      height: 10px;
+      background: rgba(6,12,26,0.95);
+      border-bottom: 1px solid rgba(37,99,235,0.18);
+      display: flex; align-items: center; padding: 0 5px; gap: 3px;
+    }
+    .preview-7-dot { width: 3px; height: 3px; border-radius: 50%; background: rgba(37,99,235,0.40); }
+    .preview-7-inner {
+      display: flex; height: calc(100% - 10px);
+    }
+    .preview-7-sidebar {
+      width: 20px;
+      background: rgba(6,12,26,0.70);
+      border-right: 1px solid rgba(37,99,235,0.12);
+      display: flex; flex-direction: column; align-items: center;
+      padding: 6px 0; gap: 5px;
+    }
+    .preview-7-sitem {
+      width: 10px; height: 2px; border-radius: 1px;
+      background: rgba(37,99,235,0.35);
+    }
+    .preview-7-sitem.active { background: #0EA5E9; }
+    .preview-7-content {
+      flex: 1; padding: 5px 4px; display: flex; flex-direction: column; gap: 4px;
+    }
+    .preview-7-row {
+      display: flex; gap: 3px;
+    }
+    .preview-7-card {
+      flex: 1; height: 22px;
+      background: rgba(37,99,235,0.08);
+      border: 1px solid rgba(37,99,235,0.15);
+      border-radius: 1px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .preview-7-bar-wrap {
+      flex: 1; height: 36px;
+      background: rgba(37,99,235,0.05);
+      border: 1px solid rgba(37,99,235,0.12);
+      border-radius: 1px;
+      padding: 4px 4px 2px;
+      display: flex; align-items: flex-end; gap: 2px;
+    }
+    .preview-7-bar {
+      flex: 1;
+      background: rgba(37,99,235,0.50);
+      border-radius: 1px 1px 0 0;
+    }
+    .preview-7-bar.hi { background: #0EA5E9; }
+    .preview-7-stat {
+      font-size: 6px; font-weight: 700; color: #60A5FA;
+      text-align: center; line-height: 1;
+    }
+    /* Left text */
+    .preview-7-label {
+      position: absolute;
+      top: 14px; left: 10px;
+      font-size: 8px; font-weight: 700; letter-spacing: .18em;
+      text-transform: uppercase; color: rgba(14,165,233,0.50);
+      z-index: 2;
+    }
+    .preview-7-headline {
+      position: absolute;
+      bottom: 24px; left: 10px;
+      font-family: 'Inter Tight', sans-serif;
+      font-size: 22px; font-weight: 800; letter-spacing: -0.04em;
+      color: rgba(240,248,255,0.85); z-index: 2;
+      line-height: 1.1;
+    }
+    .preview-7-sub {
+      position: absolute;
+      bottom: 10px; left: 10px;
+      font-size: 7px; letter-spacing: .10em; text-transform: uppercase;
+      color: rgba(14,165,233,0.55); z-index: 2;
+    }
+
+    /* Card body */
+    .card-body {
+      padding: 28px 28px 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      flex: 1;
+    }
+
+    .card-tag {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      color: var(--card-tag);
+    }
+
+    .card-h {
+      font-family: 'Inter Tight', sans-serif;
+      font-size: 20px;
+      font-weight: 600;
+      color: var(--card-h);
+      letter-spacing: -0.015em;
+      line-height: 1.2;
+      transition: color 0.25s;
+    }
+
+    .card-p {
+      font-size: 14px;
+      line-height: 1.68;
+      color: var(--card-p);
+      transition: color 0.25s;
+    }
+
+    .card-count {
+      font-size: 12px;
+      color: var(--label);
+      margin-top: 4px;
+    }
+
+    .card-link {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--card-link);
+      margin-top: auto;
+      padding-top: 14px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: color 0.15s;
+    }
+    .card-link::after { content: '→'; }
+
+
+    /* ─── FOOTER ──────────────────────────────────── */
+    .footer {
+      padding-top: 32px;
+      border-top: 1px solid var(--rule);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .footer-brand {
+      font-family: 'Inter Tight', sans-serif;
+      font-size: 18px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      color: var(--nav-brand);
+      transition: color 0.25s;
+    }
+
+    .footer-note {
+      font-size: 13px;
+      color: var(--footer-text);
+    }
+
+  </style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-brand">FCI</div>
+  <div class="nav-divider"></div>
+  <div class="nav-title">Hero Direction Gallery &mdash; Website Redesign</div>
+  <div class="theme-toggle">
+    <button class="theme-btn" id="btn-system" onclick="setTheme('system')">System</button>
+    <button class="theme-btn" id="btn-light"  onclick="setTheme('light')">Light</button>
+    <button class="theme-btn" id="btn-dark"   onclick="setTheme('dark')">Dark</button>
+  </div>
+</nav>
+
+<div class="page">
+  <div class="page-eyebrow">Visual exploration · March 2026</div>
+  <h1 class="page-h1">Hero direction<br>proposals.</h1>
+  <p class="page-sub">Seven groups of concepts for the fcicyber.com homepage hero — abstract &amp; animated, photography-based, cybersecurity concept, editorial, technical, modern high-end, and CISO portal. All proposals support light and dark mode.</p>
+
+  <hr class="section-rule">
+  <div class="section-label">Visual direction groups</div>
+
+  <div class="card-grid">
+
+    <!-- Card 01 -->
+    <a class="card" href="FCI Hero Directions.html">
+      <div class="card-preview preview-1">
+        <div class="preview-1-extra"></div>
+        <div class="preview-1-line">Group 01</div>
+        <div class="preview-1-sub">Abstract</div>
+        <div class="preview-1-text">FCI</div>
+      </div>
+      <div class="card-body">
+        <div class="card-tag">Group 01</div>
+        <div class="card-h">Abstract &amp; Animated</div>
+        <p class="card-p">Five directions using pure CSS and JavaScript — gradient orbs, network topology, topographic contour lines, scrolling data streams, and crystalline light geometry. No photography. Each responds to both light and dark mode.</p>
+        <div class="card-count">5 proposals &nbsp;·&nbsp; Light &amp; Dark</div>
+        <div class="card-link">Open group</div>
+      </div>
+    </a>
+
+    <!-- Card 02 -->
+    <a class="card" href="FCI Hero Directions 2.html">
+      <div class="card-preview preview-2">
+        <div class="preview-2-photo"></div>
+        <div class="preview-2-overlay"></div>
+        <div class="preview-2-line">Group 02</div>
+        <div class="preview-2-sub">Photography</div>
+        <div class="preview-2-text">FCI</div>
+      </div>
+      <div class="card-body">
+        <div class="card-tag">Group 02</div>
+        <div class="card-h">Photography-Based</div>
+        <p class="card-p">Four proposals using subtle, treated photography — business-casual people, real warmth — applied through blur, half-reveal, transparency wash, and duotone color treatment. Fully faded and gradated so imagery supports rather than dominates.</p>
+        <div class="card-count">4 proposals &nbsp;·&nbsp; Light &amp; Dark</div>
+        <div class="card-link">Open group</div>
+      </div>
+    </a>
+
+    <!-- Card 03 -->
+    <a class="card" href="FCI Hero Directions 3.html">
+      <div class="card-preview preview-3">
+        <div class="preview-3-grid"></div>
+        <div class="preview-3-globe"></div>
+        <div class="preview-3-arc"></div>
+        <div class="preview-3-arc2"></div>
+        <div class="preview-3-dot" style="top:calc(50% - 55px);left:calc(50% + 75px);"></div>
+        <div class="preview-3-dot" style="top:calc(50% + 35px);left:calc(50% - 65px);width:3px;height:3px;opacity:0.7;"></div>
+        <div class="preview-3-line">Group 03</div>
+        <div class="preview-3-sub">Cyber Concept</div>
+        <div class="preview-3-text">FCI</div>
+      </div>
+      <div class="card-body">
+        <div class="card-tag">Group 03</div>
+        <div class="card-h">Cybersecurity Concept</div>
+        <p class="card-p">Four directions using canvas-animated data visualisation — a financial-centre globe with live threat arcs, a ghost CISO Portal dashboard, a rotating radar sweep, and a pulsing hex endpoint grid.</p>
+        <div class="card-count">4 proposals &nbsp;·&nbsp; Light &amp; Dark</div>
+        <div class="card-link">Open group</div>
+      </div>
+    </a>
+
+    <!-- Card 04 -->
+    <a class="card" href="FCI Hero Directions 4.html">
+      <div class="card-preview preview-4">
+        <div class="preview-4-glow"></div>
+        <div class="preview-4-glow2"></div>
+        <div class="preview-4-label">Group 04</div>
+        <div class="preview-4-eyebrow">Managed cybersecurity</div>
+        <div class="preview-4-wordmark">FCI</div>
+        <div class="preview-4-rule"></div>
+        <div class="preview-4-tag">Editorial</div>
+      </div>
+      <div class="card-body">
+        <div class="card-tag">Group 04</div>
+        <div class="card-h">Editorial</div>
+        <p class="card-p">Four bold directions — a typographic manifesto with huge wordmark, a theatrical spotlight stage, a perspective endpoint grid, and a fluid chromatic gradient. Bigger typography, more editorial confidence.</p>
+        <div class="card-count">4 proposals &nbsp;·&nbsp; Light &amp; Dark</div>
+        <div class="card-link">Open group</div>
+      </div>
+    </a>
+
+    <!-- Card 05 -->
+    <a class="card" href="FCI Hero Directions 5.html">
+      <div class="card-preview preview-5">
+        <div class="preview-5-grid"></div>
+        <div class="preview-5-label">Group 05</div>
+        <div class="preview-5-text">FCI-SPM</div>
+        <div class="preview-5-headline">FCI</div>
+        <div class="preview-5-gauge">
+          <div class="preview-5-needle"></div>
+        </div>
+        <div class="preview-5-g2"></div>
+        <div class="preview-5-status-row">
+          <div class="preview-5-dot" style="background:#4ADE80;"></div>
+          <div class="preview-5-dot" style="background:#2563EB;"></div>
+          <div class="preview-5-dot" style="background:#EF4444;"></div>
+          <div class="preview-5-dot" style="background:#0EA5E9;"></div>
+        </div>
+        <div class="preview-5-scope"></div>
+      </div>
+      <div class="card-body">
+        <div class="card-tag">Group 05</div>
+        <div class="card-h">Technical</div>
+        <p class="card-p">Four directions drawn from spacecraft and nuclear control room aesthetics — FCI-blue instrument gauges, concentric reactor rings, an oscilloscope signal panel, and a compliance orrery.</p>
+        <div class="card-count">4 proposals &nbsp;·&nbsp; Light &amp; Dark</div>
+        <div class="card-link">Open group</div>
+      </div>
+    </a>
+
+    <!-- Card 06 -->
+    <a class="card" href="FCI Hero Directions 6.html">
+      <div class="card-preview preview-6">
+        <div class="preview-6-dots"></div>
+        <div class="preview-6-lines"></div>
+        <div class="preview-6-label">Group 06</div>
+        <div class="preview-6-headline">FCI</div>
+        <div class="preview-6-sub">Modern Series</div>
+      </div>
+      <div class="card-body">
+        <div class="card-tag">Group 06</div>
+        <div class="card-h">Modern</div>
+        <p class="card-p">Four high-end directions inspired by Nvidia, Stripe, CrowdStrike, and IBM — particle mesh, aurora gradient, live network graph, and a wireframe sphere.</p>
+        <div class="card-count">4 proposals &nbsp;·&nbsp; Light &amp; Dark</div>
+        <div class="card-link">Open group</div>
+      </div>
+    </a>
+
+    <!-- Card 07 -->
+    <a class="card" href="FCI Hero Directions 7.html">
+      <div class="card-preview preview-7">
+        <div class="preview-7-label">Group 07</div>
+        <div class="preview-7-browser">
+          <div class="preview-7-topbar">
+            <div class="preview-7-dot"></div>
+            <div class="preview-7-dot"></div>
+            <div class="preview-7-dot"></div>
+          </div>
+          <div class="preview-7-inner">
+            <div class="preview-7-sidebar">
+              <div class="preview-7-sitem active"></div>
+              <div class="preview-7-sitem"></div>
+              <div class="preview-7-sitem"></div>
+              <div class="preview-7-sitem"></div>
+            </div>
+            <div class="preview-7-content">
+              <div class="preview-7-row">
+                <div class="preview-7-card"><div class="preview-7-stat">94%</div></div>
+                <div class="preview-7-card"><div class="preview-7-stat">40k</div></div>
+                <div class="preview-7-card"><div class="preview-7-stat">SOC</div></div>
+              </div>
+              <div class="preview-7-bar-wrap">
+                <div class="preview-7-bar" style="height:55%"></div>
+                <div class="preview-7-bar hi" style="height:80%"></div>
+                <div class="preview-7-bar" style="height:40%"></div>
+                <div class="preview-7-bar" style="height:65%"></div>
+                <div class="preview-7-bar hi" style="height:90%"></div>
+                <div class="preview-7-bar" style="height:50%"></div>
+              </div>
+              <div class="preview-7-row">
+                <div class="preview-7-card" style="height:28px;"><div class="preview-7-stat" style="font-size:5px;color:rgba(200,222,250,0.6);">ALERTS</div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="preview-7-headline">FCI</div>
+        <div class="preview-7-sub">Portal Series</div>
+      </div>
+      <div class="card-body">
+        <div class="card-tag">Group 07</div>
+        <div class="card-h">CISO Portal</div>
+        <p class="card-p">Four directions showcasing the FCI CISO Portal as the hero visual — a 3D browser mockup, floating intelligence panels, a compliance score ring, and a live endpoint grid.</p>
+        <div class="card-count">4 proposals &nbsp;·&nbsp; Light &amp; Dark</div>
+        <div class="card-link">Open group</div>
+      </div>
+    </a>
+
+  </div>
+
+  <div class="footer">
+    <div class="footer-brand">FCI</div>
+    <div class="footer-note">Internal — Website Redesign 2026</div>
+  </div>
+</div>
+
+<script>
+  let currentTheme = 'system';
+
+  function setTheme(t) {
+    currentTheme = t;
+    document.body.classList.remove('theme-light', 'theme-dark');
+    if (t === 'light') document.body.classList.add('theme-light');
+    if (t === 'dark')  document.body.classList.add('theme-dark');
+    document.querySelectorAll('.theme-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('btn-' + t).classList.add('active');
+  }
+
+  document.getElementById('btn-system').classList.add('active');
+</script>
+
+</body>
+</html>
