@@ -774,7 +774,56 @@
       .cs-dashed { padding: 20px 20px; }
     }
 
-  </style>
+  
+    /* == Hub theme toggle == */
+    .hub-nav {
+      position: fixed; top: 0; left: 0; right: 0; height: 52px; z-index: 200;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 32px;
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(15,23,42,0.08);
+    }
+    .hub-nav .back-nav {
+      font-size: 13px; font-weight: 600; text-decoration: none;
+      color: #475569; transition: color 0.15s;
+    }
+    .hub-nav .back-nav:hover { color: #0F172A; }
+    .hub-theme-toggle {
+      display: flex; align-items: center;
+      background: rgba(15,23,42,0.06);
+      border: 1px solid rgba(15,23,42,0.1);
+      border-radius: 8px; padding: 3px; gap: 2px;
+    }
+    .hub-theme-toggle button {
+      font-family: inherit; font-size: 11px; font-weight: 600;
+      letter-spacing: 0.03em; color: #94A3B8;
+      background: transparent; border: none; cursor: pointer;
+      padding: 4px 10px; border-radius: 6px; line-height: 1;
+      transition: background 0.15s, color 0.15s;
+    }
+    .hub-theme-toggle button:hover { color: #0F172A; }
+    .hub-theme-toggle button.active {
+      background: #fff; color: #0F172A;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.12);
+    }
+    html[data-hub-theme=dark] .hub-nav { background: rgba(8,14,28,0.9); border-bottom-color: rgba(255,255,255,0.07); }
+    html[data-hub-theme=dark] .hub-nav .back-nav { color: rgba(255,255,255,0.5); }
+    html[data-hub-theme=dark] .hub-nav .back-nav:hover { color: #fff; }
+    html[data-hub-theme=dark] .hub-theme-toggle { background: rgba(255,255,255,0.07); border-color: rgba(255,255,255,0.1); }
+    html[data-hub-theme=dark] .hub-theme-toggle button { color: rgba(255,255,255,0.35); }
+    html[data-hub-theme=dark] .hub-theme-toggle button:hover { color: #fff; }
+    html[data-hub-theme=dark] .hub-theme-toggle button.active { background: rgba(255,255,255,0.1); color: #fff; box-shadow: none; }
+    @media (prefers-color-scheme: dark) {
+      html:not([data-hub-theme=light]) .hub-nav { background: rgba(8,14,28,0.9); border-bottom-color: rgba(255,255,255,0.07); }
+      html:not([data-hub-theme=light]) .hub-nav .back-nav { color: rgba(255,255,255,0.5); }
+      html:not([data-hub-theme=light]) .hub-nav .back-nav:hover { color: #fff; }
+      html:not([data-hub-theme=light]) .hub-theme-toggle { background: rgba(255,255,255,0.07); border-color: rgba(255,255,255,0.1); }
+      html:not([data-hub-theme=light]) .hub-theme-toggle button { color: rgba(255,255,255,0.35); }
+      html:not([data-hub-theme=light]) .hub-theme-toggle button:hover { color: #fff; }
+      html:not([data-hub-theme=light]) .hub-theme-toggle button.active { background: rgba(255,255,255,0.1); color: #fff; box-shadow: none; }
+    }
+</style>
 <style type="text/css">/* Copyright 2014-present Evernote Corporation. All rights reserved. */
 @keyframes caretBlink {
     from { opacity: 1.0; }
@@ -952,7 +1001,7 @@
 }
 </style><style data-emotion="cosmos-global-global" data-s=""></style><style data-emotion="cosmos-global-global" data-s=""></style><style data-emotion="cosmos-global-global" data-s=""></style></head>
 <body class="clickup-chrome-ext_installed" data-new-gr-c-s-check-loaded="14.1280.0" data-gr-ext-installed="" data-new-gr-c-s-loaded="14.1280.0">
-<div id="pronounceRootElement" class="pronounceRootElementItem" style="position: fixed; top: 0px; left: 0px; width: 1px; height: 1px; z-index: 2147483645;"><audio><source type="audio/mpeg"></audio><div id="pronounceRootElementInner"></div></div><a href="index.html" class="back-nav">← Brand Hub</a>
+<div id="pronounceRootElement" class="pronounceRootElementItem" style="position: fixed; top: 0px; left: 0px; width: 1px; height: 1px; z-index: 2147483645;"><audio><source type="audio/mpeg"></audio><div id="pronounceRootElementInner"></div></div><nav class="hub-nav"><a href="index.html" class="back-nav">← Brand Hub</a><div class="hub-theme-toggle"><button data-hub-mode="light" onclick="setHubTheme('light')">Light</button><button data-hub-mode="dark" onclick="setHubTheme('dark')">Dark</button><button data-hub-mode="system" onclick="setHubTheme('system')" class="active">System</button></div></nav>
 <div class="page">
 
   <!-- COVER -->
@@ -1301,4 +1350,18 @@
 
 
 
-<div><span></span></div></body><grammarly-desktop-integration data-grammarly-shadow-root="true"></grammarly-desktop-integration></html>
+<div><span></span></div><script>
+  function setHubTheme(m) {
+    if (m === 'system') { document.documentElement.removeAttribute('data-hub-theme'); localStorage.removeItem('fci-hub-theme'); }
+    else { document.documentElement.setAttribute('data-hub-theme', m); localStorage.setItem('fci-hub-theme', m); }
+    document.querySelectorAll('.hub-theme-toggle button').forEach(function(b){ b.classList.toggle('active', b.dataset.hubMode === m); });
+  }
+  (function(){
+    var s = localStorage.getItem('fci-hub-theme') || 'system';
+    if (s !== 'system') document.documentElement.setAttribute('data-hub-theme', s);
+    document.addEventListener('DOMContentLoaded', function(){
+      document.querySelectorAll('.hub-theme-toggle button').forEach(function(b){ b.classList.toggle('active', b.dataset.hubMode === s); });
+    });
+  })();
+</script>
+</body><grammarly-desktop-integration data-grammarly-shadow-root="true"></grammarly-desktop-integration></html>
