@@ -1,0 +1,828 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FCI CISO Portal — Redesign v2</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+
+/* ─── TOKENS ─────────────────────────────────────────────────────── */
+:root {
+  --blue:        #2563EB;
+  --blue-dark:   #1D4ED8;
+  --sky:         #0EA5E9;
+  --blue-tint:   #DBEAFE;
+  --blue-faint:  #EFF6FF;
+  --white:       #FFFFFF;
+  --offwhite:    #F8FAFC;
+  --rule:        #E2E8F0;
+  --rule-inner:  #F1F5F9;
+  --ink:         #0F172A;
+  --text:        #1E3A5F;
+  --text-body:   #475569;
+  --text-muted:  #94A3B8;
+  --text-faint:  #CBD5E1;
+
+  --crit-bg:     #FEF2F2;
+  --crit-text:   #B91C1C;
+  --crit-dot:    #EF4444;
+  --warn-bg:     #FFFBEB;
+  --warn-text:   #92400E;
+  --warn-dot:    #F59E0B;
+  --ok-dot:      #22C55E;
+  --ok-bg:       #F0FDF4;
+  --ok-text:     #166534;
+  --info-dot:    #94A3B8;
+  --info-bg:     #F8FAFC;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+button { font: inherit; cursor: pointer; border: none; background: none; }
+a { text-decoration: none; color: inherit; }
+
+body {
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  color: var(--text);
+  background: var(--offwhite);
+  -webkit-font-smoothing: antialiased;
+  overflow: hidden;
+  height: 100vh;
+}
+
+/* ─── SHELL ──────────────────────────────────────────────────────── */
+.shell { display: flex; height: 100vh; overflow: hidden; }
+
+/* ─── SIDEBAR ────────────────────────────────────────────────────── */
+.sidebar {
+  width: 220px;
+  min-width: 220px;
+  height: 100vh;
+  background: var(--blue-faint);
+  border-right: 1px solid var(--blue-tint);
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+}
+
+/* ── Logo: FCI big + CISO Portal inline ── */
+.sidebar-logo {
+  height: 56px;
+  display: flex;
+  align-items: center;
+  padding: 0 18px;
+  gap: 0;
+  border-bottom: 1px solid var(--blue-tint);
+  flex-shrink: 0;
+}
+
+.logo-fci {
+  font-family: 'Inter Tight', sans-serif;
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--blue);
+  letter-spacing: -0.02em;
+  line-height: 1;
+}
+
+.logo-divider {
+  width: 1px;
+  height: 18px;
+  background: var(--blue-tint);
+  margin: 0 10px;
+  flex-shrink: 0;
+}
+
+.logo-portal {
+  font-family: 'Inter Tight', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-muted);
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+}
+
+/* ── Nav ── */
+.nav-section { padding: 14px 8px 2px; }
+
+.nav-label {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--sky);
+  opacity: 0.7;
+  padding: 0 8px;
+  margin-bottom: 3px;
+  display: block;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 33px;
+  padding: 0 8px;
+  border-radius: 6px;
+  margin: 1px 0;
+  color: var(--text-body);
+  font-size: 13px;
+  border-left: 2px solid transparent;
+  transition: background 0.1s, color 0.1s;
+}
+
+.nav-item:hover { background: rgba(37,99,235,0.06); color: var(--text); }
+
+.nav-item.active {
+  background: rgba(37,99,235,0.09);
+  color: var(--blue);
+  font-weight: 500;
+  border-left-color: var(--blue);
+}
+
+.nav-item svg { width: 14px; height: 14px; flex-shrink: 0; opacity: 0.5; stroke-width: 1.75; }
+.nav-item.active svg { opacity: 1; }
+
+/* ─── MAIN ───────────────────────────────────────────────────────── */
+.main { flex: 1; display: flex; flex-direction: column; min-width: 0; overflow: hidden; }
+
+/* ─── TOPBAR ─────────────────────────────────────────────────────── */
+.topbar {
+  height: 52px;
+  background: var(--white);
+  border-bottom: 1px solid var(--rule);
+  display: flex;
+  align-items: center;
+  padding: 0 20px 0 16px;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.topbar-btn {
+  width: 30px; height: 30px;
+  display: flex; align-items: center; justify-content: center;
+  border-radius: 5px; color: var(--text-muted);
+}
+.topbar-btn:hover { background: var(--offwhite); }
+
+.context-group { display: flex; align-items: center; gap: 6px; flex: 1; }
+
+.context-pill {
+  display: flex; align-items: center; gap: 5px;
+  height: 30px; padding: 0 10px;
+  border: 1px solid var(--rule); border-radius: 6px;
+  font-size: 12.5px; color: var(--text-body); background: var(--white); cursor: pointer;
+}
+.context-pill:hover { background: var(--offwhite); }
+.context-pill svg { width: 10px; height: 10px; opacity: 0.45; }
+
+.context-sep { color: var(--text-faint); font-size: 14px; }
+
+.topbar-right { display: flex; align-items: center; gap: 2px; }
+
+.icon-btn {
+  width: 30px; height: 30px;
+  display: flex; align-items: center; justify-content: center;
+  border-radius: 5px; color: var(--text-muted); cursor: pointer;
+}
+.icon-btn:hover { background: var(--offwhite); }
+.icon-btn svg { width: 15px; height: 15px; }
+
+.avatar {
+  width: 30px; height: 30px; border-radius: 50%;
+  background: var(--blue);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px; font-weight: 600; color: white; margin-left: 4px; cursor: pointer;
+}
+
+/* ─── PAGE BODY ──────────────────────────────────────────────────── */
+.page-body { flex: 1; overflow-y: auto; padding: 28px 32px 48px; }
+
+/* ─── PAGE HEADER ────────────────────────────────────────────────── */
+.page-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  margin-bottom: 24px;
+}
+
+.page-title {
+  font-family: 'Inter Tight', sans-serif;
+  font-size: 28px;
+  font-weight: 600;
+  color: var(--ink);
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+}
+
+.page-meta { display: flex; align-items: center; gap: 12px; margin-top: 5px; }
+
+.page-subtitle { font-size: 12.5px; color: var(--text-muted); }
+
+.sync-badge { display: flex; align-items: center; gap: 5px; font-size: 11.5px; color: var(--text-muted); }
+.sync-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--ok-dot); }
+
+.header-actions { display: flex; align-items: center; gap: 8px; padding-bottom: 4px; }
+
+.btn-secondary {
+  display: flex; align-items: center; gap: 6px;
+  height: 32px; padding: 0 14px;
+  border: 1px solid var(--rule); border-radius: 6px;
+  font-size: 12.5px; color: var(--text-body); background: var(--white); cursor: pointer;
+}
+.btn-secondary:hover { background: var(--offwhite); color: var(--text); }
+.btn-secondary svg { width: 13px; height: 13px; opacity: 0.55; }
+
+/* ─── KPI ROW ────────────────────────────────────────────────────── */
+.kpi-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.kpi-card {
+  background: var(--white);
+  border: 1px solid var(--rule);
+  border-radius: 10px;
+  padding: 22px 24px 20px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+  position: relative;
+  overflow: hidden;
+  border-top: 3px solid transparent;
+}
+
+.kpi-card.kpi-posture  { border-top-color: var(--blue); }
+.kpi-card.kpi-critical { border-top-color: var(--crit-dot); }
+.kpi-card.kpi-ok       { border-top-color: var(--ok-dot); }
+
+.kpi-label {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 10px;
+  display: block;
+}
+
+.kpi-number {
+  font-family: 'Inter Tight', sans-serif;
+  font-size: 56px;
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  color: var(--ink);
+  line-height: 1;
+  margin-bottom: 6px;
+}
+
+.kpi-sub {
+  font-size: 12px;
+  color: var(--text-muted);
+  line-height: 1.4;
+}
+
+.kpi-watermark {
+  position: absolute;
+  bottom: -12px; right: -12px;
+  width: 72px; height: 72px;
+  opacity: 0.05;
+  pointer-events: none;
+}
+
+/* ─── FILTER BAR ─────────────────────────────────────────────────── */
+.filter-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+
+.chips { display: flex; gap: 5px; }
+
+.chip {
+  display: inline-flex; align-items: center; gap: 5px;
+  height: 28px; padding: 0 11px;
+  border-radius: 6px; font-size: 12.5px;
+  border: 1px solid var(--rule); color: var(--text-body); background: transparent; cursor: pointer;
+}
+.chip:hover { background: var(--offwhite); }
+.chip.on { background: var(--blue-faint); color: var(--blue); border-color: var(--blue-tint); font-weight: 500; }
+.chip-n { font-size: 10.5px; padding: 1px 5px; border-radius: 3px; background: rgba(0,0,0,0.06); }
+.chip.on .chip-n { background: rgba(37,99,235,0.12); }
+
+.filter-toggles { display: flex; align-items: center; gap: 14px; }
+.toggle {
+  display: flex; align-items: center; gap: 6px;
+  font-size: 11.5px; color: var(--text-muted); cursor: pointer; user-select: none;
+}
+.toggle input { width: 13px; height: 13px; accent-color: var(--blue); cursor: pointer; }
+
+/* ─── TABLE ──────────────────────────────────────────────────────── */
+.tbl {
+  background: var(--white);
+  border: 1px solid var(--rule);
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+}
+
+/* ── Section Header ── */
+.sec-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 18px 9px;
+  border-bottom: 1px solid var(--rule);
+}
+
+.sec-head.crit { background: #FFF8F8; }
+.sec-head.warn { background: #FFFDF5; }
+.sec-head.info { background: #FAFBFC; }
+
+.sec-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%; flex-shrink: 0;
+}
+
+.sec-label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  flex: 1;
+}
+
+.sec-label.crit { color: var(--crit-text); }
+.sec-label.warn { color: var(--warn-text); }
+.sec-label.info { color: var(--info-dot); }
+
+.sec-meta {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+.sec-meta strong { font-weight: 500; color: var(--text-body); }
+
+/* ── Column headers ── */
+.tbl-head {
+  display: grid;
+  grid-template-columns: 1fr 148px 160px;
+  padding: 8px 18px 8px 24px;
+  background: var(--offwhite);
+  border-bottom: 1px solid var(--rule);
+}
+
+.th {
+  font-size: 10.5px; font-weight: 600;
+  letter-spacing: 0.07em; text-transform: uppercase; color: var(--text-muted);
+}
+.th.r { text-align: right; }
+
+/* ── Rows ── */
+.row {
+  display: grid;
+  grid-template-columns: 1fr 148px 160px;
+  align-items: center;
+  height: 46px;
+  padding: 0 18px;
+  border-bottom: 1px solid var(--rule-inner);
+  border-left: 3px solid transparent;
+  cursor: pointer;
+  transition: background 0.08s;
+}
+.row:last-child { border-bottom: none; }
+.row:hover { background: #FAFCFF; }
+
+.row.crit { border-left-color: var(--crit-dot); }
+.row.warn { border-left-color: var(--warn-dot); }
+.row.info { border-left-color: var(--info-dot); }
+
+.row-name { display: flex; align-items: center; gap: 7px; min-width: 0; padding-left: 3px; }
+
+.row-name-text {
+  font-size: 13.5px; color: var(--ink);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  font-weight: 450;
+}
+
+.info-icon { width: 13px; height: 13px; color: var(--text-muted); opacity: 0.4; flex-shrink: 0; }
+
+/* Device pill */
+.row-devices { display: flex; align-items: center; }
+
+.dev-pill {
+  display: inline-flex; align-items: center; gap: 4px;
+  font-size: 11px; font-weight: 600;
+  padding: 3px 9px; border-radius: 100px;
+}
+.dev-pill.crit { background: var(--crit-bg); color: var(--crit-text); }
+.dev-pill.warn { background: var(--warn-bg); color: var(--warn-text); }
+.dev-pill.info { background: var(--blue-faint); color: var(--blue-dark); }
+
+/* Compliance cell */
+.row-compliance {
+  display: flex; align-items: center; gap: 10px; justify-content: flex-end;
+}
+
+.compliance-pct {
+  font-size: 13px; font-weight: 600; color: var(--text-body);
+  min-width: 36px; text-align: right; font-variant-numeric: tabular-nums;
+}
+.compliance-pct.full { color: var(--ok-dot); font-weight: 600; }
+
+.bar-track { width: 80px; height: 4px; background: #EEF2F7; border-radius: 2px; overflow: hidden; flex-shrink: 0; }
+.bar-fill { height: 100%; border-radius: 2px; background: var(--blue); }
+.bar-fill.full { background: var(--ok-dot); }
+
+/* ── Collapse row ── */
+.collapse-row {
+  display: flex; align-items: center; gap: 7px;
+  padding: 7px 18px 7px 24px;
+  font-size: 11.5px; color: var(--text-muted);
+  cursor: pointer; background: #FAFCFF;
+  transition: background 0.08s, color 0.08s;
+}
+.collapse-row:hover { background: #EFF5FF; color: var(--blue); }
+.collapse-row svg { width: 12px; height: 12px; opacity: 0.5; }
+
+/* ── Section divider ── */
+.sec-divider { height: 1px; background: var(--rule); }
+
+</style>
+</head>
+<body>
+<div class="shell">
+
+  <!-- ═══ SIDEBAR ═══ -->
+  <nav class="sidebar">
+
+    <div class="sidebar-logo">
+      <span class="logo-fci">FCI</span>
+      <div class="logo-divider"></div>
+      <span class="logo-portal">CISO Portal</span>
+    </div>
+
+    <div class="nav-section">
+      <span class="nav-label">Monitoring</span>
+      <a class="nav-item active" href="#">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor"><path d="M2 10l3-3 3 3 5-6"/><circle cx="13" cy="4" r="1.5"/></svg>
+        Compliance Alerts
+      </a>
+    </div>
+
+    <div class="nav-section">
+      <span class="nav-label">Inventory</span>
+      <a class="nav-item" href="#">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor"><rect x="2" y="3" width="12" height="8" rx="1.5"/><path d="M5 11v2M11 11v2M4 13h8"/></svg>
+        Active Devices
+      </a>
+      <a class="nav-item" href="#">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor"><rect x="2" y="3" width="12" height="8" rx="1.5" opacity=".4"/><path d="M6 7h4"/></svg>
+        Decommissioned
+      </a>
+      <a class="nav-item" href="#">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor"><path d="M8 2v3M8 11v3M2 8h3M11 8h3"/><circle cx="8" cy="8" r="3"/></svg>
+        Installers
+      </a>
+    </div>
+
+    <div class="nav-section">
+      <span class="nav-label">Controls</span>
+      <a class="nav-item" href="#">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor"><path d="M2 4h12M2 8h12M2 12h7"/></svg>
+        Endpoint Configuration
+      </a>
+      <a class="nav-item" href="#">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor"><path d="M8 2l1.5 4.5H14L10 9l1.5 5L8 11.5 4.5 14 6 9 2 6.5h4.5z"/></svg>
+        Endpoint Control
+      </a>
+    </div>
+
+    <div class="nav-section">
+      <span class="nav-label">Management</span>
+      <a class="nav-item" href="#">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor"><path d="M4 2h8a1 1 0 011 1v10a1 1 0 01-1 1H4a1 1 0 01-1-1V3a1 1 0 011-1z"/><path d="M5 6h6M5 9h4"/></svg>
+        Exceptions
+      </a>
+      <a class="nav-item" href="#">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor"><rect x="2" y="2" width="12" height="12" rx="2"/><path d="M5 6h6M5 9h4"/></svg>
+        Ticket Management
+      </a>
+      <a class="nav-item" href="#">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor"><circle cx="8" cy="8" r="5.5"/><path d="M8 6a2 2 0 011.5 3.3c-.4.5-.9.7-1.5.7v1.5"/><circle cx="8" cy="13" r=".5" fill="currentColor"/></svg>
+        Settings
+      </a>
+      <a class="nav-item" href="#">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor"><path d="M8 2v3M8 14h0M3.5 4.5l2 2M12 10l1.5 1.5M2 8h3M14 8h-3M3.5 11.5l2-2M12 6l1.5-1.5"/></svg>
+        What's New
+      </a>
+    </div>
+
+  </nav>
+
+
+  <!-- ═══ MAIN ═══ -->
+  <div class="main">
+
+    <!-- TOPBAR -->
+    <div class="topbar">
+      <button class="topbar-btn">
+        <svg width="15" height="15" viewBox="0 0 15 15" fill="none"><path d="M2 4h11M2 7.5h11M2 11h11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+      </button>
+      <div class="context-group">
+        <button class="context-pill">
+          <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.3" width="12" height="12"><circle cx="6" cy="6" r="4.5"/><path d="M6 1.5c-1 1.5-1.5 3-1.5 4.5s.5 3 1.5 4.5M6 1.5c1 1.5 1.5 3 1.5 4.5S7 9 6 10.5M1.5 6h9"/></svg>
+          Acme Corp
+          <svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.3" width="10" height="10"><path d="M2.5 4l2.5 2.5L7.5 4" stroke-linecap="round"/></svg>
+        </button>
+        <span class="context-sep">/</span>
+        <button class="context-pill">
+          All Endpoints
+          <svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.3" width="10" height="10"><path d="M2.5 4l2.5 2.5L7.5 4" stroke-linecap="round"/></svg>
+        </button>
+      </div>
+      <div class="topbar-right">
+        <button class="icon-btn">
+          <svg viewBox="0 0 15 15" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="6.5" cy="6.5" r="4.5"/><path d="M10 10l3 3" stroke-linecap="round"/></svg>
+        </button>
+        <button class="icon-btn">
+          <svg viewBox="0 0 15 15" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M5.5 11.5a2 2 0 004 0M7.5 3v.5A4.5 4.5 0 0112 8v1.5H3V8A4.5 4.5 0 017.5 3.5V3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div class="avatar">VG</div>
+      </div>
+    </div>
+
+
+    <!-- PAGE BODY -->
+    <div class="page-body">
+
+      <!-- HEADER -->
+      <div class="page-header">
+        <div>
+          <div class="page-title">Compliance Posture</div>
+          <div class="page-meta">
+            <span class="page-subtitle">6 endpoints &nbsp;·&nbsp; Acme Corp &nbsp;·&nbsp; All Endpoints</span>
+            <div class="sync-badge">
+              <div class="sync-dot"></div>
+              Synchronized 2 hours ago
+            </div>
+          </div>
+        </div>
+        <div class="header-actions">
+          <button class="btn-secondary">
+            <svg viewBox="0 0 13 13" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M6.5 2v7M4 7l2.5 2.5L9 7" stroke-linecap="round" stroke-linejoin="round"/><path d="M2 11h9" stroke-linecap="round"/></svg>
+            Export Report
+          </button>
+        </div>
+      </div>
+
+
+      <!-- KPI ROW -->
+      <div class="kpi-row">
+
+        <!-- Posture Score -->
+        <div class="kpi-card kpi-posture">
+          <span class="kpi-label">Posture Score</span>
+          <div class="kpi-number">68%</div>
+          <div class="kpi-sub">of device-checks passing</div>
+          <svg class="kpi-watermark" viewBox="0 0 56 56" fill="none" stroke="#2563EB" stroke-width="2"><circle cx="28" cy="28" r="22"/><path d="M18 28l8 8 14-14"/></svg>
+        </div>
+
+        <!-- Checks Need Attention -->
+        <div class="kpi-card kpi-critical">
+          <span class="kpi-label">Checks Need Attention</span>
+          <div class="kpi-number">12</div>
+          <div class="kpi-sub">across 6 endpoints</div>
+          <svg class="kpi-watermark" viewBox="0 0 56 56" fill="none" stroke="#EF4444" stroke-width="2"><path d="M28 8L50 46H6z"/><line x1="28" y1="24" x2="28" y2="34"/><circle cx="28" cy="39" r="1.5" fill="#EF4444"/></svg>
+        </div>
+
+        <!-- Controls Clear -->
+        <div class="kpi-card kpi-ok">
+          <span class="kpi-label">Controls Fully Met</span>
+          <div class="kpi-number">17</div>
+          <div class="kpi-sub">of 29 total checks</div>
+          <svg class="kpi-watermark" viewBox="0 0 56 56" fill="none" stroke="#22C55E" stroke-width="2"><circle cx="28" cy="28" r="22"/><path d="M18 28l8 8 14-14"/></svg>
+        </div>
+
+      </div>
+
+
+      <!-- FILTER BAR -->
+      <div class="filter-bar">
+        <div class="chips">
+          <button class="chip on">All <span class="chip-n">29</span></button>
+          <button class="chip">High Risk <span class="chip-n">13</span></button>
+          <button class="chip">Low Risk <span class="chip-n">13</span></button>
+          <button class="chip">Informational <span class="chip-n">3</span></button>
+        </div>
+        <div class="filter-toggles">
+          <label class="toggle"><input type="checkbox" checked> Hide clear controls</label>
+          <label class="toggle"><input type="checkbox"> Hide inactive devices</label>
+        </div>
+      </div>
+
+
+      <!-- TABLE -->
+      <div class="tbl">
+
+        <!-- ══ HIGH RISK ══ -->
+        <div class="sec-head crit">
+          <div class="sec-dot" style="background:var(--crit-dot)"></div>
+          <span class="sec-label crit">High Risk</span>
+          <span class="sec-meta"><strong>7</strong> checks need attention &nbsp;·&nbsp; <strong>6</strong> devices affected</span>
+        </div>
+
+        <div class="tbl-head">
+          <div class="th">Check</div>
+          <div class="th">Affected Devices</div>
+          <div class="th r">% In Compliance</div>
+        </div>
+
+        <div class="row crit">
+          <div class="row-name">
+            <span class="row-name-text">Managed Antivirus Missing</span>
+            <svg class="info-icon" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="7" cy="7" r="5.5"/><path d="M7 6.5v3M7 5h0" stroke-linecap="round"/></svg>
+          </div>
+          <div class="row-devices"><span class="dev-pill crit">5 devices</span></div>
+          <div class="row-compliance">
+            <span class="compliance-pct">16%</span>
+            <div class="bar-track"><div class="bar-fill" style="width:16%"></div></div>
+          </div>
+        </div>
+
+        <div class="row crit">
+          <div class="row-name">
+            <span class="row-name-text">Unpatched Operating System</span>
+            <svg class="info-icon" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="7" cy="7" r="5.5"/><path d="M7 6.5v3M7 5h0" stroke-linecap="round"/></svg>
+          </div>
+          <div class="row-devices"><span class="dev-pill crit">3 devices</span></div>
+          <div class="row-compliance">
+            <span class="compliance-pct">50%</span>
+            <div class="bar-track"><div class="bar-fill" style="width:50%"></div></div>
+          </div>
+        </div>
+
+        <div class="row crit">
+          <div class="row-name">
+            <span class="row-name-text">End of Life Operating System</span>
+            <svg class="info-icon" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="7" cy="7" r="5.5"/><path d="M7 6.5v3M7 5h0" stroke-linecap="round"/></svg>
+          </div>
+          <div class="row-devices"><span class="dev-pill crit">2 devices</span></div>
+          <div class="row-compliance">
+            <span class="compliance-pct">66%</span>
+            <div class="bar-track"><div class="bar-fill" style="width:66%"></div></div>
+          </div>
+        </div>
+
+        <div class="row crit">
+          <div class="row-name">
+            <span class="row-name-text">RDP Enabled Without MFA</span>
+            <svg class="info-icon" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="7" cy="7" r="5.5"/><path d="M7 6.5v3M7 5h0" stroke-linecap="round"/></svg>
+          </div>
+          <div class="row-devices"><span class="dev-pill crit">2 devices</span></div>
+          <div class="row-compliance">
+            <span class="compliance-pct">66%</span>
+            <div class="bar-track"><div class="bar-fill" style="width:66%"></div></div>
+          </div>
+        </div>
+
+        <div class="row crit">
+          <div class="row-name">
+            <span class="row-name-text">Machine Inactivity Not Set</span>
+            <svg class="info-icon" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="7" cy="7" r="5.5"/><path d="M7 6.5v3M7 5h0" stroke-linecap="round"/></svg>
+          </div>
+          <div class="row-devices"><span class="dev-pill crit">1 device</span></div>
+          <div class="row-compliance">
+            <span class="compliance-pct">83%</span>
+            <div class="bar-track"><div class="bar-fill" style="width:83%"></div></div>
+          </div>
+        </div>
+
+        <div class="row crit">
+          <div class="row-name">
+            <span class="row-name-text">Personal Microsoft User Accounts</span>
+            <svg class="info-icon" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="7" cy="7" r="5.5"/><path d="M7 6.5v3M7 5h0" stroke-linecap="round"/></svg>
+          </div>
+          <div class="row-devices"><span class="dev-pill crit">1 device</span></div>
+          <div class="row-compliance">
+            <span class="compliance-pct">83%</span>
+            <div class="bar-track"><div class="bar-fill" style="width:83%"></div></div>
+          </div>
+        </div>
+
+        <div class="row crit">
+          <div class="row-name">
+            <span class="row-name-text">Windows 10 Operating System</span>
+            <svg class="info-icon" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="7" cy="7" r="5.5"/><path d="M7 6.5v3M7 5h0" stroke-linecap="round"/></svg>
+          </div>
+          <div class="row-devices"><span class="dev-pill crit">1 device</span></div>
+          <div class="row-compliance">
+            <span class="compliance-pct">83%</span>
+            <div class="bar-track"><div class="bar-fill" style="width:83%"></div></div>
+          </div>
+        </div>
+
+        <div class="collapse-row">
+          <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M3 4.5L6 7.5 9 4.5" stroke-linecap="round"/></svg>
+          6 more High Risk checks — all endpoints fully compliant
+        </div>
+
+        <div class="sec-divider"></div>
+
+        <!-- ══ LOW RISK ══ -->
+        <div class="sec-head warn">
+          <div class="sec-dot" style="background:var(--warn-dot)"></div>
+          <span class="sec-label warn">Low Risk</span>
+          <span class="sec-meta"><strong>3</strong> checks need attention &nbsp;·&nbsp; <strong>6</strong> devices affected</span>
+        </div>
+
+        <div class="row warn">
+          <div class="row-name">
+            <span class="row-name-text">Default Workgroup Name Set</span>
+            <svg class="info-icon" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="7" cy="7" r="5.5"/><path d="M7 6.5v3M7 5h0" stroke-linecap="round"/></svg>
+          </div>
+          <div class="row-devices"><span class="dev-pill warn">5 devices</span></div>
+          <div class="row-compliance">
+            <span class="compliance-pct">16%</span>
+            <div class="bar-track"><div class="bar-fill" style="width:16%"></div></div>
+          </div>
+        </div>
+
+        <div class="row warn">
+          <div class="row-name">
+            <span class="row-name-text">Password Complexity Not Set</span>
+            <svg class="info-icon" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="7" cy="7" r="5.5"/><path d="M7 6.5v3M7 5h0" stroke-linecap="round"/></svg>
+          </div>
+          <div class="row-devices"><span class="dev-pill warn">1 device</span></div>
+          <div class="row-compliance">
+            <span class="compliance-pct">83%</span>
+            <div class="bar-track"><div class="bar-fill" style="width:83%"></div></div>
+          </div>
+        </div>
+
+        <div class="row warn">
+          <div class="row-name">
+            <span class="row-name-text">Device Firewall Logging Disabled</span>
+            <svg class="info-icon" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="7" cy="7" r="5.5"/><path d="M7 6.5v3M7 5h0" stroke-linecap="round"/></svg>
+          </div>
+          <div class="row-devices"><span class="dev-pill warn">1 device</span></div>
+          <div class="row-compliance">
+            <span class="compliance-pct">93%</span>
+            <div class="bar-track"><div class="bar-fill" style="width:93%"></div></div>
+          </div>
+        </div>
+
+        <div class="collapse-row">
+          <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M3 4.5L6 7.5 9 4.5" stroke-linecap="round"/></svg>
+          10 more Low Risk checks — all endpoints fully compliant
+        </div>
+
+        <div class="sec-divider"></div>
+
+        <!-- ══ INFORMATIONAL ══ -->
+        <div class="sec-head info">
+          <div class="sec-dot" style="background:var(--info-dot)"></div>
+          <span class="sec-label info">Informational</span>
+          <span class="sec-meta"><strong>2</strong> items need review</span>
+        </div>
+
+        <div class="row info">
+          <div class="row-name">
+            <span class="row-name-text">Duplicate Devices</span>
+            <svg class="info-icon" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="7" cy="7" r="5.5"/><path d="M7 6.5v3M7 5h0" stroke-linecap="round"/></svg>
+          </div>
+          <div class="row-devices"><span class="dev-pill info">2 devices</span></div>
+          <div class="row-compliance">
+            <span class="compliance-pct">66%</span>
+            <div class="bar-track"><div class="bar-fill" style="width:66%"></div></div>
+          </div>
+        </div>
+
+        <div class="row info">
+          <div class="row-name">
+            <span class="row-name-text">Inactive Devices</span>
+            <svg class="info-icon" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="7" cy="7" r="5.5"/><path d="M7 6.5v3M7 5h0" stroke-linecap="round"/></svg>
+          </div>
+          <div class="row-devices"><span class="dev-pill info">2 devices</span></div>
+          <div class="row-compliance">
+            <span class="compliance-pct">66%</span>
+            <div class="bar-track"><div class="bar-fill" style="width:66%"></div></div>
+          </div>
+        </div>
+
+        <div class="collapse-row">
+          <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M3 4.5L6 7.5 9 4.5" stroke-linecap="round"/></svg>
+          1 more informational check — fully compliant
+        </div>
+
+      </div>
+      <!-- end tbl -->
+
+    </div>
+    <!-- end page-body -->
+  </div>
+</div>
+</body>
+</html>

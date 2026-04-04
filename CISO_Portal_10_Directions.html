@@ -1,0 +1,1652 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FCI CISO Portal — 10 Design Directions</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600&family=Inter+Tight:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&family=Syne:wght@400;600;700;800&family=JetBrains+Mono:wght@300;400;500;600&family=Manrope:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+/* ── TAB BAR ─────────────────────────────────────────── */
+.tabbar{
+  position:fixed;top:0;left:0;right:0;z-index:9999;
+  display:flex;align-items:center;gap:2px;
+  background:#0B1120;border-bottom:1px solid rgba(255,255,255,0.08);
+  height:46px;padding:0 16px;overflow-x:auto;
+}
+.tabbar-brand{
+  font-family:'Inter Tight',sans-serif;font-size:13px;font-weight:700;
+  color:#fff;letter-spacing:-.02em;margin-right:20px;flex-shrink:0;
+  padding-right:20px;border-right:1px solid rgba(255,255,255,0.12);
+}
+.tab{
+  flex-shrink:0;padding:5px 11px;border-radius:5px;border:none;
+  background:transparent;font-family:'Inter',sans-serif;font-size:11.5px;
+  color:rgba(255,255,255,0.42);cursor:pointer;transition:all .15s;white-space:nowrap;
+}
+.tab:hover{color:rgba(255,255,255,0.8);background:rgba(255,255,255,0.07)}
+.tab.active{color:#fff;background:rgba(255,255,255,0.14)}
+
+/* ── DIRECTION WRAPPER ───────────────────────────────── */
+.dir{display:none;width:100vw;height:100vh;padding-top:46px;overflow:hidden}
+.dir.active{display:flex}
+
+/* ══════════════════════════════════════════════════════
+   DIRECTION 01 — TERMINAL
+══════════════════════════════════════════════════════ */
+.d1{background:#050505;color:#00E57F;font-family:'JetBrains Mono',monospace}
+.d1-sidebar{
+  width:200px;flex-shrink:0;height:100%;
+  border-right:1px solid #00E57F22;
+  padding:24px 0;display:flex;flex-direction:column;gap:0;
+}
+.d1-logo{padding:0 20px 24px;border-bottom:1px solid #00E57F22;margin-bottom:16px}
+.d1-logo-fci{font-size:20px;font-weight:600;color:#00E57F;letter-spacing:.05em}
+.d1-logo-sub{font-size:10px;color:#00E57F66;margin-top:2px;letter-spacing:.08em}
+.d1-nav-item{
+  padding:8px 20px;font-size:11px;color:#00E57F55;
+  cursor:pointer;letter-spacing:.04em;
+}
+.d1-nav-item.active{color:#00E57F;border-left:2px solid #00E57F;padding-left:18px}
+.d1-main{flex:1;overflow-y:auto;padding:24px 32px}
+.d1-topbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:28px}
+.d1-breadcrumb{font-size:11px;color:#00E57F55;letter-spacing:.04em}
+.d1-breadcrumb span{color:#00E57F}
+.d1-company{font-size:11px;color:#00E57F77;border:1px solid #00E57F33;padding:4px 10px;border-radius:2px}
+.d1-title{font-size:11px;color:#00E57F55;letter-spacing:.06em;text-transform:uppercase;margin-bottom:20px}
+.d1-kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:28px}
+.d1-kpi{border:1px solid #00E57F22;padding:16px 20px;position:relative}
+.d1-kpi::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:#00E57F44}
+.d1-kpi-label{font-size:9px;color:#00E57F55;letter-spacing:.08em;text-transform:uppercase;margin-bottom:10px}
+.d1-kpi-num{font-size:48px;font-weight:500;color:#00E57F;line-height:1;letter-spacing:-.02em}
+.d1-kpi-num.warn{color:#F59E0B}
+.d1-kpi-num.ok{color:#22C55E}
+.d1-kpi-sub{font-size:9px;color:#00E57F44;margin-top:6px;letter-spacing:.04em}
+.d1-section-head{
+  font-size:9px;letter-spacing:.1em;text-transform:uppercase;
+  color:#EF444499;border-top:1px solid #EF444422;border-bottom:1px solid #EF444422;
+  padding:6px 0;margin-bottom:0;display:grid;
+  grid-template-columns:1fr 120px 100px;gap:8px;
+}
+.d1-section-head.low{color:#F59E0B99;border-color:#F59E0B22}
+.d1-row{
+  display:grid;grid-template-columns:1fr 120px 100px;gap:8px;
+  padding:7px 0;border-bottom:1px solid #00E57F0D;
+  font-size:11px;align-items:center;
+}
+.d1-row-name{color:#00E57FBB;display:flex;align-items:center;gap:8px}
+.d1-row-name::before{content:'▶';font-size:8px;color:#EF444488}
+.d1-row-name.low::before{color:#F59E0B88}
+.d1-row-devices{color:#00E57F66;font-size:10px}
+.d1-bar{height:3px;background:#00E57F15;border-radius:0;position:relative;overflow:hidden}
+.d1-bar-fill{height:100%;background:#EF4444;border-radius:0}
+.d1-bar-fill.low{background:#F59E0B}
+
+/* ══════════════════════════════════════════════════════
+   DIRECTION 02 — DEEP COSMOS (Premium Dark)
+══════════════════════════════════════════════════════ */
+.d2{background:#05091A;color:#7EAED8;font-family:'Inter',sans-serif}
+.d2-sidebar{
+  width:220px;flex-shrink:0;height:100%;
+  background:#060B1C;border-right:1px solid rgba(37,99,235,0.15);
+  padding:0;display:flex;flex-direction:column;
+}
+.d2-logo-area{padding:22px 20px 20px;border-bottom:1px solid rgba(37,99,235,0.12)}
+.d2-logo{display:flex;align-items:center;gap:10px}
+.d2-logo-fci{font-family:'Inter Tight',sans-serif;font-size:20px;font-weight:700;color:#F0F8FF;letter-spacing:-.03em}
+.d2-logo-div{width:1px;height:16px;background:rgba(37,99,235,0.3)}
+.d2-logo-portal{font-size:11px;font-weight:400;color:#3B6EAA;letter-spacing:.02em}
+.d2-client{
+  padding:12px 20px;border-bottom:1px solid rgba(37,99,235,0.1);
+  font-size:11px;color:#3B6EAA;
+}
+.d2-client strong{display:block;color:#7EAED8;font-weight:500;font-size:12px;margin-bottom:2px}
+.d2-nav{padding:16px 0;flex:1}
+.d2-nav-item{
+  display:flex;align-items:center;gap:10px;
+  padding:9px 20px;font-size:12px;color:#3B6EAA;cursor:pointer;
+  border-left:2px solid transparent;transition:all .15s;
+}
+.d2-nav-item.active{
+  color:#BAE6FD;border-left-color:#2563EB;
+  background:rgba(37,99,235,0.1);
+}
+.d2-nav-icon{width:14px;height:14px;flex-shrink:0;opacity:.5}
+.d2-nav-item.active .d2-nav-icon{opacity:1}
+.d2-main{flex:1;overflow-y:auto;background:#05091A}
+.d2-topbar{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:16px 28px;border-bottom:1px solid rgba(37,99,235,0.1);
+}
+.d2-page-title{font-family:'Inter Tight',sans-serif;font-size:22px;font-weight:600;color:#F0F8FF;letter-spacing:-.03em}
+.d2-controls{display:flex;gap:10px;align-items:center}
+.d2-btn{
+  font-size:11px;padding:6px 14px;border-radius:6px;border:none;cursor:pointer;
+  background:rgba(37,99,235,0.15);color:#7EAED8;border:1px solid rgba(37,99,235,0.25);
+}
+.d2-content{padding:24px 28px}
+.d2-kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:24px}
+.d2-kpi{
+  background:#080F22;border:1px solid rgba(37,99,235,0.18);
+  border-radius:10px;padding:18px 20px;border-top:3px solid rgba(37,99,235,0.4);
+  position:relative;overflow:hidden;
+}
+.d2-kpi::after{
+  content:'';position:absolute;bottom:-20px;right:-20px;
+  width:80px;height:80px;border-radius:50%;
+  background:radial-gradient(circle,rgba(37,99,235,0.12) 0%,transparent 70%);
+}
+.d2-kpi.crit{border-top-color:rgba(239,68,68,0.5)}
+.d2-kpi.ok{border-top-color:rgba(34,197,94,0.5)}
+.d2-kpi-label{font-size:10px;color:#3B6EAA;font-weight:500;letter-spacing:.04em;text-transform:uppercase;margin-bottom:12px}
+.d2-kpi-num{font-family:'Inter Tight',sans-serif;font-size:54px;font-weight:700;color:#F0F8FF;line-height:1;letter-spacing:-.04em}
+.d2-kpi-sub{font-size:10px;color:#3B6EAA;margin-top:8px}
+.d2-table-header{
+  display:flex;justify-content:space-between;align-items:center;
+  margin-bottom:12px;
+}
+.d2-section-label{
+  font-size:10px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;
+  color:#EF4444;display:flex;align-items:center;gap:8px;
+}
+.d2-section-label::before{content:'';width:6px;height:6px;border-radius:50%;background:#EF4444;display:inline-block}
+.d2-section-label.low{color:#F59E0B}
+.d2-section-label.low::before{background:#F59E0B}
+.d2-count{font-size:10px;color:#3B6EAA}
+.d2-row{
+  display:grid;grid-template-columns:1fr 120px 150px;gap:8px;
+  padding:10px 14px;border-radius:6px;align-items:center;
+  border-left:2px solid transparent;margin-bottom:2px;
+  background:rgba(255,255,255,0.02);
+}
+.d2-row.high{border-left-color:#EF444455}
+.d2-row.low{border-left-color:#F59E0B55;background:rgba(255,255,255,0.01)}
+.d2-row-name{font-size:12px;color:#BAE6FD;font-weight:400}
+.d2-row-devices{font-size:11px;color:#3B6EAA}
+.d2-bar{height:4px;background:rgba(255,255,255,0.07);border-radius:2px;overflow:hidden}
+.d2-bar-fill{height:100%;background:#EF4444;border-radius:2px}
+.d2-bar-fill.low{background:#F59E0B}
+.d2-pct{font-size:10px;color:#3B6EAA;text-align:right}
+.d2-bar-wrap{display:flex;align-items:center;gap:8px}
+
+/* ══════════════════════════════════════════════════════
+   DIRECTION 03 — ARCTIC MINIMAL
+══════════════════════════════════════════════════════ */
+.d3{background:#FFFFFF;color:#64748B;font-family:'Inter',sans-serif}
+.d3-sidebar{
+  width:210px;flex-shrink:0;height:100%;
+  border-right:1px solid #F1F5F9;padding:28px 0;
+  display:flex;flex-direction:column;gap:0;
+}
+.d3-logo{padding:0 24px 24px;border-bottom:1px solid #F1F5F9;margin-bottom:20px}
+.d3-logo-fci{font-family:'Inter Tight',sans-serif;font-size:18px;font-weight:300;color:#0F172A;letter-spacing:.05em}
+.d3-logo-portal{font-size:10px;color:#CBD5E1;margin-top:3px;font-weight:300;letter-spacing:.06em}
+.d3-nav-item{
+  padding:8px 24px;font-size:12px;color:#94A3B8;cursor:pointer;
+  font-weight:300;transition:color .15s;
+}
+.d3-nav-item.active{color:#0F172A;font-weight:400}
+.d3-main{flex:1;overflow-y:auto}
+.d3-topbar{
+  padding:20px 36px 16px;border-bottom:1px solid #F8FAFC;
+  display:flex;justify-content:space-between;align-items:flex-end;
+}
+.d3-page-title{
+  font-family:'Inter Tight',sans-serif;font-size:30px;font-weight:300;
+  color:#0F172A;letter-spacing:-.04em;
+}
+.d3-subtitle{font-size:11px;color:#CBD5E1;font-weight:300;margin-top:3px}
+.d3-date{font-size:11px;color:#CBD5E1;font-weight:300}
+.d3-content{padding:28px 36px}
+.d3-kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:#F8FAFC;margin-bottom:36px;border:1px solid #F1F5F9}
+.d3-kpi{background:#fff;padding:24px 28px}
+.d3-kpi-label{font-size:10px;color:#CBD5E1;font-weight:400;letter-spacing:.06em;text-transform:uppercase;margin-bottom:14px}
+.d3-kpi-num{font-family:'Inter Tight',sans-serif;font-size:72px;font-weight:200;color:#0F172A;line-height:1;letter-spacing:-.05em}
+.d3-kpi-num.warn{color:#F59E0B}
+.d3-kpi-num.ok{color:#22C55E}
+.d3-kpi-sub{font-size:11px;color:#CBD5E1;font-weight:300;margin-top:8px}
+.d3-table{border:1px solid #F1F5F9}
+.d3-section-head{
+  padding:8px 16px;background:#FAFBFC;
+  font-size:9px;font-weight:500;color:#EF4444;letter-spacing:.08em;text-transform:uppercase;
+  display:flex;align-items:center;gap:6px;border-bottom:1px solid #F1F5F9;
+}
+.d3-section-head.low{color:#F59E0B}
+.d3-section-dot{width:4px;height:4px;border-radius:50%;background:currentColor}
+.d3-row{
+  display:grid;grid-template-columns:1fr 100px 140px;gap:8px;
+  padding:10px 16px;border-bottom:1px solid #F8FAFC;align-items:center;
+}
+.d3-row-name{font-size:12px;color:#475569;font-weight:300}
+.d3-row-devices{font-size:11px;color:#CBD5E1;font-weight:300}
+.d3-bar{height:2px;background:#F1F5F9;position:relative;overflow:hidden}
+.d3-bar-fill{height:100%;background:#EF4444}
+.d3-bar-fill.low{background:#F59E0B}
+.d3-pct{font-size:10px;color:#CBD5E1;text-align:right}
+.d3-bar-wrap{display:flex;align-items:center;gap:8px}
+
+/* ══════════════════════════════════════════════════════
+   DIRECTION 04 — EDITORIAL
+══════════════════════════════════════════════════════ */
+.d4{background:#F4F1EA;font-family:'Inter',sans-serif}
+.d4-sidebar{
+  width:200px;flex-shrink:0;height:100%;
+  background:#1A1818;padding:28px 0;display:flex;flex-direction:column;
+}
+.d4-logo{padding:0 22px 24px;border-bottom:1px solid rgba(255,255,255,0.08);margin-bottom:20px}
+.d4-logo-fci{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:#F4F1EA;letter-spacing:-.01em}
+.d4-logo-portal{font-size:9px;color:rgba(255,255,255,0.35);margin-top:3px;letter-spacing:.12em;text-transform:uppercase}
+.d4-nav-section{font-size:8px;color:rgba(255,255,255,0.25);letter-spacing:.12em;text-transform:uppercase;padding:0 22px 8px;margin-top:8px}
+.d4-nav-item{padding:8px 22px;font-size:12px;color:rgba(255,255,255,0.45);cursor:pointer}
+.d4-nav-item.active{color:#F4F1EA;border-left:2px solid #C9A96E;padding-left:20px}
+.d4-main{flex:1;overflow-y:auto}
+.d4-topbar{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:16px 36px;border-bottom:2px solid #1A1818;
+  background:#F4F1EA;
+}
+.d4-company{font-size:11px;color:#9C8B6E;font-family:'Playfair Display',serif;font-style:italic}
+.d4-date{font-size:10px;color:#9C8B6E;letter-spacing:.04em}
+.d4-content{padding:28px 36px}
+.d4-page-title{
+  font-family:'Playfair Display',serif;font-size:36px;font-weight:700;
+  color:#1A1818;letter-spacing:-.02em;margin-bottom:6px;
+}
+.d4-page-sub{font-size:11px;color:#9C8B6E;margin-bottom:24px;font-style:italic;font-family:'Playfair Display',serif}
+.d4-kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-bottom:28px}
+.d4-kpi{background:#FFFFFF;padding:20px 22px;border-top:3px solid #1A1818}
+.d4-kpi.crit{border-top-color:#C0392B}
+.d4-kpi.ok{border-top-color:#2D6A4F}
+.d4-kpi-label{font-size:8px;color:#9C8B6E;letter-spacing:.1em;text-transform:uppercase;margin-bottom:10px;font-weight:500}
+.d4-kpi-num{font-family:'Playfair Display',serif;font-size:56px;font-weight:700;color:#1A1818;line-height:1;letter-spacing:-.02em}
+.d4-kpi-num.warn{color:#C0392B}
+.d4-kpi-num.ok{color:#2D6A4F}
+.d4-kpi-sub{font-size:10px;color:#9C8B6E;margin-top:6px;font-style:italic}
+.d4-table-wrap{background:#FFFFFF;border-top:2px solid #1A1818}
+.d4-section-head{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:8px 16px;background:#FAF7F0;border-bottom:1px solid #E8E2D8;
+}
+.d4-section-label{font-size:9px;font-weight:600;color:#C0392B;letter-spacing:.1em;text-transform:uppercase;font-family:'Inter Tight',sans-serif}
+.d4-section-label.low{color:#8B5E3C}
+.d4-section-count{font-size:9px;color:#9C8B6E;font-family:'Playfair Display',serif;font-style:italic}
+.d4-cols{
+  display:grid;grid-template-columns:1fr 110px 140px;
+  padding:6px 16px;background:#FAF7F0;
+  border-bottom:1px solid #E8E2D8;
+}
+.d4-col-label{font-size:8px;color:#9C8B6E;letter-spacing:.08em;text-transform:uppercase}
+.d4-row{
+  display:grid;grid-template-columns:1fr 110px 140px;gap:8px;
+  padding:9px 16px;border-bottom:1px solid #F0EBE0;align-items:center;
+}
+.d4-row-name{font-size:12px;color:#2C2A24}
+.d4-row-devices{font-size:11px;color:#9C8B6E}
+.d4-bar{height:3px;background:#E8E2D8;overflow:hidden}
+.d4-bar-fill{height:100%;background:#C0392B}
+.d4-bar-fill.low{background:#8B5E3C}
+.d4-bar-wrap{display:flex;align-items:center;gap:8px}
+.d4-pct{font-size:10px;color:#9C8B6E;font-family:'Playfair Display',serif;min-width:30px;text-align:right}
+
+/* ══════════════════════════════════════════════════════
+   DIRECTION 05 — BRUTALIST
+══════════════════════════════════════════════════════ */
+.d5{background:#FFFFFF;font-family:'Space Grotesk',sans-serif}
+.d5-sidebar{
+  width:200px;flex-shrink:0;height:100%;
+  background:#000;padding:0;display:flex;flex-direction:column;
+  border-right:3px solid #000;
+}
+.d5-logo{padding:20px 20px;border-bottom:3px solid #fff1}
+.d5-logo-fci{font-size:26px;font-weight:700;color:#fff;letter-spacing:-.02em}
+.d5-logo-portal{font-size:9px;color:#ffffff66;margin-top:2px;letter-spacing:.08em;text-transform:uppercase;font-weight:500}
+.d5-nav-item{
+  padding:10px 20px;font-size:12px;color:#ffffff66;cursor:pointer;
+  font-weight:500;border-bottom:1px solid rgba(255,255,255,0.05);
+}
+.d5-nav-item.active{color:#fff;background:#2563EB;border-bottom-color:#2563EB}
+.d5-main{flex:1;overflow-y:auto}
+.d5-topbar{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:16px 28px;border-bottom:3px solid #000;
+}
+.d5-page-title{font-size:28px;font-weight:700;color:#000;letter-spacing:-.03em}
+.d5-company-tag{
+  font-size:11px;font-weight:600;background:#000;color:#fff;
+  padding:5px 12px;letter-spacing:.04em;
+}
+.d5-content{padding:24px 28px}
+.d5-kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border:3px solid #000;margin-bottom:24px}
+.d5-kpi{padding:20px 22px;border-right:3px solid #000}
+.d5-kpi:last-child{border-right:none}
+.d5-kpi-label{font-size:9px;font-weight:700;color:#64748B;letter-spacing:.1em;text-transform:uppercase;margin-bottom:12px}
+.d5-kpi-num{
+  font-size:64px;font-weight:700;color:#000;line-height:1;letter-spacing:-.04em;
+  -webkit-text-stroke:0;
+}
+.d5-kpi-num.warn{color:#000;-webkit-text-stroke:3px #F59E0B;color:transparent}
+.d5-kpi-num.ok{color:#000;-webkit-text-stroke:3px #16A34A;color:transparent}
+.d5-kpi-sub{font-size:10px;color:#94A3B8;font-weight:500;margin-top:8px;letter-spacing:.02em}
+.d5-table{border:3px solid #000}
+.d5-section-head{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:8px 16px;background:#000;
+}
+.d5-section-head.low{background:#1C1C1C}
+.d5-section-label{font-size:10px;font-weight:700;color:#fff;letter-spacing:.08em;text-transform:uppercase}
+.d5-section-count{font-size:10px;font-weight:500;color:rgba(255,255,255,0.5)}
+.d5-row{
+  display:grid;grid-template-columns:1fr 100px 140px;gap:0;
+  padding:10px 16px;border-bottom:1px solid #E2E8F0;align-items:center;
+  border-left:4px solid #EF4444;
+}
+.d5-row.low{border-left-color:#F59E0B}
+.d5-row-name{font-size:12px;color:#000;font-weight:500}
+.d5-row-devices{font-size:11px;color:#64748B;font-weight:500}
+.d5-bar{height:5px;background:#F1F5F9;overflow:hidden}
+.d5-bar-fill{height:100%;background:#EF4444}
+.d5-bar-fill.low{background:#F59E0B}
+.d5-bar-wrap{display:flex;align-items:center;gap:8px}
+.d5-pct{font-size:10px;font-weight:700;color:#000;min-width:30px;text-align:right}
+
+/* ══════════════════════════════════════════════════════
+   DIRECTION 06 — GLASSMORPHISM
+══════════════════════════════════════════════════════ */
+.d6{
+  background:linear-gradient(135deg,#1E1B4B 0%,#1E3A8A 45%,#0C1445 100%);
+  font-family:'Inter',sans-serif;position:relative;overflow:hidden;
+}
+.d6::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse 60% 50% at 30% 40%,rgba(37,99,235,0.2) 0%,transparent 70%),
+             radial-gradient(ellipse 40% 60% at 80% 70%,rgba(99,102,241,0.15) 0%,transparent 70%);
+  pointer-events:none;
+}
+.d6-sidebar{
+  width:220px;flex-shrink:0;height:100%;
+  background:rgba(255,255,255,0.04);
+  border-right:1px solid rgba(255,255,255,0.1);
+  padding:0;display:flex;flex-direction:column;
+  backdrop-filter:blur(10px);position:relative;z-index:1;
+}
+.d6-logo{padding:22px 20px;border-bottom:1px solid rgba(255,255,255,0.08)}
+.d6-logo-fci{font-family:'Inter Tight',sans-serif;font-size:20px;font-weight:700;color:rgba(255,255,255,0.95);letter-spacing:-.03em}
+.d6-logo-div{width:1px;height:14px;background:rgba(255,255,255,0.2);margin:0 8px;display:inline-block;vertical-align:middle}
+.d6-logo-portal{font-size:11px;color:rgba(255,255,255,0.35);vertical-align:middle}
+.d6-nav{padding:16px 0;flex:1}
+.d6-nav-item{
+  padding:9px 20px;font-size:12px;color:rgba(255,255,255,0.38);cursor:pointer;
+  display:flex;align-items:center;gap:8px;font-weight:300;
+}
+.d6-nav-item.active{
+  color:rgba(255,255,255,0.92);
+  background:rgba(255,255,255,0.08);
+  border-left:2px solid rgba(147,197,253,0.8);padding-left:18px;
+}
+.d6-main{flex:1;overflow-y:auto;position:relative;z-index:1}
+.d6-topbar{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:18px 28px;border-bottom:1px solid rgba(255,255,255,0.08);
+  background:rgba(255,255,255,0.03);backdrop-filter:blur(8px);
+}
+.d6-page-title{font-family:'Inter Tight',sans-serif;font-size:24px;font-weight:600;color:rgba(255,255,255,0.95);letter-spacing:-.03em}
+.d6-content{padding:24px 28px}
+.d6-kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:24px}
+.d6-kpi{
+  background:rgba(255,255,255,0.06);
+  border:1px solid rgba(255,255,255,0.12);
+  border-radius:12px;padding:20px;
+  backdrop-filter:blur(16px);
+  position:relative;overflow:hidden;
+}
+.d6-kpi::before{
+  content:'';position:absolute;inset:0;border-radius:12px;
+  background:linear-gradient(135deg,rgba(255,255,255,0.06) 0%,transparent 60%);
+}
+.d6-kpi-label{font-size:10px;color:rgba(255,255,255,0.4);letter-spacing:.06em;text-transform:uppercase;margin-bottom:12px;position:relative}
+.d6-kpi-num{font-family:'Inter Tight',sans-serif;font-size:52px;font-weight:700;color:rgba(255,255,255,0.95);line-height:1;letter-spacing:-.04em;position:relative}
+.d6-kpi-num.warn{color:#FCD34D}
+.d6-kpi-num.ok{color:#6EE7B7}
+.d6-kpi-sub{font-size:10px;color:rgba(255,255,255,0.3);margin-top:8px;position:relative}
+.d6-table{border:1px solid rgba(255,255,255,0.08);border-radius:10px;overflow:hidden;backdrop-filter:blur(10px)}
+.d6-section-head{
+  padding:8px 16px;background:rgba(239,68,68,0.12);
+  border-bottom:1px solid rgba(239,68,68,0.2);
+  display:flex;align-items:center;gap:8px;
+}
+.d6-section-head.low{background:rgba(245,158,11,0.08);border-bottom-color:rgba(245,158,11,0.15)}
+.d6-section-dot{width:5px;height:5px;border-radius:50%;background:#EF4444;flex-shrink:0}
+.d6-section-dot.low{background:#F59E0B}
+.d6-section-label{font-size:9px;font-weight:600;color:#FCA5A5;letter-spacing:.08em;text-transform:uppercase}
+.d6-section-label.low{color:#FCD34D}
+.d6-row{
+  display:grid;grid-template-columns:1fr 110px 140px;gap:8px;
+  padding:10px 16px;border-bottom:1px solid rgba(255,255,255,0.05);
+  align-items:center;background:rgba(255,255,255,0.02);
+}
+.d6-row:hover{background:rgba(255,255,255,0.04)}
+.d6-row-name{font-size:12px;color:rgba(255,255,255,0.72);font-weight:300}
+.d6-row-devices{font-size:11px;color:rgba(255,255,255,0.28)}
+.d6-bar{height:4px;background:rgba(255,255,255,0.08);border-radius:2px;overflow:hidden}
+.d6-bar-fill{height:100%;background:rgba(239,68,68,0.7);border-radius:2px}
+.d6-bar-fill.low{background:rgba(245,158,11,0.7)}
+.d6-bar-wrap{display:flex;align-items:center;gap:8px}
+.d6-pct{font-size:10px;color:rgba(255,255,255,0.3);min-width:28px;text-align:right}
+
+/* ══════════════════════════════════════════════════════
+   DIRECTION 07 — CYBERPUNK / NEON
+══════════════════════════════════════════════════════ */
+.d7{background:#08001A;font-family:'JetBrains Mono',monospace;overflow:hidden;position:relative}
+.d7::before{
+  content:'';position:absolute;inset:0;pointer-events:none;
+  background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,255,200,0.008) 2px,rgba(0,255,200,0.008) 4px);
+}
+.d7-sidebar{
+  width:200px;flex-shrink:0;height:100%;
+  border-right:1px solid #00FFB233;
+  background:rgba(0,255,178,0.02);
+  padding:20px 0;display:flex;flex-direction:column;
+  position:relative;z-index:1;
+}
+.d7-logo{padding:0 18px 20px;border-bottom:1px solid #00FFB222;margin-bottom:16px}
+.d7-logo-fci{font-size:22px;font-weight:600;color:#00FFB2;letter-spacing:.06em;text-shadow:0 0 20px #00FFB266}
+.d7-logo-portal{font-size:9px;color:#00FFB244;margin-top:3px;letter-spacing:.1em}
+.d7-nav-item{
+  padding:7px 18px;font-size:10px;color:#00FFB233;cursor:pointer;
+  letter-spacing:.04em;text-transform:uppercase;transition:all .15s;
+}
+.d7-nav-item.active{
+  color:#00FFB2;background:rgba(0,255,178,0.06);
+  border-left:2px solid #00FFB2;padding-left:16px;
+  text-shadow:0 0 10px #00FFB255;
+}
+.d7-main{flex:1;overflow-y:auto;position:relative;z-index:1}
+.d7-topbar{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:16px 24px;border-bottom:1px solid #00FFB222;
+}
+.d7-page-title{
+  font-size:16px;font-weight:600;color:#00FFB2;letter-spacing:.08em;text-transform:uppercase;
+  text-shadow:0 0 20px #00FFB255;
+}
+.d7-badge{font-size:9px;color:#FF00AA;border:1px solid #FF00AA44;padding:3px 8px;letter-spacing:.06em;text-shadow:0 0 8px #FF00AA55}
+.d7-content{padding:20px 24px}
+.d7-kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:24px}
+.d7-kpi{
+  border:1px solid #00FFB233;padding:16px;
+  background:rgba(0,255,178,0.03);position:relative;
+}
+.d7-kpi::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,#00FFB255,transparent)}
+.d7-kpi.warn{border-color:#FF9B0044;background:rgba(255,155,0,0.03)}
+.d7-kpi.warn::before{background:linear-gradient(90deg,transparent,#FF9B0055,transparent)}
+.d7-kpi.ok{border-color:#00FF8844;background:rgba(0,255,136,0.03)}
+.d7-kpi.ok::before{background:linear-gradient(90deg,transparent,#00FF8855,transparent)}
+.d7-kpi-label{font-size:8px;color:#00FFB244;letter-spacing:.1em;text-transform:uppercase;margin-bottom:10px}
+.d7-kpi-num{font-size:48px;font-weight:500;color:#00FFB2;line-height:1;text-shadow:0 0 20px #00FFB255}
+.d7-kpi-num.warn{color:#FF9B00;text-shadow:0 0 20px #FF9B0055}
+.d7-kpi-num.ok{color:#00FF88;text-shadow:0 0 20px #00FF8855}
+.d7-kpi-sub{font-size:8px;color:#00FFB233;margin-top:6px;letter-spacing:.04em}
+.d7-table{border:1px solid #00FFB222}
+.d7-section-head{
+  padding:6px 14px;background:#08001A;
+  border-bottom:1px solid #FF00AA33;
+  display:flex;align-items:center;gap:8px;
+}
+.d7-section-head.low{border-bottom-color:#FF9B0033}
+.d7-section-label{font-size:8px;font-weight:600;color:#FF00AA;letter-spacing:.1em;text-transform:uppercase;text-shadow:0 0 10px #FF00AA55}
+.d7-section-label.low{color:#FF9B00;text-shadow:0 0 10px #FF9B0055}
+.d7-row{
+  display:grid;grid-template-columns:1fr 100px 130px;gap:8px;
+  padding:8px 14px;border-bottom:1px solid #00FFB20A;align-items:center;
+}
+.d7-row-name{font-size:10px;color:#00FFB288;letter-spacing:.02em}
+.d7-row-devices{font-size:9px;color:#00FFB233}
+.d7-bar{height:3px;background:rgba(255,0,170,0.1);overflow:hidden}
+.d7-bar-fill{height:100%;background:#FF00AA;box-shadow:0 0 6px #FF00AA55}
+.d7-bar-fill.low{background:#FF9B00;box-shadow:0 0 6px #FF9B0055}
+.d7-bar-wrap{display:flex;align-items:center;gap:6px}
+.d7-pct{font-size:9px;color:#FF00AA55;min-width:28px;text-align:right}
+
+/* ══════════════════════════════════════════════════════
+   DIRECTION 08 — BLOOMBERG / DENSE
+══════════════════════════════════════════════════════ */
+.d8{background:#1A1A1C;font-family:'DM Mono',monospace;color:#E2E2E2}
+.d8-sidebar{
+  width:180px;flex-shrink:0;height:100%;
+  background:#111114;border-right:1px solid #2A2A2E;
+  padding:0;display:flex;flex-direction:column;
+}
+.d8-logo{padding:14px 16px;border-bottom:1px solid #2A2A2E;background:#0A0A0C}
+.d8-logo-fci{font-size:14px;font-weight:500;color:#F59E0B;letter-spacing:.06em}
+.d8-logo-portal{font-size:8px;color:#444;margin-top:2px;letter-spacing:.06em;text-transform:uppercase}
+.d8-nav-section{font-size:8px;color:#333;letter-spacing:.1em;text-transform:uppercase;padding:12px 16px 4px;margin-top:4px}
+.d8-nav-item{padding:5px 16px;font-size:10px;color:#666;cursor:pointer;letter-spacing:.02em}
+.d8-nav-item.active{color:#F59E0B;background:#111114}
+.d8-main{flex:1;overflow-y:auto}
+.d8-topbar{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:8px 16px;border-bottom:1px solid #2A2A2E;
+  background:#111114;
+}
+.d8-title-row{display:flex;align-items:baseline;gap:16px}
+.d8-page-title{font-size:13px;font-weight:500;color:#F59E0B;letter-spacing:.04em;text-transform:uppercase}
+.d8-company{font-size:10px;color:#444;letter-spacing:.02em}
+.d8-time{font-size:10px;color:#444}
+.d8-content{padding:12px 16px}
+.d8-kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:#2A2A2E;margin-bottom:12px}
+.d8-kpi{background:#1A1A1C;padding:12px 14px}
+.d8-kpi-label{font-size:8px;color:#666;letter-spacing:.06em;text-transform:uppercase;margin-bottom:6px}
+.d8-kpi-num{font-size:42px;font-weight:500;color:#E2E2E2;line-height:1;letter-spacing:-.02em}
+.d8-kpi-num.warn{color:#EF4444}
+.d8-kpi-num.ok{color:#22C55E}
+.d8-kpi-sub{font-size:8px;color:#444;margin-top:4px}
+.d8-table-head{
+  display:grid;grid-template-columns:1fr 90px 110px;gap:4px;
+  padding:5px 10px;background:#0A0A0C;border-bottom:1px solid #2A2A2E;
+}
+.d8-th{font-size:8px;color:#444;letter-spacing:.06em;text-transform:uppercase}
+.d8-section-head{
+  padding:4px 10px;background:#0A0A0C;
+  border-left:3px solid #EF4444;margin-top:1px;
+}
+.d8-section-head.low{border-left-color:#F59E0B}
+.d8-section-label{font-size:8px;font-weight:500;color:#EF4444;letter-spacing:.08em;text-transform:uppercase}
+.d8-section-label.low{color:#F59E0B}
+.d8-row{
+  display:grid;grid-template-columns:1fr 90px 110px;gap:4px;
+  padding:5px 10px;border-bottom:1px solid #222225;align-items:center;
+  border-left:3px solid #EF444433;
+}
+.d8-row.low{border-left-color:#F59E0B33}
+.d8-row-name{font-size:10px;color:#BBBBBF}
+.d8-row-devices{font-size:9px;color:#555}
+.d8-bar{height:3px;background:#2A2A2E;overflow:hidden}
+.d8-bar-fill{height:100%;background:#EF4444}
+.d8-bar-fill.low{background:#F59E0B}
+.d8-bar-wrap{display:flex;align-items:center;gap:4px}
+.d8-pct{font-size:9px;color:#555;min-width:26px;text-align:right}
+
+/* ══════════════════════════════════════════════════════
+   DIRECTION 09 — WARM EXECUTIVE
+══════════════════════════════════════════════════════ */
+.d9{background:#FAFAF7;font-family:'Manrope',sans-serif;color:#3D3520}
+.d9-sidebar{
+  width:220px;flex-shrink:0;height:100%;
+  background:#2D2820;border-right:none;
+  padding:0;display:flex;flex-direction:column;
+}
+.d9-logo{padding:24px 22px;border-bottom:1px solid rgba(255,255,255,0.06)}
+.d9-logo-fci{font-size:20px;font-weight:700;color:#F4EDD4;letter-spacing:-.01em}
+.d9-logo-div{width:1px;height:14px;background:#C9A96E55;display:inline-block;vertical-align:middle;margin:0 8px}
+.d9-logo-portal{font-size:11px;color:#7A6B4F;vertical-align:middle}
+.d9-client-area{padding:14px 22px;border-bottom:1px solid rgba(255,255,255,0.05)}
+.d9-client-label{font-size:8px;color:#6B5D3F;letter-spacing:.1em;text-transform:uppercase;margin-bottom:4px;font-weight:500}
+.d9-client-name{font-size:12px;color:#D4C49A;font-weight:500}
+.d9-nav{padding:16px 0;flex:1}
+.d9-nav-item{
+  padding:9px 22px;font-size:12px;color:#7A6B4F;cursor:pointer;
+  display:flex;align-items:center;gap:10px;font-weight:400;
+  transition:all .15s;
+}
+.d9-nav-item.active{color:#F4EDD4;background:rgba(201,169,110,0.12);border-left:2px solid #C9A96E;padding-left:20px}
+.d9-main{flex:1;overflow-y:auto}
+.d9-topbar{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:18px 32px;border-bottom:1px solid #ECE8DF;background:#FAFAF7;
+}
+.d9-page-title{font-size:26px;font-weight:700;color:#1C1810;letter-spacing:-.03em}
+.d9-date{font-size:11px;color:#9C8B6E;font-weight:400}
+.d9-content{padding:24px 32px}
+.d9-kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:28px}
+.d9-kpi{background:#fff;padding:20px 22px;border:1px solid #EDE9E0;border-top:3px solid #C9A96E}
+.d9-kpi.crit{border-top-color:#B03A2E}
+.d9-kpi.ok{border-top-color:#2D6A4F}
+.d9-kpi-label{font-size:9px;color:#9C8B6E;font-weight:600;letter-spacing:.08em;text-transform:uppercase;margin-bottom:12px}
+.d9-kpi-num{font-size:56px;font-weight:700;color:#1C1810;line-height:1;letter-spacing:-.04em}
+.d9-kpi-num.warn{color:#B03A2E}
+.d9-kpi-num.ok{color:#2D6A4F}
+.d9-kpi-sub{font-size:10px;color:#9C8B6E;margin-top:8px;font-weight:400}
+.d9-table{border:1px solid #EDE9E0;background:#fff}
+.d9-section-head{
+  padding:8px 16px;background:#F9F5EE;border-bottom:1px solid #EDE9E0;
+  display:flex;align-items:center;gap:8px;
+}
+.d9-section-dot{width:5px;height:5px;border-radius:50%;background:#B03A2E;flex-shrink:0}
+.d9-section-dot.low{background:#C9A96E}
+.d9-section-label{font-size:9px;font-weight:700;color:#B03A2E;letter-spacing:.08em;text-transform:uppercase}
+.d9-section-label.low{color:#9C6B1E}
+.d9-row{
+  display:grid;grid-template-columns:1fr 110px 140px;gap:8px;
+  padding:10px 16px;border-bottom:1px solid #F5F0E8;align-items:center;
+  border-left:3px solid #B03A2E22;
+}
+.d9-row.low{border-left-color:#C9A96E33}
+.d9-row-name{font-size:12px;color:#3D3520;font-weight:400}
+.d9-row-devices{font-size:11px;color:#9C8B6E}
+.d9-bar{height:3px;background:#F0EBE0;overflow:hidden}
+.d9-bar-fill{height:100%;background:#B03A2E}
+.d9-bar-fill.low{background:#C9A96E}
+.d9-bar-wrap{display:flex;align-items:center;gap:8px}
+.d9-pct{font-size:10px;color:#9C8B6E;min-width:30px;text-align:right}
+
+/* ══════════════════════════════════════════════════════
+   DIRECTION 10 — NEO GRADIENT / STARTUP
+══════════════════════════════════════════════════════ */
+.d10{background:#0D0D1A;font-family:'Syne',sans-serif;color:#8899CC}
+.d10-sidebar{
+  width:220px;flex-shrink:0;height:100%;
+  background:linear-gradient(180deg,#0F0F22 0%,#120E1E 100%);
+  border-right:1px solid rgba(130,80,255,0.15);
+  padding:0;display:flex;flex-direction:column;
+}
+.d10-logo{padding:22px 20px;border-bottom:1px solid rgba(130,80,255,0.12)}
+.d10-logo-fci{
+  font-size:22px;font-weight:800;letter-spacing:-.02em;
+  background:linear-gradient(90deg,#7C3AED,#2563EB);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+.d10-logo-portal{font-size:10px;color:#4B5280;margin-top:3px;letter-spacing:.04em}
+.d10-nav{padding:16px 0;flex:1}
+.d10-nav-item{
+  padding:9px 20px;font-size:12px;color:#3B4268;cursor:pointer;
+  display:flex;align-items:center;gap:8px;font-weight:400;transition:all .15s;
+}
+.d10-nav-item.active{
+  color:#C4B5FD;
+  background:linear-gradient(90deg,rgba(124,58,237,0.15),rgba(37,99,235,0.05));
+  border-left:2px solid #7C3AED;padding-left:18px;
+}
+.d10-main{flex:1;overflow-y:auto}
+.d10-topbar{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:18px 28px;border-bottom:1px solid rgba(130,80,255,0.12);
+}
+.d10-page-title{
+  font-size:26px;font-weight:800;letter-spacing:-.03em;
+  background:linear-gradient(90deg,#F0F0FF,#C4B5FD);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+.d10-chip{
+  font-size:10px;padding:4px 10px;border-radius:999px;
+  background:rgba(124,58,237,0.15);color:#C4B5FD;
+  border:1px solid rgba(124,58,237,0.25);font-family:'Inter',sans-serif;
+}
+.d10-content{padding:24px 28px}
+.d10-kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:24px}
+.d10-kpi{
+  padding:20px;border-radius:12px;
+  background:linear-gradient(135deg,rgba(124,58,237,0.12) 0%,rgba(37,99,235,0.06) 100%);
+  border:1px solid rgba(124,58,237,0.2);
+  position:relative;overflow:hidden;
+}
+.d10-kpi.warn{background:linear-gradient(135deg,rgba(239,68,68,0.1) 0%,rgba(220,38,38,0.04) 100%);border-color:rgba(239,68,68,0.2)}
+.d10-kpi.ok{background:linear-gradient(135deg,rgba(34,197,94,0.1) 0%,rgba(16,185,129,0.04) 100%);border-color:rgba(34,197,94,0.2)}
+.d10-kpi-label{font-size:9px;color:#4B5280;letter-spacing:.06em;text-transform:uppercase;margin-bottom:12px;font-family:'Inter',sans-serif}
+.d10-kpi-num{
+  font-size:56px;font-weight:800;line-height:1;letter-spacing:-.04em;
+  background:linear-gradient(90deg,#C4B5FD,#93C5FD);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+.d10-kpi-num.warn{background:linear-gradient(90deg,#FCA5A5,#F87171);-webkit-background-clip:text;background-clip:text}
+.d10-kpi-num.ok{background:linear-gradient(90deg,#6EE7B7,#34D399);-webkit-background-clip:text;background-clip:text}
+.d10-kpi-sub{font-size:10px;color:#3B4268;margin-top:8px;font-family:'Inter',sans-serif}
+.d10-table{border:1px solid rgba(130,80,255,0.15);border-radius:10px;overflow:hidden}
+.d10-section-head{
+  padding:8px 16px;
+  background:rgba(239,68,68,0.08);border-bottom:1px solid rgba(239,68,68,0.15);
+  display:flex;align-items:center;gap:8px;
+}
+.d10-section-head.low{background:rgba(245,158,11,0.06);border-bottom-color:rgba(245,158,11,0.12)}
+.d10-section-label{
+  font-size:9px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
+  background:linear-gradient(90deg,#FCA5A5,#F87171);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+.d10-section-label.low{background:linear-gradient(90deg,#FCD34D,#F59E0B);-webkit-background-clip:text;background-clip:text}
+.d10-row{
+  display:grid;grid-template-columns:1fr 110px 140px;gap:8px;
+  padding:10px 16px;border-bottom:1px solid rgba(130,80,255,0.07);
+  align-items:center;
+}
+.d10-row-name{font-size:12px;color:#8899CC;font-weight:400;font-family:'Inter',sans-serif}
+.d10-row-devices{font-size:11px;color:#3B4268;font-family:'Inter',sans-serif}
+.d10-bar{height:4px;background:rgba(130,80,255,0.1);border-radius:2px;overflow:hidden}
+.d10-bar-fill{height:100%;background:linear-gradient(90deg,#F87171,#FCA5A5);border-radius:2px}
+.d10-bar-fill.low{background:linear-gradient(90deg,#F59E0B,#FCD34D)}
+.d10-bar-wrap{display:flex;align-items:center;gap:8px}
+.d10-pct{font-size:10px;color:#3B4268;min-width:28px;text-align:right;font-family:'Inter',sans-serif}
+
+/* ── THEME TOGGLE BUTTONS ─────────────────────────── */
+.tabbar-spacer{flex:1;min-width:16px}
+.theme-group{display:flex;align-items:center;gap:2px;flex-shrink:0;padding-left:14px;border-left:1px solid rgba(255,255,255,0.1)}
+.theme-btn{flex-shrink:0;padding:4px 10px;border-radius:5px;border:none;background:transparent;font-family:'Inter',sans-serif;font-size:11px;color:rgba(255,255,255,0.38);cursor:pointer;transition:all .15s;white-space:nowrap}
+.theme-btn:hover{color:rgba(255,255,255,0.8);background:rgba(255,255,255,0.07)}
+.theme-btn.active{color:#fff;background:rgba(255,255,255,0.14)}
+
+/* ══════════════════════════════════════════════════════
+   LIGHT THEME — overrides for dark-default directions
+══════════════════════════════════════════════════════ */
+/* D1 Terminal → Light */
+html[data-theme="light"] .d1{background:#F2FAF5;color:#006B3E}
+html[data-theme="light"] .d1-sidebar{background:#0A1A0A;border-right-color:rgba(0,107,62,0.3)}
+html[data-theme="light"] .d1-logo-fci{color:#00C46A}
+html[data-theme="light"] .d1-logo-sub{color:#00C46A66}
+html[data-theme="light"] .d1-nav-item{color:#00C46A44}
+html[data-theme="light"] .d1-nav-item.active{color:#00C46A;border-left-color:#00C46A}
+html[data-theme="light"] .d1-main{background:#F2FAF5}
+html[data-theme="light"] .d1-breadcrumb{color:#006B3E55}
+html[data-theme="light"] .d1-breadcrumb span{color:#006B3E}
+html[data-theme="light"] .d1-company{color:#006B3E77;border-color:#006B3E33}
+html[data-theme="light"] .d1-title{color:#006B3E55}
+html[data-theme="light"] .d1-kpi{border-color:rgba(0,107,62,0.18)}
+html[data-theme="light"] .d1-kpi::before{background:rgba(0,107,62,0.28)}
+html[data-theme="light"] .d1-kpi-label{color:#006B3E55}
+html[data-theme="light"] .d1-kpi-num{color:#006B3E}
+html[data-theme="light"] .d1-kpi-sub{color:#006B3E44}
+html[data-theme="light"] .d1-section-head{border-color:rgba(239,68,68,0.18)}
+html[data-theme="light"] .d1-row{border-bottom-color:rgba(0,107,62,0.08)}
+html[data-theme="light"] .d1-row-name{color:#006B3EBB}
+html[data-theme="light"] .d1-row-devices{color:#006B3E66}
+html[data-theme="light"] .d1-bar{background:rgba(0,107,62,0.1)}
+
+/* D2 Deep Cosmos → Light */
+html[data-theme="light"] .d2{background:#EFF6FF;color:#3B6EAA}
+html[data-theme="light"] .d2-sidebar{background:#fff;border-right-color:rgba(37,99,235,0.12)}
+html[data-theme="light"] .d2-logo-area{border-bottom-color:rgba(37,99,235,0.1)}
+html[data-theme="light"] .d2-logo-fci{color:#0F172A}
+html[data-theme="light"] .d2-logo-portal{color:#5B8AB0}
+html[data-theme="light"] .d2-client{border-bottom-color:rgba(37,99,235,0.08);color:#5B8AB0}
+html[data-theme="light"] .d2-client strong{color:#1E3A5F}
+html[data-theme="light"] .d2-nav-item{color:#5B8AB0}
+html[data-theme="light"] .d2-nav-item.active{color:#1E3A5F;background:rgba(37,99,235,0.07);border-left-color:#2563EB}
+html[data-theme="light"] .d2-main{background:#EFF6FF}
+html[data-theme="light"] .d2-topbar{border-bottom-color:rgba(37,99,235,0.1)}
+html[data-theme="light"] .d2-page-title{color:#0F172A}
+html[data-theme="light"] .d2-btn{background:#EFF6FF;color:#1E3A5F;border-color:rgba(37,99,235,0.2)}
+html[data-theme="light"] .d2-kpi{background:#fff;border-color:rgba(37,99,235,0.12)}
+html[data-theme="light"] .d2-kpi-label{color:#5B8AB0}
+html[data-theme="light"] .d2-kpi-num{color:#0F172A}
+html[data-theme="light"] .d2-kpi-sub{color:#5B8AB0}
+html[data-theme="light"] .d2-count{color:#5B8AB0}
+html[data-theme="light"] .d2-row{background:rgba(0,0,0,0.02)}
+html[data-theme="light"] .d2-row.low{background:rgba(0,0,0,0.01)}
+html[data-theme="light"] .d2-row-name{color:#1E3A5F}
+html[data-theme="light"] .d2-row-devices{color:#5B8AB0}
+html[data-theme="light"] .d2-pct{color:#5B8AB0}
+html[data-theme="light"] .d2-bar{background:rgba(0,0,0,0.06)}
+
+/* D6 Glass → Light */
+html[data-theme="light"] .d6{background:linear-gradient(135deg,#DBEAFE 0%,#E0E7FF 50%,#EFF6FF 100%)}
+html[data-theme="light"] .d6::before{background:radial-gradient(ellipse 60% 50% at 30% 40%,rgba(37,99,235,0.1) 0%,transparent 70%),radial-gradient(ellipse 40% 60% at 80% 70%,rgba(99,102,241,0.07) 0%,transparent 70%)}
+html[data-theme="light"] .d6-sidebar{background:rgba(255,255,255,0.5);border-right-color:rgba(37,99,235,0.12)}
+html[data-theme="light"] .d6-logo{border-bottom-color:rgba(37,99,235,0.1)}
+html[data-theme="light"] .d6-logo-fci{color:#1E3A6E}
+html[data-theme="light"] .d6-logo-portal{color:#5B8AB0}
+html[data-theme="light"] .d6-nav-item{color:#5B8AB0}
+html[data-theme="light"] .d6-nav-item.active{color:#1E3A5F;background:rgba(255,255,255,0.5);border-left-color:#2563EB}
+html[data-theme="light"] .d6-topbar{background:rgba(255,255,255,0.35);border-bottom-color:rgba(37,99,235,0.1)}
+html[data-theme="light"] .d6-page-title{color:#0F172A}
+html[data-theme="light"] .d6-kpi{background:rgba(255,255,255,0.55);border-color:rgba(255,255,255,0.8)}
+html[data-theme="light"] .d6-kpi::before{background:linear-gradient(135deg,rgba(255,255,255,0.8) 0%,transparent 60%)}
+html[data-theme="light"] .d6-kpi-label{color:#5B8AB0}
+html[data-theme="light"] .d6-kpi-num{color:#0F172A}
+html[data-theme="light"] .d6-kpi-sub{color:#5B8AB0}
+html[data-theme="light"] .d6-table{border-color:rgba(37,99,235,0.12)}
+html[data-theme="light"] .d6-section-head{background:rgba(220,38,38,0.05);border-bottom-color:rgba(220,38,38,0.12)}
+html[data-theme="light"] .d6-section-head.low{background:rgba(245,158,11,0.04);border-bottom-color:rgba(245,158,11,0.1)}
+html[data-theme="light"] .d6-section-label{color:#B91C1C}
+html[data-theme="light"] .d6-section-label.low{color:#92400E}
+html[data-theme="light"] .d6-section-dot{background:#EF4444}
+html[data-theme="light"] .d6-section-dot.low{background:#F59E0B}
+html[data-theme="light"] .d6-row{background:rgba(255,255,255,0.35)}
+html[data-theme="light"] .d6-row:hover{background:rgba(255,255,255,0.5)}
+html[data-theme="light"] .d6-row-name{color:#1E3A5F}
+html[data-theme="light"] .d6-row-devices{color:#5B8AB0}
+html[data-theme="light"] .d6-pct{color:#5B8AB0}
+html[data-theme="light"] .d6-bar{background:rgba(0,0,0,0.07)}
+
+/* D7 Cyberpunk → Light */
+html[data-theme="light"] .d7{background:#F3EEFF}
+html[data-theme="light"] .d7::before{background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(91,33,182,0.007) 2px,rgba(91,33,182,0.007) 4px)}
+html[data-theme="light"] .d7-sidebar{background:rgba(91,33,182,0.04);border-right-color:rgba(91,33,182,0.18)}
+html[data-theme="light"] .d7-logo{border-bottom-color:rgba(91,33,182,0.15)}
+html[data-theme="light"] .d7-logo-fci{color:#5B21B6;text-shadow:none}
+html[data-theme="light"] .d7-logo-portal{color:#5B21B666}
+html[data-theme="light"] .d7-nav-item{color:#5B21B644}
+html[data-theme="light"] .d7-nav-item.active{color:#5B21B6;background:rgba(91,33,182,0.08);border-left-color:#5B21B6;text-shadow:none}
+html[data-theme="light"] .d7-topbar{border-bottom-color:rgba(91,33,182,0.12)}
+html[data-theme="light"] .d7-page-title{color:#3B0764;text-shadow:none}
+html[data-theme="light"] .d7-badge{color:#7C3AED;border-color:rgba(124,58,237,0.3);text-shadow:none}
+html[data-theme="light"] .d7-kpi{border-color:rgba(91,33,182,0.18);background:rgba(91,33,182,0.04)}
+html[data-theme="light"] .d7-kpi.warn{border-color:rgba(245,158,11,0.25);background:rgba(245,158,11,0.04)}
+html[data-theme="light"] .d7-kpi.ok{border-color:rgba(34,197,94,0.2);background:rgba(34,197,94,0.04)}
+html[data-theme="light"] .d7-kpi::before{background:linear-gradient(90deg,transparent,rgba(91,33,182,0.18),transparent)}
+html[data-theme="light"] .d7-kpi-label{color:#5B21B655}
+html[data-theme="light"] .d7-kpi-num{color:#3B0764;text-shadow:none}
+html[data-theme="light"] .d7-kpi-num.warn{color:#92400E;text-shadow:none}
+html[data-theme="light"] .d7-kpi-num.ok{color:#166534;text-shadow:none}
+html[data-theme="light"] .d7-kpi-sub{color:#5B21B644}
+html[data-theme="light"] .d7-table{border-color:rgba(91,33,182,0.15)}
+html[data-theme="light"] .d7-section-head{border-bottom-color:rgba(124,58,237,0.2)}
+html[data-theme="light"] .d7-section-head.low{border-bottom-color:rgba(245,158,11,0.18)}
+html[data-theme="light"] .d7-section-label{color:#7C3AED;text-shadow:none}
+html[data-theme="light"] .d7-section-label.low{color:#B45309;text-shadow:none}
+html[data-theme="light"] .d7-row{border-bottom-color:rgba(91,33,182,0.07)}
+html[data-theme="light"] .d7-row-name{color:#5B21B6}
+html[data-theme="light"] .d7-row-devices{color:#5B21B666}
+html[data-theme="light"] .d7-pct{color:#5B21B677}
+html[data-theme="light"] .d7-bar{background:rgba(91,33,182,0.08)}
+html[data-theme="light"] .d7-bar-fill{background:#9333EA;box-shadow:none}
+html[data-theme="light"] .d7-bar-fill.low{background:#D97706;box-shadow:none}
+
+/* D8 Bloomberg → Light */
+html[data-theme="light"] .d8{background:#F2F2EE;color:#2A2A2C}
+html[data-theme="light"] .d8-sidebar{background:#E4E4E0;border-right-color:#CCCCC4}
+html[data-theme="light"] .d8-logo{background:#D8D8D4}
+html[data-theme="light"] .d8-logo-portal{color:#888}
+html[data-theme="light"] .d8-nav-section{color:#AAA}
+html[data-theme="light"] .d8-nav-item{color:#666}
+html[data-theme="light"] .d8-nav-item.active{color:#B8720A}
+html[data-theme="light"] .d8-main{background:#F2F2EE}
+html[data-theme="light"] .d8-topbar{background:#E4E4E0;border-bottom-color:#CCCCC4}
+html[data-theme="light"] .d8-company{color:#666}
+html[data-theme="light"] .d8-time{color:#888}
+html[data-theme="light"] .d8-kpis{background:#CCCCC4}
+html[data-theme="light"] .d8-kpi{background:#F2F2EE}
+html[data-theme="light"] .d8-kpi-label{color:#888}
+html[data-theme="light"] .d8-kpi-num{color:#1A1A1C}
+html[data-theme="light"] .d8-kpi-sub{color:#888}
+html[data-theme="light"] .d8-table-head{background:#E4E4E0;border-bottom-color:#CCCCC4}
+html[data-theme="light"] .d8-th{color:#888}
+html[data-theme="light"] .d8-section-head{background:#DDDDD8}
+html[data-theme="light"] .d8-row{background:#F2F2EE;border-bottom-color:#E2E2DE}
+html[data-theme="light"] .d8-row-name{color:#2A2A2C}
+html[data-theme="light"] .d8-row-devices{color:#666}
+html[data-theme="light"] .d8-pct{color:#666}
+html[data-theme="light"] .d8-bar{background:#DDDDD8}
+
+/* D10 Neo-Gradient → Light */
+html[data-theme="light"] .d10{background:#FAFAFF;color:#4B4080}
+html[data-theme="light"] .d10-sidebar{background:linear-gradient(180deg,#F5F0FF 0%,#F0EBFF 100%);border-right-color:rgba(124,58,237,0.12)}
+html[data-theme="light"] .d10-logo{border-bottom-color:rgba(124,58,237,0.1)}
+html[data-theme="light"] .d10-logo-portal{color:#6B5B99}
+html[data-theme="light"] .d10-nav-item{color:#6B5B99}
+html[data-theme="light"] .d10-nav-item.active{color:#5B21B6;background:linear-gradient(90deg,rgba(124,58,237,0.1),rgba(37,99,235,0.04));border-left-color:#7C3AED}
+html[data-theme="light"] .d10-topbar{border-bottom-color:rgba(124,58,237,0.1)}
+html[data-theme="light"] .d10-chip{background:rgba(124,58,237,0.08);color:#5B21B6;border-color:rgba(124,58,237,0.2)}
+html[data-theme="light"] .d10-kpi{background:rgba(124,58,237,0.06);border-color:rgba(124,58,237,0.15)}
+html[data-theme="light"] .d10-kpi.warn{background:rgba(239,68,68,0.05);border-color:rgba(239,68,68,0.15)}
+html[data-theme="light"] .d10-kpi.ok{background:rgba(34,197,94,0.05);border-color:rgba(34,197,94,0.15)}
+html[data-theme="light"] .d10-kpi-label{color:#6B5B99}
+html[data-theme="light"] .d10-kpi-sub{color:#6B5B99}
+html[data-theme="light"] .d10-table{border-color:rgba(124,58,237,0.12)}
+html[data-theme="light"] .d10-section-head{background:rgba(239,68,68,0.04);border-bottom-color:rgba(239,68,68,0.1)}
+html[data-theme="light"] .d10-section-head.low{background:rgba(245,158,11,0.04);border-bottom-color:rgba(245,158,11,0.08)}
+html[data-theme="light"] .d10-row{border-bottom-color:rgba(124,58,237,0.05)}
+html[data-theme="light"] .d10-row-name{color:#3B2F72}
+html[data-theme="light"] .d10-row-devices{color:#6B5B99}
+html[data-theme="light"] .d10-pct{color:#6B5B99}
+html[data-theme="light"] .d10-bar{background:rgba(124,58,237,0.08)}
+
+/* ══════════════════════════════════════════════════════
+   DARK THEME — overrides for light-default directions
+══════════════════════════════════════════════════════ */
+/* D3 Arctic → Dark */
+html[data-theme="dark"] .d3{background:#09090F;color:#475569}
+html[data-theme="dark"] .d3-sidebar{background:#09090F;border-right-color:#1E293B}
+html[data-theme="dark"] .d3-logo{border-bottom-color:#1E293B}
+html[data-theme="dark"] .d3-logo-fci{color:#E2E8F0}
+html[data-theme="dark"] .d3-logo-portal{color:#334155}
+html[data-theme="dark"] .d3-nav-item{color:#475569}
+html[data-theme="dark"] .d3-nav-item.active{color:#E2E8F0}
+html[data-theme="dark"] .d3-topbar{border-bottom-color:#1A1A2E;background:#09090F}
+html[data-theme="dark"] .d3-page-title{color:#F1F5F9}
+html[data-theme="dark"] .d3-subtitle{color:#334155}
+html[data-theme="dark"] .d3-date{color:#334155}
+html[data-theme="dark"] .d3-kpis{background:#12121E;border-color:#1E293B}
+html[data-theme="dark"] .d3-kpi{background:#09090F}
+html[data-theme="dark"] .d3-kpi-label{color:#334155}
+html[data-theme="dark"] .d3-kpi-num{color:#F1F5F9}
+html[data-theme="dark"] .d3-kpi-sub{color:#334155}
+html[data-theme="dark"] .d3-table{border-color:#1E293B}
+html[data-theme="dark"] .d3-section-head{background:#0F0F1A;border-bottom-color:#1E293B}
+html[data-theme="dark"] .d3-row{border-bottom-color:#131322}
+html[data-theme="dark"] .d3-row-name{color:#94A3B8}
+html[data-theme="dark"] .d3-row-devices{color:#334155}
+html[data-theme="dark"] .d3-pct{color:#334155}
+html[data-theme="dark"] .d3-bar{background:#1E293B}
+
+/* D4 Editorial → Dark */
+html[data-theme="dark"] .d4{background:#1C1814}
+html[data-theme="dark"] .d4-sidebar{background:#100C0A}
+html[data-theme="dark"] .d4-topbar{background:#1C1814;border-bottom-color:#D4C8A044}
+html[data-theme="dark"] .d4-company{color:#7A6B4F}
+html[data-theme="dark"] .d4-date{color:#7A6B4F}
+html[data-theme="dark"] .d4-page-title{color:#E8DFC8}
+html[data-theme="dark"] .d4-page-sub{color:#7A6B4F}
+html[data-theme="dark"] .d4-kpi{background:#231E1A}
+html[data-theme="dark"] .d4-kpi-label{color:#7A6B4F}
+html[data-theme="dark"] .d4-kpi-num{color:#E8DFC8}
+html[data-theme="dark"] .d4-kpi-sub{color:#7A6B4F}
+html[data-theme="dark"] .d4-table-wrap{background:#231E1A;border-top-color:#D4C8A0}
+html[data-theme="dark"] .d4-section-head{background:#1C1814;border-bottom-color:#2A2218}
+html[data-theme="dark"] .d4-cols{background:#1C1814;border-bottom-color:#2A2218}
+html[data-theme="dark"] .d4-col-label{color:#7A6B4F}
+html[data-theme="dark"] .d4-row{border-bottom-color:#2A2218}
+html[data-theme="dark"] .d4-row-name{color:#D4C8A0}
+html[data-theme="dark"] .d4-row-devices{color:#7A6B4F}
+html[data-theme="dark"] .d4-pct{color:#7A6B4F}
+html[data-theme="dark"] .d4-bar{background:#2A2218}
+
+/* D5 Brutalist → Dark */
+html[data-theme="dark"] .d5{background:#0A0A0A}
+html[data-theme="dark"] .d5-topbar{background:#0A0A0A;border-bottom-color:#fff}
+html[data-theme="dark"] .d5-page-title{color:#fff}
+html[data-theme="dark"] .d5-kpis{background:#2A2A2A;border-color:#fff}
+html[data-theme="dark"] .d5-kpi{background:#0A0A0A;border-right-color:#2A2A2A}
+html[data-theme="dark"] .d5-kpi-label{color:#555}
+html[data-theme="dark"] .d5-kpi-num{color:#fff}
+html[data-theme="dark"] .d5-kpi-sub{color:#555}
+html[data-theme="dark"] .d5-table{border-color:#fff}
+html[data-theme="dark"] .d5-row{background:#0A0A0A;border-bottom-color:#1A1A1A}
+html[data-theme="dark"] .d5-row-name{color:#fff}
+html[data-theme="dark"] .d5-row-devices{color:#555}
+html[data-theme="dark"] .d5-pct{color:#fff}
+html[data-theme="dark"] .d5-bar{background:#1A1A1A}
+
+/* D9 Warm Executive → Dark */
+html[data-theme="dark"] .d9{background:#1A1510;color:#7A6B4F}
+html[data-theme="dark"] .d9-sidebar{background:#120E0A}
+html[data-theme="dark"] .d9-client-area{border-bottom-color:rgba(255,255,255,0.04)}
+html[data-theme="dark"] .d9-client-label{color:#5A4D38}
+html[data-theme="dark"] .d9-client-name{color:#C4A870}
+html[data-theme="dark"] .d9-topbar{background:#1A1510;border-bottom-color:rgba(201,169,110,0.12)}
+html[data-theme="dark"] .d9-page-title{color:#E8D5A0}
+html[data-theme="dark"] .d9-date{color:#5A4D38}
+html[data-theme="dark"] .d9-kpi{background:#221C14;border-color:rgba(201,169,110,0.14)}
+html[data-theme="dark"] .d9-kpi-label{color:#5A4D38}
+html[data-theme="dark"] .d9-kpi-num{color:#E8D5A0}
+html[data-theme="dark"] .d9-kpi-sub{color:#5A4D38}
+html[data-theme="dark"] .d9-table{background:#1E1914;border-color:rgba(201,169,110,0.1)}
+html[data-theme="dark"] .d9-section-head{background:#231E18;border-bottom-color:rgba(201,169,110,0.1)}
+html[data-theme="dark"] .d9-row{border-bottom-color:rgba(201,169,110,0.07)}
+html[data-theme="dark"] .d9-row-name{color:#C4A870}
+html[data-theme="dark"] .d9-row-devices{color:#5A4D38}
+html[data-theme="dark"] .d9-pct{color:#5A4D38}
+html[data-theme="dark"] .d9-bar{background:rgba(201,169,110,0.1)}
+</style>
+</head>
+<body>
+
+<!-- ── TAB BAR ──────────────────────────────────────────── -->
+<div class="tabbar">
+  <div class="tabbar-brand">FCI — 10 Directions</div>
+  <button class="tab active" onclick="show(1)">01 Terminal</button>
+  <button class="tab" onclick="show(2)">02 Deep Cosmos</button>
+  <button class="tab" onclick="show(3)">03 Arctic</button>
+  <button class="tab" onclick="show(4)">04 Editorial</button>
+  <button class="tab" onclick="show(5)">05 Brutalist</button>
+  <button class="tab" onclick="show(6)">06 Glass</button>
+  <button class="tab" onclick="show(7)">07 Cyberpunk</button>
+  <button class="tab" onclick="show(8)">08 Bloomberg</button>
+  <button class="tab" onclick="show(9)">09 Executive</button>
+  <button class="tab" onclick="show(10)">10 Neo-Gradient</button>
+  <div class="tabbar-spacer"></div>
+  <div class="theme-group">
+    <button class="theme-btn" data-t="light" onclick="setTheme('light')">☀ Light</button>
+    <button class="theme-btn active" data-t="system" onclick="setTheme('system')">◐ System</button>
+    <button class="theme-btn" data-t="dark" onclick="setTheme('dark')">☾ Dark</button>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════
+     DIRECTION 01 — TERMINAL
+══════════════════════════════════════════════════════ -->
+<section class="dir active d1" id="dir-1">
+  <div class="d1-sidebar">
+    <div class="d1-logo">
+      <div class="d1-logo-fci">FCI_</div>
+      <div class="d1-logo-sub">CISO PORTAL v3.1</div>
+    </div>
+    <div class="d1-nav-item active">▸ COMPLIANCE POSTURE</div>
+    <div class="d1-nav-item">  ACTIVE DEVICES</div>
+    <div class="d1-nav-item">  POLICY STATUS</div>
+    <div class="d1-nav-item">  INCIDENT LOG</div>
+    <div class="d1-nav-item">  REPORTS</div>
+    <div class="d1-nav-item">  SETTINGS</div>
+  </div>
+  <div class="d1-main">
+    <div class="d1-topbar">
+      <div class="d1-breadcrumb">ROOT / <span>COMPLIANCE</span></div>
+      <div class="d1-company">⬡ LIGHTHOUSE CAPITAL MANAGEMENT</div>
+    </div>
+    <div class="d1-title">// POSTURE OVERVIEW — MARCH 2025</div>
+    <div class="d1-kpis">
+      <div class="d1-kpi">
+        <div class="d1-kpi-label">POSTURE_SCORE</div>
+        <div class="d1-kpi-num">68%</div>
+        <div class="d1-kpi-sub">of device-checks passing</div>
+      </div>
+      <div class="d1-kpi">
+        <div class="d1-kpi-label">CHECKS_ATTENTION</div>
+        <div class="d1-kpi-num warn">12</div>
+        <div class="d1-kpi-sub">across 6 endpoints</div>
+      </div>
+      <div class="d1-kpi">
+        <div class="d1-kpi-label">CONTROLS_MET</div>
+        <div class="d1-kpi-num ok">17</div>
+        <div class="d1-kpi-sub">of 29 total checks</div>
+      </div>
+    </div>
+    <div class="d1-section-head">
+      <div>■ HIGH RISK — 7 CHECKS</div><div>AFFECTED DEVICES</div><div>% COMPLIANT</div>
+    </div>
+    <div class="d1-row">
+      <div class="d1-row-name">Managed Antivirus Missing</div>
+      <div class="d1-row-devices">5 devices</div>
+      <div><div class="d1-bar"><div class="d1-bar-fill" style="width:16%"></div></div></div>
+    </div>
+    <div class="d1-row">
+      <div class="d1-row-name">Unpatched Operating System</div>
+      <div class="d1-row-devices">3 devices</div>
+      <div><div class="d1-bar"><div class="d1-bar-fill" style="width:50%"></div></div></div>
+    </div>
+    <div class="d1-row">
+      <div class="d1-row-name">End of Life Operating System</div>
+      <div class="d1-row-devices">2 devices</div>
+      <div><div class="d1-bar"><div class="d1-bar-fill" style="width:66%"></div></div></div>
+    </div>
+    <div class="d1-row">
+      <div class="d1-row-name">RDP Enabled Without MFA</div>
+      <div class="d1-row-devices">2 devices</div>
+      <div><div class="d1-bar"><div class="d1-bar-fill" style="width:66%"></div></div></div>
+    </div>
+    <div class="d1-section-head low" style="margin-top:12px">
+      <div>◆ LOW RISK — 3 CHECKS</div><div>AFFECTED DEVICES</div><div>% COMPLIANT</div>
+    </div>
+    <div class="d1-row">
+      <div class="d1-row-name low">Default Workgroup Name Set</div>
+      <div class="d1-row-devices">5 devices</div>
+      <div><div class="d1-bar"><div class="d1-bar-fill low" style="width:16%"></div></div></div>
+    </div>
+    <div class="d1-row">
+      <div class="d1-row-name low">Password Complexity Not Set</div>
+      <div class="d1-row-devices">1 device</div>
+      <div><div class="d1-bar"><div class="d1-bar-fill low" style="width:83%"></div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════
+     DIRECTION 02 — DEEP COSMOS
+══════════════════════════════════════════════════════ -->
+<section class="dir d2" id="dir-2">
+  <div class="d2-sidebar">
+    <div class="d2-logo-area">
+      <div class="d2-logo">
+        <span class="d2-logo-fci">FCI</span>
+        <div class="d2-logo-div"></div>
+        <span class="d2-logo-portal">CISO Portal</span>
+      </div>
+    </div>
+    <div class="d2-client">
+      <strong>Lighthouse Capital Mgmt.</strong>
+      RIA · 47 employees
+    </div>
+    <nav class="d2-nav">
+      <div class="d2-nav-item active">
+        <svg class="d2-nav-icon" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1" y="1" width="12" height="12" rx="2"/><path d="M4 7h6M4 4.5h4M4 9.5h3"/></svg>
+        Compliance Posture
+      </div>
+      <div class="d2-nav-item">
+        <svg class="d2-nav-icon" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1" y="3" width="12" height="9" rx="1.5"/><path d="M5 3V2M9 3V2"/></svg>
+        Active Devices
+      </div>
+      <div class="d2-nav-item">
+        <svg class="d2-nav-icon" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M7 2v2M7 10v2M2 7h2M10 7h2"/><circle cx="7" cy="7" r="3"/></svg>
+        Policy Status
+      </div>
+      <div class="d2-nav-item">
+        <svg class="d2-nav-icon" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 4h8M3 7h6M3 10h4"/></svg>
+        Reports
+      </div>
+    </nav>
+  </div>
+  <div class="d2-main">
+    <div class="d2-topbar">
+      <div class="d2-page-title">Compliance Posture</div>
+      <div class="d2-controls">
+        <button class="d2-btn">Export PDF</button>
+        <button class="d2-btn">March 2025 ▾</button>
+      </div>
+    </div>
+    <div class="d2-content">
+      <div class="d2-kpis">
+        <div class="d2-kpi">
+          <div class="d2-kpi-label">Posture Score</div>
+          <div class="d2-kpi-num">68%</div>
+          <div class="d2-kpi-sub">of device-checks passing</div>
+        </div>
+        <div class="d2-kpi crit">
+          <div class="d2-kpi-label">Checks Need Attention</div>
+          <div class="d2-kpi-num">12</div>
+          <div class="d2-kpi-sub">across 6 endpoints</div>
+        </div>
+        <div class="d2-kpi ok">
+          <div class="d2-kpi-label">Controls Fully Met</div>
+          <div class="d2-kpi-num">17</div>
+          <div class="d2-kpi-sub">of 29 total checks</div>
+        </div>
+      </div>
+      <div class="d2-table-header">
+        <div class="d2-section-label">High Risk</div>
+        <div class="d2-count">7 checks · 5 endpoints</div>
+      </div>
+      <div class="d2-row high"><div class="d2-row-name">Managed Antivirus Missing</div><div class="d2-row-devices">5 devices</div><div class="d2-bar-wrap"><div class="d2-bar" style="flex:1"><div class="d2-bar-fill" style="width:16%"></div></div><div class="d2-pct">16%</div></div></div>
+      <div class="d2-row high"><div class="d2-row-name">Unpatched Operating System</div><div class="d2-row-devices">3 devices</div><div class="d2-bar-wrap"><div class="d2-bar" style="flex:1"><div class="d2-bar-fill" style="width:50%"></div></div><div class="d2-pct">50%</div></div></div>
+      <div class="d2-row high"><div class="d2-row-name">End of Life Operating System</div><div class="d2-row-devices">2 devices</div><div class="d2-bar-wrap"><div class="d2-bar" style="flex:1"><div class="d2-bar-fill" style="width:66%"></div></div><div class="d2-pct">66%</div></div></div>
+      <div class="d2-row high"><div class="d2-row-name">RDP Enabled Without MFA</div><div class="d2-row-devices">2 devices</div><div class="d2-bar-wrap"><div class="d2-bar" style="flex:1"><div class="d2-bar-fill" style="width:66%"></div></div><div class="d2-pct">66%</div></div></div>
+      <div style="margin-top:16px"></div>
+      <div class="d2-table-header">
+        <div class="d2-section-label low">Low Risk</div>
+        <div class="d2-count">3 checks</div>
+      </div>
+      <div class="d2-row low"><div class="d2-row-name">Default Workgroup Name Set</div><div class="d2-row-devices">5 devices</div><div class="d2-bar-wrap"><div class="d2-bar" style="flex:1"><div class="d2-bar-fill low" style="width:16%"></div></div><div class="d2-pct">16%</div></div></div>
+      <div class="d2-row low"><div class="d2-row-name">Password Complexity Not Set</div><div class="d2-row-devices">1 device</div><div class="d2-bar-wrap"><div class="d2-bar" style="flex:1"><div class="d2-bar-fill low" style="width:83%"></div></div><div class="d2-pct">83%</div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════
+     DIRECTION 03 — ARCTIC MINIMAL
+══════════════════════════════════════════════════════ -->
+<section class="dir d3" id="dir-3">
+  <div class="d3-sidebar">
+    <div class="d3-logo">
+      <div class="d3-logo-fci">FCI</div>
+      <div class="d3-logo-portal">CISO Portal</div>
+    </div>
+    <div class="d3-nav-item active">Compliance Posture</div>
+    <div class="d3-nav-item">Active Devices</div>
+    <div class="d3-nav-item">Policy Status</div>
+    <div class="d3-nav-item">Incident Log</div>
+    <div class="d3-nav-item">Reports</div>
+  </div>
+  <div class="d3-main">
+    <div class="d3-topbar">
+      <div>
+        <div class="d3-page-title">Compliance Posture</div>
+        <div class="d3-subtitle">Lighthouse Capital Management · March 2025</div>
+      </div>
+      <div class="d3-date">March 31, 2025</div>
+    </div>
+    <div class="d3-content">
+      <div class="d3-kpis">
+        <div class="d3-kpi">
+          <div class="d3-kpi-label">Posture Score</div>
+          <div class="d3-kpi-num">68%</div>
+          <div class="d3-kpi-sub">of device-checks passing</div>
+        </div>
+        <div class="d3-kpi">
+          <div class="d3-kpi-label">Checks Need Attention</div>
+          <div class="d3-kpi-num warn">12</div>
+          <div class="d3-kpi-sub">across 6 endpoints</div>
+        </div>
+        <div class="d3-kpi">
+          <div class="d3-kpi-label">Controls Fully Met</div>
+          <div class="d3-kpi-num ok">17</div>
+          <div class="d3-kpi-sub">of 29 total checks</div>
+        </div>
+      </div>
+      <div class="d3-table">
+        <div class="d3-section-head"><div class="d3-section-dot"></div>High Risk — 7 checks</div>
+        <div class="d3-row"><div class="d3-row-name">Managed Antivirus Missing</div><div class="d3-row-devices">5 devices</div><div class="d3-bar-wrap"><div class="d3-bar" style="flex:1"><div class="d3-bar-fill" style="width:16%"></div></div><div class="d3-pct">16%</div></div></div>
+        <div class="d3-row"><div class="d3-row-name">Unpatched Operating System</div><div class="d3-row-devices">3 devices</div><div class="d3-bar-wrap"><div class="d3-bar" style="flex:1"><div class="d3-bar-fill" style="width:50%"></div></div><div class="d3-pct">50%</div></div></div>
+        <div class="d3-row"><div class="d3-row-name">End of Life Operating System</div><div class="d3-row-devices">2 devices</div><div class="d3-bar-wrap"><div class="d3-bar" style="flex:1"><div class="d3-bar-fill" style="width:66%"></div></div><div class="d3-pct">66%</div></div></div>
+        <div class="d3-row"><div class="d3-row-name">RDP Enabled Without MFA</div><div class="d3-row-devices">2 devices</div><div class="d3-bar-wrap"><div class="d3-bar" style="flex:1"><div class="d3-bar-fill" style="width:66%"></div></div><div class="d3-pct">66%</div></div></div>
+        <div class="d3-section-head low"><div class="d3-section-dot" style="background:#F59E0B"></div>Low Risk — 3 checks</div>
+        <div class="d3-row"><div class="d3-row-name">Default Workgroup Name Set</div><div class="d3-row-devices">5 devices</div><div class="d3-bar-wrap"><div class="d3-bar" style="flex:1"><div class="d3-bar-fill low" style="width:16%"></div></div><div class="d3-pct">16%</div></div></div>
+        <div class="d3-row"><div class="d3-row-name">Password Complexity Not Set</div><div class="d3-row-devices">1 device</div><div class="d3-bar-wrap"><div class="d3-bar" style="flex:1"><div class="d3-bar-fill low" style="width:83%"></div></div><div class="d3-pct">83%</div></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════
+     DIRECTION 04 — EDITORIAL
+══════════════════════════════════════════════════════ -->
+<section class="dir d4" id="dir-4">
+  <div class="d4-sidebar">
+    <div class="d4-logo">
+      <div class="d4-logo-fci">FCI</div>
+      <div class="d4-logo-portal">CISO PORTAL</div>
+    </div>
+    <div class="d4-nav-section">Navigation</div>
+    <div class="d4-nav-item active">Compliance Posture</div>
+    <div class="d4-nav-item">Active Devices</div>
+    <div class="d4-nav-item">Policy Status</div>
+    <div class="d4-nav-item">Incident Log</div>
+    <div class="d4-nav-section">Account</div>
+    <div class="d4-nav-item">Settings</div>
+    <div class="d4-nav-item">Export Reports</div>
+  </div>
+  <div class="d4-main">
+    <div class="d4-topbar">
+      <div class="d4-company">Lighthouse Capital Management</div>
+      <div class="d4-date">March 31, 2025</div>
+    </div>
+    <div class="d4-content">
+      <div class="d4-page-title">Compliance Posture</div>
+      <div class="d4-page-sub">Monthly security control review · All endpoints</div>
+      <div class="d4-kpis">
+        <div class="d4-kpi">
+          <div class="d4-kpi-label">Posture Score</div>
+          <div class="d4-kpi-num">68%</div>
+          <div class="d4-kpi-sub">device-checks passing</div>
+        </div>
+        <div class="d4-kpi crit">
+          <div class="d4-kpi-label">Need Attention</div>
+          <div class="d4-kpi-num warn">12</div>
+          <div class="d4-kpi-sub">across 6 endpoints</div>
+        </div>
+        <div class="d4-kpi ok">
+          <div class="d4-kpi-label">Controls Met</div>
+          <div class="d4-kpi-num ok">17</div>
+          <div class="d4-kpi-sub">of 29 total checks</div>
+        </div>
+      </div>
+      <div class="d4-table-wrap">
+        <div class="d4-section-head">
+          <div class="d4-section-label">High Risk</div>
+          <div class="d4-section-count">7 checks requiring action</div>
+        </div>
+        <div class="d4-cols"><div class="d4-col-label">Check</div><div class="d4-col-label">Devices</div><div class="d4-col-label">Compliance</div></div>
+        <div class="d4-row"><div class="d4-row-name">Managed Antivirus Missing</div><div class="d4-row-devices">5 devices</div><div class="d4-bar-wrap"><div class="d4-bar" style="flex:1"><div class="d4-bar-fill" style="width:16%"></div></div><div class="d4-pct">16%</div></div></div>
+        <div class="d4-row"><div class="d4-row-name">Unpatched Operating System</div><div class="d4-row-devices">3 devices</div><div class="d4-bar-wrap"><div class="d4-bar" style="flex:1"><div class="d4-bar-fill" style="width:50%"></div></div><div class="d4-pct">50%</div></div></div>
+        <div class="d4-row"><div class="d4-row-name">End of Life Operating System</div><div class="d4-row-devices">2 devices</div><div class="d4-bar-wrap"><div class="d4-bar" style="flex:1"><div class="d4-bar-fill" style="width:66%"></div></div><div class="d4-pct">66%</div></div></div>
+        <div class="d4-row"><div class="d4-row-name">RDP Enabled Without MFA</div><div class="d4-row-devices">2 devices</div><div class="d4-bar-wrap"><div class="d4-bar" style="flex:1"><div class="d4-bar-fill" style="width:66%"></div></div><div class="d4-pct">66%</div></div></div>
+        <div class="d4-section-head" style="border-top:1px solid #E8E2D8">
+          <div class="d4-section-label low">Low Risk</div>
+          <div class="d4-section-count">3 checks to address</div>
+        </div>
+        <div class="d4-row"><div class="d4-row-name">Default Workgroup Name Set</div><div class="d4-row-devices">5 devices</div><div class="d4-bar-wrap"><div class="d4-bar" style="flex:1"><div class="d4-bar-fill low" style="width:16%"></div></div><div class="d4-pct">16%</div></div></div>
+        <div class="d4-row"><div class="d4-row-name">Password Complexity Not Set</div><div class="d4-row-devices">1 device</div><div class="d4-bar-wrap"><div class="d4-bar" style="flex:1"><div class="d4-bar-fill low" style="width:83%"></div></div><div class="d4-pct">83%</div></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════
+     DIRECTION 05 — BRUTALIST
+══════════════════════════════════════════════════════ -->
+<section class="dir d5" id="dir-5">
+  <div class="d5-sidebar">
+    <div class="d5-logo">
+      <div class="d5-logo-fci">FCI</div>
+      <div class="d5-logo-portal">CISO PORTAL</div>
+    </div>
+    <div class="d5-nav-item active">COMPLIANCE</div>
+    <div class="d5-nav-item">DEVICES</div>
+    <div class="d5-nav-item">POLICIES</div>
+    <div class="d5-nav-item">INCIDENTS</div>
+    <div class="d5-nav-item">REPORTS</div>
+    <div class="d5-nav-item">SETTINGS</div>
+  </div>
+  <div class="d5-main">
+    <div class="d5-topbar">
+      <div class="d5-page-title">Compliance Posture</div>
+      <div class="d5-company-tag">LIGHTHOUSE CAPITAL</div>
+    </div>
+    <div class="d5-content">
+      <div class="d5-kpis">
+        <div class="d5-kpi">
+          <div class="d5-kpi-label">Posture Score</div>
+          <div class="d5-kpi-num">68%</div>
+          <div class="d5-kpi-sub">of device-checks passing</div>
+        </div>
+        <div class="d5-kpi">
+          <div class="d5-kpi-label">Need Attention</div>
+          <div class="d5-kpi-num warn">12</div>
+          <div class="d5-kpi-sub">across 6 endpoints</div>
+        </div>
+        <div class="d5-kpi">
+          <div class="d5-kpi-label">Controls Met</div>
+          <div class="d5-kpi-num ok">17</div>
+          <div class="d5-kpi-sub">of 29 total checks</div>
+        </div>
+      </div>
+      <div class="d5-table">
+        <div class="d5-section-head">
+          <div class="d5-section-label">HIGH RISK — 7 CHECKS</div>
+          <div class="d5-section-count">5 endpoints affected</div>
+        </div>
+        <div class="d5-row"><div class="d5-row-name">Managed Antivirus Missing</div><div class="d5-row-devices">5 devices</div><div class="d5-bar-wrap"><div class="d5-bar" style="flex:1"><div class="d5-bar-fill" style="width:16%"></div></div><div class="d5-pct">16%</div></div></div>
+        <div class="d5-row"><div class="d5-row-name">Unpatched Operating System</div><div class="d5-row-devices">3 devices</div><div class="d5-bar-wrap"><div class="d5-bar" style="flex:1"><div class="d5-bar-fill" style="width:50%"></div></div><div class="d5-pct">50%</div></div></div>
+        <div class="d5-row"><div class="d5-row-name">End of Life Operating System</div><div class="d5-row-devices">2 devices</div><div class="d5-bar-wrap"><div class="d5-bar" style="flex:1"><div class="d5-bar-fill" style="width:66%"></div></div><div class="d5-pct">66%</div></div></div>
+        <div class="d5-row"><div class="d5-row-name">RDP Enabled Without MFA</div><div class="d5-row-devices">2 devices</div><div class="d5-bar-wrap"><div class="d5-bar" style="flex:1"><div class="d5-bar-fill" style="width:66%"></div></div><div class="d5-pct">66%</div></div></div>
+        <div class="d5-section-head low">
+          <div class="d5-section-label">LOW RISK — 3 CHECKS</div>
+          <div class="d5-section-count">6 endpoints affected</div>
+        </div>
+        <div class="d5-row low"><div class="d5-row-name">Default Workgroup Name Set</div><div class="d5-row-devices">5 devices</div><div class="d5-bar-wrap"><div class="d5-bar" style="flex:1"><div class="d5-bar-fill low" style="width:16%"></div></div><div class="d5-pct">16%</div></div></div>
+        <div class="d5-row low"><div class="d5-row-name">Password Complexity Not Set</div><div class="d5-row-devices">1 device</div><div class="d5-bar-wrap"><div class="d5-bar" style="flex:1"><div class="d5-bar-fill low" style="width:83%"></div></div><div class="d5-pct">83%</div></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════
+     DIRECTION 06 — GLASSMORPHISM
+══════════════════════════════════════════════════════ -->
+<section class="dir d6" id="dir-6">
+  <div class="d6-sidebar">
+    <div class="d6-logo">
+      <span class="d6-logo-fci">FCI</span><div class="d6-logo-div"></div><span class="d6-logo-portal">CISO Portal</span>
+    </div>
+    <nav class="d6-nav">
+      <div class="d6-nav-item active">Compliance Posture</div>
+      <div class="d6-nav-item">Active Devices</div>
+      <div class="d6-nav-item">Policy Status</div>
+      <div class="d6-nav-item">Incident Log</div>
+      <div class="d6-nav-item">Reports</div>
+    </nav>
+  </div>
+  <div class="d6-main">
+    <div class="d6-topbar">
+      <div class="d6-page-title">Compliance Posture</div>
+      <div style="font-size:11px;color:rgba(255,255,255,0.25);font-family:'Inter',sans-serif">Lighthouse Capital Management</div>
+    </div>
+    <div class="d6-content">
+      <div class="d6-kpis">
+        <div class="d6-kpi">
+          <div class="d6-kpi-label">Posture Score</div>
+          <div class="d6-kpi-num">68%</div>
+          <div class="d6-kpi-sub">of device-checks passing</div>
+        </div>
+        <div class="d6-kpi">
+          <div class="d6-kpi-label">Checks Need Attention</div>
+          <div class="d6-kpi-num warn">12</div>
+          <div class="d6-kpi-sub">across 6 endpoints</div>
+        </div>
+        <div class="d6-kpi">
+          <div class="d6-kpi-label">Controls Fully Met</div>
+          <div class="d6-kpi-num ok">17</div>
+          <div class="d6-kpi-sub">of 29 total checks</div>
+        </div>
+      </div>
+      <div class="d6-table">
+        <div class="d6-section-head"><div class="d6-section-dot"></div><div class="d6-section-label">High Risk — 7 checks</div></div>
+        <div class="d6-row"><div class="d6-row-name">Managed Antivirus Missing</div><div class="d6-row-devices">5 devices</div><div class="d6-bar-wrap"><div class="d6-bar" style="flex:1"><div class="d6-bar-fill" style="width:16%"></div></div><div class="d6-pct">16%</div></div></div>
+        <div class="d6-row"><div class="d6-row-name">Unpatched Operating System</div><div class="d6-row-devices">3 devices</div><div class="d6-bar-wrap"><div class="d6-bar" style="flex:1"><div class="d6-bar-fill" style="width:50%"></div></div><div class="d6-pct">50%</div></div></div>
+        <div class="d6-row"><div class="d6-row-name">End of Life Operating System</div><div class="d6-row-devices">2 devices</div><div class="d6-bar-wrap"><div class="d6-bar" style="flex:1"><div class="d6-bar-fill" style="width:66%"></div></div><div class="d6-pct">66%</div></div></div>
+        <div class="d6-row"><div class="d6-row-name">RDP Enabled Without MFA</div><div class="d6-row-devices">2 devices</div><div class="d6-bar-wrap"><div class="d6-bar" style="flex:1"><div class="d6-bar-fill" style="width:66%"></div></div><div class="d6-pct">66%</div></div></div>
+        <div class="d6-section-head low"><div class="d6-section-dot low"></div><div class="d6-section-label low">Low Risk — 3 checks</div></div>
+        <div class="d6-row"><div class="d6-row-name">Default Workgroup Name Set</div><div class="d6-row-devices">5 devices</div><div class="d6-bar-wrap"><div class="d6-bar" style="flex:1"><div class="d6-bar-fill low" style="width:16%"></div></div><div class="d6-pct">16%</div></div></div>
+        <div class="d6-row"><div class="d6-row-name">Password Complexity Not Set</div><div class="d6-row-devices">1 device</div><div class="d6-bar-wrap"><div class="d6-bar" style="flex:1"><div class="d6-bar-fill low" style="width:83%"></div></div><div class="d6-pct">83%</div></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════
+     DIRECTION 07 — CYBERPUNK
+══════════════════════════════════════════════════════ -->
+<section class="dir d7" id="dir-7">
+  <div class="d7-sidebar">
+    <div class="d7-logo">
+      <div class="d7-logo-fci">FCI_</div>
+      <div class="d7-logo-portal">CISO PORTAL</div>
+    </div>
+    <div class="d7-nav-item active">POSTURE</div>
+    <div class="d7-nav-item">DEVICES</div>
+    <div class="d7-nav-item">POLICIES</div>
+    <div class="d7-nav-item">INCIDENTS</div>
+    <div class="d7-nav-item">REPORTS</div>
+  </div>
+  <div class="d7-main">
+    <div class="d7-topbar">
+      <div class="d7-page-title">COMPLIANCE POSTURE</div>
+      <div class="d7-badge">LIGHTHOUSE CAPITAL</div>
+    </div>
+    <div class="d7-content">
+      <div class="d7-kpis">
+        <div class="d7-kpi">
+          <div class="d7-kpi-label">POSTURE_SCORE</div>
+          <div class="d7-kpi-num">68%</div>
+          <div class="d7-kpi-sub">device-checks passing</div>
+        </div>
+        <div class="d7-kpi warn">
+          <div class="d7-kpi-label">CHECKS_CRITICAL</div>
+          <div class="d7-kpi-num warn">12</div>
+          <div class="d7-kpi-sub">across 6 endpoints</div>
+        </div>
+        <div class="d7-kpi ok">
+          <div class="d7-kpi-label">CONTROLS_MET</div>
+          <div class="d7-kpi-num ok">17</div>
+          <div class="d7-kpi-sub">of 29 checks</div>
+        </div>
+      </div>
+      <div class="d7-table">
+        <div class="d7-section-head"><div class="d7-section-label">// HIGH RISK — 7 CHECKS</div></div>
+        <div class="d7-row"><div class="d7-row-name">Managed Antivirus Missing</div><div class="d7-row-devices">5 devices</div><div class="d7-bar-wrap"><div class="d7-bar" style="flex:1"><div class="d7-bar-fill" style="width:16%"></div></div><div class="d7-pct">16%</div></div></div>
+        <div class="d7-row"><div class="d7-row-name">Unpatched Operating System</div><div class="d7-row-devices">3 devices</div><div class="d7-bar-wrap"><div class="d7-bar" style="flex:1"><div class="d7-bar-fill" style="width:50%"></div></div><div class="d7-pct">50%</div></div></div>
+        <div class="d7-row"><div class="d7-row-name">End of Life Operating System</div><div class="d7-row-devices">2 devices</div><div class="d7-bar-wrap"><div class="d7-bar" style="flex:1"><div class="d7-bar-fill" style="width:66%"></div></div><div class="d7-pct">66%</div></div></div>
+        <div class="d7-row"><div class="d7-row-name">RDP Enabled Without MFA</div><div class="d7-row-devices">2 devices</div><div class="d7-bar-wrap"><div class="d7-bar" style="flex:1"><div class="d7-bar-fill" style="width:66%"></div></div><div class="d7-pct">66%</div></div></div>
+        <div class="d7-section-head low"><div class="d7-section-label low">// LOW RISK — 3 CHECKS</div></div>
+        <div class="d7-row"><div class="d7-row-name">Default Workgroup Name Set</div><div class="d7-row-devices">5 devices</div><div class="d7-bar-wrap"><div class="d7-bar" style="flex:1"><div class="d7-bar-fill low" style="width:16%"></div></div><div class="d7-pct">16%</div></div></div>
+        <div class="d7-row"><div class="d7-row-name">Password Complexity Not Set</div><div class="d7-row-devices">1 device</div><div class="d7-bar-wrap"><div class="d7-bar" style="flex:1"><div class="d7-bar-fill low" style="width:83%"></div></div><div class="d7-pct">83%</div></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════
+     DIRECTION 08 — BLOOMBERG DENSE
+══════════════════════════════════════════════════════ -->
+<section class="dir d8" id="dir-8">
+  <div class="d8-sidebar">
+    <div class="d8-logo">
+      <div class="d8-logo-fci">FCI</div>
+      <div class="d8-logo-portal">CISO PORTAL</div>
+    </div>
+    <div class="d8-nav-section">Monitoring</div>
+    <div class="d8-nav-item active">Compliance</div>
+    <div class="d8-nav-item">Devices</div>
+    <div class="d8-nav-item">Policies</div>
+    <div class="d8-nav-section">Actions</div>
+    <div class="d8-nav-item">Reports</div>
+    <div class="d8-nav-item">Export</div>
+    <div class="d8-nav-section">System</div>
+    <div class="d8-nav-item">Settings</div>
+  </div>
+  <div class="d8-main">
+    <div class="d8-topbar">
+      <div class="d8-title-row">
+        <div class="d8-page-title">COMPLIANCE POSTURE</div>
+        <div class="d8-company">LIGHTHOUSE CAPITAL MANAGEMENT</div>
+      </div>
+      <div class="d8-time">31 MAR 2025 09:14:22</div>
+    </div>
+    <div class="d8-content">
+      <div class="d8-kpis">
+        <div class="d8-kpi">
+          <div class="d8-kpi-label">POSTURE SCORE</div>
+          <div class="d8-kpi-num">68%</div>
+          <div class="d8-kpi-sub">device-checks passing</div>
+        </div>
+        <div class="d8-kpi">
+          <div class="d8-kpi-label">NEED ATTENTION</div>
+          <div class="d8-kpi-num warn">12</div>
+          <div class="d8-kpi-sub">6 endpoints</div>
+        </div>
+        <div class="d8-kpi">
+          <div class="d8-kpi-label">CONTROLS MET</div>
+          <div class="d8-kpi-num ok">17</div>
+          <div class="d8-kpi-sub">of 29 checks</div>
+        </div>
+      </div>
+      <div class="d8-table-head">
+        <div class="d8-th">Check Name</div><div class="d8-th">Devices</div><div class="d8-th">Compliance</div>
+      </div>
+      <div class="d8-section-head"><div class="d8-section-label">HIGH RISK (7)</div></div>
+      <div class="d8-row"><div class="d8-row-name">Managed Antivirus Missing</div><div class="d8-row-devices">5 dev</div><div class="d8-bar-wrap"><div class="d8-bar" style="flex:1"><div class="d8-bar-fill" style="width:16%"></div></div><div class="d8-pct">16%</div></div></div>
+      <div class="d8-row"><div class="d8-row-name">Unpatched Operating System</div><div class="d8-row-devices">3 dev</div><div class="d8-bar-wrap"><div class="d8-bar" style="flex:1"><div class="d8-bar-fill" style="width:50%"></div></div><div class="d8-pct">50%</div></div></div>
+      <div class="d8-row"><div class="d8-row-name">End of Life Operating System</div><div class="d8-row-devices">2 dev</div><div class="d8-bar-wrap"><div class="d8-bar" style="flex:1"><div class="d8-bar-fill" style="width:66%"></div></div><div class="d8-pct">66%</div></div></div>
+      <div class="d8-row"><div class="d8-row-name">RDP Enabled Without MFA</div><div class="d8-row-devices">2 dev</div><div class="d8-bar-wrap"><div class="d8-bar" style="flex:1"><div class="d8-bar-fill" style="width:66%"></div></div><div class="d8-pct">66%</div></div></div>
+      <div class="d8-section-head low"><div class="d8-section-label low">LOW RISK (3)</div></div>
+      <div class="d8-row low"><div class="d8-row-name">Default Workgroup Name Set</div><div class="d8-row-devices">5 dev</div><div class="d8-bar-wrap"><div class="d8-bar" style="flex:1"><div class="d8-bar-fill low" style="width:16%"></div></div><div class="d8-pct">16%</div></div></div>
+      <div class="d8-row low"><div class="d8-row-name">Password Complexity Not Set</div><div class="d8-row-devices">1 dev</div><div class="d8-bar-wrap"><div class="d8-bar" style="flex:1"><div class="d8-bar-fill low" style="width:83%"></div></div><div class="d8-pct">83%</div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════
+     DIRECTION 09 — WARM EXECUTIVE
+══════════════════════════════════════════════════════ -->
+<section class="dir d9" id="dir-9">
+  <div class="d9-sidebar">
+    <div class="d9-logo">
+      <span class="d9-logo-fci">FCI</span><div class="d9-logo-div"></div><span class="d9-logo-portal">CISO Portal</span>
+    </div>
+    <div class="d9-client-area">
+      <div class="d9-client-label">Client</div>
+      <div class="d9-client-name">Lighthouse Capital</div>
+    </div>
+    <nav class="d9-nav">
+      <div class="d9-nav-item active">Compliance Posture</div>
+      <div class="d9-nav-item">Active Devices</div>
+      <div class="d9-nav-item">Policy Status</div>
+      <div class="d9-nav-item">Incident Log</div>
+      <div class="d9-nav-item">Reports</div>
+    </nav>
+  </div>
+  <div class="d9-main">
+    <div class="d9-topbar">
+      <div class="d9-page-title">Compliance Posture</div>
+      <div class="d9-date">March 31, 2025</div>
+    </div>
+    <div class="d9-content">
+      <div class="d9-kpis">
+        <div class="d9-kpi">
+          <div class="d9-kpi-label">Posture Score</div>
+          <div class="d9-kpi-num">68%</div>
+          <div class="d9-kpi-sub">of device-checks passing</div>
+        </div>
+        <div class="d9-kpi crit">
+          <div class="d9-kpi-label">Checks Need Attention</div>
+          <div class="d9-kpi-num warn">12</div>
+          <div class="d9-kpi-sub">across 6 endpoints</div>
+        </div>
+        <div class="d9-kpi ok">
+          <div class="d9-kpi-label">Controls Fully Met</div>
+          <div class="d9-kpi-num ok">17</div>
+          <div class="d9-kpi-sub">of 29 total checks</div>
+        </div>
+      </div>
+      <div class="d9-table">
+        <div class="d9-section-head"><div class="d9-section-dot"></div><div class="d9-section-label">High Risk — 7 checks</div></div>
+        <div class="d9-row"><div class="d9-row-name">Managed Antivirus Missing</div><div class="d9-row-devices">5 devices</div><div class="d9-bar-wrap"><div class="d9-bar" style="flex:1"><div class="d9-bar-fill" style="width:16%"></div></div><div class="d9-pct">16%</div></div></div>
+        <div class="d9-row"><div class="d9-row-name">Unpatched Operating System</div><div class="d9-row-devices">3 devices</div><div class="d9-bar-wrap"><div class="d9-bar" style="flex:1"><div class="d9-bar-fill" style="width:50%"></div></div><div class="d9-pct">50%</div></div></div>
+        <div class="d9-row"><div class="d9-row-name">End of Life Operating System</div><div class="d9-row-devices">2 devices</div><div class="d9-bar-wrap"><div class="d9-bar" style="flex:1"><div class="d9-bar-fill" style="width:66%"></div></div><div class="d9-pct">66%</div></div></div>
+        <div class="d9-row"><div class="d9-row-name">RDP Enabled Without MFA</div><div class="d9-row-devices">2 devices</div><div class="d9-bar-wrap"><div class="d9-bar" style="flex:1"><div class="d9-bar-fill" style="width:66%"></div></div><div class="d9-pct">66%</div></div></div>
+        <div class="d9-section-head" style="border-top:1px solid #EDE9E0"><div class="d9-section-dot low"></div><div class="d9-section-label low">Low Risk — 3 checks</div></div>
+        <div class="d9-row low"><div class="d9-row-name">Default Workgroup Name Set</div><div class="d9-row-devices">5 devices</div><div class="d9-bar-wrap"><div class="d9-bar" style="flex:1"><div class="d9-bar-fill low" style="width:16%"></div></div><div class="d9-pct">16%</div></div></div>
+        <div class="d9-row low"><div class="d9-row-name">Password Complexity Not Set</div><div class="d9-row-devices">1 device</div><div class="d9-bar-wrap"><div class="d9-bar" style="flex:1"><div class="d9-bar-fill low" style="width:83%"></div></div><div class="d9-pct">83%</div></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════
+     DIRECTION 10 — NEO GRADIENT
+══════════════════════════════════════════════════════ -->
+<section class="dir d10" id="dir-10">
+  <div class="d10-sidebar">
+    <div class="d10-logo">
+      <div class="d10-logo-fci">FCI</div>
+      <div class="d10-logo-portal">CISO Portal</div>
+    </div>
+    <nav class="d10-nav">
+      <div class="d10-nav-item active">Compliance Posture</div>
+      <div class="d10-nav-item">Active Devices</div>
+      <div class="d10-nav-item">Policy Status</div>
+      <div class="d10-nav-item">Incident Log</div>
+      <div class="d10-nav-item">Reports</div>
+    </nav>
+  </div>
+  <div class="d10-main">
+    <div class="d10-topbar">
+      <div class="d10-page-title">Compliance Posture</div>
+      <div class="d10-chip">Lighthouse Capital</div>
+    </div>
+    <div class="d10-content">
+      <div class="d10-kpis">
+        <div class="d10-kpi">
+          <div class="d10-kpi-label">Posture Score</div>
+          <div class="d10-kpi-num">68%</div>
+          <div class="d10-kpi-sub">of device-checks passing</div>
+        </div>
+        <div class="d10-kpi warn">
+          <div class="d10-kpi-label">Checks Need Attention</div>
+          <div class="d10-kpi-num warn">12</div>
+          <div class="d10-kpi-sub">across 6 endpoints</div>
+        </div>
+        <div class="d10-kpi ok">
+          <div class="d10-kpi-label">Controls Fully Met</div>
+          <div class="d10-kpi-num ok">17</div>
+          <div class="d10-kpi-sub">of 29 total checks</div>
+        </div>
+      </div>
+      <div class="d10-table">
+        <div class="d10-section-head"><div class="d10-section-label">High Risk — 7 checks</div></div>
+        <div class="d10-row"><div class="d10-row-name">Managed Antivirus Missing</div><div class="d10-row-devices">5 devices</div><div class="d10-bar-wrap"><div class="d10-bar" style="flex:1"><div class="d10-bar-fill" style="width:16%"></div></div><div class="d10-pct">16%</div></div></div>
+        <div class="d10-row"><div class="d10-row-name">Unpatched Operating System</div><div class="d10-row-devices">3 devices</div><div class="d10-bar-wrap"><div class="d10-bar" style="flex:1"><div class="d10-bar-fill" style="width:50%"></div></div><div class="d10-pct">50%</div></div></div>
+        <div class="d10-row"><div class="d10-row-name">End of Life Operating System</div><div class="d10-row-devices">2 devices</div><div class="d10-bar-wrap"><div class="d10-bar" style="flex:1"><div class="d10-bar-fill" style="width:66%"></div></div><div class="d10-pct">66%</div></div></div>
+        <div class="d10-row"><div class="d10-row-name">RDP Enabled Without MFA</div><div class="d10-row-devices">2 devices</div><div class="d10-bar-wrap"><div class="d10-bar" style="flex:1"><div class="d10-bar-fill" style="width:66%"></div></div><div class="d10-pct">66%</div></div></div>
+        <div class="d10-section-head low"><div class="d10-section-label low">Low Risk — 3 checks</div></div>
+        <div class="d10-row"><div class="d10-row-name">Default Workgroup Name Set</div><div class="d10-row-devices">5 devices</div><div class="d10-bar-wrap"><div class="d10-bar" style="flex:1"><div class="d10-bar-fill low" style="width:16%"></div></div><div class="d10-pct">16%</div></div></div>
+        <div class="d10-row"><div class="d10-row-name">Password Complexity Not Set</div><div class="d10-row-devices">1 device</div><div class="d10-bar-wrap"><div class="d10-bar" style="flex:1"><div class="d10-bar-fill low" style="width:83%"></div></div><div class="d10-pct">83%</div></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+// ── TAB SWITCHING ─────────────────────────────────────
+function show(n){
+  document.querySelectorAll('.dir').forEach(d=>d.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById('dir-'+n).classList.add('active');
+  document.querySelectorAll('.tab')[n-1].classList.add('active');
+}
+
+// ── THEME SWITCHING ───────────────────────────────────
+const mq = window.matchMedia('(prefers-color-scheme: dark)');
+
+function applySystemTheme(){
+  document.documentElement.dataset.theme = mq.matches ? 'dark' : 'light';
+}
+
+function setTheme(t){
+  document.querySelectorAll('.theme-btn').forEach(b=>b.classList.toggle('active', b.dataset.t===t));
+  if(t==='system'){
+    mq.addEventListener('change', applySystemTheme);
+    applySystemTheme();
+  } else {
+    mq.removeEventListener('change', applySystemTheme);
+    document.documentElement.dataset.theme = t;
+  }
+  try{ localStorage.setItem('fci-dir-theme', t); }catch(e){}
+}
+
+// Init — restore saved preference or default to system
+(function(){
+  let saved;
+  try{ saved = localStorage.getItem('fci-dir-theme'); }catch(e){}
+  setTheme(saved || 'system');
+})();
+</script>
+</body>
+</html>
