@@ -233,6 +233,58 @@
       background: var(--sky);
     }
 
+    /* ─── PILLAR DIAGRAM ──────────────────────────── */
+    .pillar-diagram {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin: 24px 0 32px;
+    }
+    .pillar-card {
+      background: var(--blue-faint);
+      border: 1px solid var(--rule);
+      border-radius: 6px;
+      padding: 24px 20px;
+      text-align: center;
+    }
+    .pillar-number {
+      font-family: 'Inter Tight', sans-serif;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 10px;
+    }
+    .pillar-card-title {
+      font-family: 'Inter Tight', sans-serif;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--blue);
+      line-height: 1.35;
+    }
+
+    /* ─── PILLAR DETAIL BLOCKS ───────────────────── */
+    .pillar {
+      background: var(--white);
+      border: 1px solid var(--rule);
+      padding: 24px 32px;
+      margin: 12px 0;
+    }
+    .pillar-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--deep-navy);
+      letter-spacing: 0.04em;
+      margin-bottom: 10px;
+    }
+    .pillar p {
+      font-size: 14px;
+      color: var(--body);
+      line-height: 1.6;
+      margin: 0;
+    }
+
     /* ─── TWO-COL GRID (use / avoid) ──────────────── */
     .two-col {
       display: grid;
@@ -482,9 +534,9 @@
     <a href="#ciso">CISO &amp; CCO</a>
     <a href="#field">Field Compliance Officer</a>
     <a href="#it">IT Manager</a>
-    <a href="#ria">RIA Market</a>
-    <a href="#broker-dealer">Broker-Dealer Market</a>
-    <a href="#insurance">Insurance Market</a>
+    <a href="#ria">RIAs</a>
+    <a href="#broker-dealer">Broker-Dealers &amp; Branches</a>
+    <a href="#insurance">Insurance Carriers &amp; Agencies</a>
     <a href="#objections">Objection Responses</a>
     <a href="#vocabulary">Vocabulary</a>
   </nav>
@@ -503,7 +555,7 @@
       <div class="block-label">The one-sentence positioning</div>
       <div class="callout">
         <div class="callout-label">Use this in every first impression — website hero, presentation cover, intro email</div>
-        <div class="callout-text">FCI manages cybersecurity for sales offices of broker-dealers, insurance carriers, and RIAs — enforcing the tools, settings, and procedures required by their regulators, their enterprise, and their cyber insurer.</div>
+        <div class="callout-text">FCI manages cybersecurity for sales offices of broker-dealers, insurance carriers, and RIAs — enforcing the tools, settings, and procedures required by regulators, home offices, and cyber insurers.</div>
       </div>
     </div>
 
@@ -513,23 +565,51 @@
       <div class="block-content">Sales offices in financial services are the advisors, agents, representatives, and branch teams that deliver personal financial guidance. They manage wills, trusts, account statements, insurance policies, and investment portfolios. They hold the most private financial information of the country's wealthiest families — and they carry strict requirements for protecting it. The term sales office applies universally: an RIA advisory practice, a broker-dealer branch, an insurance agency. The regulatory framework differs by market. The challenge is the same.</div>
     </div>
 
-    <!-- Three pillars -->
+    <!-- Four pillars -->
     <div class="block">
-      <div class="block-label">The three things FCI does</div>
-      <div class="block-content">Every FCI asset connects to at least one of these three ideas. They are the organizing logic for all messaging.</div>
-      <div class="list-block">
-        <ul>
-          <li>Pillar 1 — Settings and tools. FCI implements and maintains the technical controls required by regulation, by the enterprise, and by the insurer. These controls run across every device and every location — automatically, without touching the workflows of the people using them. Advisors and agents do not notice the protections running. The compliance team does not have to ask anyone to change anything.</li>
-          <li>Pillar 2 — Procedures and structured processes. Settings and tools are necessary but not sufficient. Regulators and insurers require evidence of a managed cybersecurity program. FCI provides the systems and structured processes that make that program manageable. The CISO Portal automates what would otherwise take weeks of manual effort, producing exam-ready documentation in minutes and returning more than 80% of the time previously spent on routine compliance management to the firm.</li>
-          <li>Pillar 3 — Expert knowledge, applied at scale. FCI's experience comes from managing cybersecurity across more than 40,000 endpoints in financial services firms — through regulatory examinations, cyber incidents, insurance renewals, and enterprise audits. That experience feeds directly into how FCI implements controls and structures compliance programs for every client. Every engagement adds to the knowledge base that makes all three pillars stronger.</li>
-        </ul>
+      <div class="block-label">The four pillars of FCI</div>
+      <div class="block-content">Every FCI asset connects to at least one of these four pillars. They are the organizing logic for all messaging.</div>
+      <div class="pillar-diagram">
+        <div class="pillar-card">
+          <div class="pillar-number">Pillar 1</div>
+          <div class="pillar-card-title">Cyber Tools & Settings</div>
+        </div>
+        <div class="pillar-card">
+          <div class="pillar-number">Pillar 2</div>
+          <div class="pillar-card-title">Procedures & Processes</div>
+        </div>
+        <div class="pillar-card">
+          <div class="pillar-number">Pillar 3</div>
+          <div class="pillar-card-title">Expert Knowledge, Applied at Scale</div>
+        </div>
+        <div class="pillar-card">
+          <div class="pillar-number">Pillar 4</div>
+          <div class="pillar-card-title">Proof of Security & Compliance</div>
+        </div>
+      </div>
+      <div class="pillar">
+        <div class="pillar-title">Pillar 1 — Cyber Tools & Settings</div>
+        <p>FCI implements and maintains the technical controls required by regulators, home offices, and cyber insurers. These controls run across every user, device, network, and cloud app — automatically, without touching the workflows of the people using them. Employees and affiliates do not notice the protections running. The compliance team does not have to ask anyone to change anything.</p>
+      </div>
+      <div class="pillar">
+        <div class="pillar-title">Pillar 2 — Procedures & Processes</div>
+        <p>Settings and tools are necessary but not sufficient. Regulators, home offices, and cyber insurers require evidence of a managed cybersecurity program. FCI provides the processes that make that program manageable. The CISO Portal automates what would otherwise take weeks of manual effort, producing exam-ready documentation and returning more than 80% of compliance management time to the firm.</p>
+      </div>
+      <div class="pillar">
+        <div class="pillar-title">Pillar 3 — Expert Knowledge, Applied at Scale</div>
+        <p>FCI's experience comes from managing cybersecurity across more than 40,000 endpoints with more than 400 clients in financial services — through regulatory examinations, cyber incidents, cyber insurance renewals, and home office audits. That experience feeds directly into how FCI implements controls and structures programs for every client. Every engagement adds to the knowledge base that makes all four pillars stronger.</p>
+      </div>
+      <div class="pillar">
+        <div class="pillar-title">Pillar 4 — Proof of Security & Compliance</div>
+        <p>Security and compliance are only as real as what you can prove. Whether it is an exam, a cyber insurance claim, or a breach, the question is always the same: can you document what was in place and how it was maintained? FCI builds that evidence continuously as a byproduct of how it operates — so the proof is already assembled before anyone asks for it. And when it is time to present it to regulators, home offices, or cyber insurers, FCI is there with the firm to do it.</p>
       </div>
     </div>
 
     <!-- Proof points -->
     <div class="block">
-      <div class="block-label">The four proof points — use exactly as written</div>
+      <div class="block-label">The five proof points — use exactly as written</div>
       <div class="proof-row">
+        <div class="proof-pill">400+ clients in financial services</div>
         <div class="proof-pill">40,000+ endpoints under management</div>
         <div class="proof-pill">Up to 90% reduction in implementation time</div>
         <div class="proof-pill">80%+ of compliance management time returned to the firm</div>
@@ -541,7 +621,7 @@
     <div class="block">
       <div class="block-label">Certifications and standards</div>
       <div class="proof-row">
-        <div class="proof-pill">SOC 2 Type 1 certified</div>
+        <div class="proof-pill">SOC 2 Type 1 attestation</div>
         <div class="proof-pill">100% SecurityScorecard rating</div>
         <div class="proof-pill">NIST CSF-mapped controls</div>
         <div class="proof-pill">SEC · FINRA · NYDFS · NAIC alignment</div>
@@ -553,7 +633,7 @@
       <div class="block-label">The universal call to action</div>
       <div class="callout">
         <div class="callout-label">End every asset with this — or a close variation</div>
-        <div class="callout-text">Request a Gap Analysis. In 30 minutes, you will have a clear picture of what controls are in place, what is missing, and what your next regulatory exam, enterprise audit, or cyber insurance renewal will ask for.</div>
+        <div class="callout-text">Request a Gap Analysis. In 30 minutes, you will have a clear picture of what controls must be in place, what is missing, and what your next regulatory exam, home office audit, or cyber insurance renewal will ask for.</div>
       </div>
     </div>
   </div>
@@ -566,24 +646,24 @@
   <div class="section" id="board">
     <div class="section-label">Part 2 — Role</div>
     <div class="section-title">Shareholders, Board of Directors &amp; C-Level</div>
-    <div class="section-intro">The owners, managing partners, and senior executives of financial services firms. Personally accountable for the firm's regulatory standing, client relationships, and survival. This role exists across all three markets — RIA, broker-dealer, and insurance.</div>
+    <div class="section-intro">The owners, managing partners, and senior executives of financial services firms. Personally accountable for the firm's regulatory standing, client relationships, and survival. This role exists across all three markets — RIAs, broker-dealers &amp; branch offices, and insurance carriers &amp; agencies.</div>
 
     <div class="persona-band">
       <div class="persona-band-label">Who they are</div>
-      <div class="persona-band-title">The person who built something over decades and now understands that a single cyber event — not a market correction, not a regulatory fine — is what could take it down.</div>
+      <div class="persona-band-title">The person who built the firm or was hired to protect it — and who now understands that a single cyber event, not a market correction or a regulatory fine, is what could take it down.</div>
     </div>
 
     <div class="block">
       <div class="block-label">Their world</div>
-      <div class="block-content">They built their firms to serve clients, not to manage technology. But the risk environment has changed. Cyber is the most significant business risk a financial services firm faces today. A breach does not just disrupt operations. It triggers mandatory regulatory reporting, exposes client data, and creates liability that can destroy a firm built over decades. The pressure arrives from every direction at once: examinations are more detailed, cyber insurance carriers demand proof of specific controls before renewing policies, and enterprise home offices require documentation that every affiliated sales office is in good order. They know they need coverage. What they often cannot confirm is that the controls are actually in place — across every advisor, every device, and every location.</div>
+      <div class="block-content">They run their firms to serve clients, not to manage technology. But the risk environment has changed. Cyber is the most significant business risk a financial services firm faces today. A breach does not just disrupt operations. It triggers mandatory regulatory reporting, exposes client data, and creates liability that can destroy a firm built over decades. The pressure arrives from every direction at once: examinations are more detailed, cyber insurance carriers demand proof of specific controls before renewing policies or paying a claim, and home offices require documentation that every affiliated sales office is in good order. They know they need coverage. What they often cannot confirm is that the controls are actually in place — across every user, every device, every network, and every cloud app.</div>
     </div>
 
     <div class="block">
       <div class="block-label">The job they need done</div>
       <div class="list-block">
         <ul>
-          <li>Know that every device in the firm is covered — regardless of who owns it or where it is used.</li>
-          <li>Have a credible, documented answer when a regulator, insurer, or enterprise asks about cybersecurity controls.</li>
+          <li>Know that every device is covered — regardless of who owns it or where it is used.</li>
+          <li>Have a credible, documented answer when a regulator, cyber insurer, or home office asks about cybersecurity controls.</li>
           <li>Confirm that the compliance program is running as it should, without having to personally manage it.</li>
           <li>Free leadership to focus on growing the business, not on cybersecurity maintenance.</li>
           <li>Know that if something happens, a qualified team is already involved — and the documentation is already assembled.</li>
@@ -601,7 +681,7 @@
 
     <div class="block">
       <div class="block-label">FCI's answer to this role</div>
-      <div class="block-content">FCI provides the most substantial risk reduction available to a financial services firm — implementing and maintaining the controls that regulators require, the evidence that insurers ask for, and the visibility that leadership needs, without asking the firm to build a security team or manage a technology stack.</div>
+      <div class="block-content">FCI provides the most substantial risk reduction available to a financial services firm — implementing and maintaining the controls that regulators require, the evidence that cyber insurers ask for, and the visibility that leadership needs, without asking the firm to build a security team or manage a technology stack.</div>
     </div>
 
     <div class="block">
@@ -609,7 +689,7 @@
       <div class="list-block">
         <ul>
           <li>Controls enforced across every device — corporate, BYOD, Mac, Windows — without hardware purchases or internal configuration by the firm's own staff.</li>
-          <li>The CISO Portal produces regulatory documentation in minutes, mapped to what SEC, FINRA, NYDFS, and NAIC examiners actually request.</li>
+          <li>The FCI CISO Portal produces regulatory documentation in minutes, mapped to what SEC, FINRA, NYDFS, and NAIC examiners actually request.</li>
           <li>FCI's 30 years in financial services means the controls deployed reflect what regulators are actively examining — not just what frameworks recommend.</li>
           <li>24x7 SOC monitoring means a human team is watching every endpoint at all hours — not an automated alert sitting in a queue.</li>
         </ul>
@@ -622,13 +702,13 @@
     </div>
 
     <div class="block">
-      <div class="block-label">What they can show a regulator or insurer</div>
+      <div class="block-label">What they can show a regulator or cyber insurer</div>
       <div class="list-block">
         <ul>
           <li>Complete endpoint inventory with compliance status for every device.</li>
           <li>Control enforcement records showing what is active, when it was deployed, and whether anything was changed.</li>
           <li>Regulatory documentation mapped to the examiner's specific requirements.</li>
-          <li>Cyber insurance renewal package documenting the controls carriers ask for.</li>
+          <li>Evidence documenting the controls carriers ask for.</li>
           <li>Incident response documentation if any event has occurred.</li>
         </ul>
       </div>
@@ -638,7 +718,7 @@
       <div class="block-label">The sentence that makes them lean in</div>
       <div class="callout">
         <div class="callout-label">Use at the close of a first meeting or as a follow-up subject line</div>
-        <div class="callout-text">"Your advisors will not notice a difference. Your regulator will."</div>
+        <div class="callout-text">"Your employees and affiliates will not notice a difference. Your regulator will."</div>
       </div>
     </div>
   </div>
@@ -660,7 +740,7 @@
 
     <div class="block">
       <div class="block-label">Their world</div>
-      <div class="block-content">They set the program. Enforcement of that program depends on sales offices and field teams the home office does not directly control. Those offices may not have dedicated IT support. Their devices are often personal. Their networks are outside the firm's perimeter. Regulators increasingly ask not just whether written policies exist, but whether those policies are backed by technical controls that can be verified. Assembling that verification — across dozens or hundreds of distributed offices — is a manual, time-consuming process that creates a gap between what the firm's policies say and what the firm can actually prove. Enterprise home offices are beginning to gain visibility into field devices — and what that visibility is revealing is a gap that compliance leadership is now expected to close.</div>
+      <div class="block-content">They set the program. Enforcement of that program depends on sales offices and field teams the home office does not directly control. Those offices may not have dedicated IT support. Their devices are often personal (BYOD). Their networks are outside the firm's perimeter. Regulators increasingly ask not just whether written policies exist, but whether those policies are backed by technical controls that can be verified. Assembling that verification — across dozens or hundreds of distributed offices — is a manual, time-consuming process that creates a gap between what the firm's policies say and what the firm can actually prove. Home offices are beginning to gain visibility into field devices — and what that visibility is revealing is a gap that compliance leadership is now expected to close.</div>
     </div>
 
     <div class="block">
@@ -680,7 +760,7 @@
       <div class="block-label">The fear that drives the decision</div>
       <div class="callout">
         <div class="callout-label">This is what they are thinking when they take the first meeting</div>
-        <div class="callout-text">"The regulator will ask me to prove that our cybersecurity controls are working across every sales office. I can see the policy. I cannot prove the policy is being followed in the field — and I cannot show that to an examiner."</div>
+        <div class="callout-text">"The regulator will ask me to prove that our cybersecurity controls are working across every sales office. We have the policies. What we cannot prove is that they are implemented."</div>
       </div>
     </div>
 
@@ -693,10 +773,10 @@
       <div class="block-label">Role-specific proof points</div>
       <div class="list-block">
         <ul>
-          <li>NIST CSF controls mapped specifically to the examination priorities of SEC, FINRA, NYDFS, and NAIC — the evidence produced matches what examiners actually request.</li>
-          <li>The CISO Portal provides a single view of every device in the network — compliance status, control enforcement history, and incident records.</li>
+          <li>Controls mapped specifically to the examination priorities of SEC, FINRA, NYDFS, and NAIC — the evidence produced matches what examiners actually request.</li>
+          <li>The FCI CISO Portal provides a single view of every device in the network — compliance status, control enforcement history, and incident records.</li>
           <li>FCI's engagement itself constitutes vendor due diligence documentation — SOC 2 Type 1, 100% SecurityScorecard rating, and regulatory alignment on record.</li>
-          <li>Automation at scale: when multiple sales offices follow a common enterprise template, FCI deploys that template consistently across all of them — so the CISO or CCO can confirm every office is in good order, not just the offices with attentive IT managers.</li>
+          <li>Automation at scale: when multiple sales offices follow a common home office template, FCI deploys that template consistently across all of them — so the CISO or CCO can confirm every office is in good order, not just the offices with attentive IT managers.</li>
         </ul>
       </div>
     </div>
@@ -707,7 +787,7 @@
     </div>
 
     <div class="block">
-      <div class="block-label">What they can show a regulator or insurer</div>
+      <div class="block-label">What they can show a regulator or cyber insurer</div>
       <div class="list-block">
         <ul>
           <li>Device inventory and control enforcement log across all offices and locations.</li>
@@ -746,15 +826,15 @@
 
     <div class="block">
       <div class="block-label">Their world</div>
-      <div class="block-content">The CISO or CCO above them defines the program. The field compliance officer is responsible for implementing it — often without cybersecurity expertise, without dedicated IT support, and without the tools to verify what is actually happening on the devices in their office. Independent advisors and agents use their own devices, on their own networks. The field compliance officer cannot see those devices. They cannot configure them. And if something goes wrong, they are the first person asked to explain why the controls did not reach there. Enterprise home offices are beginning to gain visibility into what is — and is not — in the field. That visibility is landing on the field compliance officer's desk as a requirement they were not prepared for.</div>
+      <div class="block-content">The CISO or CCO above them defines the program. The field compliance officer is responsible for implementing it — often without cybersecurity expertise, without dedicated IT support, and without the tools to verify what is actually happening on the devices in their office. Independent advisors and agents use their own devices, on their own networks. The field compliance officer cannot see those devices. They cannot configure them. And if something goes wrong, they are the first person asked to explain why the controls did not reach there. Home offices are beginning to gain visibility into what is — and is not — in the field. That visibility is landing on the field compliance officer's desk as a requirement they were not prepared for.</div>
     </div>
 
     <div class="block">
       <div class="block-label">The job they need done</div>
       <div class="list-block">
         <ul>
-          <li>Meet the cybersecurity requirements from the firm, the enterprise, or the regulator — without becoming a cybersecurity expert.</li>
-          <li>Have evidence to show when the enterprise, a compliance team, or an insurer asks what controls are in place.</li>
+          <li>Meet the cybersecurity requirements from regulators, the home office, and cyber insurers — without becoming a cybersecurity expert.</li>
+          <li>Have evidence to show when the home office, a compliance team, or a cyber insurer asks what controls are in place.</li>
           <li>Manage the security posture of BYOD devices without the budget or authority to purchase, configure, or control those devices.</li>
           <li>Implement controls across every user in the office — consistently, automatically, without requiring users to change how they work.</li>
           <li>Know that if something happens, a qualified team is already involved and the documentation already exists.</li>
@@ -795,16 +875,16 @@
 
     <div class="block">
       <div class="block-label">What changes on day one</div>
-      <div class="block-content">FCI maps every device connected to the office. The field compliance officer sees the full picture of what is in the network — often for the first time. Controls deploy automatically. Users do not notice anything has changed. The documentation begins building immediately, so the next time the enterprise or a compliance team asks for evidence, it already exists.</div>
+      <div class="block-content">FCI maps every device connected to the office. The field compliance officer sees the full picture of what is in the network — often for the first time. Controls deploy automatically. Users do not notice anything has changed. The documentation begins building immediately, so the next time the home office or a compliance team asks for evidence, it already exists.</div>
     </div>
 
     <div class="block">
-      <div class="block-label">What they can show a compliance team or insurer</div>
+      <div class="block-label">What they can show a compliance team or cyber insurer</div>
       <div class="list-block">
         <ul>
           <li>Full device inventory for the office, with compliance status for every device.</li>
           <li>Control enforcement records: what is active, when it was applied, whether anything changed.</li>
-          <li>BYOD coverage records showing that personal devices meet enterprise requirements.</li>
+          <li>BYOD coverage records showing that personal devices meet home office requirements.</li>
           <li>MFA and VPN enforcement records for all users in the office.</li>
           <li>Incident response documentation if any event occurred.</li>
         </ul>
@@ -837,7 +917,7 @@
 
     <div class="block">
       <div class="block-label">Their world</div>
-      <div class="block-content">They are not resisting cybersecurity improvements out of bad intent — they are protecting territory they know well, while knowing there are limits to what they can cover alone. They are not typically exposed to the breadth of regulatory requirements, cyber incidents, insurance audits, and enterprise enforcement actions that FCI manages across its entire client base. Their knowledge comes from their firm. FCI's knowledge comes from 40,000+ endpoints and 30 years of financial services cybersecurity. That difference is not a reason to compete — it is a reason to partner. Leadership often trusts their word. "We're good" goes unchallenged — not because leadership does not care, but because they do not know what evidence to ask for. That is where the risk accumulates, and where the IT manager carries more liability than they realize.</div>
+      <div class="block-content">They are not resisting cybersecurity improvements out of bad intent — they are protecting territory they know well, while knowing there are limits to what they can cover alone. They are not typically exposed to the breadth of regulatory requirements, cyber incidents, insurance audits, and home office enforcement actions that FCI manages across its entire client base. Their knowledge comes from their firm. FCI's knowledge comes from 40,000+ endpoints and 30 years of financial services cybersecurity. That difference is not a reason to compete — it is a reason to partner. Leadership often trusts their word. "We're good" goes unchallenged — not because leadership does not care, but because they do not know what evidence to ask for. That is where the risk accumulates, and where the IT manager carries more liability than they realize.</div>
     </div>
 
     <div class="block">
@@ -851,7 +931,7 @@
         <ul>
           <li>Keep every device and every user secure — without spending the majority of available time on configuration and maintenance.</li>
           <li>Have a reliable, documented answer when compliance asks what controls are in place.</li>
-          <li>Respond to the firm's regulatory and enterprise requirements without rebuilding the security stack.</li>
+          <li>Respond to the firm's regulatory and home office requirements without rebuilding the security stack.</li>
           <li>Be seen by firm leadership as a driver of business value — not a cost center.</li>
           <li>Focus on the technology that helps the firm serve clients better and compete more effectively.</li>
         </ul>
@@ -933,7 +1013,7 @@
 
     <div class="block">
       <div class="block-label">The specific challenge of the RIA model</div>
-      <div class="block-content">The compliance obligation extends to every advisor and every device. But those advisors are often semi-independent, working from locations and on devices outside the firm's direct control. FCI was designed for exactly this environment — where the compliance requirement reaches to the field edge but where the firm has neither the staff nor the budget to manage a traditional enterprise security program.</div>
+      <div class="block-content">The compliance obligation extends to every advisor and every device. But those advisors are often semi-independent, working from locations and on devices outside the firm's direct control. FCI was designed for exactly this environment — where the compliance requirement reaches to the field edge but where the firm has neither the staff nor the budget to manage a traditional security program.</div>
     </div>
   </div>
 
@@ -1021,7 +1101,7 @@
 
     <div class="objection">
       <div class="objection-q">We have never had an incident, so we are probably fine.</div>
-      <div class="objection-a">Most firms that experience a breach had never had one before. The distributed model — personal devices, home networks, independent offices — creates exposure that does not announce itself. The question regulators and insurers ask is not whether a firm has been breached. It is whether the firm can prove its controls were in place. FCI answers that second question, continuously, before anyone asks it.</div>
+      <div class="objection-a">Most firms that experience a breach had never had one before. The distributed model — personal devices, home networks, independent offices — creates exposure that does not announce itself. The question regulators, home offices, and cyber insurers ask is not whether a firm has been breached. It is whether the firm can prove its controls were in place. FCI answers that second question, continuously, before anyone asks it.</div>
     </div>
 
     <div class="objection">
@@ -1047,9 +1127,9 @@
           <li><em>Sales office</em> — the primary descriptor for the offices FCI serves; covers RIA practices, broker-dealer branches, and insurance agencies equally</li>
           <li><em>Universal</em> — FCI works on any device, any OS, any configuration; use when describing coverage</li>
           <li><em>Gap analysis</em> — the preferred call to action; diagnostic before prescriptive</li>
-          <li><em>In good order</em> — use when describing the outcome FCI delivers for an enterprise managing multiple affiliated offices</li>
+          <li><em>In good order</em> — use when describing the outcome FCI delivers for a home office managing multiple affiliated offices</li>
           <li><em>Settings and tools, procedures, enforcement</em> — what FCI implements and maintains</li>
-          <li><em>Evidence, posture, exam-ready</em> — what FCI produces for exams and insurers</li>
+          <li><em>Evidence, posture, exam-ready</em> — what FCI produces for exams and cyber insurers</li>
           <li><em>BYOD, Zero Trust, endpoint visibility, MXDR, SOC</em> — the technical capabilities</li>
           <li><em>NIST CSF, SEC, FINRA, NYDFS, NAIC</em> — always explain the business benefit alongside the framework name</li>
         </ul>
