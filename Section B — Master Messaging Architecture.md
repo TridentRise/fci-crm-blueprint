@@ -67,6 +67,29 @@ A gap analysis tells you where you stand — before anyone else asks.
 
 ---
 
+## Competitive Positioning — What Makes FCI Structurally Different
+
+Most managed security service providers (MSSPs) sell tools. FCI delivers a managed cybersecurity program built specifically for the distributed sales office model in financial services. This distinction matters in every conversation.
+
+### The structural difference
+
+A typical MSSP deploys endpoint protection or runs a SOC — then hands the client a dashboard and a phone number. The client is still responsible for configuring controls, writing policies, producing compliance evidence, and responding to regulatory examinations. FCI does all of that. The four pillars — Cyber Tools & Settings, Procedures & Processes, Expert Knowledge Applied at Scale, and Proof of Security & Compliance — are not sold separately. They are one program, delivered as one service, managed by one team.
+
+### Where most competitors stop
+
+Most MSSPs do not produce the documentation regulators actually ask for. They do not sit with the firm during an examination. They do not manage incident response. They do not enforce controls across devices they did not sell. FCI does all four — because the financial services sales office requires all four.
+
+### Key competitive distinctions
+
+- Full-cycle managed program, not point tools
+- Built exclusively for financial services sales offices
+- Produces regulatory-exam-ready evidence continuously
+- Incident response included — most competitors do not offer it
+- Sits with the firm during exams, audits & cyber insurance renewals
+- Works alongside the firm's existing IT provider — not a replacement
+
+---
+
 ## Part 2 — The Four Roles
 
 These sections describe the four people FCI most often serves or sells to. The roles exist across all three markets. Write to the role first. Add market-specific language only when the context specifically requires it.
