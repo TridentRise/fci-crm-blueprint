@@ -355,7 +355,7 @@ The branch model creates a supervision challenge that good intentions alone cann
 
 ### Market 3 — Insurance Carriers & Agencies
 
-Insurance carriers are companies licensed by state regulators to underwrite insurance products. Independent insurance agencies are firms that distribute those products on behalf of one or more carriers, typically through networks of appointed agents who may work independently or as part of an agency group.
+Insurance carriers are companies licensed by state regulators and governed by the National Association of Insurance Commissioners (NAIC) to underwrite insurance products. Independent insurance agencies are firms that distribute those products on behalf of one or more carriers, typically through networks of appointed agents who may work independently or as part of an agency group.
 
 The relationship between a carrier and its appointed agents — or between an agency network and its member agencies — creates a structural compliance challenge similar to the one broker-dealers face with their branches. The home office defines the requirements. The field carries the risk.
 
