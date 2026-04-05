@@ -108,7 +108,7 @@ The owners, managing partners, and senior executives of financial services firms
 
 They run their firms to serve clients, not to manage technology. But the risk environment has changed. Cyber is no longer an IT issue — it is the most significant business risk a financial services firm faces today. A breach does not just disrupt operations. It triggers mandatory regulatory reporting, exposes client data, and creates liability that can destroy a firm built over decades.
 
-They know this. What they often do not have is a reliable way to confirm that the controls are actually in place — across every advisor, every agent, every device, and every location. And the pressure is arriving from every direction at once: regulatory examinations are more detailed, cyber insurance carriers are demanding proof of specific controls before renewing policies or paying a claim, and home offices are requiring documentation that every affiliated sales office is in good order.
+They know this. What they often do not have is a reliable way to confirm that the controls are actually in place — across every advisor, every agent, every device, and every location. And the pressure is arriving from every direction at once: regulatory examinations are more detailed, cyber insurers are demanding proof of specific controls before renewing policies or paying a claim, and home offices are requiring documentation that every affiliated sales office is in good order.
 
 That pressure lands on their desk. They are the ones who sign the policy. They are the ones who answer when something goes wrong.
 
@@ -356,7 +356,7 @@ Many RIAs operate through a model where advisors work from their own offices, us
 
 The SEC's cybersecurity rules require firms to have written policies, conduct periodic risk assessments, and produce documentation on examination. SEC examination priorities have expanded to include cybersecurity specifically — examiners are asking for evidence of controls, not just descriptions of policies. FINRA oversight applies to RIAs that also have broker-dealer affiliations.
 
-Cyber insurance adds pressure from a different direction. Carriers require proof of specific controls — MFA, endpoint protection, access controls, incident response plans — before renewing policies or paying a claim. Smaller RIAs face the same documentation requirements as larger ones. The SEC and the insurance carrier ask the same questions regardless of firm size.
+Cyber insurance adds pressure from a different direction. Carriers require proof of specific controls — MFA, endpoint protection, access controls, incident response plans — before renewing policies or paying a claim. Smaller RIAs face the same documentation requirements as larger ones. The SEC and the cyber insurer ask the same questions regardless of firm size.
 
 The RIA model creates a structural visibility problem. The compliance obligation extends to every advisor and every device. But those advisors are often semi-independent, working from locations and on devices outside the firm's direct control. FCI was designed for exactly this environment.
 
