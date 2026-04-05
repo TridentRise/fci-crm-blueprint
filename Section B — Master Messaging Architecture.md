@@ -73,7 +73,7 @@ Most managed security service providers (MSSPs) sell tools. FCI delivers a manag
 
 ### The structural difference
 
-A typical MSSP deploys endpoint protection or runs a SOC — then hands the client a dashboard and a phone number. The client is still responsible for configuring controls, writing policies, producing compliance evidence, and responding to regulatory examinations. FCI does all of that. The four pillars — Cyber Tools & Settings, Procedures & Processes, Expert Knowledge Applied at Scale, and Proof of Security & Compliance — are not sold separately. They are one program, delivered as one service, managed by one team.
+A typical MSSP deploys endpoint protection or runs a SOC — then hands the client a dashboard and a phone number. The client is still responsible for configuring controls, writing policies, producing compliance evidence, and responding to regulatory examinations. FCI does all of that. The four pillars — Cyber Tools & Settings, Procedures & Processes, Expert Knowledge, Applied at Scale, and Proof of Security & Compliance — are not sold separately. They are one program, delivered as one service, managed by one team.
 
 ### Where most competitors stop
 
