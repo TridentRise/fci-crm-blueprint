@@ -229,7 +229,7 @@ FCI extends the technical controls that would exist on a fully managed corporate
 
 - FCI works on any device regardless of manufacturer, operating system, or configuration — no hardware purchases required
 - Always-On VPN and MFA are enforced automatically — advisors and agents connect securely without taking additional steps
-- Zero Trust access controls ensure that only known users, verified endpoints, and secure networks can communicate with and access private data and firm systems
+- Zero Trust access controls ensure that only known users and verified endpoints on secure networks can communicate with and access private data and firm systems
 - Controls that would typically require months of internal IT work are deployed in hours, using FCI's automation and established procedures
 - If an incident occurs, the 24x7 SOC is already watching — and the documentation of what was in place already exists
 
