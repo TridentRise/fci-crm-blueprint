@@ -403,13 +403,13 @@ Use: cyber tools and settings, technical controls, procedures, structured proces
 
 Do not use: solutions (vague), suite (dated), platform (overused in the category), cutting-edge, next-generation, best-of-breed, seamless, robust, security assessment (overused — prefer gap analysis)
 
-Key term — sales office: Use "sales office" as the primary descriptor for the offices FCI serves. Add market-specific context only when necessary: "sales offices and branches" in broker-dealer contexts, "sales offices and agencies" in insurance contexts. The term covers RIA advisory practices, broker-dealer branches, and insurance agencies equally. It communicates to the enterprise and home office that FCI is there for the field — not competing with the enterprise's own program.
+Key term — sales office: Use "sales office" as the primary descriptor for the offices FCI serves. Add market-specific context only when necessary: "sales offices and branches" in broker-dealer contexts, "sales offices and agencies" in insurance contexts. The term covers RIA advisory practices, broker-dealer branches, and insurance agencies equally. It communicates to the home office that FCI is there for the field — not competing with the home office's own program.
 
 Key term — universal: FCI's controls work on any device — corporate or personal, Mac or Windows, any manufacturer, any configuration. Use "universal" when describing device coverage. It distinguishes FCI from enterprise-locked models that require specific hardware or operating systems and creates a compelling contrast with the BYOD environment most sales offices operate in.
 
 Key term — gap analysis: The preferred call to action. A gap analysis shows what is in place and what is missing — it is diagnostic before it is prescriptive. It resonates better than "security assessment" because it describes a specific, actionable output. It also implies holistic review rather than piecemeal coverage — which is exactly what FCI provides.
 
-Key term — in good order: Use when describing the outcome FCI delivers for an enterprise, carrier, or broker-dealer managing multiple affiliated offices. "Putting every sales office in good order" communicates the scale and consistency of what FCI does without requiring the reader to understand the technical details.
+Key term — in good order: Use when describing the outcome FCI delivers for broker-dealers and insurance carriers managing multiple affiliated offices. "Putting every sales office in good order" communicates the scale and consistency of what FCI does without requiring the reader to understand the technical details.
 
 Regulatory bodies: always spell out on first use — Securities and Exchange Commission (SEC), Financial Industry Regulatory Authority (FINRA), New York Department of Financial Services (NYDFS), National Association of Insurance Commissioners (NAIC) — then use the abbreviation thereafter.
 
