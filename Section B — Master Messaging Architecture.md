@@ -180,7 +180,6 @@ On day one, the CISO or CCO receives a complete inventory of the firm's distribu
 - Written supervisory procedure documentation backed by technical evidence
 - Vendor due diligence file for FCI
 - Incident response log for the full distributed network
-- MFA, VPN, and endpoint control enforcement records
 
 #### The sentence that makes them lean in
 
