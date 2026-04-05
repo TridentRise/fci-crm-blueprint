@@ -39,7 +39,7 @@ Cyber tools and settings are necessary but not sufficient. Regulators, home offi
 FCI's experience comes from managing cybersecurity across more than 40,000 endpoints with more than 400 clients in financial services — through regulatory examinations, cyber incidents, cyber insurance renewals, and home office audits. That experience feeds directly into how FCI implements controls and structures programs for every client. It is not theoretical. It comes from what FCI has already seen, fixed, and documented — and it gets stronger with every engagement.
 
 **Pillar 4 — Proof of Security & Compliance**
-Security and compliance are only as real as what you can prove. Whether it is an exam, a cyber insurance claim, or a breach, the question is always the same: can you document what was in place and how it was maintained? FCI builds that evidence continuously as a byproduct of how it operates — so the proof is already assembled before anyone asks for it. And when it is time to present it to regulators, home offices, or cyber insurers, FCI is there with the firm to do it.
+Security and compliance are only as real as what you can prove. Whether it is a regulatory exam, a cyber insurance renewal, a claim, or a breach, the question is always the same: can you document what controls were in place, when they were deployed, and how they were maintained? Cyber insurers may deny a claim if that documentation does not exist. FCI builds that evidence continuously, through the CISO Portal, as a byproduct of how it operates — so the proof is already assembled before anyone asks for it. And when it is time to present it to regulators, home offices, or cyber insurers, FCI is there with the firm to do it.
 
 These four pillars form a cycle. Expert knowledge shapes the cyber tools and settings FCI deploys. The procedures FCI builds make those tools manageable. And every engagement adds to the knowledge base that makes all three better.
 
@@ -337,6 +337,8 @@ Cyber insurance adds pressure from a different direction. Carriers require proof
 
 The RIA model creates a structural visibility problem. The compliance obligation extends to every advisor and every device. But those advisors are often semi-independent, working from locations and on devices outside the firm's direct control. FCI was designed for exactly this environment.
 
+**FCI's answer for this market:** FCI extends cybersecurity controls to every affiliated advisor — regardless of location, device ownership, or technical expertise — and produces the SEC-aligned documentation that examiners and cyber insurers require, continuously and automatically.
+
 ---
 
 ### Market 2 — Broker-Dealers & Branches
@@ -350,6 +352,8 @@ FINRA's examination program has expanded its cybersecurity focus. Examiners now 
 The SEC's Regulation S-P imposes specific requirements on broker-dealers related to the safeguarding of customer records and information. Examination findings increasingly cite the gap between a written policy and a technically enforced control. Findings from controls that failed to reach branch offices are among the most difficult to remediate.
 
 The branch model creates a supervision challenge that good intentions alone cannot solve. Compliance officers need technical evidence that controls are working in offices they may never visit, on devices they do not own, managed by reps who are not cybersecurity professionals. FCI closes that gap — producing the FINRA and SEC-aligned documentation that examiners ask for, built continuously, across the full branch network.
+
+**FCI's answer for this market:** FCI enforces controls across the full branch network — every registered representative, every device, every office — and produces FINRA and SEC-aligned evidence continuously, so the home office can confirm every branch is in good order before the examiner asks.
 
 ---
 
@@ -366,6 +370,8 @@ The National Association of Insurance Commissioners (NAIC) Model Data Security L
 Cyber insurance compounds the challenge for this market. Carriers are being asked by their own cyber insurers for the same documentation they require their agents to maintain. Producing that documentation requires controls to exist in the field — not just at the home office.
 
 Many agencies operate as small businesses without IT staff. The compliance requirements flowing down from the carrier are legitimate. The means to meet them are often unclear. FCI extends cybersecurity controls to appointed agents and independent agencies without requiring those agents to become technology managers — so the carrier gets the documentation it needs, and the agent gets coverage without building a program from scratch.
+
+**FCI's answer for this market:** FCI extends cybersecurity controls to every appointed agent and independent agency in the carrier's distribution network — and produces NAIC-aligned evidence that satisfies both the carrier's compliance requirements and the agent's cyber insurance obligations.
 
 ---
 
