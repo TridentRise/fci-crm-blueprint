@@ -41,7 +41,7 @@ FCI's experience comes from managing cybersecurity across more than 40,000 endpo
 **Pillar 4 — Proof of Security & Compliance**
 Security and compliance are only as real as what you can prove. Whether it is an exam, a cyber insurance claim, or a breach, the question is always the same: can you document what was in place and how it was maintained? FCI builds that evidence continuously as a byproduct of how it operates — so the proof is already assembled before anyone asks for it. And when it is time to present it to regulators, home offices, or cyber insurers, FCI is there with the firm to do it.
 
-These four pillars form a cycle. Expert knowledge shapes the settings and tools FCI deploys. The procedures FCI builds make those tools manageable. And every engagement adds to the knowledge base that makes all three better.
+These four pillars form a cycle. Expert knowledge shapes the cyber tools and settings FCI deploys. The procedures FCI builds make those tools manageable. And every engagement adds to the knowledge base that makes all three better.
 
 ### The four proof points
 
@@ -399,7 +399,7 @@ Examination preparation should not start when the notice arrives. The evidence F
 
 Use these terms consistently across all FCI materials. Inconsistency in terminology creates doubt about expertise.
 
-Use: settings and tools, technical controls, procedures, structured processes, enforcement, evidence, posture, exam-ready, sales office, field compliance, universal, BYOD, continuous monitoring, Zero Trust, endpoint visibility, MXDR, SOC, gap analysis, in good order
+Use: cyber tools and settings, technical controls, procedures, structured processes, enforcement, evidence, posture, exam-ready, sales office, field compliance, universal, BYOD, continuous monitoring, Zero Trust, endpoint visibility, MXDR, SOC, gap analysis, in good order
 
 Do not use: solutions (vague), suite (dated), platform (overused in the category), cutting-edge, next-generation, best-of-breed, seamless, robust, security assessment (overused — prefer gap analysis)
 
