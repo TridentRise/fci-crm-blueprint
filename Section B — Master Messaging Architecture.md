@@ -110,8 +110,8 @@ The average cost of a data breach in financial services is $5.56 million (IBM Co
 **Cyber insurance claim denials**
 More than 40% of cyber insurance claims are denied (industry reports, 2024). The most common reasons: inadequate documentation of controls in place at the time of the incident, failure to maintain MFA, and late notification. A denied claim turns a covered event into an unrecoverable loss.
 
-**Regulatory enforcement is increasing**
-SEC enforcement financial remedies reached $8.2 billion in fiscal year 2024 — the largest in SEC history. FINRA fined 12 firms a total of $14.4 million for recordkeeping failures in 2024–2025. NYDFS has issued penalties ranging from $2 million to $11.3 million for cybersecurity regulation violations, including against insurance companies and financial services firms. The trend is not slowing down.
+**Regulatory enforcement on cybersecurity is increasing**
+The SEC charged four public companies in 2024 for misleading cybersecurity disclosures following the SolarWinds breach — with penalties totaling approximately $7 million (Unisys, Avaya, Check Point, Mimecast). In early 2025, the SEC launched the Cyber and Emerging Technologies Unit (CETU), a dedicated enforcement team focused specifically on cybersecurity violations. NYDFS has issued penalties ranging from $2 million to $11.3 million for cybersecurity regulation violations, including against insurance companies and financial services firms. FINRA's annual examination priorities now explicitly include cybersecurity controls, incident response planning, and evidence that written supervisory procedures are backed by technical enforcement — not just policies on paper. The direction is clear: regulators are moving from asking whether policies exist to verifying that controls are technically enforced and documented.
 
 **Ransomware in financial services**
 65% of financial services firms experienced a ransomware incident in 2024. 97% of major U.S. banks experienced third-party breaches in the same year. The number of reported cyber incidents in financial services more than doubled from 2024 to 2025.
