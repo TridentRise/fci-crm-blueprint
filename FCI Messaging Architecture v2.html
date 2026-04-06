@@ -699,6 +699,24 @@
         font-size: 18px;
       }
     }
+
+    /* ─── SOURCE CITATIONS ───────────────────────── */
+    .source-cite {
+      font-size: 11px;
+      color: var(--faint);
+      margin-top: 8px;
+      line-height: 1.5;
+    }
+    .source-cite a {
+      color: var(--muted);
+      text-decoration: none;
+      border-bottom: 1px dotted var(--faint);
+      transition: color 0.15s;
+    }
+    .source-cite a:hover {
+      color: var(--sky);
+      border-color: var(--sky);
+    }
   </style>
 </head>
 <body>
@@ -974,26 +992,31 @@
       <div style="background: var(--white); border: 1px solid var(--rule); padding: 28px; margin-bottom: 16px;">
         <h4 style="font-size: 14px; font-weight: 700; color: var(--text); margin-bottom: 12px;">Breach cost in financial services</h4>
         <p style="font-size: 14px; color: var(--body); line-height: 1.75;">The average cost of a data breach in financial services is $5.56 million (IBM Cost of a Data Breach Report, 2025). Financial services is the second most expensive industry for breaches, after healthcare. This number includes detection, response, notification, and lost business — but not the long-term reputational damage that erodes client trust.</p>
+        <div class="source-cite">Source: <a href="https://www.ibm.com/reports/data-breach" target="_blank">IBM Cost of a Data Breach Report 2025</a></div>
       </div>
 
       <div style="background: var(--white); border: 1px solid var(--rule); padding: 28px; margin-bottom: 16px;">
         <h4 style="font-size: 14px; font-weight: 700; color: var(--text); margin-bottom: 12px;">Cyber insurance claim denials</h4>
         <p style="font-size: 14px; color: var(--body); line-height: 1.75;">More than 40% of cyber insurance claims are denied (industry reports, 2024). The most common reasons: inadequate documentation of controls in place at the time of the incident, failure to maintain MFA, and late notification. A denied claim turns a covered event into an unrecoverable loss.</p>
+        <div class="source-cite">Source: <a href="https://www.dcsny.com/technology-blog/cyber-insurance-claims-denied-2024/" target="_blank">DCSNY — Why Over 40% of Cyber Insurance Claims Were Denied in 2024</a></div>
       </div>
 
       <div style="background: var(--white); border: 1px solid var(--rule); padding: 28px; margin-bottom: 16px;">
         <h4 style="font-size: 14px; font-weight: 700; color: var(--text); margin-bottom: 12px;">Regulatory enforcement on cybersecurity is increasing</h4>
         <p style="font-size: 14px; color: var(--body); line-height: 1.75;">The SEC charged four public companies in 2024 for misleading cybersecurity disclosures following the SolarWinds breach — with penalties totaling approximately $7 million. In early 2025, the SEC launched the Cyber and Emerging Technologies Unit (CETU), a dedicated enforcement team focused specifically on cybersecurity violations. NYDFS has issued penalties ranging from $2 million to $11.3 million for cybersecurity regulation violations, including against insurance companies and financial services firms. FINRA's annual examination priorities now explicitly include cybersecurity controls, incident response planning, and evidence that written supervisory procedures are backed by technical enforcement — not just policies on paper. The direction is clear: regulators are moving from asking whether policies exist to verifying that controls are technically enforced and documented.</p>
+        <div class="source-cite">Sources: <a href="https://www.sec.gov/newsroom/press-releases/2024-174" target="_blank">SEC Press Release 2024-174</a> · <a href="https://www.dfs.ny.gov/reports_and_publications/press_releases" target="_blank">NYDFS Enforcement Actions</a> · <a href="https://www.finra.org/rules-guidance/guidance/reports/2024-finra-annual-regulatory-oversight-report/cybersecurity" target="_blank">FINRA 2024 Regulatory Oversight Report</a></div>
       </div>
 
       <div style="background: var(--white); border: 1px solid var(--rule); padding: 28px; margin-bottom: 16px;">
         <h4 style="font-size: 14px; font-weight: 700; color: var(--text); margin-bottom: 12px;">Ransomware in financial services</h4>
         <p style="font-size: 14px; color: var(--body); line-height: 1.75;">65% of financial services firms experienced a ransomware incident in 2024. 97% of major U.S. banks experienced third-party breaches in the same year. The number of reported cyber incidents in financial services more than doubled from 2024 to 2025.</p>
+        <div class="source-cite">Sources: <a href="https://www.sophos.com/en-us/whitepaper/state-of-ransomware-in-financial-services" target="_blank">Sophos — State of Ransomware in Financial Services 2024</a> · <a href="https://securityscorecard.com/company/press/securityscorecard-threat-intel-report-97-of-leading-u-s-banks-impacted-by-third-party-data-breaches-in-2024/" target="_blank">SecurityScorecard Threat Intel Report 2024</a></div>
       </div>
 
       <div style="background: var(--white); border: 1px solid var(--rule); padding: 28px;">
         <h4 style="font-size: 14px; font-weight: 700; color: var(--text); margin-bottom: 12px;">Small and mid-size firms are not exempt</h4>
         <p style="font-size: 14px; color: var(--body); line-height: 1.75;">61% of cyber attacks target small to medium businesses. 46% of all breaches impact businesses with fewer than 1,000 employees. The average breach cost for a small company is $3.31 million. Regulators and cyber insurers do not adjust their requirements based on firm size — a 12-person RIA faces the same examination questions as a 500-person broker-dealer.</p>
+        <div class="source-cite">Sources: <a href="https://www.preveil.com/" target="_blank">PreVeil SMB Cybersecurity Report 2025</a> · <a href="https://www.verizon.com/business/resources/reports/dbir/" target="_blank">Verizon DBIR</a> · <a href="https://www.ibm.com/reports/data-breach" target="_blank">IBM Cost of a Data Breach Report 2024</a></div>
       </div>
     </div>
 

@@ -105,21 +105,26 @@ These are the claims that underpin every pillar. Use them exactly as written. Do
 FCI's value is quantified above. The cost of the alternative should be equally concrete. Use these data points in awareness-stage messaging, proposals, and executive conversations when the prospect needs to see the scale of the risk they are carrying.
 
 **Breach cost in financial services**
-The average cost of a data breach in financial services is $5.56 million (IBM Cost of a Data Breach Report, 2025). Financial services is the second most expensive industry for breaches, after healthcare. This number includes detection, response, notification, and lost business — but not the long-term reputational damage that erodes client trust.
+The average cost of a data breach in financial services is $5.56 million. Financial services is the second most expensive industry for breaches, after healthcare. This number includes detection, response, notification, and lost business — but not the long-term reputational damage that erodes client trust.
+*Source: [IBM Cost of a Data Breach Report 2025](https://www.ibm.com/reports/data-breach)*
 
 **Cyber insurance claim denials**
-More than 40% of cyber insurance claims are denied (industry reports, 2024). The most common reasons: inadequate documentation of controls in place at the time of the incident, failure to maintain MFA, and late notification. A denied claim turns a covered event into an unrecoverable loss.
+More than 40% of cyber insurance claims are denied. The most common reasons: inadequate documentation of controls in place at the time of the incident, failure to maintain MFA, and late notification. A denied claim turns a covered event into an unrecoverable loss.
+*Source: [DCSNY — Why Over 40% of Cyber Insurance Claims Were Denied in 2024](https://www.dcsny.com/technology-blog/cyber-insurance-claims-denied-2024/)*
 
 **Regulatory enforcement on cybersecurity is increasing**
 The SEC charged four public companies in 2024 for misleading cybersecurity disclosures following the SolarWinds breach — with penalties totaling approximately $7 million (Unisys, Avaya, Check Point, Mimecast). In early 2025, the SEC launched the Cyber and Emerging Technologies Unit (CETU), a dedicated enforcement team focused specifically on cybersecurity violations. NYDFS has issued penalties ranging from $2 million to $11.3 million for cybersecurity regulation violations, including against insurance companies and financial services firms. FINRA's annual examination priorities now explicitly include cybersecurity controls, incident response planning, and evidence that written supervisory procedures are backed by technical enforcement — not just policies on paper. The direction is clear: regulators are moving from asking whether policies exist to verifying that controls are technically enforced and documented.
+*Sources: [SEC Press Release 2024-174](https://www.sec.gov/newsroom/press-releases/2024-174) · [NYDFS Enforcement Actions](https://www.dfs.ny.gov/reports_and_publications/press_releases) · [FINRA 2024 Regulatory Oversight Report — Cybersecurity](https://www.finra.org/rules-guidance/guidance/reports/2024-finra-annual-regulatory-oversight-report/cybersecurity)*
 
 **Ransomware in financial services**
 65% of financial services firms experienced a ransomware incident in 2024. 97% of major U.S. banks experienced third-party breaches in the same year. The number of reported cyber incidents in financial services more than doubled from 2024 to 2025.
+*Sources: [Sophos — State of Ransomware in Financial Services 2024](https://www.sophos.com/en-us/whitepaper/state-of-ransomware-in-financial-services) · [SecurityScorecard — 97% of Leading U.S. Banks Impacted by Third-Party Breaches, 2024](https://securityscorecard.com/company/press/securityscorecard-threat-intel-report-97-of-leading-u-s-banks-impacted-by-third-party-data-breaches-in-2024/)*
 
 **Small and mid-size firms are not exempt**
-61% of cyber attacks target small to medium businesses. 46% of all breaches impact businesses with fewer than 1,000 employees. The average breach cost for a small company is $3.31 million. Regulators and cyber insurers do not adjust their requirements based on firm size — a 12-person RIA faces the same examination questions as a 500-person broker-dealer.
+61% of small and mid-size businesses experienced a cyber attack in the past year. 46% of all breaches impact businesses with fewer than 1,000 employees. The average breach cost for a small company is $3.31 million. Regulators and cyber insurers do not adjust their requirements based on firm size — a 12-person RIA faces the same examination questions as a 500-person broker-dealer.
+*Sources: [PreVeil SMB Cybersecurity Report, 2025](https://www.preveil.com/) · [Verizon Data Breach Investigations Report](https://www.verizon.com/business/resources/reports/dbir/) · [IBM Cost of a Data Breach Report 2024](https://www.ibm.com/reports/data-breach)*
 
-**Sources and refresh schedule:** IBM Cost of a Data Breach Report (annual), SEC Enforcement Results (annual), FINRA Enforcement Actions, NYDFS Enforcement Actions, industry cyber insurance reports. These numbers should be refreshed annually. Last verified: April 2026.
+**Refresh schedule:** These numbers should be refreshed annually. Last verified: April 2026.
 
 ### Certifications and standards (use when credibility is needed)
 
