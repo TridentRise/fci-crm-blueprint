@@ -65,7 +65,7 @@ These lines apply regardless of role or market. They establish what FCI is, what
 
 ### The one-sentence positioning
 
-FCI manages cybersecurity for sales offices of broker-dealers, insurance carriers, and RIAs — enforcing the tools, settings, and procedures required by regulators, home offices, and cyber insurers.
+FCI manages cybersecurity for sales offices of RIAs, broker-dealers & branch offices, and insurance carriers & agencies — enforcing the tools, settings, and procedures required by regulators, home offices, and cyber insurers.
 
 ### Who sales offices are
 
@@ -84,12 +84,12 @@ FCI implements and maintains the technical controls required by regulators, home
 Cyber tools and settings are necessary but not sufficient. Regulators, home offices, and cyber insurers require that the firm operates a managed cybersecurity program — with policies, procedures, and structured processes that govern how controls are maintained across the organization. FCI provides the systems and structured processes that make that program manageable. The FCI CISO Portal automates what would otherwise take weeks of manual effort, returning more than 80% of the time previously spent on routine compliance management to the firm.
 
 **Pillar 3 — Expert Knowledge, Applied at Scale**
-FCI's experience comes from managing cybersecurity across more than 40,000 endpoints with more than 400 clients in financial services — through regulatory examinations, cyber incidents, cyber insurance renewals, and home office audits. That experience feeds directly into how FCI implements controls, structures programs, and responds to incidents for every client. When a cyber event occurs, FCI manages the incident response — containment, remediation, documentation, and communication — drawing on thousands of incidents handled across financial services firms. Most competitors do not offer incident response at all. It is not theoretical. It comes from what FCI has already seen, fixed, and documented — and it gets stronger with every engagement.
+FCI's experience comes from managing cybersecurity across more than 40,000 endpoints with more than 400 clients in financial services — through regulatory examinations, cyber incidents, cyber insurance renewals, and home office audits. That experience feeds directly into how FCI implements controls, structures processes, and responds to incidents for every client. When a cyber event occurs, FCI manages the incident response — containment, remediation, documentation, and communication — drawing on thousands of incidents handled across financial services firms. Most competitors do not offer incident response at all. It is not theoretical. It comes from what FCI has already seen, fixed, and documented — and it gets stronger with every engagement.
 
 **Pillar 4 — Proof of Security & Compliance**
 Security and compliance are only as real as what you can prove. Whether it is a regulatory exam, a cyber insurance renewal, a claim, or a breach, the question is always the same: can you document what controls were in place, when they were deployed, and how they were maintained? Cyber insurers may deny a claim if that documentation does not exist. FCI builds that evidence continuously, through the CISO Portal, as a byproduct of how it operates — so the proof is already assembled before anyone asks for it. And when it is time to present it to regulators, home offices, or cyber insurers, FCI is there with the firm to do it.
 
-These four pillars form a cycle. Expert knowledge shapes the cyber tools and settings FCI deploys. The procedures FCI builds make those tools manageable. The proof of security and compliance that results validates the entire program. And every engagement — every examination, every incident, every audit — adds to the knowledge base that makes all four stronger.
+These four pillars form a cycle. Expert knowledge shapes the cyber tools and settings FCI deploys. The procedures FCI builds make those tools manageable. The proof of security and compliance that results validates the entire cycle. And every engagement — every examination, every incident, every audit — adds to the knowledge base that makes all four stronger.
 
 ### The four proof points
 
@@ -98,7 +98,7 @@ These are the claims that underpin every pillar. Use them exactly as written. Do
 - 40,000+ endpoints under management in financial services
 - Up to 90% reduction in implementation time via the FCI CISO Portal
 - More than 80% of the time previously spent on manual compliance management tasks, returned to the firm
-- 30+ years serving exclusively financial services firms — RIAs, broker-dealers, and insurance carriers
+- 30+ years serving exclusively financial services firms — RIAs, broker-dealers & branch offices, and insurance carriers & agencies
 
 ### The cost of inaction — what the alternative looks like
 
@@ -149,7 +149,7 @@ A clear picture of their current posture: what controls are in place, what is mi
 
 #### What it costs
 
-The gap analysis is complimentary. There is no fee, no contract, and no obligation. The value of the gap analysis exists regardless of whether the firm engages FCI — the firm leaves with a documented understanding of where it stands.
+The gap analysis is provided at no cost. There is no fee, no contract, and no obligation. The value of the gap analysis exists regardless of whether the firm engages FCI — the firm leaves with a documented understanding of where it stands.
 
 #### What happens after
 
@@ -218,7 +218,7 @@ Most managed security service providers (MSSPs) sell tools. FCI delivers managed
 
 A typical MSSP installs tools — endpoint protection, a firewall, maybe a SOC — and then you're on your own. Need to prove controls are in place for a regulatory exam? They don't do that. Need documentation for your cyber insurer? Most will tell you that's not their responsibility. And when a real incident happens, we've seen it firsthand with firms that come to us after the fact: the previous provider deleted forensic evidence during the response — the digital equivalent of a police officer wiping fingerprints from a crime scene.
 
-FCI is structurally different because we built a holistic, integrated platform that delivers all four pillars together — Cyber Tools & Settings, Procedures & Processes, Expert Knowledge Applied at Scale, and Proof of Security & Compliance. They are not separate products sold à la carte. They are one integrated service, delivered by one team, on one platform — because the financial services sales office needs all of them working together to satisfy regulators, cyber insurers, and home offices simultaneously.
+FCI is structurally different because we built a holistic, integrated platform that delivers all four pillars together — Cyber Tools & Settings, Procedures & Processes, Expert Knowledge, Applied at Scale, and Proof of Security & Compliance. They are not separate products sold à la carte. They are one integrated service, delivered by one team, on one platform — because the financial services sales office needs all of them working together to satisfy regulators, cyber insurers, and home offices simultaneously.
 
 ### Where most competitors stop
 
@@ -447,7 +447,7 @@ On day one, FCI takes a complete inventory of every device associated with the f
 
 #### What success looks like
 
-The managing partner who brought FCI in does not think about cybersecurity compliance anymore — not because they stopped caring, but because the evidence arrives without them asking for it. When the cyber insurer sends the renewal questionnaire, the documentation is already assembled. When the board asks about the firm's posture, the answer is specific, current, and backed by records. The firm's reputation — the thing they spent decades building — is protected by a program they can see, verify, and explain. They made the decision. The program runs itself.
+The managing partner who brought FCI in does not think about cybersecurity compliance anymore — not because they stopped caring, but because the evidence arrives without them asking for it. When the cyber insurer sends the renewal questionnaire, the documentation is already assembled. When the board asks about the firm's posture, the answer is specific, current, and backed by records. The firm's reputation — the thing they spent decades building — is protected by a service they can see, verify, and explain. They made the decision. The service runs itself.
 
 #### The first 90 days and beyond
 
@@ -808,7 +808,9 @@ Use these terms consistently across all FCI materials. Inconsistency in terminol
 
 Use: cyber tools and settings, technical controls, procedures, structured processes, enforcement, evidence, posture, exam-ready, sales office, field compliance, universal, BYOD, continuous monitoring, Zero Trust, endpoint visibility, MXDR, SOC, gap analysis, in good order
 
-Do not use: solutions (vague), suite (dated), platform (overused in the category), cutting-edge, next-generation, best-of-breed, seamless, robust, security assessment (overused — prefer gap analysis)
+Do not use: solutions (vague), suite (dated), cutting-edge, next-generation, best-of-breed, seamless, robust, security assessment (overused — prefer gap analysis)
+
+Note on "platform": Use "platform" only when describing FCI's integrated, holistic offering — the combination of all four pillars delivered as one service. Do not use "platform" generically or as a synonym for "tool" or "product." The distinction is intentional: FCI's platform is the integrated whole, not a standalone product label.
 
 Key term — sales office: Use "sales office" as the primary descriptor for the offices FCI serves. Add market-specific context only when necessary: "sales offices and branches" in broker-dealer contexts, "sales offices and agencies" in insurance contexts. The term covers RIA advisory practices, broker-dealer branches, and insurance agencies equally. It communicates to the home office that FCI is there for the field — not competing with the home office's own program.
 
@@ -857,7 +859,7 @@ Expansion means adding offices, adding markets, or extending coverage to parts o
 
 When a competitor approaches an existing FCI client — usually with a lower price — the response should be factual and grounded in what the client would lose.
 
-**Key message:** "A lower price means a narrower scope. Ask what is not included. Ask whether they produce the regulatory documentation your examiner requested last year. Ask whether they will sit with you during the examination. Ask who handles the incident response. The program you have today was built over [time period] of continuous operation. The evidence trail, the deployment history, and the incident documentation — all of that resets if you switch. The question is not whether another provider is cheaper. It is whether they deliver what your regulator, home office, and cyber insurer actually require."
+**Key message:** "A lower price means a narrower scope. Ask what is not included. Ask whether they produce the regulatory documentation your examiner requested last year. Ask whether they will sit with you during the examination. Ask who handles the incident response. The service you have today was built over [time period] of continuous operation. The evidence trail, the deployment history, and the incident documentation — all of that resets if you switch. The question is not whether another provider is cheaper. It is whether they deliver what your regulator, home office, and cyber insurer actually require."
 
 ---
 
