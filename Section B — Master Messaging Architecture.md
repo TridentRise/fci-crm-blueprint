@@ -238,7 +238,7 @@ Most MSSPs do not produce the documentation regulators actually ask for. They do
 When a prospect names a specific alternative, the response should be factual, calm, and focused on what the alternative does not provide. Never disparage a competitor. Let the gaps speak for themselves.
 
 **"We are evaluating another MSSP."**
-Ask three questions: (1) Do they produce the regulatory documentation that SEC, FINRA, NYDFS, or NAIC examiners specifically request? (2) Do they sit with the firm during the examination or audit? (3) Do they include incident response — containment, remediation, documentation, and communication — as part of the service? Most MSSPs deploy tools and hand the client a dashboard. FCI delivers a managed program that includes documentation, examination support, and incident response. The distinction is not about tools — it is about what happens when the regulator, the cyber insurer, or the incident arrives.
+Ask three questions: (1) Do they produce the regulatory documentation that SEC, FINRA, NYDFS, or NAIC examiners specifically request? (2) Do they sit with the firm during the examination or audit? (3) Do they include incident response — containment, remediation, documentation, and communication — as part of the service? Most MSSPs deploy tools and hand the client a dashboard. FCI delivers an integrated cybersecurity platform that includes documentation, examination support, and incident response. The distinction is not about tools — it is about what happens when the regulator, the cyber insurer, or the incident arrives.
 
 **"Our IT provider says they can handle cybersecurity."**
 An IT provider manages performance and uptime — and many do it well. The question is whether they produce NIST-mapped compliance evidence, maintain SOC 2 attestation, run a 24x7 SOC, and have experience managing cybersecurity specifically for financial services sales offices through regulatory examinations and cyber incidents. Ask for their SOC 2 report. Ask how many financial services regulatory examinations they have supported. Ask whether they produce the documentation cyber insurers require for a claim. FCI works alongside the IT provider. The two roles do not overlap.
@@ -250,7 +250,7 @@ These are strong tools. The question is who configures them for the firm's speci
 Ask how many hours per month the team currently spends on compliance documentation and cybersecurity maintenance. Multiply by 12. That is the cost of the current approach — before the first incident, before the first failed examination, and before the first denied cyber insurance claim. Internal builds also lack the cross-client intelligence that comes from managing 40,000+ endpoints across 400+ financial services firms. FCI's controls reflect what regulators are examining right now — because FCI sees those examinations across its entire client base. An internal build starts from one firm's experience. FCI starts from hundreds.
 
 **"We will handle it after our next exam / when we have budget / when we hire someone."**
-The evidence FCI produces builds daily. Firms that start after the exam notice arrive spend weeks assembling what FCI-managed firms already have. Every month without a managed program is a month of undocumented exposure — to regulators, to cyber insurers, and to incident liability. The gap analysis takes 30 minutes and costs the firm nothing but time. It shows where the firm stands today. The decision about what to do with that information is entirely theirs.
+The evidence FCI produces builds daily. Firms that start after the exam notice arrive spend weeks assembling what FCI-managed firms already have. Every month without managed cybersecurity services is a month of undocumented exposure — to regulators, to cyber insurers, and to incident liability. The gap analysis takes 30 minutes and costs the firm nothing but time. It shows where the firm stands today. The decision about what to do with that information is entirely theirs.
 
 ---
 
@@ -290,7 +290,7 @@ The prospect has recognized the gap. They may be evaluating options — another 
 
 **Lead with:**
 - The four pillars — especially Proof of Security & Compliance and Expert Knowledge, which competitors cannot match
-- The competitive distinction: FCI is a managed program, not point tools
+- The competitive distinction: FCI is a holistic, integrated cyber platform — not a piecemeal approach and silos
 - IT provider compatibility: FCI works alongside existing IT — it is not a replacement
 - The implementation speed: what takes internal teams months takes FCI hours or days
 
@@ -538,7 +538,7 @@ The CISO or CCO who brought FCI in walks into examination season knowing the evi
 
 When the CISO or CCO needs to build the case with the board, their IT team, or their field offices:
 
-- **To the board:** "I've found a managed program that closes the gap between our policies and what we can actually prove in the field. It produces the documentation we need for examinations and cyber insurance renewals — continuously, without additional staff."
+- **To the board:** "I've found managed cybersecurity services that close the gap between our policies and what we can actually prove in the field. It produces the documentation we need for examinations and cyber insurance renewals — continuously, without additional staff."
 - **To the IT team:** "This handles the compliance documentation and regulatory alignment layer. It deploys alongside your existing tools. It does not replace what you manage — it covers the part that regulators and examiners are specifically asking for."
 - **To field offices:** "FCI handles the cybersecurity controls across your devices — including personal devices. You do not need to do anything differently. The evidence of compliance builds automatically."
 
@@ -706,7 +706,7 @@ The IT manager who brought FCI in is no longer the person who maintains complian
 
 When the IT manager needs to make the case to firm leadership, the compliance team, or their own staff:
 
-- **To firm leadership:** "I've found a managed program that handles the cybersecurity compliance layer — the documentation, the regulatory alignment, the controls that regulators and cyber insurers are asking about. It works alongside what we already have. It frees me to focus on the work that grows the firm."
+- **To firm leadership:** "I've found managed cybersecurity services that handle the cybersecurity compliance layer — the documentation, the regulatory alignment, the controls that regulators and cyber insurers are asking about. It works alongside what we already have. It frees me to focus on the work that grows the firm."
 - **To the compliance team:** "FCI produces the compliance evidence and regulatory documentation automatically. I can give you access to the dashboard. It covers the controls you've been asking me to document."
 - **To their IT staff:** "FCI manages the compliance and security monitoring layer. It does not replace our tools — it handles the part we do not have bandwidth for. We get to focus on the projects we have been deferring."
 
