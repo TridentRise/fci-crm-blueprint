@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FCI — Sales Hub</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Inter+Tight:wght@600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    *, ::before, ::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:       #060B14;
+      --surface:  #0D1626;
+      --surface2: #111F33;
+      --blue:     #2563EB;
+      --sky:      #0EA5E9;
+      --amber:    #F59E0B;
+      --amber2:   rgba(245,158,11,0.10);
+      --text1:    #F1F5F9;
+      --text2:    #94A3B8;
+      --text3:    #475569;
+      --rule:     #1A2B40;
+      --nav-bg:   rgba(6,11,20,0.88);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text1);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    ::selection { background: var(--amber); color: #000; }
+
+    .bg-glow {
+      position: fixed; inset: 0; pointer-events: none; z-index: 0;
+      background:
+        radial-gradient(80% 50% at 50% -10%, rgba(245,158,11,0.12) 0%, transparent 65%),
+        radial-gradient(35% 28% at 6% 88%,  rgba(37,99,235,0.06) 0%, transparent 55%),
+        radial-gradient(35% 28% at 94% 82%, rgba(14,165,233,0.05) 0%, transparent 55%);
+    }
+
+    /* ── Top nav ── */
+    .topnav {
+      position: fixed; top: 0; left: 0; right: 0; height: 56px;
+      background: var(--nav-bg);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--rule);
+      display: flex; align-items: center; padding: 0 48px; z-index: 100;
+    }
+
+    .nav-logo {
+      font-family: 'Inter Tight', sans-serif;
+      font-size: 20px; font-weight: 800;
+      color: var(--text1); text-decoration: none;
+      letter-spacing: -0.02em;
+      display: inline-flex; align-items: baseline; gap: 1px;
+    }
+    .nav-logo .accent { color: var(--sky); }
+
+    .nav-back {
+      font-family: 'Inter', sans-serif;
+      font-size: 13px; font-weight: 600;
+      color: var(--text3); text-decoration: none;
+      margin-left: 28px;
+      display: inline-flex; align-items: center; gap: 6px;
+      transition: color 0.15s;
+    }
+    .nav-back:hover { color: var(--text2); }
+
+    /* ── Header ── */
+    header {
+      position: relative; z-index: 1;
+      text-align: center; padding: 128px 24px 72px;
+    }
+
+    .header-eyebrow {
+      display: inline-block;
+      font-size: 10px; font-weight: 700;
+      letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--amber);
+      border: 1px solid rgba(245,158,11,0.28);
+      background: rgba(245,158,11,0.07);
+      padding: 5px 16px; border-radius: 100px;
+      margin-bottom: 28px;
+    }
+
+    header h1 {
+      font-family: 'Inter Tight', sans-serif;
+      font-size: clamp(44px, 7vw, 72px);
+      font-weight: 800; letter-spacing: -0.035em; line-height: 1;
+      color: var(--text1); margin-bottom: 20px;
+    }
+    header h1 em { color: var(--amber); font-style: normal; }
+
+    header p {
+      font-size: 17px; color: var(--text2);
+      line-height: 1.7; max-width: 480px; margin: 0 auto;
+    }
+
+    /* ── Content area ── */
+    .content-section {
+      position: relative; z-index: 1; flex: 1;
+      max-width: 1080px; width: 100%; margin: 0 auto; padding: 0 32px 112px;
+    }
+
+    /* ── Footer ── */
+    footer {
+      position: relative; z-index: 1;
+      text-align: center; padding: 0 24px 52px;
+    }
+    .footer-inner { display: inline-flex; align-items: center; gap: 14px; }
+    .footer-dot { width: 3px; height: 3px; border-radius: 50%; background: var(--text3); }
+    footer span { font-size: 12px; color: var(--text3); }
+    .footer-logo {
+      font-family: 'Inter Tight', sans-serif;
+      font-size: 15px; font-weight: 700;
+      color: var(--text3); letter-spacing: -0.01em;
+    }
+
+    /* ── Mobile ── */
+    @media (max-width: 720px) {
+      .topnav { padding: 0 24px; }
+      header { padding: 96px 20px 56px; }
+      .content-section { padding: 0 20px 80px; }
+    }
+
+    /* -- Light mode -- */
+    html[data-theme="light"] {
+      --bg: #F8FAFC; --surface: #FFFFFF; --surface2: #F1F5F9;
+      --text1: #0F172A; --text2: #475569; --text3: #94A3B8; --rule: #E2E8F0;
+      --nav-bg: rgba(248,250,252,0.92);
+    }
+    html[data-theme="light"] body { background: #F8FAFC; }
+    html[data-theme="light"] .bg-glow {
+      background:
+        radial-gradient(80% 50% at 50% -10%, rgba(245,158,11,0.06) 0%, transparent 65%),
+        radial-gradient(35% 28% at 6% 88%, rgba(37,99,235,0.03) 0%, transparent 55%),
+        radial-gradient(35% 28% at 94% 82%, rgba(14,165,233,0.02) 0%, transparent 55%);
+    }
+    @media (prefers-color-scheme: light) {
+      html:not([data-theme="dark"]) {
+        --bg: #F8FAFC; --surface: #FFFFFF; --surface2: #F1F5F9;
+        --text1: #0F172A; --text2: #475569; --text3: #94A3B8; --rule: #E2E8F0;
+        --nav-bg: rgba(248,250,252,0.92);
+      }
+      html:not([data-theme="dark"]) body { background: #F8FAFC; }
+      html:not([data-theme="dark"]) .bg-glow {
+        background:
+          radial-gradient(80% 50% at 50% -10%, rgba(245,158,11,0.06) 0%, transparent 65%),
+          radial-gradient(35% 28% at 6% 88%, rgba(37,99,235,0.03) 0%, transparent 55%),
+          radial-gradient(35% 28% at 94% 82%, rgba(14,165,233,0.02) 0%, transparent 55%);
+      }
+    }
+    /* -- Theme toggle -- */
+    .theme-toggle {
+      margin-left: auto; display: flex; align-items: center;
+      background: var(--surface2); border: 1px solid var(--rule);
+      border-radius: 8px; padding: 3px; gap: 2px;
+    }
+    .theme-toggle button {
+      font-family: Inter, sans-serif; font-size: 11px; font-weight: 600;
+      letter-spacing: 0.03em; color: var(--text3); background: transparent;
+      border: none; cursor: pointer; padding: 4px 10px; border-radius: 6px;
+      transition: background 0.15s, color 0.15s; line-height: 1;
+    }
+    .theme-toggle button:hover { color: var(--text1); }
+    .theme-toggle button.active {
+      background: var(--surface); color: var(--text1);
+      box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+    }
+  </style>
+</head>
+<body>
+
+<div class="bg-glow"></div>
+
+<nav class="topnav">
+  <a class="nav-logo" href="index.html">FCI</a>
+  <a class="nav-back" href="index.html">← Brand Hub</a>
+  <div class="theme-toggle">
+    <button data-mode="light" onclick="setTheme('light')">Light</button>
+    <button data-mode="dark" onclick="setTheme('dark')">Dark</button>
+    <button data-mode="system" onclick="setTheme('system')" class="active">System</button>
+  </div>
+</nav>
+
+<header>
+  <div class="header-eyebrow">Sales</div>
+  <h1>Sales <em>Hub</em></h1>
+  <p>Sales resources, playbooks, and enablement materials — coming soon.</p>
+</header>
+
+<section class="content-section">
+  <!-- Content will go here -->
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <span class="footer-logo">FCI</span>
+    <div class="footer-dot"></div>
+    <span>Sales Hub</span>
+    <div class="footer-dot"></div>
+    <span>Internal &middot; 2026</span>
+  </div>
+</footer>
+
+<script>
+  function setTheme(m) {
+    if (m === 'system') { document.documentElement.removeAttribute('data-theme'); localStorage.removeItem('fci-theme'); }
+    else { document.documentElement.setAttribute('data-theme', m); localStorage.setItem('fci-theme', m); }
+    document.querySelectorAll('.theme-toggle button').forEach(function(b){ b.classList.toggle('active', b.dataset.mode === m); });
+  }
+  (function(){
+    var s = localStorage.getItem('fci-theme') || 'system';
+    if (s !== 'system') document.documentElement.setAttribute('data-theme', s);
+    document.addEventListener('DOMContentLoaded', function(){
+      document.querySelectorAll('.theme-toggle button').forEach(function(b){ b.classList.toggle('active', b.dataset.mode === s); });
+    });
+  })();
+</script>
+</body>
+</html>
