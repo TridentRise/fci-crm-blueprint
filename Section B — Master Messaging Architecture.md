@@ -33,7 +33,7 @@ Every claim connects to a verifiable fact, a named regulation, or a defined outc
 FCI says what it does. It does not soften with qualifiers ("we believe," "we strive to," "we aim to"). If FCI does it, say so. If FCI does not, do not imply otherwise. Honesty is more persuasive than aspiration.
 
 - Wrong: "We aim to help firms achieve a stronger security posture through our services."
-- Right: "FCI manages the cybersecurity program. The firm's compliance team gets the evidence. The regulators get the documentation."
+- Right: "The firm owns the program. FCI implements the controls that make it enforceable — and produces the evidence that makes it provable."
 
 **4. Respectful of the reader's intelligence**
 FCI's audiences are experienced professionals in financial services. They understand regulation, risk, and the weight of their responsibilities. FCI does not explain their world to them — it speaks as a peer who has seen the same landscape from a different vantage point. No condescension. No oversimplification. No scare tactics.
