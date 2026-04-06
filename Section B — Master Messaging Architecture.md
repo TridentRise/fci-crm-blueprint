@@ -195,18 +195,18 @@ Cybersecurity proof for financial services sales offices.
 FCI manages cybersecurity for sales offices in financial services — enforcing the controls regulators require, producing the evidence examiners ask for, and standing with the firm when it matters.
 
 **30-second pitch (spoken aloud)**
-"Every sales office in financial services faces the same problem: regulators, home offices, and cyber insurers all require specific cybersecurity controls — and they require proof those controls are in place. Most firms don't have the staff to manage that. FCI does it for them. We deploy the tools, run the program, and produce the documentation — across every device, every office, every user. When the examiner asks for the evidence, it already exists."
+Every sales office in financial services faces the same problem: regulators, home offices, and cyber insurers all require specific cybersecurity controls — and they require proof those controls are in place. Most firms don't have the staff to implement and maintain those controls. FCI does it for them. We implement the tools and settings, enforce the controls the firm's program requires, and produce the evidence that those controls are in place — across every device, every office, every user. When the examiner asks for the documentation, it already exists.
 
 **2-minute narrative (for presentations, detailed conversations)**
-"Financial services sales offices — RIA practices, broker-dealer branches, insurance agencies — hold the most sensitive financial data their clients have. Regulators know it. Cyber insurers know it. Home offices know it. And all three are asking the same question: can you prove the cybersecurity controls are in place?
+Financial services sales offices — RIA practices, broker-dealer branches, insurance agencies — hold the most sensitive financial data their clients have. Regulators know it. Cyber insurers know it. Home offices know it. And all three are asking the same question: can you prove the cybersecurity controls are in place?
 
 Most sales offices can't. They don't have dedicated cybersecurity staff. Their advisors and agents use personal devices, on their own networks, in locations the home office has never visited. The compliance officer responsible for security may also be the managing partner, or the branch manager, or the person who just inherited the role.
 
-FCI was built for exactly this environment. We implement the technical controls — across any device, any OS, BYOD or corporate — without changing how people work. We run the procedures and structured processes that turn a collection of tools into a managed program. And we produce the documentation — mapped to what SEC, FINRA, NYDFS, and NAIC examiners actually request — continuously, as a byproduct of how we operate.
+FCI was built for exactly this environment. We implement the technical controls — across any device, any OS, BYOD or corporate — without changing how people work. The firm defines its cybersecurity program — its policies and procedures. FCI implements the controls that enforce those policies and produces the evidence that demonstrates compliance — mapped to what SEC, FINRA, NYDFS, and NAIC examiners actually request — continuously, as a byproduct of how we operate.
 
 The result: when the regulator asks for evidence, the cyber insurer asks for documentation, or the home office asks for confirmation — the answer already exists. The firm doesn't scramble. The compliance team doesn't spend weeks assembling files. FCI has already built it.
 
-That's what 40,000+ endpoints and 30+ years in financial services makes possible. Not a toolset. A program — managed, documented, and defended."
+That's what 40,000+ endpoints and 30+ years in financial services makes possible. Not a toolset. Not a collection of tools handed off with a dashboard. The controls implemented, the evidence produced, the compliance demonstrated — continuously.
 
 ---
 
