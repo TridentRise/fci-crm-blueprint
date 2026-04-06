@@ -212,7 +212,7 @@ That's what 40,000+ endpoints and 30+ years in financial services makes possible
 
 ## Competitive Positioning — What Makes FCI Structurally Different
 
-Most managed security service providers (MSSPs) sell tools. FCI delivers a managed cybersecurity program built specifically for the distributed sales office model in financial services. This distinction matters in every conversation.
+Most managed security service providers (MSSPs) sell tools. FCI delivers managed cybersecurity services built specifically for the distributed sales office model in financial services. This distinction matters in every conversation.
 
 ### The structural difference
 
@@ -459,7 +459,7 @@ The managing partner who brought FCI in does not think about cybersecurity compl
 
 When the board member or managing partner needs to bring this to their partners, their compliance team, or their IT manager:
 
-- **To partners:** "I found a managed cybersecurity program that handles the controls our regulators and cyber insurer require — across every device, including personal devices. They produce the documentation we need for exams. It does not require us to build a security team."
+- **To partners:** "I found managed cybersecurity services that handle the controls our regulators and cyber insurer require — across every device, including personal devices. They produce the documentation we need for exams. It does not require us to build a security team."
 - **To compliance leadership:** "This firm manages the technical enforcement side of cybersecurity and produces the evidence examiners ask for. It would close the gap between our policies and what we can actually prove."
 - **To the IT manager:** "This works alongside what you already manage. It handles the compliance and regulatory documentation layer. It is not a replacement — it is support."
 
