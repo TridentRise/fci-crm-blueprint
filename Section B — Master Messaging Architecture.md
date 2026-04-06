@@ -153,7 +153,7 @@ The gap analysis is complimentary. There is no fee, no contract, and no obligati
 
 #### What happens after
 
-The firm decides what to do with the findings. If the firm chooses to engage FCI, implementation begins immediately — FCI can deploy controls across the full device environment within days, not months. If the firm does not engage FCI, they still have a clear picture of their posture and the specific gaps they need to address.
+The firm decides what to do with the findings. If the firm chooses to engage FCI, implementation begins immediately — starting with endpoint controls, which are typically the most urgent gap and the first place regulators look. FCI can deploy across the full device environment within days, not months. From there, the engagement expands to network controls and cloud application security — building a complete posture across every layer the firm operates on. If the firm does not engage FCI, they still have a clear picture of their posture and the specific gaps they need to address.
 
 #### How to position it by buyer journey stage
 
