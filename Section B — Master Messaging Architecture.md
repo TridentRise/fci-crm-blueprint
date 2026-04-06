@@ -176,10 +176,10 @@ Not all pillars carry equal weight in every context. When space or time is limit
 This is FCI's most differentiating capability. Most MSSPs deploy tools. Very few produce the documentation that regulators, cyber insurers, and home offices actually ask for. When you have room for only one idea, lead with proof.
 
 **Second pillar: Expert Knowledge, Applied at Scale (Pillar 3)**
-The depth of experience — 40,000+ endpoints, 30+ years, thousands of incidents — is what makes FCI's program credible. It explains why the proof is trustworthy and why the tools are configured correctly.
+The depth of experience — 40,000+ endpoints, 30+ years, thousands of incidents — is what makes FCI's platform credible. It explains why the proof is trustworthy and why the tools are configured correctly.
 
 **Third pillar: Procedures & Processes (Pillar 2)**
-This is the operational layer that makes the program sustainable. The CISO Portal and the 80% time reduction are strong supporting proof points.
+This is the operational layer that makes the service sustainable. The CISO Portal and the 80% time reduction are strong supporting proof points.
 
 **Fourth pillar: Cyber Tools & Settings (Pillar 1)**
 Every MSSP claims this. It is table stakes. Important to include — but never lead with it unless the audience is specifically technical (IT manager evaluating deployment).
@@ -301,7 +301,7 @@ The prospect has recognized the gap. They may be evaluating options — another 
 **Tone:** Authoritative and direct. This is the comparison stage — be specific about what FCI does that others do not.
 
 **By role at this stage:**
-- **Board / C-Level:** "FCI provides the most substantial risk reduction available to a financial services firm — implementing controls, producing documentation, and managing incident response as one program, managed by one team."
+- **Board / C-Level:** "FCI provides the most substantial risk reduction available to a financial services firm — implementing controls, producing documentation, and managing incident response as one integrated service, delivered by one team."
 - **CISO / CCO:** "FCI enforces controls across the full distributed network and produces the documentation regulators require — built continuously, before the exam notice arrives."
 - **Field compliance:** "FCI handles the implementation across every device in the office — including personal devices — so you can confirm compliance without becoming a cybersecurity expert."
 - **IT manager:** "FCI is not a replacement for what you do. It is the automation and expertise that handles the compliance layer — so you can focus on the work that moves the firm forward."
@@ -414,7 +414,7 @@ That pressure lands on their desk. They are the ones who sign the policy. They a
 
 - Know that every device is covered — regardless of who owns it or where it is used
 - Have a credible, documented answer when a regulator, cyber insurer, or home office asks about cybersecurity controls
-- Confirm that the compliance program is running as it should, without having to personally manage it
+- Confirm that the compliance controls are running as they should, without having to personally manage it
 - Free leadership to focus on growing the business, not on cybersecurity maintenance
 - Know that if something happens, a qualified team is already involved — and the documentation is already assembled
 
@@ -532,7 +532,7 @@ The CISO or CCO who brought FCI in walks into examination season knowing the evi
 - **Week 1–2:** Controls deploying across all offices and affiliated locations. The documentation gap begins closing immediately.
 - **Month 1:** First comprehensive compliance view across the full network. The CISO or CCO can confirm device status, control enforcement, and incident history from a single dashboard.
 - **Month 3:** First regulatory examination or home office audit prepared using FCI-generated evidence. Preparation that previously took weeks is completed in minutes.
-- **Year 1:** A full annual cycle of continuous evidence — ready for annual regulatory filings, cyber insurance renewals, and home office reviews. The program has been tested in real conditions and the documentation trail is complete.
+- **Year 1:** A full annual cycle of continuous evidence — ready for annual regulatory filings, cyber insurance renewals, and home office reviews. The service has been tested in real conditions and the documentation trail is complete.
 
 #### How they sell it internally
 
@@ -832,7 +832,7 @@ The previous parts focus on acquiring new clients. This section covers the messa
 
 The strongest renewal argument is the evidence the client already has. Account managers should frame renewal conversations around what the firm has accumulated, not what FCI plans to deliver.
 
-**Key message:** "Over the past year, FCI has produced [X] compliance management reports, maintained controls across [Y] endpoints, and documented [Z] incidents and responses. That evidence exists because the program has been running continuously. Discontinuing the program means that evidence trail stops — and the next time a regulator, home office, or cyber insurer asks, the firm starts from zero."
+**Key message:** "Over the past year, FCI has produced [X] compliance management reports, maintained controls across [Y] endpoints, and documented [Z] incidents and responses. That evidence exists because the service has been running continuously. Discontinuing the service means that evidence trail stops — and the next time a regulator, home office, or cyber insurer asks, the firm starts from zero."
 
 **Supporting points:**
 - Reference the specific examinations, audits, or cyber insurance renewals the firm has completed during the engagement — and how the evidence was produced
@@ -842,16 +842,16 @@ The strongest renewal argument is the evidence the client already has. Account m
 
 ### Expansion messaging
 
-Expansion means adding offices, adding markets, or extending coverage to parts of the firm not yet under FCI's program. The message should connect the proven experience in the existing engagement to the new scope.
+Expansion means adding offices, adding markets, or extending coverage to parts of the firm not yet under FCI's coverage. The message should connect the proven experience in the existing engagement to the new scope.
 
 **Adding offices:**
-"Your [city] office is covered. Every device is under management, every control is documented, and the evidence is building continuously. Your [other city] office is carrying the same regulatory obligations — but without the same program in place. FCI can extend the same controls, the same documentation, and the same coverage to every additional office. The deployment uses the same automation — it does not start from scratch."
+"Your [city] office is covered. Every device is under management, every control is documented, and the evidence is building continuously. Your [other city] office is carrying the same regulatory obligations — but without the same coverage in place. FCI can extend the same controls, the same documentation, and the same coverage to every additional office. The deployment uses the same automation — it does not start from scratch."
 
 **Adding markets (e.g., a broker-dealer client who also has an RIA or insurance business):**
-"The program running across your broker-dealer branches is built on the same architecture FCI uses for RIAs and insurance carriers & agencies. The regulatory requirements differ — SEC and FINRA for the broker-dealer, SEC for the RIA, NAIC and state regulators for insurance — but the controls, procedures, and documentation layer are consistent. Extending coverage to your [RIA/insurance] business is not a new build. It is the same program, mapped to the additional regulatory framework."
+"The service running across your broker-dealer branches is built on the same architecture FCI uses for RIAs and insurance carriers & agencies. The regulatory requirements differ — SEC and FINRA for the broker-dealer, SEC for the RIA, NAIC and state regulators for insurance — but the controls, procedures, and documentation layer are consistent. Extending coverage to your [RIA/insurance] business is not a new build. It is the same platform, mapped to the additional regulatory framework."
 
 **Expanding scope within an existing office (more devices, more users):**
-"Your firm has grown. New advisors, new devices, new locations — and each one carries the same compliance obligation. FCI's program scales without manual configuration. Every new device enrolls through the same automation. Every new user gets the same controls. The documentation updates automatically."
+"Your firm has grown. New advisors, new devices, new locations — and each one carries the same compliance obligation. FCI's platform scales without manual configuration. Every new device enrolls through the same automation. Every new user gets the same controls. The documentation updates automatically."
 
 ### Competitive defense during renewal
 
