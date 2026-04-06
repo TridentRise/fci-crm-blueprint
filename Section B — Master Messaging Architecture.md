@@ -5,9 +5,57 @@
 
 This document is the single reference for every writer, designer, and salesperson working on FCI materials. Every one-pager, website page, presentation slide, and email sequence draws from this document. Nothing gets written without checking here first.
 
-The document is organized in five parts: the universal messages that apply across all audiences; a dedicated section for each of the four primary roles FCI serves; a section on the three markets FCI operates in; shared objection responses; and a vocabulary reference.
+The document is organized in seven parts, plus strategic sections on brand voice, message hierarchy, buyer journey, channel adaptation, and competitive response: the universal messages that apply across all audiences; a dedicated section for each of the four primary roles FCI serves; a section on the three markets FCI operates in; shared objection responses; a vocabulary reference; retention and expansion messaging; and crisis communication principles.
 
 The distinction between roles and markets is intentional. The four roles — board and ownership, compliance leadership, field compliance, and IT — are consistent across all three markets. A field compliance officer at a broker-dealer branch faces the same core challenges as one at an insurance agency. The market sections describe the regulatory context and structural characteristics unique to each market, not a separate set of messages.
+
+---
+
+## Brand Voice & Tone
+
+FCI's voice must be consistent across every writer, every channel, and every asset. The vocabulary reference in Part 5 defines which words to use. This section defines how FCI sounds when using them.
+
+### The five voice characteristics
+
+**1. Authoritative, not aggressive**
+FCI speaks from experience. The authority comes from 40,000+ endpoints, 30+ years, and thousands of incidents — not from volume or urgency. FCI does not pressure. It presents what it has seen, what it knows, and what the evidence shows.
+
+- Wrong: "Your firm is at SERIOUS RISK if you don't act now."
+- Right: "The controls regulators are examining for today are specific. The question is whether the documentation exists to prove they are in place."
+
+**2. Specific, not abstract**
+Every claim connects to a verifiable fact, a named regulation, or a defined outcome. FCI does not deal in generalities. If a number is cited, it has a source. If a capability is described, it has a mechanism.
+
+- Wrong: "FCI provides comprehensive cybersecurity solutions for the financial industry."
+- Right: "FCI enforces controls across every device — corporate, BYOD, Mac, Windows — and produces documentation mapped to what SEC, FINRA, NYDFS, and NAIC examiners actually request."
+
+**3. Direct, not hedged**
+FCI says what it does. It does not soften with qualifiers ("we believe," "we strive to," "we aim to"). If FCI does it, say so. If FCI does not, do not imply otherwise. Honesty is more persuasive than aspiration.
+
+- Wrong: "We aim to help firms achieve a stronger security posture through our services."
+- Right: "FCI manages the cybersecurity program. The firm's compliance team gets the evidence. The regulators get the documentation."
+
+**4. Respectful of the reader's intelligence**
+FCI's audiences are experienced professionals in financial services. They understand regulation, risk, and the weight of their responsibilities. FCI does not explain their world to them — it speaks as a peer who has seen the same landscape from a different vantage point. No condescension. No oversimplification. No scare tactics.
+
+- Wrong: "Did you know that cyber attacks are on the rise? Your firm could be next!"
+- Right: "Sixty-five percent of financial services firms experienced a ransomware incident in 2024. The regulatory response has been to increase examination specificity — not just whether policies exist, but whether controls are technically enforced and documented."
+
+**5. Calm under pressure**
+FCI handles incidents, examinations, and audits. The voice should reflect that composure. Even in messaging about risk and urgency, the tone is steady. The reader should feel that FCI is the team that stays calm when things go wrong — because they have done this before.
+
+- Wrong: "When a breach hits, chaos follows. Don't get caught unprepared!"
+- Right: "When a cyber event occurs, FCI manages the incident response — containment, remediation, documentation, and communication — drawing on thousands of incidents handled across financial services firms."
+
+### Tone by context
+
+The five characteristics apply everywhere, but the balance shifts by context:
+
+- **Website and landing pages:** Lead with specific and direct. The reader is scanning. Get to the point.
+- **One-pagers and collateral:** Lead with authoritative. The reader is evaluating. Show the depth.
+- **Email sequences:** Lead with respectful. The reader did not ask for this email. Earn their time.
+- **Sales conversations and presentations:** Lead with calm and authoritative. The reader is deciding. Give them confidence.
+- **Incident and crisis communication:** Calm dominates everything else. Specifics follow. Nothing else matters.
 
 ---
 
@@ -25,9 +73,9 @@ Sales offices in financial services are the advisors, agents, representatives, a
 
 The term sales office applies universally across FCI's markets: an RIA advisory practice, a broker-dealer branch, an insurance agency. The regulatory framework differs by market. The challenge is the same — meeting requirements from regulators, home offices, and cyber insurers, often without dedicated cybersecurity staff.
 
-### The three things FCI does
+### The four things FCI does
 
-Every FCI asset should connect to at least one of these three ideas. They are the organizing logic for all messaging.
+Every FCI asset should connect to at least one of these four pillars. They are the organizing logic for all messaging.
 
 **Pillar 1 — Cyber Tools & Settings**
 FCI implements and maintains the technical controls required by regulators, home offices, and cyber insurers. These controls run across every user, device, network, and cloud app — automatically, and without touching the workflows of the people using them. Employees and affiliates do not notice the protections running. The compliance team does not have to ask anyone to change anything.
@@ -41,7 +89,7 @@ FCI's experience comes from managing cybersecurity across more than 40,000 endpo
 **Pillar 4 — Proof of Security & Compliance**
 Security and compliance are only as real as what you can prove. Whether it is a regulatory exam, a cyber insurance renewal, a claim, or a breach, the question is always the same: can you document what controls were in place, when they were deployed, and how they were maintained? Cyber insurers may deny a claim if that documentation does not exist. FCI builds that evidence continuously, through the CISO Portal, as a byproduct of how it operates — so the proof is already assembled before anyone asks for it. And when it is time to present it to regulators, home offices, or cyber insurers, FCI is there with the firm to do it.
 
-These four pillars form a cycle. Expert knowledge shapes the cyber tools and settings FCI deploys. The procedures FCI builds make those tools manageable. And every engagement adds to the knowledge base that makes all three better.
+These four pillars form a cycle. Expert knowledge shapes the cyber tools and settings FCI deploys. The procedures FCI builds make those tools manageable. The proof of security and compliance that results validates the entire program. And every engagement — every examination, every incident, every audit — adds to the knowledge base that makes all four stronger.
 
 ### The four proof points
 
@@ -52,6 +100,27 @@ These are the claims that underpin every pillar. Use them exactly as written. Do
 - More than 80% of the time previously spent on manual compliance management tasks, returned to the firm
 - 30+ years serving exclusively financial services firms — RIAs, broker-dealers, and insurance carriers
 
+### The cost of inaction — what the alternative looks like
+
+FCI's value is quantified above. The cost of the alternative should be equally concrete. Use these data points in awareness-stage messaging, proposals, and executive conversations when the prospect needs to see the scale of the risk they are carrying.
+
+**Breach cost in financial services**
+The average cost of a data breach in financial services is $5.56 million (IBM Cost of a Data Breach Report, 2025). Financial services is the second most expensive industry for breaches, after healthcare. This number includes detection, response, notification, and lost business — but not the long-term reputational damage that erodes client trust.
+
+**Cyber insurance claim denials**
+More than 40% of cyber insurance claims are denied (industry reports, 2024). The most common reasons: inadequate documentation of controls in place at the time of the incident, failure to maintain MFA, and late notification. A denied claim turns a covered event into an unrecoverable loss.
+
+**Regulatory enforcement is increasing**
+SEC enforcement financial remedies reached $8.2 billion in fiscal year 2024 — the largest in SEC history. FINRA fined 12 firms a total of $14.4 million for recordkeeping failures in 2024–2025. NYDFS has issued penalties ranging from $2 million to $11.3 million for cybersecurity regulation violations, including against insurance companies and financial services firms. The trend is not slowing down.
+
+**Ransomware in financial services**
+65% of financial services firms experienced a ransomware incident in 2024. 97% of major U.S. banks experienced third-party breaches in the same year. The number of reported cyber incidents in financial services more than doubled from 2024 to 2025.
+
+**Small and mid-size firms are not exempt**
+61% of cyber attacks target small to medium businesses. 46% of all breaches impact businesses with fewer than 1,000 employees. The average breach cost for a small company is $3.31 million. Regulators and cyber insurers do not adjust their requirements based on firm size — a 12-person RIA faces the same examination questions as a 500-person broker-dealer.
+
+**Sources and refresh schedule:** IBM Cost of a Data Breach Report (annual), SEC Enforcement Results (annual), FINRA Enforcement Actions, NYDFS Enforcement Actions, industry cyber insurance reports. These numbers should be refreshed annually. Last verified: April 2026.
+
 ### Certifications and standards (use when credibility is needed)
 
 - SOC 2 Type 1 attestation
@@ -59,11 +128,80 @@ These are the claims that underpin every pillar. Use them exactly as written. Do
 - NIST Cybersecurity Framework mapped controls
 - SEC, FINRA, NYDFS, and NAIC regulatory alignment
 
-### The universal call to action
+### The universal call to action — Gap Analysis
 
 Request a Gap Analysis. In 30 minutes, you will have a clear picture of what controls must be in place, what is missing, and what your next regulatory exam, home office audit, or cyber insurance renewal will ask for.
 
 A gap analysis tells you where you stand — before anyone else asks.
+
+#### What happens during a gap analysis
+
+FCI reviews the firm's current cybersecurity posture against what regulators, home offices, and cyber insurers require — specific to the firm's market (RIAs, broker-dealers & branch offices, or insurance carriers & agencies). This is a 30-minute conversation, not a lengthy audit. FCI asks targeted questions, reviews the firm's current control environment, and identifies the specific gaps between what is in place and what examiners, carriers, and home offices are asking for.
+
+#### What the prospect receives
+
+A clear picture of their current posture: what controls are in place, what is missing, and what their next regulatory exam, home office audit, or cyber insurance renewal will specifically ask for. This is not a generic checklist — it is mapped to the firm's specific regulatory obligations and the examination priorities that FCI sees across its 400+ client base.
+
+#### What it costs
+
+The gap analysis is complimentary. There is no fee, no contract, and no obligation. The value of the gap analysis exists regardless of whether the firm engages FCI — the firm leaves with a documented understanding of where it stands.
+
+#### What happens after
+
+The firm decides what to do with the findings. If the firm chooses to engage FCI, implementation begins immediately — FCI can deploy controls across the full device environment within days, not months. If the firm does not engage FCI, they still have a clear picture of their posture and the specific gaps they need to address.
+
+#### How to position it by buyer journey stage
+
+- **Awareness stage:** "Find out where you stand — before your regulator, home office, or cyber insurer asks." The gap analysis is diagnostic. It creates the visibility the firm does not currently have.
+- **Consideration stage:** "In 30 minutes, you will see exactly what controls are in place, what is missing, and what your next exam will ask for." The gap analysis is evaluative. It gives the firm concrete information to compare approaches.
+- **Decision stage:** "After the gap analysis, you will have a documented picture of your posture. You decide what to do with it. No obligation." The gap analysis is the final step before commitment. Remove the risk of the decision.
+
+#### CTA variations for different formats
+
+- Landing page: "Request a Gap Analysis — see where you stand in 30 minutes."
+- Email: "Can you prove your controls are in place? A 30-minute gap analysis will show you."
+- LinkedIn: "Your next exam will ask for the evidence. Do you have it? Request a gap analysis."
+- Sales conversation: "Before we go any further — would it be useful to see exactly where your firm stands today? That takes 30 minutes. No commitment."
+
+### Message hierarchy — what to lead with
+
+Not all pillars carry equal weight in every context. When space or time is limited, use this priority order:
+
+**Lead pillar: Proof of Security & Compliance (Pillar 4)**
+This is FCI's most differentiating capability. Most MSSPs deploy tools. Very few produce the documentation that regulators, cyber insurers, and home offices actually ask for. When you have room for only one idea, lead with proof.
+
+**Second pillar: Expert Knowledge, Applied at Scale (Pillar 3)**
+The depth of experience — 40,000+ endpoints, 30+ years, thousands of incidents — is what makes FCI's program credible. It explains why the proof is trustworthy and why the tools are configured correctly.
+
+**Third pillar: Procedures & Processes (Pillar 2)**
+This is the operational layer that makes the program sustainable. The CISO Portal and the 80% time reduction are strong supporting proof points.
+
+**Fourth pillar: Cyber Tools & Settings (Pillar 1)**
+Every MSSP claims this. It is table stakes. Important to include — but never lead with it unless the audience is specifically technical (IT manager evaluating deployment).
+
+### Message length variants
+
+Use the version that fits the format. Each builds on the one before it.
+
+**Tagline (5–8 words)**
+Cybersecurity proof for financial services sales offices.
+
+**One-liner (one sentence)**
+FCI manages cybersecurity for sales offices in financial services — enforcing the controls regulators require, producing the evidence examiners ask for, and standing with the firm when it matters.
+
+**30-second pitch (spoken aloud)**
+"Every sales office in financial services faces the same problem: regulators, home offices, and cyber insurers all require specific cybersecurity controls — and they require proof those controls are in place. Most firms don't have the staff to manage that. FCI does it for them. We deploy the tools, run the program, and produce the documentation — across every device, every office, every user. When the examiner asks for the evidence, it already exists."
+
+**2-minute narrative (for presentations, detailed conversations)**
+"Financial services sales offices — RIA practices, broker-dealer branches, insurance agencies — hold the most sensitive financial data their clients have. Regulators know it. Cyber insurers know it. Home offices know it. And all three are asking the same question: can you prove the cybersecurity controls are in place?
+
+Most sales offices can't. They don't have dedicated cybersecurity staff. Their advisors and agents use personal devices, on their own networks, in locations the home office has never visited. The compliance officer responsible for security may also be the managing partner, or the branch manager, or the person who just inherited the role.
+
+FCI was built for exactly this environment. We implement the technical controls — across any device, any OS, BYOD or corporate — without changing how people work. We run the procedures and structured processes that turn a collection of tools into a managed program. And we produce the documentation — mapped to what SEC, FINRA, NYDFS, and NAIC examiners actually request — continuously, as a byproduct of how we operate.
+
+The result: when the regulator asks for evidence, the cyber insurer asks for documentation, or the home office asks for confirmation — the answer already exists. The firm doesn't scramble. The compliance team doesn't spend weeks assembling files. FCI has already built it.
+
+That's what 40,000+ endpoints and 30+ years in financial services makes possible. Not a toolset. A program — managed, documented, and defended."
 
 ---
 
@@ -87,6 +225,159 @@ Most MSSPs do not produce the documentation regulators actually ask for. They do
 - Incident response included — most competitors do not offer it
 - Sits with the firm during exams, audits & cyber insurance renewals
 - Works alongside the firm's existing IT provider — not a replacement
+
+### Competitive response framework — by competitor type
+
+When a prospect names a specific alternative, the response should be factual, calm, and focused on what the alternative does not provide. Never disparage a competitor. Let the gaps speak for themselves.
+
+**"We are evaluating another MSSP."**
+Ask three questions: (1) Do they produce the regulatory documentation that SEC, FINRA, NYDFS, or NAIC examiners specifically request? (2) Do they sit with the firm during the examination or audit? (3) Do they include incident response — containment, remediation, documentation, and communication — as part of the service? Most MSSPs deploy tools and hand the client a dashboard. FCI delivers a managed program that includes documentation, examination support, and incident response. The distinction is not about tools — it is about what happens when the regulator, the cyber insurer, or the incident arrives.
+
+**"Our IT provider says they can handle cybersecurity."**
+An IT provider manages performance and uptime — and many do it well. The question is whether they produce NIST-mapped compliance evidence, maintain SOC 2 attestation, run a 24x7 SOC, and have experience managing cybersecurity specifically for financial services sales offices through regulatory examinations and cyber incidents. Ask for their SOC 2 report. Ask how many financial services regulatory examinations they have supported. Ask whether they produce the documentation cyber insurers require for a claim. FCI works alongside the IT provider. The two roles do not overlap.
+
+**"We are looking at an enterprise security platform (CrowdStrike, SentinelOne, Palo Alto, etc.)."**
+These are strong tools. The question is who configures them for the firm's specific regulatory requirements, who produces the compliance evidence from them, who manages the incident response documentation, and who sits with the firm during the examination. An enterprise platform is an ingredient. FCI delivers the full recipe — the configuration, the procedures, the documentation, and the expertise — built specifically for the distributed sales office model in financial services. FCI can work with enterprise tools already in place.
+
+**"We are going to build this internally."**
+Ask how many hours per month the team currently spends on compliance documentation and cybersecurity maintenance. Multiply by 12. That is the cost of the current approach — before the first incident, before the first failed examination, and before the first denied cyber insurance claim. Internal builds also lack the cross-client intelligence that comes from managing 40,000+ endpoints across 400+ financial services firms. FCI's controls reflect what regulators are examining right now — because FCI sees those examinations across its entire client base. An internal build starts from one firm's experience. FCI starts from hundreds.
+
+**"We will handle it after our next exam / when we have budget / when we hire someone."**
+The evidence FCI produces builds daily. Firms that start after the exam notice arrive spend weeks assembling what FCI-managed firms already have. Every month without a managed program is a month of undocumented exposure — to regulators, to cyber insurers, and to incident liability. The gap analysis takes 30 minutes and costs the firm nothing but time. It shows where the firm stands today. The decision about what to do with that information is entirely theirs.
+
+---
+
+## Buyer Journey — Messaging by Stage
+
+Not every prospect is in the same place. The person who just received a regulatory exam notice is in a different conversation than the person who thinks their firm is "probably fine." This section maps which messages, proof points, and calls to action are most effective at each stage of the buyer's journey — across all four roles.
+
+### Awareness — "I might have a problem"
+
+The prospect knows cybersecurity is a topic but has not quantified their exposure. They have not started evaluating vendors. They may believe their current IT setup is sufficient.
+
+**Goal:** Make the gap visible without sounding alarmist. Help them see what they cannot currently prove.
+
+**Lead with:**
+- The structural visibility problem: sales offices operate on devices, networks, and in locations the firm cannot see or directly control
+- The regulatory shift: examiners are no longer asking whether policies exist — they are asking for evidence that controls are technically enforced
+- The cyber insurance tightening: carriers are requiring documentation of specific controls before renewing policies or paying claims
+- The cost of inaction data (Part 1) — concrete numbers that make the risk real
+
+**Proof points to use:** 65% of financial services firms experienced a ransomware incident in 2024. Over 40% of cyber insurance claims are denied. SEC and FINRA examination scope is expanding to include technical evidence.
+
+**Call to action:** The gap analysis. Position it as diagnostic: "Find out where you stand — before your regulator, home office, or cyber insurer asks."
+
+**Tone:** Respectful and specific. No fear, uncertainty, or doubt. Let the facts create the urgency.
+
+**By role at this stage:**
+- **Board / C-Level:** "The regulatory landscape has changed. The question is no longer whether your firm has a cybersecurity policy. It is whether you can document the controls that back it up — across every office and every device."
+- **CISO / CCO:** "Your policies define the program. The challenge is proving that the program extends to every sales office, every BYOD device, and every affiliated location — before the examiner asks."
+- **Field compliance:** "You were handed cybersecurity requirements. You were not handed the tools or the training to implement them across devices you do not own and locations you do not control."
+- **IT manager:** "You are managing more than you can fully see. The question is not whether you are doing your best — it is whether the documentation exists to prove what controls are in place."
+
+### Consideration — "I need to solve this"
+
+The prospect has recognized the gap. They may be evaluating options — another MSSP, an expansion of their IT provider's scope, or an internal build. They are comparing approaches.
+
+**Goal:** Establish FCI as the only option purpose-built for this specific environment. Show that the alternatives leave critical gaps.
+
+**Lead with:**
+- The four pillars — especially Proof of Security & Compliance and Expert Knowledge, which competitors cannot match
+- The competitive distinction: FCI is a managed program, not point tools
+- IT provider compatibility: FCI works alongside existing IT — it is not a replacement
+- The implementation speed: what takes internal teams months takes FCI hours or days
+
+**Proof points to use:** 40,000+ endpoints, 30+ years exclusively in financial services, up to 90% implementation time reduction, SOC 2 Type 1 attestation, 100% SecurityScorecard rating.
+
+**Call to action:** Gap analysis with emphasis on the deliverable: "In 30 minutes, you will see exactly what is in place, what is missing, and what your next exam will ask for."
+
+**Tone:** Authoritative and direct. This is the comparison stage — be specific about what FCI does that others do not.
+
+**By role at this stage:**
+- **Board / C-Level:** "FCI provides the most substantial risk reduction available to a financial services firm — implementing controls, producing documentation, and managing incident response as one program, managed by one team."
+- **CISO / CCO:** "FCI enforces controls across the full distributed network and produces the documentation regulators require — built continuously, before the exam notice arrives."
+- **Field compliance:** "FCI handles the implementation across every device in the office — including personal devices — so you can confirm compliance without becoming a cybersecurity expert."
+- **IT manager:** "FCI is not a replacement for what you do. It is the automation and expertise that handles the compliance layer — so you can focus on the work that moves the firm forward."
+
+### Decision — "I am choosing a partner"
+
+The prospect is ready to act. They may be comparing FCI to a specific alternative, building an internal business case, or getting final approval from leadership.
+
+**Goal:** Remove the last objections. Make the decision feel safe. Reinforce what the firm gains and what it risks by waiting.
+
+**Lead with:**
+- The "sentence that makes them lean in" for the relevant role
+- The day-one and first-90-days narrative — what the implementation actually looks like
+- The incident response capability — most competitors do not offer this
+- The "how they sell it internally" talking points (see champion enablement in each role section)
+
+**Proof points to use:** The specific regulatory alignments (SEC, FINRA, NYDFS, NAIC), the CISO Portal automation, the 80% time reduction, the 24x7 SOC.
+
+**Call to action:** Schedule the gap analysis with a specific next step: "After the gap analysis, you will have a documented picture of your posture. You decide what to do with it. No obligation."
+
+**Tone:** Calm and confident. The prospect is about to make a commitment. They need to feel that FCI has done this hundreds of times — because it has.
+
+**By role at this stage:**
+- **Board / C-Level:** "Your employees and affiliates will not notice a difference. Your regulator will."
+- **CISO / CCO:** "The examiner will ask for your evidence. FCI builds it while your sales offices are working — not after the exam notice arrives."
+- **Field compliance:** "We manage what your compliance stack cannot reach — every BYOD device, every user, every network, every sales office."
+- **IT manager:** "Your firm hired you to help it succeed. FCI handles what was keeping you from doing that."
+
+---
+
+## Channel & Format Adaptation Guide
+
+The same message delivered on a landing page, in an email subject line, on a LinkedIn carousel, and on a conference banner will sound wrong in at least three of those contexts if it is not adapted. This section defines how to shape FCI's messaging for each major format.
+
+### Format matrix
+
+**Landing page**
+- Length constraint: Headline + 3–4 sections + CTA
+- Lead with: One-sentence positioning or tagline + lead pillar (Proof of Security & Compliance)
+- Support with: Two proof points, one role-specific fear statement
+- CTA: "Request a Gap Analysis" with supporting detail (what they receive, how long it takes)
+- Tone: Direct and specific. The reader is scanning. Get to the point in the first line.
+
+**Email sequence (4–6 touches)**
+- Length constraint: 150–250 words per email
+- Structure across sequence: Touch 1 — the structural problem (awareness). Touch 2 — the regulatory shift and cost of inaction. Touch 3 — FCI's four pillars and what makes it different. Touch 4 — role-specific proof points and "what changes on day one." Touch 5 — objection handling. Touch 6 — gap analysis CTA with urgency.
+- Lead each email with: One specific, relevant fact — not a question, not a greeting
+- CTA: Gap analysis in every email, but vary the framing by touch
+- Tone: Respectful. The reader did not ask for this email. Earn their time with specificity, not cleverness.
+
+**LinkedIn ad or social post**
+- Length constraint: 1–2 sentences + link
+- Lead with: "Sentence that makes them lean in" for the target role, or a single proof point with context
+- Support with: Nothing — the link carries the weight
+- CTA: "Learn more" or "See how" linking to a landing page
+- Tone: Direct. No jargon. One idea per post.
+
+**One-pager**
+- Length constraint: One page, printed
+- Lead with: Role-specific fear + FCI's answer
+- Support with: Market context, 2–3 proof points, "what changes on day one"
+- CTA: Gap analysis with phone/email/URL
+- Tone: Authoritative. The reader is evaluating. Show depth in a compressed format.
+
+**Conference or presentation slide**
+- Length constraint: 10 words maximum on the slide itself
+- Lead with: Tagline or one-liner
+- Support with: The speaker delivers the detail verbally — the slide is a visual anchor, not a script
+- CTA: Verbal — "Let's schedule a gap analysis" or a QR code to the landing page
+- Tone: Calm and confident. The audience is listening, not reading.
+
+**Sales deck (multi-slide presentation)**
+- Length constraint: 8–12 slides for a 20-minute conversation
+- Structure: Slide 1 — the structural problem. Slide 2 — the regulatory landscape. Slide 3–6 — the four pillars. Slide 7 — competitive distinction. Slide 8 — proof points. Slide 9 — "what changes on day one." Slide 10 — gap analysis CTA.
+- Lead with: The problem, not FCI. The prospect should be nodding before FCI is introduced.
+- Tone: Authoritative. Specific. No slide should contain a claim without a supporting fact.
+
+**Proposal or executive summary**
+- Length constraint: 2–4 pages
+- Lead with: The prospect's specific situation (drawn from the gap analysis or discovery conversation)
+- Support with: All four pillars, mapped to the prospect's stated needs. Role-specific proof points. First 90 days narrative.
+- CTA: Next step — implementation timeline, pricing discussion, or decision meeting
+- Tone: Direct and calm. This is the final document before a decision. Confidence, not persuasion.
 
 ---
 
@@ -147,6 +438,26 @@ On day one, FCI takes a complete inventory of every device associated with the f
 - Evidence documenting the controls carriers ask for
 - Incident response documentation if any event has occurred
 
+#### What success looks like
+
+The managing partner who brought FCI in does not think about cybersecurity compliance anymore — not because they stopped caring, but because the evidence arrives without them asking for it. When the cyber insurer sends the renewal questionnaire, the documentation is already assembled. When the board asks about the firm's posture, the answer is specific, current, and backed by records. The firm's reputation — the thing they spent decades building — is protected by a program they can see, verify, and explain. They made the decision. The program runs itself.
+
+#### The first 90 days and beyond
+
+- **Day 1:** Full device inventory across the firm. Leadership sees the complete cybersecurity posture — often for the first time. Controls begin deploying automatically.
+- **Week 1–2:** Controls are enforced across every endpoint. Documentation of what is in place begins building as a byproduct of operations.
+- **Month 1:** First compliance management reports generated through the CISO Portal. Leadership has a documented baseline they can point to.
+- **Month 3:** First regulatory examination, home office audit, or cyber insurance renewal prepared in minutes — not weeks. The evidence already exists.
+- **Year 1:** A full year of continuous evidence: control enforcement records, incident documentation, regulatory alignment mapping. The firm's posture is measurably stronger than where it started — and the proof of that improvement is already on file.
+
+#### How they sell it internally
+
+When the board member or managing partner needs to bring this to their partners, their compliance team, or their IT manager:
+
+- **To partners:** "I found a managed cybersecurity program that handles the controls our regulators and cyber insurer require — across every device, including personal devices. They produce the documentation we need for exams. It does not require us to build a security team."
+- **To compliance leadership:** "This firm manages the technical enforcement side of cybersecurity and produces the evidence examiners ask for. It would close the gap between our policies and what we can actually prove."
+- **To the IT manager:** "This works alongside what you already manage. It handles the compliance and regulatory documentation layer. It is not a replacement — it is support."
+
 #### The sentence that makes them lean in
 
 "Your employees and affiliates will not notice a difference. Your regulator will."
@@ -203,6 +514,26 @@ On day one, the CISO or CCO receives a complete inventory of the firm's distribu
 - Written supervisory procedure documentation backed by technical evidence
 - Vendor due diligence file for FCI
 - Incident response log for the full distributed network
+
+#### What success looks like
+
+The CISO or CCO who brought FCI in walks into examination season knowing the evidence is already assembled. They do not spend weeks pulling records from field offices. They do not wonder whether the policies they wrote are actually enforced in locations they have never visited. When the examiner asks for documentation, they open the CISO Portal and produce it — mapped to the specific requirements, with dates, enforcement records, and device-level detail. They are the person who closed the gap between the firm's stated posture and what could actually be proven. That is what gets recognized.
+
+#### The first 90 days and beyond
+
+- **Day 1:** Complete inventory of the distributed device landscape — including devices and connections that may not have been previously visible.
+- **Week 1–2:** Controls deploying across all offices and affiliated locations. The documentation gap begins closing immediately.
+- **Month 1:** First comprehensive compliance view across the full network. The CISO or CCO can confirm device status, control enforcement, and incident history from a single dashboard.
+- **Month 3:** First regulatory examination or home office audit prepared using FCI-generated evidence. Preparation that previously took weeks is completed in minutes.
+- **Year 1:** A full annual cycle of continuous evidence — ready for annual regulatory filings, cyber insurance renewals, and home office reviews. The program has been tested in real conditions and the documentation trail is complete.
+
+#### How they sell it internally
+
+When the CISO or CCO needs to build the case with the board, their IT team, or their field offices:
+
+- **To the board:** "I've found a managed program that closes the gap between our policies and what we can actually prove in the field. It produces the documentation we need for examinations and cyber insurance renewals — continuously, without additional staff."
+- **To the IT team:** "This handles the compliance documentation and regulatory alignment layer. It deploys alongside your existing tools. It does not replace what you manage — it covers the part that regulators and examiners are specifically asking for."
+- **To field offices:** "FCI handles the cybersecurity controls across your devices — including personal devices. You do not need to do anything differently. The evidence of compliance builds automatically."
 
 #### The sentence that makes them lean in
 
@@ -268,6 +599,26 @@ On day one, FCI maps every device connected to the office. The field compliance 
 - MFA and VPN enforcement records for all users in the office
 - Incident response documentation if any event occurred
 
+#### What success looks like
+
+The field compliance officer who brought FCI in no longer dreads the home office compliance request. When the email arrives asking for evidence of cybersecurity controls, they do not scramble. They do not call an IT consultant. They do not spend a weekend assembling documentation they are not sure is complete. They open the portal, pull the report, and send it. The weight of a responsibility they were never trained for has been lifted — not because someone told them it was handled, but because they can see the evidence themselves. They are still accountable. But now they have the tools and the team to meet that accountability.
+
+#### The first 90 days and beyond
+
+- **Day 1:** FCI maps every device connected to the office. The field compliance officer sees the full picture — often for the first time. Controls deploy automatically. Users notice nothing.
+- **Week 1–2:** Every device in the office — including BYOD — is under management. MFA, VPN, and endpoint protections are enforced without users taking additional steps.
+- **Month 1:** The first compliance evidence report is generated. When the home office or a compliance team asks what controls are in place, the answer is documented and ready.
+- **Month 3:** The field compliance officer has been through at least one compliance request cycle with FCI-generated evidence. The time spent on cybersecurity compliance tasks has dropped by more than 80%.
+- **Year 1:** A full year of documented controls, enforcement records, and incident response readiness. The office has a defensible compliance history — and the field compliance officer has reclaimed the time to focus on the work they were actually hired to do.
+
+#### How they sell it internally
+
+When the field compliance officer needs to make the case to their managing partner, their home office, or the advisors in their office:
+
+- **To the managing partner:** "I found a firm that handles the cybersecurity requirements from our regulators and our cyber insurer. They cover every device including personal devices, and they produce the documentation we need for exams. It does not require us to hire IT staff."
+- **To the home office:** "We are working with FCI to enforce the cybersecurity controls across our office. They produce the compliance documentation you require — I can send you the current report."
+- **To advisors and agents in the office:** "Nothing changes in how you work. FCI manages the security controls on your devices in the background. You will not notice anything different."
+
 #### The sentence that makes them lean in
 
 "We manage what your compliance stack cannot reach — every BYOD device, every user, every network, every sales office."
@@ -331,6 +682,26 @@ Controls begin deploying from day one. The documentation starts building immedia
 - Monthly compliance management reports — generated by the FCI CISO Portal, not by manual effort
 - Incident and response log for every security event in the environment
 - MFA, VPN, and endpoint encryption enforcement records for all users
+
+#### What success looks like
+
+The IT manager who brought FCI in is no longer the person who maintains compliance spreadsheets and chases endpoint configurations at midnight. They are the person who made the call that freed the team. The tasks that used to consume their weeks — assembling documentation, configuring controls across dozens of devices, responding to compliance requests — are handled. What remains is the work they actually wanted to do: building the technology that helps the firm serve clients better, improving operational efficiency, solving the problems that make leadership see IT as a strategic asset instead of a cost center. They brought FCI in — and that decision changed their role.
+
+#### The first 90 days and beyond
+
+- **Day 1:** FCI runs a complete inventory of the device environment. The IT manager sees — in one report — the full picture of what is connected, what is compliant, and what is not. That visibility is frequently the moment the relationship changes.
+- **Week 1–2:** Controls deploy across all endpoints. Tasks that had been deferred for months due to bandwidth are completed. The IT manager begins to see what "managed" actually means.
+- **Month 1:** First compliance management reports generated automatically by the CISO Portal. Compliance requests that previously took the IT manager days are answered in minutes.
+- **Month 3:** The IT manager has reclaimed the majority of the time previously spent on compliance maintenance. They are working on projects that move the firm forward — the work they were hired to do.
+- **Year 1:** A full year of managed cybersecurity and automated compliance documentation. The IT manager's relationship with leadership has shifted: they are seen as the person who solved the compliance problem and freed the team, not the person who maintains the security stack.
+
+#### How they sell it internally
+
+When the IT manager needs to make the case to firm leadership, the compliance team, or their own staff:
+
+- **To firm leadership:** "I've found a managed program that handles the cybersecurity compliance layer — the documentation, the regulatory alignment, the controls that regulators and cyber insurers are asking about. It works alongside what we already have. It frees me to focus on the work that grows the firm."
+- **To the compliance team:** "FCI produces the compliance evidence and regulatory documentation automatically. I can give you access to the dashboard. It covers the controls you've been asking me to document."
+- **To their IT staff:** "FCI manages the compliance and security monitoring layer. It does not replace our tools — it handles the part we do not have bandwidth for. We get to focus on the projects we have been deferring."
 
 #### The sentence that makes them lean in
 
@@ -446,6 +817,83 @@ Frameworks: NIST Cybersecurity Framework (NIST CSF), Center for Internet Securit
 
 ---
 
+## Part 6 — Retention & Expansion Messaging
+
+The previous parts focus on acquiring new clients. This section covers the messaging that reinforces value after the contract is signed — for renewals, expansions, and competitive defense during the relationship.
+
+### Renewal reinforcement
+
+The strongest renewal argument is the evidence the client already has. Account managers should frame renewal conversations around what the firm has accumulated, not what FCI plans to deliver.
+
+**Key message:** "Over the past year, FCI has produced [X] compliance management reports, maintained controls across [Y] endpoints, and documented [Z] incidents and responses. That evidence exists because the program has been running continuously. Discontinuing the program means that evidence trail stops — and the next time a regulator, home office, or cyber insurer asks, the firm starts from zero."
+
+**Supporting points:**
+- Reference the specific examinations, audits, or cyber insurance renewals the firm has completed during the engagement — and how the evidence was produced
+- Cite the time reclaimed: the 80%+ reduction in manual compliance management effort is now a year's worth of time the firm got back
+- If any incidents occurred, reference how they were handled — the documentation, the response, the outcome
+- The cost of switching: a new provider means re-enrollment, re-deployment, and a documentation gap during the transition
+
+### Expansion messaging
+
+Expansion means adding offices, adding markets, or extending coverage to parts of the firm not yet under FCI's program. The message should connect the proven experience in the existing engagement to the new scope.
+
+**Adding offices:**
+"Your [city] office is covered. Every device is under management, every control is documented, and the evidence is building continuously. Your [other city] office is carrying the same regulatory obligations — but without the same program in place. FCI can extend the same controls, the same documentation, and the same coverage to every additional office. The deployment uses the same automation — it does not start from scratch."
+
+**Adding markets (e.g., a broker-dealer client who also has an RIA or insurance business):**
+"The program running across your broker-dealer branches is built on the same architecture FCI uses for RIAs and insurance carriers & agencies. The regulatory requirements differ — SEC and FINRA for the broker-dealer, SEC for the RIA, NAIC and state regulators for insurance — but the controls, procedures, and documentation layer are consistent. Extending coverage to your [RIA/insurance] business is not a new build. It is the same program, mapped to the additional regulatory framework."
+
+**Expanding scope within an existing office (more devices, more users):**
+"Your firm has grown. New advisors, new devices, new locations — and each one carries the same compliance obligation. FCI's program scales without manual configuration. Every new device enrolls through the same automation. Every new user gets the same controls. The documentation updates automatically."
+
+### Competitive defense during renewal
+
+When a competitor approaches an existing FCI client — usually with a lower price — the response should be factual and grounded in what the client would lose.
+
+**Key message:** "A lower price means a narrower scope. Ask what is not included. Ask whether they produce the regulatory documentation your examiner requested last year. Ask whether they will sit with you during the examination. Ask who handles the incident response. The program you have today was built over [time period] of continuous operation. The evidence trail, the deployment history, and the incident documentation — all of that resets if you switch. The question is not whether another provider is cheaper. It is whether they deliver what your regulator, home office, and cyber insurer actually require."
+
+---
+
+## Part 7 — Crisis Communication Principles
+
+FCI handles incident response. That means FCI is present during the most stressful, highest-stakes moment in a client relationship. How FCI communicates during an incident is the single most memorable brand experience a client will ever have — it shapes referrals, renewals, and reputation more than any marketing asset.
+
+This is not a crisis communications plan (that is a separate operational document). This is messaging guidance that ensures FCI's voice is consistent, steady, and trustworthy when it matters most.
+
+### Tone during a crisis
+
+**Calm dominates everything.** The client is in distress. FCI is not. FCI has handled thousands of incidents. The voice should reflect that composure — not dismissiveness, not false reassurance, but the steady authority of a team that has done this before and knows what comes next.
+
+**Specific over vague.** Never say "we're looking into it" without adding what specifically is being done. Every communication should include a concrete action and a concrete next step.
+
+**No blame.** Never suggest the incident was caused by the client's failure, even if it was. The time for root cause analysis is after the incident is resolved. During the crisis, the only message is: here is what happened, here is what we are doing, here is what you need to do, and here is when we will update you next.
+
+### Communication structure during an incident
+
+Every client-facing communication during an incident should follow this structure:
+
+1. **What happened** — stated factually, without speculation, in terms the client can repeat to their leadership
+2. **What FCI is doing** — the specific actions underway: containment, remediation, documentation
+3. **What the client needs to do** — if anything; if nothing, say so explicitly ("No action is required from your team at this time")
+4. **When the next update will arrive** — a specific time, not "soon" or "as soon as we know more"
+
+### The overarching crisis message
+
+"This is what FCI is here for. The controls were in place. The documentation exists. The incident response team is already involved. We are managing the containment, the remediation, and the documentation — and we will be with you through every step until this is resolved and reported."
+
+### Post-incident messaging
+
+After the incident is resolved, the communication shifts from crisis to evidence:
+
+- What happened, what was done, and what was documented
+- What controls were in place and how they performed
+- What changes, if any, will be made to prevent recurrence
+- The documentation package for the client's records, their regulator, and their cyber insurer
+
+The post-incident documentation is often the moment that converts a crisis into a renewal. The client sees — in writing — what FCI did, how it responded, and what evidence it produced. That experience, documented, is the most powerful proof point FCI can offer.
+
+---
+
 ## Appendix — Source Material for Future Assets
 
 The following topics surfaced during the April 2, 2026 CEO review session and contain strong material for deeper-dive assets — case studies, sales playbooks, one-pagers, and website pages. They were intentionally kept out of this document to preserve its high-level focus.
@@ -468,4 +916,5 @@ FCI Visibility White Paper: The existing white paper contains detailed technical
 
 *Section B — Master Messaging Architecture | FCI Rebranding Project | Revised April 2026*
 *Incorporates feedback from Brian Edelman, April 2, 2026.*
+*Expanded April 5, 2026: brand voice, message hierarchy, buyer journey mapping, channel adaptation, competitive response framework, aspirational messaging, first 90 days narratives, champion enablement, cost of inaction data, gap analysis funnel, retention & expansion messaging, and crisis communication principles.*
 *All claims traceable to FCI knowledge base documents. Review before publishing any asset.*
