@@ -222,7 +222,7 @@ FCI is structurally different because we built a holistic, integrated platform t
 
 ### Where most competitors stop
 
-Most MSSPs do not produce the documentation regulators actually ask for. They do not sit with the firm during an examination. They do not manage incident response. They do not enforce controls across devices they did not sell. FCI does all four — because the financial services sales office requires all four.
+Most MSSPs do not produce the documentation regulators actually ask for. They do not sit with the firm during an examination. They do not manage incident response. They do not enforce controls across devices for which they do not have admin control — BYOD, personal devices, or anything not on the corporate network. FCI does all four — because the financial services sales office requires all four.
 
 ### Key competitive distinctions
 
