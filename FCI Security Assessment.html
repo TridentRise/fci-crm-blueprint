@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FCI — Security Assessment</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Inter+Tight:wght@500;600&display=swap" rel="stylesheet" />
+  <style>
+    /* ─── DESIGN TOKENS ──────────────────────────── */
+    :root {
+      --blue:       #2563EB;
+      --blue-dark:  #1D4ED8;
+      --sky:        #0EA5E9;
+      --deep-navy:  #1E3A6E;
+      --blue-tint:  #DBEAFE;
+      --blue-faint: #EFF6FF;
+      --offwhite:   #F8FAFC;
+      --white:      #FFFFFF;
+      --rule:       #E2E8F0;
+      --text:       #0F172A;
+      --body:       #475569;
+      --muted:      #64748B;
+      --faint:      #94A3B8;
+      --amber:      #F59E0B;
+      --amber-tint: #FEF3C7;
+      --emerald:    #10B981;
+      --emerald-tint:#D1FAE5;
+    }
+
+    /* ─── RESET ──────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { font-size: 16px; scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--offwhite);
+      color: var(--text);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ─── LAYOUT ─────────────────────────────────── */
+    .wrap { max-width: 900px; margin: 0 auto; padding: 0 48px 120px; }
+
+    /* ─── HEADER ─────────────────────────────────── */
+    .site-header {
+      background: var(--blue);
+      margin: 0 -48px;
+      padding: 56px 48px 48px;
+      position: relative;
+      overflow: hidden;
+    }
+    .site-header::before {
+      content: '';
+      position: absolute;
+      top: -100px; right: -100px;
+      width: 400px; height: 400px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.04);
+      pointer-events: none;
+    }
+    .header-eyebrow {
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.70);
+      margin-bottom: 20px;
+      position: relative; z-index: 1;
+    }
+    .header-logo {
+      font-family: 'Inter Tight', sans-serif;
+      font-size: 40px;
+      font-weight: 600;
+      letter-spacing: 0;
+      color: var(--white);
+      line-height: 1;
+      display: inline-flex;
+      align-items: baseline;
+      position: relative; z-index: 1;
+    }
+    .header-descriptor {
+      font-size: 14px;
+      font-weight: 400;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.75);
+      margin-top: 10px;
+      position: relative; z-index: 1;
+    }
+    .header-title {
+      font-family: 'Inter Tight', sans-serif;
+      font-size: clamp(26px, 3.5vw, 36px);
+      font-weight: 600;
+      color: var(--white);
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+      margin-top: 32px;
+      position: relative; z-index: 1;
+    }
+    .header-sub {
+      font-size: 15px;
+      color: rgba(255,255,255,0.82);
+      margin-top: 12px;
+      max-width: 600px;
+      line-height: 1.65;
+      position: relative; z-index: 1;
+    }
+
+    /* ─── NAV ────────────────────────────────────── */
+    .toc {
+      margin: 48px 0 0;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .toc a {
+      font-size: 14px;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      color: var(--blue);
+      background: var(--blue-tint);
+      padding: 7px 16px;
+      text-decoration: none;
+      border: 1px solid #BFDBFE;
+      transition: background 0.15s;
+    }
+    .toc a:hover { background: #BFDBFE; }
+
+    /* ─── SECTION HEADERS ────────────────────────── */
+    .section { margin-top: 72px; }
+
+    .section-label {
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--sky);
+      margin-bottom: 12px;
+    }
+
+    .section-title {
+      font-family: 'Inter Tight', sans-serif;
+      font-size: clamp(24px, 3vw, 32px);
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      color: var(--text);
+      line-height: 1.15;
+      margin-bottom: 8px;
+    }
+
+    .section-intro {
+      font-size: 15px;
+      color: var(--body);
+      max-width: 620px;
+      line-height: 1.75;
+      margin-bottom: 36px;
+      padding-bottom: 36px;
+      border-bottom: 1px solid var(--rule);
+    }
+
+    /* ─── BLOCKS ─────────────────────────────────── */
+    .block { margin-bottom: 32px; }
+
+    .block-label {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--sky);
+      margin-bottom: 10px;
+    }
+
+    .block-content {
+      font-size: 15px;
+      color: var(--body);
+      line-height: 1.75;
+      max-width: 720px;
+    }
+
+    /* ─── LAYER CARDS ────────────────────────────── */
+    .layer-diagram {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin: 24px 0 32px;
+    }
+    .layer-card {
+      background: var(--blue-faint);
+      border: 1px solid var(--rule);
+      border-radius: 6px;
+      padding: 24px 20px;
+      text-align: center;
+    }
+    .layer-number {
+      font-family: 'Inter Tight', sans-serif;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 10px;
+    }
+    .layer-card-title {
+      font-family: 'Inter Tight', sans-serif;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--blue);
+      line-height: 1.35;
+    }
+
+    /* ─── LAYER DETAIL BLOCKS ───────────────────── */
+    .layer {
+      background: var(--white);
+      border: 1px solid var(--rule);
+      padding: 28px 32px;
+      margin: 16px 0;
+    }
+    .layer-title {
+      font-family: 'Inter Tight', sans-serif;
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--deep-navy);
+      letter-spacing: 0.02em;
+      margin-bottom: 12px;
+    }
+    .layer p {
+      font-size: 14px;
+      color: var(--body);
+      line-height: 1.7;
+      margin: 0 0 12px;
+    }
+    .layer p:last-child { margin-bottom: 0; }
+
+    /* ─── AREA PILLS (gap analysis) ──────────────── */
+    .area-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 16px 0 20px;
+    }
+    .area-pill {
+      background: var(--blue-faint);
+      border: 1px solid #BFDBFE;
+      padding: 8px 18px;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--blue);
+      line-height: 1.4;
+      border-radius: 4px;
+    }
+
+    /* ─── PHASE CARDS ────────────────────────────── */
+    .phase-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin: 24px 0 32px;
+    }
+    .phase-card {
+      background: var(--white);
+      border: 1px solid var(--rule);
+      border-top: 3px solid var(--blue);
+      padding: 24px 20px;
+    }
+    .phase-number {
+      font-family: 'Inter Tight', sans-serif;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 8px;
+    }
+    .phase-title {
+      font-family: 'Inter Tight', sans-serif;
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--deep-navy);
+      margin-bottom: 10px;
+    }
+    .phase-card p {
+      font-size: 13px;
+      color: var(--body);
+      line-height: 1.65;
+      margin: 0;
+    }
+
+    /* ─── MOTIVATION BLOCKS ──────────────────────── */
+    .motivation {
+      background: var(--white);
+      border: 1px solid var(--rule);
+      padding: 24px 28px;
+      margin: 12px 0;
+    }
+    .motivation-title {
+      font-family: 'Inter Tight', sans-serif;
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--deep-navy);
+      margin-bottom: 8px;
+    }
+    .motivation p {
+      font-size: 14px;
+      color: var(--body);
+      line-height: 1.7;
+      margin: 0;
+    }
+
+    /* ─── CALLOUT ────────────────────────────────── */
+    .callout {
+      background: var(--blue);
+      padding: 28px 36px;
+      margin: 36px 0;
+    }
+    .callout-label {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.70);
+      margin-bottom: 12px;
+    }
+    .callout-text {
+      font-family: 'Inter Tight', sans-serif;
+      font-size: clamp(17px, 2.2vw, 21px);
+      font-weight: 500;
+      color: var(--white);
+      letter-spacing: -0.01em;
+      line-height: 1.45;
+    }
+
+    /* ─── REGULATORY TABLE ────────────────────────── */
+    .reg-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 16px 0 24px;
+      font-size: 14px;
+    }
+    .reg-table th {
+      background: var(--blue-faint);
+      border: 1px solid var(--rule);
+      padding: 12px 16px;
+      text-align: left;
+      font-weight: 600;
+      color: var(--text);
+      font-size: 13px;
+      letter-spacing: 0.02em;
+    }
+    .reg-table td {
+      border: 1px solid var(--rule);
+      padding: 12px 16px;
+      color: var(--body);
+      line-height: 1.55;
+      background: var(--white);
+    }
+
+    /* ─── LIST BLOCK ─────────────────────────────── */
+    .list-block {
+      background: var(--white);
+      border: 1px solid var(--rule);
+      padding: 28px 32px;
+      margin: 16px 0 32px;
+    }
+    .list-block ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+    .list-block li {
+      font-size: 14px;
+      color: var(--body);
+      padding: 12px 0;
+      border-bottom: 1px solid var(--rule);
+      line-height: 1.6;
+      padding-left: 20px;
+      position: relative;
+    }
+    .list-block li:last-child { border-bottom: none; }
+    .list-block li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 20px;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--sky);
+    }
+
+    /* ─── DIVIDER ────────────────────────────────── */
+    .divider {
+      border: none;
+      border-top: 1px solid var(--rule);
+      margin: 48px 0;
+    }
+
+    /* ─── FOOTER ─────────────────────────────────── */
+    .page-footer {
+      margin-top: 96px;
+      padding-top: 36px;
+      border-top: 1px solid var(--rule);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .page-footer-logo {
+      font-family: 'Inter Tight', sans-serif;
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--faint);
+      letter-spacing: 0.04em;
+    }
+    .page-footer-note {
+      font-size: 12px;
+      color: var(--faint);
+      letter-spacing: 0.04em;
+    }
+
+    /* ─── HUB THEME TOGGLE ───────────────────────── */
+    .hub-theme-toggle {
+      position: fixed; bottom: 20px; right: 20px;
+      display: flex; gap: 4px;
+      background: var(--white); border: 1px solid var(--rule);
+      border-radius: 8px; padding: 4px; z-index: 200;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    }
+    .hub-theme-toggle button {
+      border: none; background: transparent; cursor: pointer;
+      padding: 6px 10px; border-radius: 6px;
+      font-size: 13px; color: var(--muted);
+      transition: background 0.15s, color 0.15s;
+    }
+    .hub-theme-toggle button:hover { background: var(--blue-faint); }
+    .hub-theme-toggle button.active { background: var(--blue-tint); color: var(--blue); font-weight: 600; }
+
+    /* ─── DARK MODE ──────────────────────────────── */
+    [data-hub-theme="dark"] {
+      --offwhite: #0B1120; --white: #131C2E; --rule: #1E2D42;
+      --text: #E2E8F0; --body: #94A3B8; --muted: #64748B; --faint: #475569;
+      --blue-tint: rgba(37,99,235,0.12); --blue-faint: rgba(37,99,235,0.06);
+    }
+    [data-hub-theme="dark"] .site-header { background: #0E1B30; }
+    [data-hub-theme="dark"] .hub-theme-toggle { background: #131C2E; border-color: #1E2D42; }
+    [data-hub-theme="dark"] .hub-theme-toggle button:hover { background: rgba(37,99,235,0.1); }
+    [data-hub-theme="dark"] .hub-theme-toggle button.active { background: rgba(37,99,235,0.2); }
+    [data-hub-theme="dark"] .phase-card { border-top-color: var(--sky); }
+    [data-hub-theme="dark"] .reg-table th { background: rgba(37,99,235,0.08); }
+
+    @media (max-width: 700px) {
+      .wrap { padding: 0 24px 80px; }
+      .site-header { margin: 0 -24px; padding: 48px 24px 36px; }
+      .layer-diagram { grid-template-columns: repeat(2, 1fr); }
+      .phase-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <!-- ═══════════════════════════════════════════════
+       HEADER
+  ═══════════════════════════════════════════════ -->
+  <div class="site-header">
+    <div class="header-eyebrow">Working Document</div>
+    <div class="header-logo"><span>F</span><span style="margin-left:0.02em;">C</span><span style="margin-left:0.05em;">I</span></div>
+    <div class="header-descriptor">Managed Cybersecurity Services</div>
+    <div class="header-title">Security Assessment</div>
+    <div class="header-sub">A comprehensive security assessment covers four layers — from an initial gap analysis through network penetration testing, cloud application hardening, and external attack surface evaluation. Each layer builds on the previous one to give the firm a complete picture of its security posture.</div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════
+       NAV
+  ═══════════════════════════════════════════════ -->
+  <div class="toc">
+    <a href="#layers">Four Layers</a>
+    <a href="#gap-analysis">Gap Analysis</a>
+    <a href="#pen-testing">Pen Testing</a>
+    <a href="#cloud-hardening">Cloud Hardening</a>
+    <a href="#attack-surface">Attack Surface</a>
+    <a href="#delivery">Delivery Model</a>
+    <a href="#motivations">Why &amp; Who</a>
+  </div>
+
+
+  <!-- ═══════════════════════════════════════════════
+       SECTION 1 — THE FOUR LAYERS
+  ═══════════════════════════════════════════════ -->
+  <hr class="divider" />
+  <div class="section" id="layers">
+    <div class="section-label">Section 1</div>
+    <div class="section-title">The Four Layers of Security Assessment</div>
+    <div class="section-intro">A security assessment is not a single test. It is a layered process that begins with understanding what the firm has in place today and ends with a verified view of its exposure from the outside. Each layer addresses a different dimension of risk.</div>
+
+    <!-- Layer overview diagram -->
+    <div class="layer-diagram">
+      <div class="layer-card">
+        <div class="layer-number">Layer 1</div>
+        <div class="layer-card-title">Gap Analysis</div>
+      </div>
+      <div class="layer-card">
+        <div class="layer-number">Layer 2</div>
+        <div class="layer-card-title">Network Pen Testing</div>
+      </div>
+      <div class="layer-card">
+        <div class="layer-number">Layer 3</div>
+        <div class="layer-card-title">Cloud App Hardening</div>
+      </div>
+      <div class="layer-card">
+        <div class="layer-number">Layer 4</div>
+        <div class="layer-card-title">External Attack Surface</div>
+      </div>
+    </div>
+
+
+    <!-- ── LAYER 1: GAP ANALYSIS ─────────────────── -->
+    <div class="layer" id="gap-analysis">
+      <div class="layer-title">Layer 1 — Gap Analysis</div>
+      <p>The gap analysis is the foundational layer. It discusses the firm's security posture across five areas:</p>
+
+      <div class="area-row">
+        <span class="area-pill">Firm</span>
+        <span class="area-pill">Endpoint</span>
+        <span class="area-pill">User</span>
+        <span class="area-pill">Network</span>
+        <span class="area-pill">Cloud App Security</span>
+      </div>
+
+      <p>For each area, FCI evaluates two things: what controls are in place, and whether the firm has the evidence to prove it. Evidence is what the firm would need to produce during a regulatory exam, a home office audit, a cyber insurance claim, or in the aftermath of a breach.</p>
+      <p>The gap analysis gives the firm a clear picture of where it stands, what is missing, and which layers of the full security assessment it needs. This is diagnostic before prescriptive — in 30 minutes, the firm knows exactly where the gaps are.</p>
+    </div>
+
+
+    <!-- ── LAYER 2: NETWORK PEN TESTING ──────────── -->
+    <div class="layer" id="pen-testing">
+      <div class="layer-title">Layer 2 — Network Penetration Testing (Internal &amp; External)</div>
+      <p>Network penetration testing simulates real-world attacks against the firm's infrastructure to identify vulnerabilities before an attacker does. Traditionally, this testing focused on external-facing systems — testing from the outside in.</p>
+      <p>That is changing. Regulators are now requiring firms to test from the inside as well. Internal penetration testing evaluates what an attacker could do after gaining initial access — moving laterally through the network, escalating privileges, and reaching sensitive data.</p>
+
+      <div class="block" style="margin-top: 20px;">
+        <div class="block-label">Regulatory Landscape</div>
+      </div>
+
+      <table class="reg-table">
+        <thead>
+          <tr>
+            <th>Regulator</th>
+            <th>Requirement</th>
+            <th>Internal Testing</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>NYDFS</strong> — New York Department of Financial Services</td>
+            <td>23 NYCRR 500.5 requires annual penetration testing "from both inside and outside the information systems' boundaries." Effective April 29, 2024.</td>
+            <td>Explicitly required</td>
+          </tr>
+          <tr>
+            <td><strong>SEC</strong> — Securities and Exchange Commission</td>
+            <td>Regulation S-P (updated 2024) requires written policies and procedures for safeguarding customer records and information. Penetration testing is expected as part of demonstrating compliance, though not prescribed by name.</td>
+            <td>Expected, not mandated</td>
+          </tr>
+          <tr>
+            <td><strong>FINRA</strong> — Financial Industry Regulatory Authority</td>
+            <td>FINRA's Report on Selected Cybersecurity Practices recommends penetration testing, particularly for customer-facing systems and sensitive data stores. Annual cybersecurity risk assessments are expected.</td>
+            <td>Recommended</td>
+          </tr>
+          <tr>
+            <td><strong>NAIC</strong> — National Association of Insurance Commissioners</td>
+            <td>The NAIC Insurance Data Security Model Law (adopted by 24+ states) requires annual assessment of safeguards' key controls, systems, and procedures. The model is flexible on method, but penetration testing is the accepted standard.</td>
+            <td>Implied by model law</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p>FCI performs both internal and external network penetration testing. For firms subject to NYDFS — or firms that want to get ahead of where regulation is heading — internal testing is no longer optional.</p>
+    </div>
+
+
+    <!-- ── LAYER 3: CLOUD APP HARDENING ──────────── -->
+    <div class="layer" id="cloud-hardening">
+      <div class="layer-title">Layer 3 — Cloud Application Hardening (Microsoft 365)</div>
+      <p>Microsoft 365 is where most firms store sensitive client data, communicate, and collaborate. It is the environment advisors and staff use every day — and it is a primary attack surface.</p>
+      <p>Cloud application hardening reviews the configuration of the firm's Microsoft 365 environment against security best practices. This includes email security settings, data sharing permissions, conditional access policies, and multi-factor authentication enforcement. Misconfigured settings create openings that attackers exploit — often without the firm knowing the exposure exists.</p>
+      <p>FCI assesses the current configuration, identifies gaps, and tightens the settings to reduce the attack surface.</p>
+    </div>
+
+
+    <!-- ── LAYER 4: EXTERNAL ATTACK SURFACE ──────── -->
+    <div class="layer" id="attack-surface">
+      <div class="layer-title">Layer 4 — External Attack Surface Assessment</div>
+      <p>The external attack surface is everything visible from the outside — what an attacker or an automated scanning tool would see when looking at the firm. This includes public-facing servers, open ports, DNS records, email authentication settings, SSL certificates, and the firm's marketing and corporate website.</p>
+      <p>This layer is critical because cyber insurance carriers now use automated tools to verify a firm's external attack surface before underwriting or renewing a policy. A poor external posture can directly affect insurability and premium pricing.</p>
+      <p>The assessment identifies what is exposed, what should not be, and what needs to be corrected — before an insurer, attacker, or regulator finds it first.</p>
+    </div>
+
+  </div>
+
+
+  <!-- ═══════════════════════════════════════════════
+       SECTION 2 — THREE-PHASE DELIVERY MODEL
+  ═══════════════════════════════════════════════ -->
+  <hr class="divider" />
+  <div class="section" id="delivery">
+    <div class="section-label">Section 2</div>
+    <div class="section-title">The Three-Phase Delivery Model</div>
+    <div class="section-intro">Most firms that have gone through a security assessment received a report and nothing else. The vendor ran the scans, delivered the findings, and moved on. FCI's approach is different.</div>
+
+    <div class="callout">
+      <div class="callout-label">FCI's Differentiator</div>
+      <div class="callout-text">FCI does not just find problems. FCI helps resolve them — and then proves it.</div>
+    </div>
+
+    <div class="phase-grid">
+      <div class="phase-card">
+        <div class="phase-number">Phase 1</div>
+        <div class="phase-title">Draft Report</div>
+        <p>FCI delivers a detailed draft report with all findings, risk ratings, and remediation recommendations. The firm sees exactly what was found, how severe it is, and what needs to happen next.</p>
+      </div>
+      <div class="phase-card">
+        <div class="phase-number">Phase 2</div>
+        <div class="phase-title">Remediation Window</div>
+        <p>FCI gives the firm a defined window to address the findings. FCI's team is available during this period to help implement fixes and close gaps. The firm is not left to figure it out alone.</p>
+      </div>
+      <div class="phase-card">
+        <div class="phase-number">Phase 3</div>
+        <div class="phase-title">Final Report</div>
+        <p>After the remediation window closes, FCI re-tests and delivers a final report that reflects the firm's improved posture. This is the report the firm can present to regulators, insurers, and home offices.</p>
+      </div>
+    </div>
+
+    <div class="block">
+      <div class="block-content">The final report demonstrates not just that issues were found, but that they were resolved. This turns the assessment from a point-in-time snapshot into a measurable improvement cycle — and gives the firm a document that proves progress, not just problems.</div>
+    </div>
+  </div>
+
+
+  <!-- ═══════════════════════════════════════════════
+       SECTION 3 — WHY & WHO
+  ═══════════════════════════════════════════════ -->
+  <hr class="divider" />
+  <div class="section" id="motivations">
+    <div class="section-label">Section 3</div>
+    <div class="section-title">Why Firms Run Security Assessments</div>
+    <div class="section-intro">There are four primary reasons a firm initiates a security assessment. Understanding the motivation shapes the scope, urgency, and audience for the results.</div>
+
+    <div class="motivation">
+      <div class="motivation-title">1. Self-Validation</div>
+      <p>The firm wants to know where it stands. Either it confirms that its security posture is solid — which provides confidence to leadership, the board, and clients — or it identifies weaknesses and builds the case for budget to address them. In both outcomes, the firm is better off than not knowing.</p>
+    </div>
+
+    <div class="motivation">
+      <div class="motivation-title">2. Regulatory Requirement</div>
+      <p>Regulators — the Securities and Exchange Commission (SEC), the Financial Industry Regulatory Authority (FINRA), the New York Department of Financial Services (NYDFS), and state insurance departments — ask for copies of security assessments during examinations. Having a current, comprehensive assessment ready is a compliance expectation. Firms that do not have one face harder questions and increased scrutiny.</p>
+    </div>
+
+    <div class="motivation">
+      <div class="motivation-title">3. Home Office Requirement</div>
+      <p>The home office, carrier, or enterprise above the sales office requires annual security assessments as part of its oversight. This can be a standing annual requirement — built into the affiliation agreement or compliance calendar — or triggered by enforcement after an incident or audit finding. In either case, the sales office needs to produce results on a defined timeline.</p>
+    </div>
+
+    <div class="motivation">
+      <div class="motivation-title">4. Mergers &amp; Acquisitions</div>
+      <p>On the sell side, a firm wants to demonstrate the value and security maturity of what the buyer is acquiring. A strong assessment adds to the firm's credibility and negotiating position. On the buy side, the acquirer wants to understand and reduce liability. A poor security assessment can directly reduce the acquisition value — or introduce conditions and holdbacks into the deal.</p>
+    </div>
+  </div>
+
+
+  <!-- ═══════════════════════════════════════════════
+       FOOTER
+  ═══════════════════════════════════════════════ -->
+  <div class="page-footer">
+    <div class="page-footer-logo"><span style="letter-spacing:0;">F</span><span style="letter-spacing:0;margin-left:0.02em;">C</span><span style="letter-spacing:0;margin-left:0.05em;">I</span></div>
+    <div class="page-footer-note">Security Assessment — Working Document — April 2026</div>
+  </div>
+
+</div>
+
+<!-- ─── HUB THEME TOGGLE ─── -->
+<div class="hub-theme-toggle">
+  <button data-hub-mode="system" onclick="setHubTheme('system')">Auto</button>
+  <button data-hub-mode="light" onclick="setHubTheme('light')">Light</button>
+  <button data-hub-mode="dark" onclick="setHubTheme('dark')">Dark</button>
+</div>
+
+<script>
+  function setHubTheme(m) {
+    if (m === 'system') { document.documentElement.removeAttribute('data-hub-theme'); localStorage.removeItem('fci-hub-theme'); }
+    else { document.documentElement.setAttribute('data-hub-theme', m); localStorage.setItem('fci-hub-theme', m); }
+    document.querySelectorAll('.hub-theme-toggle button').forEach(function(b){ b.classList.toggle('active', b.dataset.hubMode === m); });
+  }
+  (function(){
+    var s = localStorage.getItem('fci-hub-theme') || 'system';
+    if (s !== 'system') document.documentElement.setAttribute('data-hub-theme', s);
+    document.addEventListener('DOMContentLoaded', function(){
+      document.querySelectorAll('.hub-theme-toggle button').forEach(function(b){ b.classList.toggle('active', b.dataset.hubMode === s); });
+    });
+  })();
+</script>
+</body>
+</html>
