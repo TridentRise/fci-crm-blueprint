@@ -1,0 +1,2021 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FCI — Messaging Architecture v2</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Inter+Tight:wght@500;600&display=swap" rel="stylesheet" />
+  <style>
+    /* ─── DESIGN TOKENS ──────────────────────────── */
+    :root {
+      --blue:       #2563EB;
+      --blue-dark:  #1D4ED8;
+      --sky:        #0EA5E9;
+      --deep-navy: #1E3A6E;
+      --blue-tint:  #DBEAFE;
+      --blue-faint: #EFF6FF;
+      --offwhite:   #F8FAFC;
+      --white:      #FFFFFF;
+      --rule:       #E2E8F0;
+      --text:       #0F172A;
+      --body:       #475569;
+      --muted:      #64748B;
+      --faint:      #94A3B8;
+    }
+
+    /* ─── RESET ──────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { font-size: 16px; scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--offwhite);
+      color: var(--text);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      padding-top: 52px;
+    }
+
+    /* ─── LAYOUT ─────────────────────────────────── */
+    .wrap { max-width: 900px; margin: 0 auto; padding: 0 48px 120px; }
+
+    /* ─── HEADER ─────────────────────────────────── */
+    .site-header {
+      background: var(--blue);
+      margin: 0 -48px 0;
+      padding: 56px 48px 48px;
+      position: relative;
+      overflow: hidden;
+    }
+    .site-header::before {
+      content: '';
+      position: absolute;
+      top: -100px; right: -100px;
+      width: 400px; height: 400px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.04);
+      pointer-events: none;
+    }
+    .header-eyebrow {
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.70);
+      margin-bottom: 20px;
+      position: relative; z-index: 1;
+    }
+    .header-logo {
+      font-family: 'Inter Tight', sans-serif;
+      font-size: 40px;
+      font-weight: 600;
+      letter-spacing: 0;
+      color: var(--white);
+      line-height: 1;
+      display: inline-flex;
+      align-items: baseline;
+      position: relative; z-index: 1;
+    }
+    .header-descriptor {
+      font-size: 14px;
+      font-weight: 400;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.75);
+      margin-top: 10px;
+      position: relative; z-index: 1;
+    }
+    .header-title {
+      font-family: 'Inter Tight', sans-serif;
+      font-size: clamp(26px, 3.5vw, 36px);
+      font-weight: 600;
+      color: var(--white);
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+      margin-top: 32px;
+      position: relative; z-index: 1;
+    }
+    .header-sub {
+      font-size: 15px;
+      color: rgba(255,255,255,0.82);
+      margin-top: 12px;
+      max-width: 620px;
+      line-height: 1.65;
+      position: relative; z-index: 1;
+    }
+
+    /* ─── SIDEBAR NAV (TOC) ──────────────────────── */
+    .sidebar-nav {
+      position: fixed;
+      left: 0;
+      top: 52px;
+      width: 280px;
+      height: calc(100vh - 52px);
+      background: var(--white);
+      border-right: 1px solid var(--rule);
+      padding: 24px 0;
+      overflow-y: auto;
+      z-index: 100;
+    }
+    .sidebar-nav-inner {
+      padding: 0 20px;
+    }
+    .sidebar-nav-section {
+      margin-bottom: 28px;
+    }
+    .sidebar-nav-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 10px;
+      display: block;
+    }
+    .sidebar-nav-list {
+      list-style: none;
+    }
+    .sidebar-nav-item {
+      margin-bottom: 0;
+    }
+    .sidebar-nav-link {
+      display: block;
+      font-size: 13px;
+      color: var(--body);
+      text-decoration: none;
+      padding: 8px 12px;
+      margin-bottom: 4px;
+      border-radius: 4px;
+      transition: background 0.15s, color 0.15s;
+    }
+    .sidebar-nav-link:hover {
+      background: var(--blue-faint);
+      color: var(--blue);
+    }
+    .sidebar-nav-link.active {
+      background: var(--blue-tint);
+      color: var(--blue-dark);
+      font-weight: 600;
+    }
+
+    /* ─── MAIN CONTENT WITH SIDEBAR ──────────────── */
+    .main-with-sidebar {
+      display: flex;
+    }
+    .main-content {
+      flex: 1;
+      margin-left: 280px;
+    }
+
+    /* ─── TOP NAV ────────────────────────────────── */
+    .hub-nav {
+      position: fixed; top: 0; left: 0; right: 0; height: 52px; z-index: 200;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 32px;
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(15,23,42,0.08);
+    }
+    .hub-nav .back-nav {
+      font-size: 13px; font-weight: 600; text-decoration: none;
+      color: #475569; transition: color 0.15s;
+    }
+    .hub-nav .back-nav:hover { color: #0F172A; }
+    .hub-theme-toggle {
+      display: flex; align-items: center;
+      background: rgba(15,23,42,0.06);
+      border: 1px solid rgba(15,23,42,0.1);
+      border-radius: 8px; padding: 3px; gap: 2px;
+    }
+    .hub-theme-toggle button {
+      font-family: inherit; font-size: 11px; font-weight: 600;
+      letter-spacing: 0.03em; color: #94A3B8;
+      background: transparent; border: none; cursor: pointer;
+      padding: 4px 10px; border-radius: 6px; line-height: 1;
+      transition: background 0.15s, color 0.15s;
+    }
+    .hub-theme-toggle button:hover { color: #0F172A; }
+    .hub-theme-toggle button.active {
+      background: #fff; color: #0F172A;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.12);
+    }
+
+    /* ─── BACK TO TOP BUTTON ─────────────────────── */
+    .back-to-top {
+      position: fixed;
+      bottom: 32px;
+      right: 32px;
+      width: 48px;
+      height: 48px;
+      background: var(--blue);
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      color: white;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s, visibility 0.3s;
+      z-index: 150;
+      box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25);
+    }
+    .back-to-top.show {
+      opacity: 1;
+      visibility: visible;
+    }
+    .back-to-top:hover {
+      background: var(--blue-dark);
+      box-shadow: 0 6px 16px rgba(37, 99, 235, 0.35);
+    }
+
+    /* ─── SECTION HEADERS ────────────────────────── */
+    .section { margin-top: 72px; scroll-margin-top: 80px; }
+
+    .section-label {
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--sky);
+      margin-bottom: 12px;
+    }
+
+    .section-title {
+      font-family: 'Inter Tight', sans-serif;
+      font-size: clamp(24px, 3vw, 32px);
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      color: var(--text);
+      line-height: 1.15;
+      margin-bottom: 8px;
+    }
+
+    .section-intro {
+      font-size: 15px;
+      color: var(--body);
+      max-width: 720px;
+      line-height: 1.75;
+      margin-bottom: 36px;
+      padding-bottom: 36px;
+      border-bottom: 1px solid var(--rule);
+    }
+
+    /* ─── BLOCKS ─────────────────────────────────── */
+    .block { margin-bottom: 32px; }
+
+    .block-label {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--sky);
+      margin-bottom: 10px;
+    }
+
+    .block-content {
+      font-size: 15px;
+      color: var(--body);
+      line-height: 1.75;
+      max-width: 720px;
+    }
+
+    /* ─── CALLOUT (highlighted single sentence) ──── */
+    .callout {
+      background: var(--blue);
+      padding: 28px 36px;
+      margin: 36px 0;
+    }
+    .callout-label {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.70);
+      margin-bottom: 12px;
+    }
+    .callout-text {
+      font-family: 'Inter Tight', sans-serif;
+      font-size: clamp(17px, 2.2vw, 21px);
+      font-weight: 500;
+      color: var(--white);
+      letter-spacing: -0.01em;
+      line-height: 1.45;
+    }
+
+    /* ─── LIST BLOCK ─────────────────────────────── */
+    .list-block {
+      background: var(--white);
+      border: 1px solid var(--rule);
+      padding: 28px 32px;
+      margin: 16px 0 32px;
+    }
+    .list-block ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+    .list-block li {
+      font-size: 14px;
+      color: var(--body);
+      padding: 12px 0;
+      border-bottom: 1px solid var(--rule);
+      line-height: 1.6;
+      padding-left: 20px;
+      position: relative;
+    }
+    .list-block li:last-child { border-bottom: none; }
+    .list-block li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 20px;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--sky);
+    }
+
+    /* ─── PILLAR DIAGRAM ──────────────────────────── */
+    .pillar-diagram {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin: 24px 0 32px;
+    }
+    .pillar-card {
+      background: var(--blue-faint);
+      border: 1px solid var(--rule);
+      border-radius: 6px;
+      padding: 24px 20px;
+      text-align: center;
+    }
+    .pillar-number {
+      font-family: 'Inter Tight', sans-serif;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 10px;
+    }
+    .pillar-card-title {
+      font-family: 'Inter Tight', sans-serif;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--blue);
+      line-height: 1.35;
+    }
+
+    /* ─── PILLAR DETAIL BLOCKS ───────────────────── */
+    .pillar {
+      background: var(--white);
+      border: 1px solid var(--rule);
+      padding: 24px 32px;
+      margin: 12px 0;
+    }
+    .pillar-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--deep-navy);
+      letter-spacing: 0.04em;
+      margin-bottom: 10px;
+    }
+    .pillar p {
+      font-size: 14px;
+      color: var(--body);
+      line-height: 1.6;
+      margin: 0;
+    }
+
+    /* ─── TWO-COL GRID (use / avoid) ──────────────── */
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3px;
+      margin: 16px 0 32px;
+      background: var(--rule);
+    }
+    .col-card {
+      background: var(--white);
+      padding: 32px;
+    }
+    .col-card.avoid { background: #FFF8F8; }
+    .col-card-label {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+    }
+    .col-card.use   .col-card-label { color: var(--sky); }
+    .col-card.avoid .col-card-label { color: #EF4444; }
+    .col-card ul { list-style: none; display: flex; flex-direction: column; gap: 0; }
+    .col-card li {
+      font-size: 16px;
+      color: var(--body);
+      padding: 10px 0;
+      border-bottom: 1px solid var(--rule);
+      line-height: 1.55;
+    }
+    .col-card.avoid li { border-color: #FEE2E2; }
+    .col-card li:last-child { border-bottom: none; }
+    .col-card li em { font-style: normal; font-weight: 600; color: var(--text); }
+
+    /* ─── PROOF PILLS ────────────────────────────── */
+    .proof-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin: 16px 0 32px;
+    }
+    .proof-pill {
+      background: var(--blue-faint);
+      border: 1px solid #BFDBFE;
+      padding: 10px 20px;
+      font-size: 16px;
+      font-weight: 500;
+      color: var(--blue);
+      line-height: 1.4;
+    }
+
+    /* ─── PERSONA CARD ───────────────────────────── */
+    .persona-band {
+      background: var(--blue-tint);
+      border-left: 4px solid var(--blue);
+      padding: 20px 24px;
+      margin-bottom: 36px;
+    }
+    .persona-band-label {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--blue-dark);
+      margin-bottom: 6px;
+    }
+    .persona-band-title {
+      font-family: 'Inter Tight', sans-serif;
+      font-size: 20px;
+      font-weight: 600;
+      color: var(--text);
+      letter-spacing: -0.01em;
+    }
+
+    /* ─── DIVIDER ────────────────────────────────── */
+    .divider {
+      border: none;
+      border-top: 1px solid var(--rule);
+      margin: 48px 0;
+    }
+
+    /* ─── OBJECTION BLOCK ────────────────────────── */
+    .objection {
+      background: var(--white);
+      border: 1px solid var(--rule);
+      margin-bottom: 16px;
+      overflow: hidden;
+    }
+    .objection-q {
+      background: var(--blue-faint);
+      padding: 18px 24px;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text);
+      border-bottom: 1px solid #BFDBFE;
+    }
+    .objection-a {
+      padding: 18px 24px;
+      font-size: 14px;
+      color: var(--body);
+      line-height: 1.75;
+    }
+
+    /* ─── COLLAPSIBLE SECTIONS ──────────────────── */
+    .collapsible-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+      padding: 20px 24px;
+      background: var(--blue-faint);
+      border: 1px solid var(--rule);
+      margin-bottom: 12px;
+      transition: background 0.2s;
+    }
+    .collapsible-header:hover {
+      background: #BFDBFE;
+    }
+    .collapsible-header-text {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text);
+      flex: 1;
+    }
+    .collapsible-icon {
+      font-size: 18px;
+      color: var(--blue);
+      transition: transform 0.2s;
+    }
+    .collapsible-icon.open {
+      transform: rotate(180deg);
+    }
+    .collapsible-content {
+      display: none;
+      padding: 24px;
+      background: var(--white);
+      border: 1px solid var(--rule);
+      border-top: none;
+      margin-bottom: 12px;
+    }
+    .collapsible-content.open {
+      display: block;
+    }
+    .collapsible-content > * + * {
+      margin-top: 20px;
+    }
+
+    /* ─── TIMELINE ──────────────────────────────── */
+    .timeline {
+      position: relative;
+      padding: 20px 0 20px 40px;
+      margin: 24px 0 32px;
+    }
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 6px;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: var(--rule);
+    }
+    .timeline-item {
+      position: relative;
+      padding-bottom: 20px;
+      margin-bottom: 20px;
+    }
+    .timeline-item:last-child {
+      padding-bottom: 0;
+      margin-bottom: 0;
+    }
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      left: -34px;
+      top: 4px;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: var(--blue);
+      border: 3px solid var(--white);
+    }
+    .timeline-marker {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--sky);
+      margin-bottom: 6px;
+    }
+    .timeline-content {
+      font-size: 14px;
+      color: var(--body);
+      line-height: 1.6;
+    }
+
+    /* ─── INTERNAL QUOTE CARD ──────────────────── */
+    .internal-quote {
+      background: #F3F4F6;
+      border-left: 4px solid var(--muted);
+      padding: 20px 24px;
+      margin: 16px 0 24px;
+      font-size: 14px;
+      color: var(--body);
+      line-height: 1.75;
+      font-style: italic;
+    }
+    .internal-quote-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 8px;
+      font-style: normal;
+    }
+
+    /* ─── FOOTER ─────────────────────────────────── */
+    .page-footer {
+      margin-top: 96px;
+      padding-top: 36px;
+      border-top: 1px solid var(--rule);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .page-footer-logo {
+      font-family: 'Inter Tight', sans-serif;
+      font-size: 22px;
+      font-weight: 600;
+      letter-spacing: 0;
+      color: var(--blue);
+      display: inline-flex;
+      align-items: baseline;
+    }
+    .page-footer-note {
+      font-size: 14px;
+      color: var(--faint);
+      letter-spacing: 0.04em;
+    }
+
+    /* ══════════════════════════════════════════
+       DARK MODE
+    ══════════════════════════════════════════ */
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --white:      #1E293B;
+        --offwhite:   #0F172A;
+        --rule:       #334155;
+        --text:       #F1F5F9;
+        --body:       #CBD5E1;
+        --muted:      #94A3B8;
+        --faint:      #64748B;
+        --blue-tint:  #172554;
+        --blue-faint: #1E293B;
+      }
+      body { background: #0F172A; }
+      .col-card { background: #1E293B; border-color: #334155; }
+      .col-card.avoid { background: #2D1A1A !important; border-color: #4B2020; }
+      .col-card.avoid .col-card-label { color: #F87171; }
+      .col-card.avoid li { border-color: #4B2020; color: #CBD5E1; }
+      .objection { border-color: #334155; }
+      .objection-q { background: #1E3A6E; color: #F1F5F9; }
+      .objection-a { background: #1E293B; color: #CBD5E1; }
+      .persona-band { background: #1E3A6E; }
+      .persona-band-title { color: #FFFFFF; }
+      .persona-band-label { color: rgba(255,255,255,0.65); }
+      .proof-pill { background: #1E293B; border-color: #334155; color: #93C5FD; }
+      .sidebar-nav { background: #1E293B; border-right-color: #334155; }
+      .collapsible-header { background: #1E3A6E; border-color: #334155; }
+      .collapsible-header:hover { background: #2D5BA5; }
+      .collapsible-header-text { color: #F1F5F9; }
+      .collapsible-content { background: #1E293B; border-color: #334155; }
+      .timeline::before { background: #334155; }
+      .timeline-item::before { background: var(--sky); border-color: #0F172A; }
+      .internal-quote { background: #1E293B; border-left-color: #475569; }
+      html:not([data-hub-theme=light]) .hub-nav { background: rgba(8,14,28,0.9); border-bottom-color: rgba(255,255,255,0.07); }
+      html:not([data-hub-theme=light]) .hub-nav .back-nav { color: rgba(255,255,255,0.5); }
+      html:not([data-hub-theme=light]) .hub-nav .back-nav:hover { color: #fff; }
+      html:not([data-hub-theme=light]) .hub-theme-toggle { background: rgba(255,255,255,0.07); border-color: rgba(255,255,255,0.1); }
+      html:not([data-hub-theme=light]) .hub-theme-toggle button { color: rgba(255,255,255,0.35); }
+      html:not([data-hub-theme=light]) .hub-theme-toggle button:hover { color: #fff; }
+      html:not([data-hub-theme=light]) .hub-theme-toggle button.active { background: rgba(255,255,255,0.1); color: #fff; box-shadow: none; }
+    }
+
+    /* ══════════════════════════════════════════
+       MOBILE
+    ══════════════════════════════════════════ */
+    @media (max-width: 1024px) {
+      .sidebar-nav { display: none; }
+      .main-content { margin-left: 0; }
+    }
+
+    @media (max-width: 680px) {
+      .wrap { padding: 0 20px 80px; }
+      .pillar-diagram { grid-template-columns: repeat(2, 1fr); }
+      .two-col { grid-template-columns: 1fr !important; gap: 0; }
+      .col-card { padding: 24px; }
+      body { padding-top: 52px; }
+      .back-to-top {
+        bottom: 20px;
+        right: 20px;
+        width: 44px;
+        height: 44px;
+        font-size: 18px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════
+     TOP NAV
+═══════════════════════════════════════════════ -->
+<nav class="hub-nav">
+  <a href="index.html" class="back-nav">← Brand Hub</a>
+  <div class="hub-theme-toggle">
+    <button data-hub-mode="light" onclick="setHubTheme('light')">Light</button>
+    <button data-hub-mode="dark" onclick="setHubTheme('dark')">Dark</button>
+    <button data-hub-mode="system" onclick="setHubTheme('system')" class="active">System</button>
+  </div>
+</nav>
+
+<!-- ═══════════════════════════════════════════════
+     SIDEBAR NAV
+═══════════════════════════════════════════════ -->
+<aside class="sidebar-nav">
+  <div class="sidebar-nav-inner">
+    <div class="sidebar-nav-section">
+      <span class="sidebar-nav-label">Getting Started</span>
+      <ul class="sidebar-nav-list">
+        <li class="sidebar-nav-item"><a href="#voice-tone" class="sidebar-nav-link">Brand Voice &amp; Tone</a></li>
+      </ul>
+    </div>
+
+    <div class="sidebar-nav-section">
+      <span class="sidebar-nav-label">Part 1</span>
+      <ul class="sidebar-nav-list">
+        <li class="sidebar-nav-item"><a href="#universal" class="sidebar-nav-link">Universal Messages</a></li>
+        <li class="sidebar-nav-item"><a href="#competitive" class="sidebar-nav-link">Competitive Positioning</a></li>
+        <li class="sidebar-nav-item"><a href="#buyer-journey" class="sidebar-nav-link">Buyer Journey</a></li>
+      </ul>
+    </div>
+
+    <div class="sidebar-nav-section">
+      <span class="sidebar-nav-label">Part 2</span>
+      <ul class="sidebar-nav-list">
+        <li class="sidebar-nav-item"><a href="#role-board" class="sidebar-nav-link">Board &amp; C-Level</a></li>
+        <li class="sidebar-nav-item"><a href="#role-ciso" class="sidebar-nav-link">CISO &amp; CCO</a></li>
+        <li class="sidebar-nav-item"><a href="#role-field" class="sidebar-nav-link">Field Compliance</a></li>
+        <li class="sidebar-nav-item"><a href="#role-it" class="sidebar-nav-link">IT Manager</a></li>
+      </ul>
+    </div>
+
+    <div class="sidebar-nav-section">
+      <span class="sidebar-nav-label">Part 3</span>
+      <ul class="sidebar-nav-list">
+        <li class="sidebar-nav-item"><a href="#market-ria" class="sidebar-nav-link">RIAs</a></li>
+        <li class="sidebar-nav-item"><a href="#market-bd" class="sidebar-nav-link">Broker-Dealers &amp; Branches</a></li>
+        <li class="sidebar-nav-item"><a href="#market-insurance" class="sidebar-nav-link">Insurance Carriers &amp; Agencies</a></li>
+      </ul>
+    </div>
+
+    <div class="sidebar-nav-section">
+      <span class="sidebar-nav-label">Reference</span>
+      <ul class="sidebar-nav-list">
+        <li class="sidebar-nav-item"><a href="#objections" class="sidebar-nav-link">Objection Responses</a></li>
+        <li class="sidebar-nav-item"><a href="#vocabulary" class="sidebar-nav-link">Vocabulary</a></li>
+        <li class="sidebar-nav-item"><a href="#retention" class="sidebar-nav-link">Retention &amp; Expansion</a></li>
+        <li class="sidebar-nav-item"><a href="#crisis" class="sidebar-nav-link">Crisis Communication</a></li>
+      </ul>
+    </div>
+  </div>
+</aside>
+
+<!-- ═══════════════════════════════════════════════
+     MAIN CONTENT
+═══════════════════════════════════════════════ -->
+<div class="main-with-sidebar">
+<div class="main-content">
+<div class="wrap">
+
+  <!-- ═══════════════════════════════════════════════
+       HEADER
+  ═══════════════════════════════════════════════ -->
+  <div class="site-header">
+    <div class="header-eyebrow">Internal Reference — Not for Distribution</div>
+    <div class="header-logo"><span style="letter-spacing:0;">F</span><span style="letter-spacing:0;margin-left:0.02em;">C</span><span style="letter-spacing:0;margin-left:0.05em;">I</span></div>
+    <div class="header-descriptor">Managed Cybersecurity for Financial Services</div>
+    <div class="header-title">Messaging Architecture — Expanded Edition</div>
+    <div class="header-sub">The single source of truth for all FCI copywriting and sales conversations. This expanded version includes brand voice, buyer journey mapping, channel guidance, competitive response frameworks, and comprehensive role and market guidance.</div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════
+       BRAND VOICE & TONE
+  ═══════════════════════════════════════════════ -->
+  <div class="section" id="voice-tone">
+    <div class="section-label">Getting Started</div>
+    <div class="section-title">Brand Voice & Tone</div>
+    <div class="section-intro">FCI's voice must be consistent across every writer, every channel, and every asset. The vocabulary reference in Part 5 defines which words to use. This section defines how FCI sounds when using them.</div>
+
+    <div class="block">
+      <div class="block-label">The five voice characteristics</div>
+
+      <div style="margin-top: 24px;">
+        <h4 style="font-size: 15px; font-weight: 600; color: var(--text); margin-bottom: 12px; margin-top: 24px;">1. Authoritative, not aggressive</h4>
+        <p style="font-size: 14px; color: var(--body); line-height: 1.75; margin-bottom: 16px;">FCI speaks from experience. The authority comes from 40,000+ endpoints, 30+ years, and thousands of incidents — not from volume or urgency. FCI does not pressure. It presents what it has seen, what it knows, and what the evidence shows.</p>
+        <div class="two-col">
+          <div class="col-card avoid">
+            <div class="col-card-label">Wrong</div>
+            <p style="font-size: 14px; color: var(--body); line-height: 1.6;">Your firm is at SERIOUS RISK if you don't act now.</p>
+          </div>
+          <div class="col-card use">
+            <div class="col-card-label">Right</div>
+            <p style="font-size: 14px; color: var(--body); line-height: 1.6;">The controls regulators are examining for today are specific. The question is whether the documentation exists to prove they are in place.</p>
+          </div>
+        </div>
+      </div>
+
+      <div style="margin-top: 24px;">
+        <h4 style="font-size: 15px; font-weight: 600; color: var(--text); margin-bottom: 12px; margin-top: 24px;">2. Specific, not abstract</h4>
+        <p style="font-size: 14px; color: var(--body); line-height: 1.75; margin-bottom: 16px;">Every claim connects to a verifiable fact, a named regulation, or a defined outcome. FCI does not deal in generalities. If a number is cited, it has a source. If a capability is described, it has a mechanism.</p>
+        <div class="two-col">
+          <div class="col-card avoid">
+            <div class="col-card-label">Wrong</div>
+            <p style="font-size: 14px; color: var(--body); line-height: 1.6;">FCI provides comprehensive cybersecurity solutions for the financial industry.</p>
+          </div>
+          <div class="col-card use">
+            <div class="col-card-label">Right</div>
+            <p style="font-size: 14px; color: var(--body); line-height: 1.6;">FCI enforces controls across every device — corporate, BYOD, Mac, Windows — and produces documentation mapped to what SEC, FINRA, NYDFS, and NAIC examiners actually request.</p>
+          </div>
+        </div>
+      </div>
+
+      <div style="margin-top: 24px;">
+        <h4 style="font-size: 15px; font-weight: 600; color: var(--text); margin-bottom: 12px; margin-top: 24px;">3. Direct, not hedged</h4>
+        <p style="font-size: 14px; color: var(--body); line-height: 1.75; margin-bottom: 16px;">FCI says what it does. It does not soften with qualifiers ("we believe," "we strive to," "we aim to"). If FCI does it, say so. If FCI does not, do not imply otherwise. Honesty is more persuasive than aspiration.</p>
+        <div class="two-col">
+          <div class="col-card avoid">
+            <div class="col-card-label">Wrong</div>
+            <p style="font-size: 14px; color: var(--body); line-height: 1.6;">We aim to help firms achieve a stronger security posture through our services.</p>
+          </div>
+          <div class="col-card use">
+            <div class="col-card-label">Right</div>
+            <p style="font-size: 14px; color: var(--body); line-height: 1.6;">FCI manages the cybersecurity program. The firm's compliance team gets the evidence. The regulators get the documentation.</p>
+          </div>
+        </div>
+      </div>
+
+      <div style="margin-top: 24px;">
+        <h4 style="font-size: 15px; font-weight: 600; color: var(--text); margin-bottom: 12px; margin-top: 24px;">4. Respectful of the reader's intelligence</h4>
+        <p style="font-size: 14px; color: var(--body); line-height: 1.75; margin-bottom: 16px;">FCI's audiences are experienced professionals in financial services. They understand regulation, risk, and the weight of their responsibilities. FCI does not explain their world to them — it speaks as a peer who has seen the same landscape from a different vantage point. No condescension. No oversimplification. No scare tactics.</p>
+        <div class="two-col">
+          <div class="col-card avoid">
+            <div class="col-card-label">Wrong</div>
+            <p style="font-size: 14px; color: var(--body); line-height: 1.6;">Did you know that cyber attacks are on the rise? Your firm could be next!</p>
+          </div>
+          <div class="col-card use">
+            <div class="col-card-label">Right</div>
+            <p style="font-size: 14px; color: var(--body); line-height: 1.6;">Sixty-five percent of financial services firms experienced a ransomware incident in 2024. The regulatory response has been to increase examination specificity — not just whether policies exist, but whether controls are technically enforced and documented.</p>
+          </div>
+        </div>
+      </div>
+
+      <div style="margin-top: 24px;">
+        <h4 style="font-size: 15px; font-weight: 600; color: var(--text); margin-bottom: 12px; margin-top: 24px;">5. Calm under pressure</h4>
+        <p style="font-size: 14px; color: var(--body); line-height: 1.75; margin-bottom: 16px;">FCI handles incidents, examinations, and audits. The voice should reflect that composure. Even in messaging about risk and urgency, the tone is steady. The reader should feel that FCI is the team that stays calm when things go wrong — because they have done this before.</p>
+        <div class="two-col">
+          <div class="col-card avoid">
+            <div class="col-card-label">Wrong</div>
+            <p style="font-size: 14px; color: var(--body); line-height: 1.6;">When a breach hits, chaos follows. Don't get caught unprepared!</p>
+          </div>
+          <div class="col-card use">
+            <div class="col-card-label">Right</div>
+            <p style="font-size: 14px; color: var(--body); line-height: 1.6;">When a cyber event occurs, FCI manages the incident response — containment, remediation, documentation, and communication — drawing on thousands of incidents handled across financial services firms.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="block" style="margin-top: 48px;">
+      <div class="block-label">Tone by context</div>
+      <p style="font-size: 14px; color: var(--body); line-height: 1.75; margin-bottom: 16px;">The five characteristics apply everywhere, but the balance shifts by context:</p>
+      <div class="list-block">
+        <ul>
+          <li><strong>Website and landing pages:</strong> Lead with specific and direct. The reader is scanning. Get to the point.</li>
+          <li><strong>One-pagers and collateral:</strong> Lead with authoritative. The reader is evaluating. Show the depth.</li>
+          <li><strong>Email sequences:</strong> Lead with respectful. The reader did not ask for this email. Earn their time.</li>
+          <li><strong>Sales conversations and presentations:</strong> Lead with calm and authoritative. The reader is deciding. Give them confidence.</li>
+          <li><strong>Incident and crisis communication:</strong> Calm dominates everything else. Specifics follow. Nothing else matters.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════
+       PART 1: UNIVERSAL MESSAGES
+  ═══════════════════════════════════════════════ -->
+  <div class="section" id="universal">
+    <div class="section-label">Part 1</div>
+    <div class="section-title">Universal Messages</div>
+    <div class="section-intro">These lines apply regardless of role or market. They establish what FCI is, what it does, and why it is different. Every asset uses at least one of these.</div>
+
+    <div class="block">
+      <div class="block-label">The one-sentence positioning</div>
+      <div class="callout">
+        <div class="callout-label">Use this in every first impression</div>
+        <div class="callout-text">FCI manages cybersecurity for sales offices of broker-dealers, insurance carriers, and RIAs — enforcing the tools, settings, and procedures required by regulators, home offices, and cyber insurers.</div>
+      </div>
+    </div>
+
+    <div class="block">
+      <div class="block-label">Who sales offices are</div>
+      <div class="block-content">
+        <p style="margin-bottom: 16px;">Sales offices in financial services are the advisors, agents, representatives, and branch teams that deliver personal financial guidance. They manage wills, trusts, account statements, insurance policies, and investment portfolios. They hold the most private financial information of the country's wealthiest families — and they carry strict requirements for protecting it.</p>
+        <p>The term sales office applies universally across FCI's markets: an RIA advisory practice, a broker-dealer branch, an insurance agency. The regulatory framework differs by market. The challenge is the same — meeting requirements from regulators, home offices, and cyber insurers, often without dedicated cybersecurity staff.</p>
+      </div>
+    </div>
+
+    <div class="block">
+      <div class="block-label">The four pillars of FCI</div>
+      <p style="font-size: 14px; color: var(--body); line-height: 1.75; margin-bottom: 16px;">Every FCI asset connects to at least one of these four pillars. They are the organizing logic for all messaging.</p>
+      <div class="pillar-diagram">
+        <div class="pillar-card">
+          <div class="pillar-number">Pillar 1</div>
+          <div class="pillar-card-title">Cyber Tools & Settings</div>
+        </div>
+        <div class="pillar-card">
+          <div class="pillar-number">Pillar 2</div>
+          <div class="pillar-card-title">Procedures & Processes</div>
+        </div>
+        <div class="pillar-card">
+          <div class="pillar-number">Pillar 3</div>
+          <div class="pillar-card-title">Expert Knowledge, Applied at Scale</div>
+        </div>
+        <div class="pillar-card">
+          <div class="pillar-number">Pillar 4</div>
+          <div class="pillar-card-title">Proof of Security & Compliance</div>
+        </div>
+      </div>
+
+      <div class="pillar">
+        <div class="pillar-title">Pillar 1 — Cyber Tools & Settings</div>
+        <p>FCI implements and maintains the technical controls required by regulators, home offices, and cyber insurers. These controls run across every user, device, network, and cloud app — automatically, without touching the workflows of the people using them. Employees and affiliates do not notice the protections running. The compliance team does not have to ask anyone to change anything.</p>
+      </div>
+
+      <div class="pillar">
+        <div class="pillar-title">Pillar 2 — Procedures & Processes</div>
+        <p>Cyber tools and settings are necessary but not sufficient. Regulators, home offices, and cyber insurers require that the firm operates a managed cybersecurity program — with policies, procedures, and structured processes that govern how controls are maintained across the organization. FCI provides the systems and structured processes that make that program manageable. The FCI CISO Portal automates what would otherwise take weeks of manual effort, returning more than 80% of the time previously spent on routine compliance management to the firm.</p>
+      </div>
+
+      <div class="pillar">
+        <div class="pillar-title">Pillar 3 — Expert Knowledge, Applied at Scale</div>
+        <p>FCI's experience comes from managing cybersecurity across more than 40,000 endpoints with more than 400 clients in financial services — through regulatory examinations, cyber incidents, cyber insurance renewals, and home office audits. That experience feeds directly into how FCI implements controls, structures programs, and responds to incidents for every client. When a cyber event occurs, FCI manages the incident response — containment, remediation, documentation, and communication — drawing on thousands of incidents handled across financial services firms. Most competitors do not offer incident response at all. It is not theoretical. It comes from what FCI has already seen, fixed, and documented — and it gets stronger with every engagement.</p>
+      </div>
+
+      <div class="pillar">
+        <div class="pillar-title">Pillar 4 — Proof of Security & Compliance</div>
+        <p>Security and compliance are only as real as what you can prove. Whether it is a regulatory exam, a cyber insurance renewal, a claim, or a breach, the question is always the same: can you document what controls were in place, when they were deployed, and how they were maintained? Cyber insurers may deny a claim if that documentation does not exist. FCI builds that evidence continuously, through the CISO Portal, as a byproduct of how it operates — so the proof is already assembled before anyone asks for it. And when it is time to present it to regulators, home offices, or cyber insurers, FCI is there with the firm to do it.</p>
+      </div>
+
+      <p style="font-size: 14px; color: var(--body); line-height: 1.75; margin-top: 24px; padding-top: 24px; border-top: 1px solid var(--rule);">These four pillars form a cycle. Expert knowledge shapes the cyber tools and settings FCI deploys. The procedures FCI builds make those tools manageable. The proof of security and compliance that results validates the entire program. And every engagement — every examination, every incident, every audit — adds to the knowledge base that makes all four stronger.</p>
+    </div>
+
+    <div class="block">
+      <div class="block-label">The four proof points</div>
+      <p style="font-size: 14px; color: var(--body); line-height: 1.75; margin-bottom: 16px;">These are the claims that underpin every pillar. Use them exactly as written. Do not round up, do not embellish.</p>
+      <div class="proof-row">
+        <div class="proof-pill">40,000+ endpoints under management in financial services</div>
+        <div class="proof-pill">Up to 90% reduction in implementation time via the FCI CISO Portal</div>
+        <div class="proof-pill">More than 80% of compliance management time returned to the firm</div>
+        <div class="proof-pill">30+ years serving exclusively financial services firms</div>
+      </div>
+    </div>
+
+    <div class="block">
+      <div class="block-label">The cost of inaction — what the alternative looks like</div>
+      <p style="font-size: 14px; color: var(--body); line-height: 1.75; margin-bottom: 20px;">FCI's value is quantified above. The cost of the alternative should be equally concrete. Use these data points in awareness-stage messaging when the prospect needs to see the scale of the risk they are carrying.</p>
+
+      <div style="background: var(--white); border: 1px solid var(--rule); padding: 28px; margin-bottom: 16px;">
+        <h4 style="font-size: 14px; font-weight: 700; color: var(--text); margin-bottom: 12px;">Breach cost in financial services</h4>
+        <p style="font-size: 14px; color: var(--body); line-height: 1.75;">The average cost of a data breach in financial services is $5.56 million (IBM Cost of a Data Breach Report, 2025). Financial services is the second most expensive industry for breaches, after healthcare. This number includes detection, response, notification, and lost business — but not the long-term reputational damage that erodes client trust.</p>
+      </div>
+
+      <div style="background: var(--white); border: 1px solid var(--rule); padding: 28px; margin-bottom: 16px;">
+        <h4 style="font-size: 14px; font-weight: 700; color: var(--text); margin-bottom: 12px;">Cyber insurance claim denials</h4>
+        <p style="font-size: 14px; color: var(--body); line-height: 1.75;">More than 40% of cyber insurance claims are denied (industry reports, 2024). The most common reasons: inadequate documentation of controls in place at the time of the incident, failure to maintain MFA, and late notification. A denied claim turns a covered event into an unrecoverable loss.</p>
+      </div>
+
+      <div style="background: var(--white); border: 1px solid var(--rule); padding: 28px; margin-bottom: 16px;">
+        <h4 style="font-size: 14px; font-weight: 700; color: var(--text); margin-bottom: 12px;">Regulatory enforcement is increasing</h4>
+        <p style="font-size: 14px; color: var(--body); line-height: 1.75;">SEC enforcement financial remedies reached $8.2 billion in fiscal year 2024 — the largest in SEC history. FINRA fined 12 firms a total of $14.4 million for recordkeeping failures in 2024–2025. NYDFS has issued penalties ranging from $2 million to $11.3 million for cybersecurity regulation violations. The trend is not slowing down.</p>
+      </div>
+
+      <div style="background: var(--white); border: 1px solid var(--rule); padding: 28px; margin-bottom: 16px;">
+        <h4 style="font-size: 14px; font-weight: 700; color: var(--text); margin-bottom: 12px;">Ransomware in financial services</h4>
+        <p style="font-size: 14px; color: var(--body); line-height: 1.75;">65% of financial services firms experienced a ransomware incident in 2024. 97% of major U.S. banks experienced third-party breaches in the same year. The number of reported cyber incidents in financial services more than doubled from 2024 to 2025.</p>
+      </div>
+
+      <div style="background: var(--white); border: 1px solid var(--rule); padding: 28px;">
+        <h4 style="font-size: 14px; font-weight: 700; color: var(--text); margin-bottom: 12px;">Small and mid-size firms are not exempt</h4>
+        <p style="font-size: 14px; color: var(--body); line-height: 1.75;">61% of cyber attacks target small to medium businesses. 46% of all breaches impact businesses with fewer than 1,000 employees. The average breach cost for a small company is $3.31 million. Regulators and cyber insurers do not adjust their requirements based on firm size — a 12-person RIA faces the same examination questions as a 500-person broker-dealer.</p>
+      </div>
+    </div>
+
+    <div class="block">
+      <div class="block-label">Message hierarchy — what to lead with</div>
+      <p style="font-size: 14px; color: var(--body); line-height: 1.75; margin-bottom: 20px;">Not all pillars carry equal weight in every context. When space or time is limited, use this priority order:</p>
+
+      <div class="list-block">
+        <ul>
+          <li><strong>Lead pillar: Proof of Security & Compliance (Pillar 4)</strong> — This is FCI's most differentiating capability. Most MSSPs deploy tools. Very few produce the documentation that regulators, cyber insurers, and home offices actually ask for.</li>
+          <li><strong>Second pillar: Expert Knowledge, Applied at Scale (Pillar 3)</strong> — The depth of experience explains why the proof is trustworthy and why the tools are configured correctly.</li>
+          <li><strong>Third pillar: Procedures & Processes (Pillar 2)</strong> — This is the operational layer that makes the program sustainable. The CISO Portal and 80% time reduction are strong proof points.</li>
+          <li><strong>Fourth pillar: Cyber Tools & Settings (Pillar 1)</strong> — Every MSSP claims this. It is table stakes. Important to include — but never lead with it unless the audience is specifically technical.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="block">
+      <div class="block-label">Message length variants</div>
+      <p style="font-size: 14px; color: var(--body); line-height: 1.75; margin-bottom: 20px;">Use the version that fits the format. Each builds on the one before it.</p>
+
+      <div style="background: var(--white); border: 1px solid var(--rule); padding: 28px; margin-bottom: 16px;">
+        <h4 style="font-size: 12px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--sky); margin-bottom: 12px;">Tagline (5–8 words)</h4>
+        <p style="font-size: 16px; color: var(--text); line-height: 1.75; font-weight: 500;">Cybersecurity proof for financial services sales offices.</p>
+      </div>
+
+      <div style="background: var(--white); border: 1px solid var(--rule); padding: 28px; margin-bottom: 16px;">
+        <h4 style="font-size: 12px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--sky); margin-bottom: 12px;">One-liner (one sentence)</h4>
+        <p style="font-size: 14px; color: var(--body); line-height: 1.75;">FCI manages cybersecurity for sales offices in financial services — enforcing the controls regulators require, producing the evidence examiners ask for, and standing with the firm when it matters.</p>
+      </div>
+
+      <div style="background: var(--white); border: 1px solid var(--rule); padding: 28px; margin-bottom: 16px;">
+        <h4 style="font-size: 12px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--sky); margin-bottom: 12px;">30-second pitch (spoken aloud)</h4>
+        <p style="font-size: 14px; color: var(--body); line-height: 1.75;">"Every sales office in financial services faces the same problem: regulators, home offices, and cyber insurers all require specific cybersecurity controls — and they require proof those controls are in place. Most firms don't have the staff to manage that. FCI does it for them. We deploy the tools, run the program, and produce the documentation — across every device, every office, every user. When the examiner asks for the evidence, it already exists."</p>
+      </div>
+
+      <div style="background: var(--white); border: 1px solid var(--rule); padding: 28px;">
+        <h4 style="font-size: 12px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--sky); margin-bottom: 12px;">2-minute narrative (for presentations)</h4>
+        <p style="font-size: 14px; color: var(--body); line-height: 1.75;">Financial services sales offices — RIA practices, broker-dealer branches, insurance agencies — hold the most sensitive financial data their clients have. Regulators know it. Cyber insurers know it. Home offices know it. And all three are asking the same question: can you prove the cybersecurity controls are in place?</p>
+        <p style="font-size: 14px; color: var(--body); line-height: 1.75; margin-top: 12px;">Most sales offices can't. They don't have dedicated cybersecurity staff. Their advisors and agents use personal devices, on their own networks, in locations the home office has never visited. The compliance officer responsible for security may also be the managing partner, or the branch manager, or the person who just inherited the role.</p>
+        <p style="font-size: 14px; color: var(--body); line-height: 1.75; margin-top: 12px;">FCI was built for exactly this environment. We implement the technical controls — across any device, any OS, BYOD or corporate — without changing how people work. We run the procedures and structured processes that turn a collection of tools into a managed program. And we produce the documentation — mapped to what SEC, FINRA, NYDFS, and NAIC examiners actually request — continuously, as a byproduct of how we operate.</p>
+        <p style="font-size: 14px; color: var(--body); line-height: 1.75; margin-top: 12px;">The result: when the regulator asks for evidence, the cyber insurer asks for documentation, or the home office asks for confirmation — the answer already exists. The firm doesn't scramble. The compliance team doesn't spend weeks assembling files. FCI has already built it. That's what 40,000+ endpoints and 30+ years in financial services makes possible. Not a toolset. A program — managed, documented, and defended.</p>
+      </div>
+    </div>
+
+    <div class="block">
+      <div class="block-label">The universal call to action — Gap Analysis</div>
+      <div class="callout">
+        <div class="callout-label">The most effective CTA across all stages</div>
+        <div class="callout-text">Request a Gap Analysis. In 30 minutes, you will have a clear picture of what controls must be in place, what is missing, and what your next regulatory exam, home office audit, or cyber insurance renewal will ask for.</div>
+      </div>
+
+      <h4 style="font-size: 15px; font-weight: 600; color: var(--text); margin-top: 28px; margin-bottom: 12px;">What happens during a gap analysis</h4>
+      <p style="font-size: 14px; color: var(--body); line-height: 1.75; margin-bottom: 16px;">FCI reviews the firm's current cybersecurity posture against what regulators, home offices, and cyber insurers require — specific to the firm's market (RIAs, broker-dealers & branch offices, or insurance carriers & agencies). This is a 30-minute conversation, not a lengthy audit. FCI asks targeted questions, reviews the firm's current control environment, and identifies the specific gaps between what is in place and what examiners, carriers, and home offices are asking for.</p>
+
+      <h4 style="font-size: 15px; font-weight: 600; color: var(--text); margin-top: 28px; margin-bottom: 12px;">What the prospect receives</h4>
+      <p style="font-size: 14px; color: var(--body); line-height: 1.75; margin-bottom: 16px;">A clear picture of their current posture: what controls are in place, what is missing, and what their next regulatory exam, home office audit, or cyber insurance renewal will specifically ask for. This is not a generic checklist — it is mapped to the firm's specific regulatory obligations and the examination priorities that FCI sees across its 400+ client base.</p>
+
+      <h4 style="font-size: 15px; font-weight: 600; color: var(--text); margin-top: 28px; margin-bottom: 12px;">What it costs</h4>
+      <p style="font-size: 14px; color: var(--body); line-height: 1.75; margin-bottom: 16px;">The gap analysis is complimentary. There is no fee, no contract, and no obligation. The value of the gap analysis exists regardless of whether the firm engages FCI — the firm leaves with a documented understanding of where it stands.</p>
+
+      <h4 style="font-size: 15px; font-weight: 600; color: var(--text); margin-top: 28px; margin-bottom: 12px;">What happens after</h4>
+      <p style="font-size: 14px; color: var(--body); line-height: 1.75; margin-bottom: 16px;">The firm decides what to do with the findings. If the firm chooses to engage FCI, implementation begins immediately — FCI can deploy controls across the full device environment within days, not months. If the firm does not engage FCI, they still have a clear picture of their posture and the specific gaps they need to address.</p>
+
+      <h4 style="font-size: 15px; font-weight: 600; color: var(--text); margin-top: 28px; margin-bottom: 12px;">How to position it by buyer journey stage</h4>
+      <div class="list-block">
+        <ul>
+          <li><strong>Awareness stage:</strong> "Find out where you stand — before your regulator, home office, or cyber insurer asks." The gap analysis is diagnostic. It creates the visibility the firm does not currently have.</li>
+          <li><strong>Consideration stage:</strong> "In 30 minutes, you will see exactly what controls are in place, what is missing, and what your next exam will ask for." The gap analysis is evaluative. It gives the firm concrete information to compare approaches.</li>
+          <li><strong>Decision stage:</strong> "After the gap analysis, you will have a documented picture of your posture. You decide what to do with it. No obligation." The gap analysis is the final step before commitment. Remove the risk of the decision.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════
+       COMPETITIVE POSITIONING
+  ═══════════════════════════════════════════════ -->
+  <div class="section" id="competitive">
+    <div class="section-label">Part 1 Continued</div>
+    <div class="section-title">Competitive Positioning</div>
+    <div class="section-intro">Most managed security service providers (MSSPs) sell tools. FCI delivers a managed cybersecurity program built specifically for the distributed sales office model in financial services. This distinction matters in every conversation.</div>
+
+    <div class="block">
+      <div class="block-label">The structural difference</div>
+      <div class="block-content">
+        <p>A typical MSSP deploys endpoint protection or runs a SOC — then hands the client a dashboard and a phone number. The client is still responsible for configuring controls, writing policies, producing compliance evidence, and responding to regulatory examinations. FCI does all of that. The four pillars — Cyber Tools & Settings, Procedures & Processes, Expert Knowledge, Applied at Scale, and Proof of Security & Compliance — are not sold separately. They are one program, delivered as one service, managed by one team.</p>
+      </div>
+    </div>
+
+    <div class="block">
+      <div class="block-label">Where most competitors stop</div>
+      <div class="list-block">
+        <ul>
+          <li>Do not produce the documentation regulators actually ask for</li>
+          <li>Do not sit with the firm during an examination</li>
+          <li>Do not manage incident response</li>
+          <li>Do not enforce controls across devices they did not sell</li>
+        </ul>
+      </div>
+      <p style="font-size: 14px; color: var(--body); line-height: 1.75; margin-top: 16px;">FCI does all four — because the financial services sales office requires all four.</p>
+    </div>
+
+    <div class="block">
+      <div class="block-label">Key competitive distinctions</div>
+      <div class="proof-row">
+        <div class="proof-pill">Full-cycle managed program, not point tools</div>
+        <div class="proof-pill">Built exclusively for financial services sales offices</div>
+        <div class="proof-pill">Produces regulatory-exam-ready evidence continuously</div>
+        <div class="proof-pill">Incident response included — most competitors do not</div>
+        <div class="proof-pill">Sits with the firm during exams, audits & renewals</div>
+        <div class="proof-pill">Works alongside existing IT providers — not a replacement</div>
+      </div>
+    </div>
+
+    <div class="block">
+      <div class="block-label">Competitive response framework — by competitor type</div>
+      <p style="font-size: 14px; color: var(--body); line-height: 1.75; margin-bottom: 24px;">When a prospect names a specific alternative, the response should be factual, calm, and focused on what the alternative does not provide. Never disparage a competitor. Let the gaps speak for themselves.</p>
+
+      <div style="margin-bottom: 28px;">
+        <h4 style="font-size: 15px; font-weight: 600; color: var(--text); margin-bottom: 12px;">"We are evaluating another MSSP."</h4>
+        <p style="font-size: 14px; color: var(--body); line-height: 1.75;">Ask three questions: (1) Do they produce the regulatory documentation that SEC, FINRA, NYDFS, or NAIC examiners specifically request? (2) Do they sit with the firm during the examination or audit? (3) Do they include incident response — containment, remediation, documentation, and communication — as part of the service? Most MSSPs deploy tools and hand the client a dashboard. FCI delivers a managed program that includes documentation, examination support, and incident response. The distinction is not about tools — it is about what happens when the regulator, the cyber insurer, or the incident arrives.</p>
+      </div>
+
+      <div style="margin-bottom: 28px;">
+        <h4 style="font-size: 15px; font-weight: 600; color: var(--text); margin-bottom: 12px;">"Our IT provider says they can handle cybersecurity."</h4>
+        <p style="font-size: 14px; color: var(--body); line-height: 1.75;">An IT provider manages performance and uptime — and many do it well. The question is whether they produce NIST-mapped compliance evidence, maintain SOC 2 attestation, run a 24x7 SOC, and have experience managing cybersecurity specifically for financial services sales offices through regulatory examinations and cyber incidents. Ask for their SOC 2 report. Ask how many financial services regulatory examinations they have supported. Ask whether they produce the documentation cyber insurers require for a claim. FCI works alongside the IT provider. The two roles do not overlap.</p>
+      </div>
+
+      <div style="margin-bottom: 28px;">
+        <h4 style="font-size: 15px; font-weight: 600; color: var(--text); margin-bottom: 12px;">"We are looking at an enterprise security platform (CrowdStrike, SentinelOne, Palo Alto, etc.)."</h4>
+        <p style="font-size: 14px; color: var(--body); line-height: 1.75;">These are strong tools. The question is who configures them for the firm's specific regulatory requirements, who produces the compliance evidence from them, who manages the incident response documentation, and who sits with the firm during the examination. An enterprise platform is an ingredient. FCI delivers the full recipe — the configuration, the procedures, the documentation, and the expertise — built specifically for the distributed sales office model in financial services. FCI can work with enterprise tools already in place.</p>
+      </div>
+
+      <div style="margin-bottom: 28px;">
+        <h4 style="font-size: 15px; font-weight: 600; color: var(--text); margin-bottom: 12px;">"We are going to build this internally."</h4>
+        <p style="font-size: 14px; color: var(--body); line-height: 1.75;">Ask how many hours per month the team currently spends on compliance documentation and cybersecurity maintenance. Multiply by 12. That is the cost of the current approach — before the first incident, before the first failed examination, and before the first denied cyber insurance claim. Internal builds also lack the cross-client intelligence that comes from managing 40,000+ endpoints across 400+ financial services firms. FCI's controls reflect what regulators are examining right now — because FCI sees those examinations across its entire client base. An internal build starts from one firm's experience. FCI starts from hundreds.</p>
+      </div>
+
+      <div>
+        <h4 style="font-size: 15px; font-weight: 600; color: var(--text); margin-bottom: 12px;">"We will handle it after our next exam / when we have budget / when we hire someone."</h4>
+        <p style="font-size: 14px; color: var(--body); line-height: 1.75;">The evidence FCI produces builds daily. Firms that start after the exam notice arrive spend weeks assembling what FCI-managed firms already have. Every month without a managed program is a month of undocumented exposure — to regulators, to cyber insurers, and to incident liability. The gap analysis takes 30 minutes and costs the firm nothing but time. It shows where the firm stands today. The decision about what to do with that information is entirely theirs.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════
+       BUYER JOURNEY
+  ═══════════════════════════════════════════════ -->
+  <div class="section" id="buyer-journey">
+    <div class="section-label">Part 1 Continued</div>
+    <div class="section-title">Buyer Journey — Messaging by Stage</div>
+    <div class="section-intro">Not every prospect is in the same place. This section maps which messages, proof points, and calls to action are most effective at each stage — across all four roles.</div>
+
+    <div class="block">
+      <h4 style="font-size: 18px; font-weight: 600; color: var(--text); margin-bottom: 16px; margin-top: 24px;">Awareness — "I might have a problem"</h4>
+      <p style="font-size: 14px; color: var(--body); line-height: 1.75; margin-bottom: 12px;"><strong>The prospect knows cybersecurity is a topic but has not quantified their exposure.</strong></p>
+
+      <h5 style="font-size: 14px; font-weight: 600; color: var(--text); margin-top: 20px; margin-bottom: 10px;">Goal</h5>
+      <p style="font-size: 14px; color: var(--body); line-height: 1.75; margin-bottom: 16px;">Make the gap visible without sounding alarmist. Help them see what they cannot currently prove.</p>
+
+      <h5 style="font-size: 14px; font-weight: 600; color: var(--text); margin-top: 20px; margin-bottom: 10px;">Lead with</h5>
+      <div class="list-block">
+        <ul>
+          <li>The structural visibility problem: sales offices operate on devices, networks, and in locations the firm cannot see or control</li>
+          <li>The regulatory shift: examiners are asking for evidence that controls are technically enforced</li>
+          <li>The cyber insurance tightening: carriers are requiring documentation of specific controls</li>
+          <li>The cost of inaction data — concrete numbers that make the risk real</li>
+        </ul>
+      </div>
+
+      <h5 style="font-size: 14px; font-weight: 600; color: var(--text); margin-top: 20px; margin-bottom: 10px;">By role at this stage</h5>
+      <div class="list-block">
+        <ul>
+          <li><strong>Board / C-Level:</strong> "The regulatory landscape has changed. The question is no longer whether your firm has a cybersecurity policy. It is whether you can document the controls that back it up — across every office and every device."</li>
+          <li><strong>CISO / CCO:</strong> "Your policies define the program. The challenge is proving that the program extends to every sales office, every BYOD device, and every affiliated location — before the examiner asks."</li>
+          <li><strong>Field compliance:</strong> "You were handed cybersecurity requirements. You were not handed the tools or the training to implement them across devices you do not own and locations you do not control."</li>
+          <li><strong>IT manager:</strong> "You are managing more than you can fully see. The question is not whether you are doing your best — it is whether the documentation exists to prove what controls are in place."</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="block">
+      <h4 style="font-size: 18px; font-weight: 600; color: var(--text); margin-bottom: 16px; margin-top: 36px;">Consideration — "I need to solve this"</h4>
+      <p style="font-size: 14px; color: var(--body); line-height: 1.75; margin-bottom: 12px;"><strong>The prospect has recognized the gap. They are comparing approaches.</strong></p>
+
+      <h5 style="font-size: 14px; font-weight: 600; color: var(--text); margin-top: 20px; margin-bottom: 10px;">Goal</h5>
+      <p style="font-size: 14px; color: var(--body); line-height: 1.75; margin-bottom: 16px;">Establish FCI as the only option purpose-built for this specific environment. Show that the alternatives leave critical gaps.</p>
+
+      <h5 style="font-size: 14px; font-weight: 600; color: var(--text); margin-top: 20px; margin-bottom: 10px;">Lead with</h5>
+      <div class="list-block">
+        <ul>
+          <li>The four pillars — especially Proof of Security & Compliance and Expert Knowledge</li>
+          <li>The competitive distinction: FCI is a managed program, not point tools</li>
+          <li>IT provider compatibility: FCI works alongside existing IT</li>
+          <li>The implementation speed: what takes internal teams months takes FCI hours or days</li>
+        </ul>
+      </div>
+
+      <h5 style="font-size: 14px; font-weight: 600; color: var(--text); margin-top: 20px; margin-bottom: 10px;">By role at this stage</h5>
+      <div class="list-block">
+        <ul>
+          <li><strong>Board / C-Level:</strong> "FCI provides the most substantial risk reduction available to a financial services firm — implementing controls, producing documentation, and managing incident response as one program, managed by one team."</li>
+          <li><strong>CISO / CCO:</strong> "FCI enforces controls across the full distributed network and produces the documentation regulators require — built continuously, before the exam notice arrives."</li>
+          <li><strong>Field compliance:</strong> "FCI handles the implementation across every device in the office — including personal devices — so you can confirm compliance without becoming a cybersecurity expert."</li>
+          <li><strong>IT manager:</strong> "FCI is not a replacement for what you do. It is the automation and expertise that handles the compliance layer — so you can focus on the work that moves the firm forward."</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="block">
+      <h4 style="font-size: 18px; font-weight: 600; color: var(--text); margin-bottom: 16px; margin-top: 36px;">Decision — "I am choosing a partner"</h4>
+      <p style="font-size: 14px; color: var(--body); line-height: 1.75; margin-bottom: 12px;"><strong>The prospect is ready to act. They are comparing FCI to a specific alternative or building an internal business case.</strong></p>
+
+      <h5 style="font-size: 14px; font-weight: 600; color: var(--text); margin-top: 20px; margin-bottom: 10px;">Goal</h5>
+      <p style="font-size: 14px; color: var(--body); line-height: 1.75; margin-bottom: 16px;">Remove the last objections. Make the decision feel safe. Reinforce what the firm gains and what it risks by waiting.</p>
+
+      <h5 style="font-size: 14px; font-weight: 600; color: var(--text); margin-top: 20px; margin-bottom: 10px;">By role at this stage</h5>
+      <div class="list-block">
+        <ul>
+          <li><strong>Board / C-Level:</strong> "Your employees and affiliates will not notice a difference. Your regulator will."</li>
+          <li><strong>CISO / CCO:</strong> "The examiner will ask for your evidence. FCI builds it while your sales offices are working — not after the exam notice arrives."</li>
+          <li><strong>Field compliance:</strong> "We manage what your compliance stack cannot reach — every BYOD device, every user, every network, every sales office."</li>
+          <li><strong>IT manager:</strong> "Your firm hired you to help it succeed. FCI handles what was keeping you from doing that."</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Continue with remaining sections... the file is long, so breaking here -->
+  <!-- More sections to follow in next continuation -->
+
+<!-- ROLE 1: Board & C-Level -->
+  <div class="section" id="role-board">
+    <div class="section-label">Part 2 — The Four Roles</div>
+    <div class="section-title">Shareholders, Board of Directors, and C-Level</div>
+
+    <div class="block">
+      <div class="block-label">Who they are</div>
+      <div class="block-content">The owners, managing partners, and senior executives of financial services firms — the people who built the firm or were hired to protect it. They may hold the title of CEO, President, Managing Director, or Principal. In smaller firms, one person fills several of these roles at once. They are personally accountable for the firm's regulatory standing, its client relationships, and its survival.</div>
+    </div>
+
+    <div class="block">
+      <div class="block-label">Their world</div>
+      <div class="block-content">They run their firms to serve clients, not to manage technology. But the risk environment has changed. Cyber is no longer an IT issue — it is the most significant business risk a financial services firm faces today. A breach does not just disrupt operations. It triggers mandatory regulatory reporting, exposes client data, and creates liability that can destroy a firm built over decades.</div>
+      <div class="block-content" style="margin-top: 16px;">They know this. What they often do not have is a reliable way to confirm that the controls are actually in place — across every advisor, every agent, every device, and every location. And the pressure is arriving from every direction at once: regulatory examinations are more detailed, cyber insurers are demanding proof of specific controls before renewing policies or paying a claim, and home offices are requiring documentation that every affiliated sales office is in good order.</div>
+      <div class="block-content" style="margin-top: 16px;">That pressure lands on their desk. They are the ones who sign the policy. They are the ones who answer when something goes wrong.</div>
+    </div>
+
+    <div class="block">
+      <div class="block-label">The job they need done</div>
+      <div class="list-block">
+        <ul>
+          <li>Know that every device is covered — regardless of who owns it or where it is used</li>
+          <li>Have a credible, documented answer when a regulator, cyber insurer, or home office asks about cybersecurity controls</li>
+          <li>Confirm that the compliance program is running as it should, without having to personally manage it</li>
+          <li>Free leadership to focus on growing the business, not on cybersecurity maintenance</li>
+          <li>Know that if something happens, a qualified team is already involved — and the documentation is already assembled</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="callout">
+      <div class="callout-label">The fear that drives the decision</div>
+      <div class="callout-text">"A breach would force me to report to regulators, notify clients, and explain in writing what controls we had in place and why they failed. The client trust I have spent 20 years building could be gone in a week. And I would not know it was happening until the damage was done."</div>
+    </div>
+
+    <div class="block">
+      <div class="block-label">FCI's answer to this role</div>
+      <div class="block-content">FCI provides the most substantial risk reduction available to a financial services firm — implementing and maintaining the controls that regulators require, the evidence that cyber insurers ask for, and the visibility that leadership needs, without asking the firm to build a security team or manage a technology stack.</div>
+    </div>
+
+    <div class="block">
+      <div class="block-label">What success looks like</div>
+      <div class="block-content">The managing partner who brought FCI in does not think about cybersecurity compliance anymore — not because they stopped caring, but because the evidence arrives without them asking for it. When the cyber insurer sends the renewal questionnaire, the documentation is already assembled. When the board asks about the firm's posture, the answer is specific, current, and backed by records. The firm's reputation — the thing they spent decades building — is protected by a program they can see, verify, and explain. They made the decision. The program runs itself.</div>
+    </div>
+
+    <div class="block">
+      <div class="block-label">Role-specific proof points</div>
+      <div class="list-block">
+        <ul>
+          <li>Controls enforced across every device — corporate, BYOD, Mac, Windows, any configuration — without hardware purchases or internal configuration by the firm's own staff</li>
+          <li>The FCI CISO Portal produces regulatory documentation in minutes, mapped to what SEC, FINRA, NYDFS, and NAIC examiners actually request</li>
+          <li>FCI's 30 years in financial services means the controls deployed reflect what regulators are actively examining — not just what frameworks recommend</li>
+          <li>24x7 SOC monitoring means a human team is watching every endpoint at all hours — not an automated alert that sits in a queue</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="block">
+      <div class="block-label">What changes on day one</div>
+      <div class="block-content">On day one, FCI takes a complete inventory of every device associated with the firm. Leadership receives a clear view of the full cybersecurity posture — often for the first time. Controls begin deploying automatically. The documentation of what is in place starts building from that moment forward.</div>
+    </div>
+
+    <div class="block">
+      <div class="block-label">What they can show a regulator or cyber insurer</div>
+      <div class="list-block">
+        <ul>
+          <li>Complete endpoint inventory with compliance status for every device</li>
+          <li>Control enforcement records showing what is active, when it was deployed, and whether anything was changed</li>
+          <li>Regulatory documentation mapped to the examiner's specific requirements</li>
+          <li>Evidence documenting the controls carriers ask for</li>
+          <li>Incident response documentation if any event has occurred</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="block">
+      <div class="block-label">The first 90 days and beyond</div>
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="timeline-marker">Day 1</div>
+          <div class="timeline-content">Full device inventory across the firm. Leadership sees the complete cybersecurity posture — often for the first time. Controls begin deploying automatically.</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-marker">Week 1–2</div>
+          <div class="timeline-content">Controls are enforced across every endpoint. Documentation of what is in place begins building as a byproduct of operations.</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-marker">Month 1</div>
+          <div class="timeline-content">First compliance management reports generated through the CISO Portal. Leadership has a documented baseline they can point to.</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-marker">Month 3</div>
+          <div class="timeline-content">First regulatory examination, home office audit, or cyber insurance renewal prepared in minutes — not weeks. The evidence already exists.</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-marker">Year 1</div>
+          <div class="timeline-content">A full year of continuous evidence: control enforcement records, incident documentation, regulatory alignment mapping. The firm's posture is measurably stronger than where it started — and the proof of that improvement is already on file.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="block">
+      <div class="block-label">How they sell it internally</div>
+      <div class="internal-quote">
+        <div class="internal-quote-label">To partners</div>
+        <div>"I found a managed cybersecurity program that handles the controls our regulators and cyber insurer require — across every device, including personal devices. They produce the documentation we need for exams. It does not require us to build a security team."</div>
+      </div>
+      <div class="internal-quote">
+        <div class="internal-quote-label">To compliance leadership</div>
+        <div>"This firm manages the technical enforcement side of cybersecurity and produces the evidence examiners ask for. It would close the gap between our policies and what we can actually prove."</div>
+      </div>
+      <div class="internal-quote">
+        <div class="internal-quote-label">To the IT manager</div>
+        <div>"This works alongside what you already manage. It handles the compliance and regulatory documentation layer. It is not a replacement — it is support."</div>
+      </div>
+    </div>
+
+    <div class="callout">
+      <div class="callout-text">"Your employees and affiliates will not notice a difference. Your regulator will."</div>
+    </div>
+  </div>
+
+  <!-- ROLE 2: CISO & CCO -->
+  <div class="section" id="role-ciso">
+    <div class="section-label">Part 2 — The Four Roles</div>
+    <div class="section-title">CISO and CCO</div>
+
+    <div class="block">
+      <div class="block-label">Who they are</div>
+      <div class="block-content">The Chief Information Security Officer, Chief Compliance Officer, or senior compliance leader at the firm level. They are responsible for defining the cybersecurity and compliance program — the policies, controls, documentation, and procedures — and for confirming that those requirements are being met across the entire organization, including every sales office, branch, agency, and affiliated location.</div>
+      <div class="block-content" style="margin-top: 16px;">They answer to regulators. They answer to the board. When something goes wrong in the field, they answer for it.</div>
+    </div>
+
+    <div class="block">
+      <div class="block-label">Their world</div>
+      <div class="block-content">The firm-level CISO or CCO sets the requirements. The challenge is that enforcement of those requirements depends on sales offices and field teams the home office does not directly control. Those offices may not have dedicated IT support. Their devices are often personal (BYOD). Their networks are outside the firm's perimeter.</div>
+      <div class="block-content" style="margin-top: 16px;">Every year the examination expectations grow more specific. Regulators increasingly ask not just whether written policies exist, but whether those policies are backed by technical controls that can be verified. Assembling that verification — across dozens or hundreds of distributed offices — is a manual, time-consuming process that creates a gap between what the firm's policies say and what the firm can actually prove.</div>
+      <div class="block-content" style="margin-top: 16px;">Home offices are beginning to see this gap more clearly as visibility tools improve. What that visibility reveals is often worse than expected.</div>
+    </div>
+
+    <div class="block">
+      <div class="block-label">The job they need done</div>
+      <div class="list-block">
+        <ul>
+          <li>Prove to regulators that the cybersecurity program extends to every sales office and every device — not just the home office</li>
+          <li>Close the gap between the firm's stated security posture and what can actually be verified in the field</li>
+          <li>Reduce the time spent preparing for examinations — the evidence should be assembling continuously, not in the weeks after an exam notice arrives</li>
+          <li>Confirm that written supervisory procedures and policies are backed by actual technical controls, not just documentation on paper</li>
+          <li>Get real-time visibility into device status, control enforcement, and incidents across the entire distributed network</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="callout">
+      <div class="callout-label">The fear that drives the decision</div>
+      <div class="callout-text">"The regulator will ask me to prove that our cybersecurity controls are working across every sales office. We have the policies. What we cannot prove is that they are implemented."</div>
+    </div>
+
+    <div class="block">
+      <div class="block-label">FCI's answer to this role</div>
+      <div class="block-content">FCI enforces controls across the full distributed network — every sales office, every BYOD device, every location — and produces the documentation regulators require, built continuously, before the exam notice arrives.</div>
+    </div>
+
+    <div class="block">
+      <div class="block-label">What success looks like</div>
+      <div class="block-content">The CISO or CCO who brought FCI in walks into examination season knowing the evidence is already assembled. They do not spend weeks pulling records from field offices. They do not wonder whether the policies they wrote are actually enforced in locations they have never visited. When the examiner asks for documentation, they open the CISO Portal and produce it — mapped to the specific requirements, with dates, enforcement records, and device-level detail. They are the person who closed the gap between the firm's stated posture and what could actually be proven. That is what gets recognized.</div>
+    </div>
+
+    <div class="block">
+      <div class="block-label">Role-specific proof points</div>
+      <div class="list-block">
+        <ul>
+          <li>Controls mapped specifically to the examination priorities of SEC, FINRA, NYDFS, and NAIC — the evidence produced matches what examiners actually request</li>
+          <li>The FCI CISO Portal provides a single view of every device in the network — compliance status, control enforcement history, and incident records</li>
+          <li>FCI's engagement itself constitutes vendor due diligence documentation — SOC 2 Type 1, 100% SecurityScorecard rating, and regulatory alignment on record</li>
+          <li>Automation at scale: when multiple sales offices follow a common home office template, FCI deploys that template consistently across all of them — so the CISO or CCO can confirm that the full distribution is in good order, not just the offices with attentive IT managers</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="block">
+      <div class="block-label">What changes on day one</div>
+      <div class="block-content">On day one, the CISO or CCO receives a complete inventory of the firm's distributed device landscape — including devices and connections that may not have been previously visible. Controls begin deploying from that point. The documentation gap starts closing immediately.</div>
+    </div>
+
+    <div class="block">
+      <div class="block-label">What they can show a regulator or cyber insurer</div>
+      <div class="list-block">
+        <ul>
+          <li>Device inventory and control enforcement log across all offices and locations</li>
+          <li>Regulatory alignment mapping: NIST CSF, SEC, FINRA, NYDFS, or NAIC, as applicable</li>
+          <li>Written supervisory procedure documentation backed by technical evidence</li>
+          <li>Vendor due diligence file for FCI</li>
+          <li>Incident response log for the full distributed network</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="block">
+      <div class="block-label">The first 90 days and beyond</div>
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="timeline-marker">Day 1</div>
+          <div class="timeline-content">Complete inventory of the distributed device landscape — including devices and connections that may not have been previously visible.</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-marker">Week 1–2</div>
+          <div class="timeline-content">Controls deploying across all offices and affiliated locations. The documentation gap begins closing immediately.</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-marker">Month 1</div>
+          <div class="timeline-content">First comprehensive compliance view across the full network. The CISO or CCO can confirm device status, control enforcement, and incident history from a single dashboard.</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-marker">Month 3</div>
+          <div class="timeline-content">First regulatory examination or home office audit prepared using FCI-generated evidence. Preparation that previously took weeks is completed in minutes.</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-marker">Year 1</div>
+          <div class="timeline-content">A full annual cycle of continuous evidence — ready for annual regulatory filings, cyber insurance renewals, and home office reviews. The program has been tested in real conditions and the documentation trail is complete.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="block">
+      <div class="block-label">How they sell it internally</div>
+      <div class="internal-quote">
+        <div class="internal-quote-label">To the board</div>
+        <div>"I've found a managed program that closes the gap between our policies and what we can actually prove in the field. It produces the documentation we need for examinations and cyber insurance renewals — continuously, without additional staff."</div>
+      </div>
+      <div class="internal-quote">
+        <div class="internal-quote-label">To the IT team</div>
+        <div>"This handles the compliance documentation and regulatory alignment layer. It deploys alongside your existing tools. It does not replace what you manage — it covers the part that regulators and examiners are specifically asking for."</div>
+      </div>
+      <div class="internal-quote">
+        <div class="internal-quote-label">To field offices</div>
+        <div>"FCI handles the cybersecurity controls across your devices — including personal devices. You do not need to do anything differently. The evidence of compliance builds automatically."</div>
+      </div>
+    </div>
+
+    <div class="callout">
+      <div class="callout-text">"The examiner will ask for your evidence. FCI builds it while your sales offices are working — not after the exam notice arrives."</div>
+    </div>
+  </div>
+
+  <!-- ROLE 3: Field Compliance Officer -->
+  <div class="section" id="role-field">
+    <div class="section-label">Part 2 — The Four Roles</div>
+    <div class="section-title">Field Compliance Officer</div>
+
+    <div class="block">
+      <div class="block-label">Who they are</div>
+      <div class="block-content">The person accountable for cybersecurity and compliance at the sales office level. The title varies: field compliance officer, office compliance officer, branch manager, agency principal, or simply the person in the office who handles compliance. In many sales offices, this is not a full-time function — it is one responsibility among many.</div>
+      <div class="block-content" style="margin-top: 16px;">They did not choose to become cybersecurity managers. They were handed a list of requirements.</div>
+    </div>
+
+    <div class="block">
+      <div class="block-label">Their world</div>
+      <div class="block-content">The firm-level CISO or CCO defines the program. The field compliance officer is responsible for implementing it — often without cybersecurity expertise, without dedicated IT support, and without the tools to verify what is actually happening on the devices in their office.</div>
+      <div class="block-content" style="margin-top: 16px;">They are accountable for security across devices and locations they may not be able to physically access or directly control. Independent advisors and agents use their own devices, on their own networks. The field compliance officer cannot see those devices. They cannot configure them. And if something goes wrong, they are the first person asked to explain why the controls did not reach there.</div>
+      <div class="block-content" style="margin-top: 16px;">Home offices are beginning to gain visibility into field devices — and what that visibility is revealing is a gap that field offices are being asked to close, often without being given the tools or resources to do it.</div>
+    </div>
+
+    <div class="block">
+      <div class="block-label">The job they need done</div>
+      <div class="list-block">
+        <ul>
+          <li>Meet the cybersecurity requirements from regulators, the home office, and cyber insurers — without becoming a cybersecurity expert</li>
+          <li>Have evidence to show when the home office, a compliance team, or a cyber insurer asks what controls are in place</li>
+          <li>Manage the security posture of BYOD devices without the budget or authority to purchase, configure, or control those devices</li>
+          <li>Implement controls across every user in the office — consistently, automatically, without requiring users to change how they work</li>
+          <li>Know that if something happens, a qualified team is already involved and the documentation already exists</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="callout">
+      <div class="callout-label">The fear that drives the decision</div>
+      <div class="callout-text">"I am responsible for security across devices and offices I cannot see and cannot directly control. Something happens — and I am the one who has to explain why our controls did not reach there. I was not given instructions for how to do this."</div>
+    </div>
+
+    <div class="block">
+      <div class="block-label">FCI's answer to this role</div>
+      <div class="block-content">FCI handles the technical implementation — the settings, tools, and procedures — so the field compliance officer can focus on their actual job. Every device in the office gets covered. Every control gets documented. And the evidence is already assembled before anyone asks for it.</div>
+    </div>
+
+    <div class="block">
+      <div class="block-label">A note on BYOD</div>
+      <div class="block-content">Most financial services sales offices run on a mix of personal and firm-issued devices. Requiring everyone to switch to firm-issued hardware is expensive, slow, and creates its own management burden. FCI's design works across any device — Mac, Windows, any manufacturer, any configuration — without requiring the firm to own or provision that hardware.</div>
+      <div class="block-content" style="margin-top: 16px;">FCI extends the technical controls that would exist on a fully managed corporate device to a personal device. The result is BYOD with corporate-standard security — at a fraction of the cost of a hardware purchase and refresh program. This is not a workaround. It is the design. FCI was built for exactly this environment.</div>
+    </div>
+
+    <div class="block">
+      <div class="block-label">What success looks like</div>
+      <div class="block-content">The field compliance officer who brought FCI in no longer dreads the home office compliance request. When the email arrives asking for evidence of cybersecurity controls, they do not scramble. They do not call an IT consultant. They do not spend a weekend assembling documentation they are not sure is complete. They open the portal, pull the report, and send it. The weight of a responsibility they were never trained for has been lifted — not because someone told them it was handled, but because they can see the evidence themselves. They are still accountable. But now they have the tools and the team to meet that accountability.</div>
+    </div>
+
+    <div class="block">
+      <div class="block-label">Role-specific proof points</div>
+      <div class="list-block">
+        <ul>
+          <li>FCI works on any device regardless of manufacturer, operating system, or configuration — no hardware purchases required</li>
+          <li>Always-On VPN and MFA are enforced automatically — advisors and agents connect securely without taking additional steps</li>
+          <li>Zero Trust access controls ensure that only known users and verified endpoints on secure networks can communicate with and access private data and firm systems</li>
+          <li>Controls that would typically require months of internal IT work are deployed in hours, using FCI's automation and established procedures</li>
+          <li>If an incident occurs, the 24x7 SOC is already watching — and the documentation of what was in place already exists</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="block">
+      <div class="block-label">What changes on day one</div>
+      <div class="block-content">On day one, FCI maps every device connected to the office. The field compliance officer sees the full picture of what is in the network — often for the first time. Controls deploy automatically. Users do not notice anything has changed. The documentation begins building immediately, so the next time the home office or a compliance team asks for evidence, it already exists.</div>
+    </div>
+
+    <div class="block">
+      <div class="block-label">What they can show a compliance team or cyber insurer</div>
+      <div class="list-block">
+        <ul>
+          <li>Full device inventory for the office, with compliance status for every device</li>
+          <li>Control enforcement records: what is active, when it was applied, whether anything changed</li>
+          <li>BYOD coverage records — showing that personal devices meet home office requirements</li>
+          <li>MFA and VPN enforcement records for all users in the office</li>
+          <li>Incident response documentation if any event occurred</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="block">
+      <div class="block-label">The first 90 days and beyond</div>
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="timeline-marker">Day 1</div>
+          <div class="timeline-content">FCI maps every device connected to the office. The field compliance officer sees the full picture — often for the first time. Controls deploy automatically. Users notice nothing.</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-marker">Week 1–2</div>
+          <div class="timeline-content">Every device in the office — including BYOD — is under management. MFA, VPN, and endpoint protections are enforced without users taking additional steps.</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-marker">Month 1</div>
+          <div class="timeline-content">The first compliance evidence report is generated. When the home office or a compliance team asks what controls are in place, the answer is documented and ready.</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-marker">Month 3</div>
+          <div class="timeline-content">The field compliance officer has been through at least one compliance request cycle with FCI-generated evidence. The time spent on cybersecurity compliance tasks has dropped by more than 80%.</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-marker">Year 1</div>
+          <div class="timeline-content">A full year of documented controls, enforcement records, and incident response readiness. The office has a defensible compliance history — and the field compliance officer has reclaimed the time to focus on the work they were actually hired to do.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="block">
+      <div class="block-label">How they sell it internally</div>
+      <div class="internal-quote">
+        <div class="internal-quote-label">To the managing partner</div>
+        <div>"I found a firm that handles the cybersecurity requirements from our regulators and our cyber insurer. They cover every device including personal devices, and they produce the documentation we need for exams. It does not require us to hire IT staff."</div>
+      </div>
+      <div class="internal-quote">
+        <div class="internal-quote-label">To the home office</div>
+        <div>"We are working with FCI to enforce the cybersecurity controls across our office. They produce the compliance documentation you require — I can send you the current report."</div>
+      </div>
+      <div class="internal-quote">
+        <div class="internal-quote-label">To advisors and agents in the office</div>
+        <div>"Nothing changes in how you work. FCI manages the security controls on your devices in the background. You will not notice anything different."</div>
+      </div>
+    </div>
+
+    <div class="callout">
+      <div class="callout-text">"We manage what your compliance stack cannot reach — every BYOD device, every user, every network, every sales office."</div>
+    </div>
+  </div>
+
+  <!-- ROLE 4: IT Manager -->
+  <div class="section" id="role-it">
+    <div class="section-label">Part 2 — The Four Roles</div>
+    <div class="section-title">IT Manager</div>
+
+    <div class="block">
+      <div class="block-label">Who they are</div>
+      <div class="block-content">The technical manager or IT lead at the firm or sales office level — the person responsible for the technology environment the firm runs on. In larger firms, this may be a dedicated team. In most sales offices, it is one person, managing cybersecurity alongside everything else.</div>
+      <div class="block-content" style="margin-top: 16px;">The IT manager is frequently the first person FCI meets. They are also, sometimes, the first person who decides whether FCI moves forward.</div>
+    </div>
+
+    <div class="block">
+      <div class="block-label">Their world</div>
+      <div class="block-content">The IT manager wants to do the right thing for the firm. They are not resisting cybersecurity improvements out of bad intent — they are protecting territory they know well, while knowing there are limits to what they can cover alone.</div>
+      <div class="block-content" style="margin-top: 16px;">They are not typically exposed to the breadth of regulatory requirements, cyber incidents, insurance audits, and home office enforcement actions that FCI manages across its entire client base. Their knowledge comes from their firm. FCI's knowledge comes from 40,000+ endpoints and 30 years of financial services cybersecurity. That difference is not a reason to compete — it is a reason to partner.</div>
+      <div class="block-content" style="margin-top: 16px;">The IT manager's larger challenge is focus. Every hour spent maintaining cybersecurity configurations, responding to compliance requests, and managing endpoint settings is an hour not spent on the things that actually move the firm forward: better client-facing technology, operational efficiency, data leverage. The best IT teams in financial services are not managing compliance tasks. They are building the things that give the firm an edge.</div>
+      <div class="block-content" style="margin-top: 16px;">Leadership often trusts the IT manager's word. "We're good" goes unchallenged — not because leadership does not care, but because they do not know what evidence to ask for. That is where the risk accumulates.</div>
+    </div>
+
+    <div class="block">
+      <div class="block-label">The job they need done</div>
+      <div class="list-block">
+        <ul>
+          <li>Keep every device and every user secure — without spending the majority of available time on configuration and maintenance</li>
+          <li>Have a reliable, documented answer when compliance asks what controls are in place</li>
+          <li>Respond to the firm's regulatory and home office requirements without rebuilding the security stack from scratch</li>
+          <li>Be seen by firm leadership as a driver of business value, not a cost center</li>
+          <li>Focus on the technology that helps the firm serve clients better and compete more effectively</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="callout">
+      <div class="callout-label">The fear that drives the decision</div>
+      <div class="callout-text">"Leadership trusts that I have this covered. I do my best. But I am managing more than I can fully see — and I cannot always tell what I am missing until it has already become a problem."</div>
+    </div>
+
+    <div class="block">
+      <div class="block-label">FCI's answer to this role</div>
+      <div class="block-content">FCI is not a replacement for the IT manager — it is the automation and expertise that frees them to do the work that matters. The settings, monitoring, compliance documentation, and incident response that currently consume their time become FCI's responsibility. What remains for the IT manager is the work that drives the firm forward.</div>
+      <div class="block-content" style="margin-top: 16px;">The firms where this works best are the ones where the IT team stops thinking of FCI as a vendor and starts treating it as part of their team. Zero Trust network deployments that would have taken months take hours. Endpoint enrollment across hundreds of devices is done remotely and automatically. The IT manager is the person who made that happen — because they were the one who brought FCI in.</div>
+    </div>
+
+    <div class="block">
+      <div class="block-label">What success looks like</div>
+      <div class="block-content">The IT manager who brought FCI in is no longer the person who maintains compliance spreadsheets and chases endpoint configurations at midnight. They are the person who made the call that freed the team. The tasks that used to consume their weeks — assembling documentation, configuring controls across dozens of devices, responding to compliance requests — are handled. What remains is the work they actually wanted to do: building the technology that helps the firm serve clients better, improving operational efficiency, solving the problems that make leadership see IT as a strategic asset instead of a cost center. They brought FCI in — and that decision changed their role.</div>
+    </div>
+
+    <div class="block">
+      <div class="block-label">Role-specific proof points</div>
+      <div class="list-block">
+        <ul>
+          <li>FCI deploys across any device, any OS, any configuration — no prerequisites, no hardware refresh required</li>
+          <li>Implementation that typically takes internal teams months is completed in hours or days using FCI's automation and established financial services procedures</li>
+          <li>FCI manages the ongoing compliance documentation, freeing the IT manager from the monthly burden of assembling and maintaining it</li>
+          <li>FCI's 24x7 SOC monitors every endpoint, so the IT manager does not carry the overnight and weekend security watch alone</li>
+          <li>Every incident is handled by a team that has managed thousands of incidents across financial services firms — that depth of experience does not exist internally at most firms</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="block">
+      <div class="block-label">What changes on day one</div>
+      <div class="block-content">On day one, FCI runs a complete inventory of the device environment. The IT manager often sees — in one report — the full picture of what is connected, what is compliant, and what is not. That visibility is frequently the moment the relationship changes.</div>
+      <div class="block-content" style="margin-top: 16px;">Controls begin deploying from day one. The documentation starts building immediately. Within the first weeks, the IT manager begins to notice what is different: compliance requests that used to take days are answered in minutes. Tasks that had been deferred for months because there was no bandwidth are completed.</div>
+    </div>
+
+    <div class="block">
+      <div class="block-label">What they can show firm leadership or a compliance team</div>
+      <div class="list-block">
+        <ul>
+          <li>Full device inventory with compliance status across every endpoint</li>
+          <li>Control deployment records showing what is enforced, when it was applied, and whether anything has changed</li>
+          <li>Monthly compliance management reports — generated by the FCI CISO Portal, not by manual effort</li>
+          <li>Incident and response log for every security event in the environment</li>
+          <li>MFA, VPN, and endpoint encryption enforcement records for all users</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="block">
+      <div class="block-label">The first 90 days and beyond</div>
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="timeline-marker">Day 1</div>
+          <div class="timeline-content">FCI runs a complete inventory of the device environment. The IT manager sees — in one report — the full picture of what is connected, what is compliant, and what is not. That visibility is frequently the moment the relationship changes.</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-marker">Week 1–2</div>
+          <div class="timeline-content">Controls deploy across all endpoints. Tasks that had been deferred for months due to bandwidth are completed. The IT manager begins to see what "managed" actually means.</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-marker">Month 1</div>
+          <div class="timeline-content">First compliance management reports generated automatically by the CISO Portal. Compliance requests that previously took the IT manager days are answered in minutes.</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-marker">Month 3</div>
+          <div class="timeline-content">The IT manager has reclaimed the majority of the time previously spent on compliance maintenance. They are working on projects that move the firm forward — the work they were hired to do.</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-marker">Year 1</div>
+          <div class="timeline-content">A full year of managed cybersecurity and automated compliance documentation. The IT manager's relationship with leadership has shifted: they are seen as the person who solved the compliance problem and freed the team, not the person who maintains the security stack.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="block">
+      <div class="block-label">How they sell it internally</div>
+      <div class="internal-quote">
+        <div class="internal-quote-label">To firm leadership</div>
+        <div>"I've found a managed program that handles the cybersecurity compliance layer — the documentation, the regulatory alignment, the controls that regulators and cyber insurers are asking about. It works alongside what we already have. It frees me to focus on the work that grows the firm."</div>
+      </div>
+      <div class="internal-quote">
+        <div class="internal-quote-label">To the compliance team</div>
+        <div>"FCI produces the compliance evidence and regulatory documentation automatically. I can give you access to the dashboard. It covers the controls you've been asking me to document."</div>
+      </div>
+      <div class="internal-quote">
+        <div class="internal-quote-label">To their IT staff</div>
+        <div>"FCI manages the compliance and security monitoring layer. It does not replace our tools — it handles the part we do not have bandwidth for. We get to focus on the projects we have been deferring."</div>
+      </div>
+    </div>
+
+    <div class="callout">
+      <div class="callout-text">"Your firm hired you to help it succeed. FCI handles what was keeping you from doing that."</div>
+    </div>
+  </div>
+
+<!-- MARKET 1: RIAs -->
+  <div class="section" id="market-ria">
+    <div class="section-label">Part 3 — The Three Markets</div>
+    <div class="section-title">Registered Investment Advisors</div>
+
+    <div class="block">
+      <div class="block-label">Market context</div>
+      <div class="block-content">Registered investment advisors are firms registered with the Securities and Exchange Commission (SEC) or state securities regulators to provide investment advice for compensation. They range from solo practitioners to multi-billion dollar enterprises with dozens of affiliated advisors working across multiple locations.</div>
+      <div class="block-content" style="margin-top: 16px;">RIAs operate under a fiduciary standard — they are legally required to act in the best interest of their clients. That relationship is built on trust, and it is the most valuable asset an RIA firm owns. A cybersecurity breach does not just create regulatory exposure. It erodes the client trust the entire business depends on.</div>
+      <div class="block-content" style="margin-top: 16px;">Many RIAs operate through a model where advisors work from their own offices, using their own devices, on networks the firm does not manage. Client data flows through personal laptops, email accounts, and cloud applications that may or may not meet regulatory standards. The firm's compliance officer — who may also be its managing partner — is responsible for confirming that cybersecurity controls extend to every one of those environments.</div>
+      <div class="block-content" style="margin-top: 16px;">The SEC's cybersecurity rules require firms to have written policies, conduct periodic risk assessments, and produce documentation on examination. SEC examination priorities have expanded to include cybersecurity specifically — examiners are asking for evidence of controls, not just descriptions of policies. FINRA oversight applies to RIAs that also have broker-dealer affiliations.</div>
+      <div class="block-content" style="margin-top: 16px;">Cyber insurance adds pressure from a different direction. Carriers require proof of specific controls — MFA, endpoint protection, access controls, incident response plans — before renewing policies or paying a claim. Smaller RIAs face the same documentation requirements as larger ones. The SEC and the cyber insurer ask the same questions regardless of firm size.</div>
+      <div class="block-content" style="margin-top: 16px;">The RIA model creates a structural visibility problem. The compliance obligation extends to every advisor and every device. But those advisors are often semi-independent, working from locations and on devices outside the firm's direct control. FCI was designed for exactly this environment.</div>
+    </div>
+
+    <div class="callout">
+      <div class="callout-label">FCI's answer for this market</div>
+      <div class="callout-text">FCI extends cybersecurity controls to every affiliated advisor — regardless of location, device ownership, or technical expertise — and produces the SEC-aligned documentation that examiners and cyber insurers require, continuously and automatically.</div>
+    </div>
+  </div>
+
+  <!-- MARKET 2: Broker-Dealers & Branches -->
+  <div class="section" id="market-bd">
+    <div class="section-label">Part 3 — The Three Markets</div>
+    <div class="section-title">Broker-Dealers & Branch Offices</div>
+
+    <div class="block">
+      <div class="block-label">Market context</div>
+      <div class="block-content">Broker-dealers are firms registered with the Financial Industry Regulatory Authority (FINRA) and the Securities and Exchange Commission (SEC) to buy and sell securities on behalf of clients or for their own accounts. They operate through a network of registered representatives who may work out of the firm's owned branches or through independent offices affiliated with the firm but not directly owned by it.</div>
+      <div class="block-content" style="margin-top: 16px;">The broker-dealer home office sets the compliance program — the written supervisory procedures, cybersecurity policies, vendor oversight requirements, and examination protocols. That program must reach every branch and every registered representative, including those working from independent offices or home locations. Each branch may have its own technology environment, its own devices, and its own IT support or lack of it.</div>
+      <div class="block-content" style="margin-top: 16px;">FINRA's examination program has expanded its cybersecurity focus. Examiners now routinely ask for evidence of specific controls across the full rep network: endpoint protection, MFA enforcement, access controls, incident response plans, vendor due diligence documentation, and written supervisory procedures backed by technical evidence — not just policies on paper.</div>
+      <div class="block-content" style="margin-top: 16px;">The SEC's Regulation S-P imposes specific requirements on broker-dealers related to the safeguarding of customer records and information. Examination findings increasingly cite the gap between a written policy and a technically enforced control. Findings from controls that failed to reach branch offices are among the most difficult to remediate.</div>
+      <div class="block-content" style="margin-top: 16px;">The branch model creates a supervision challenge that good intentions alone cannot solve. Compliance officers need technical evidence that controls are working in offices they may never visit, on devices they do not own, managed by reps who are not cybersecurity professionals. FCI closes that gap — producing the FINRA and SEC-aligned documentation that examiners ask for, built continuously, across the full branch network.</div>
+    </div>
+
+    <div class="callout">
+      <div class="callout-label">FCI's answer for this market</div>
+      <div class="callout-text">FCI enforces controls across the full branch network — every registered representative, every device, every office — and produces FINRA and SEC-aligned evidence continuously, so the home office can confirm every branch is in good order before the examiner asks.</div>
+    </div>
+  </div>
+
+  <!-- MARKET 3: Insurance Carriers & Agencies -->
+  <div class="section" id="market-insurance">
+    <div class="section-label">Part 3 — The Three Markets</div>
+    <div class="section-title">Insurance Carriers & Agencies</div>
+
+    <div class="block">
+      <div class="block-label">Market context</div>
+      <div class="block-content">Insurance carriers are companies licensed by state regulators and governed by the National Association of Insurance Commissioners (NAIC) to underwrite insurance products. Independent insurance agencies are firms that distribute those products on behalf of one or more carriers, typically through networks of appointed agents who may work independently or as part of an agency group.</div>
+      <div class="block-content" style="margin-top: 16px;">The relationship between a carrier and its appointed agents — or between an agency network and its member agencies — creates a structural compliance challenge similar to the one broker-dealers face with their branches. The home office defines the requirements. The field carries the risk.</div>
+      <div class="block-content" style="margin-top: 16px;">Insurance agents hold some of the most sensitive personal information in the country — health data, beneficiary designations, financial account details, life insurance applications. They connect to carrier systems to submit applications, access policy information, and process claims. The carrier is responsible for demonstrating that cybersecurity controls reach those agents, even though it does not own their offices or manage their technology.</div>
+      <div class="block-content" style="margin-top: 16px;">The National Association of Insurance Commissioners (NAIC) Model Data Security Law has been adopted by most states. It requires insurance carriers and large producers to develop and maintain a cybersecurity program, conduct risk assessments, oversee the security practices of third-party service providers, and notify regulators of cybersecurity events. State regulators are conducting more frequent and more detailed cybersecurity examinations of carriers, with increasing scope into their distribution networks.</div>
+      <div class="block-content" style="margin-top: 16px;">Cyber insurance compounds the challenge for this market. Carriers are being asked by their own cyber insurers for the same documentation they require their agents to maintain. Producing that documentation requires controls to exist in the field — not just at the home office.</div>
+      <div class="block-content" style="margin-top: 16px;">Many agencies operate as small businesses without IT staff. The compliance requirements flowing down from the carrier are legitimate. The means to meet them are often unclear. FCI extends cybersecurity controls to appointed agents and independent agencies without requiring those agents to become technology managers — so the carrier gets the documentation it needs, and the agent gets coverage without building a program from scratch.</div>
+    </div>
+
+    <div class="callout">
+      <div class="callout-label">FCI's answer for this market</div>
+      <div class="callout-text">FCI extends cybersecurity controls to every appointed agent and independent agency in the carrier's distribution network — and produces NAIC-aligned evidence that satisfies both the carrier's compliance requirements and the agent's cyber insurance obligations.</div>
+    </div>
+  </div>
+
+  <div class="section" id="objections">
+    <div class="section-label">Reference</div>
+    <div class="section-title">Shared Objection Responses</div>
+    <div class="section-intro">These objections appear across all roles and markets. Use these responses as the baseline — they can be adapted by role or market as needed.</div>
+
+    <div class="block">
+      <div class="objection">
+        <div class="objection-q">We don't have cybersecurity as a major concern right now.</div>
+        <div class="objection-a">That's likely true — until the regulator walks through the door asking for documentation, or the cyber insurer denies a claim because controls weren't documented, or a device on your network gets infected. At that point, the cost of not having a program in place becomes very real. A gap analysis takes 30 minutes. You'll either confirm that you're covered — or you'll have a clear picture of what needs to change before someone else asks for it.</div>
+      </div>
+
+      <div class="objection">
+        <div class="objection-q">Our IT provider / current MSSP is handling security for us.</div>
+        <div class="objection-a">They may be doing good work with the tools and infrastructure. The question is whether they are producing the documentation regulators specifically ask for, sitting with you during an exam, and managing incident response. Most IT providers and MSSPs stop at tools and monitoring. FCI is built specifically to handle the compliance layer on top of whatever tools are already in place. The two work together, not in conflict.</div>
+      </div>
+
+      <div class="objection">
+        <div class="objection-q">We have cyber insurance — we're covered.</div>
+        <div class="objection-a">Cyber insurance is important, but over 40% of claims are denied. The most common reasons: inadequate documentation of controls at the time of the incident, failure to maintain MFA, or late notification. A cyber insurer will pay a claim only if you can prove the controls they required were actually in place. That's where FCI comes in. We build that proof continuously — so when you need to make a claim, the documentation already exists.</div>
+      </div>
+
+      <div class="objection">
+        <div class="objection-q">This seems expensive.</div>
+        <div class="objection-a">Compare it to the cost of a data breach ($5.56 million in financial services), a denied insurance claim, or regulatory penalties (SEC, FINRA, and NYDFS are all increasing enforcement). FCI costs a fraction of any of those. And the gap analysis is complimentary — you'll see exactly what you're exposed to before making any commitment.</div>
+      </div>
+
+      <div class="objection">
+        <div class="objection-q">We're a small firm — this is probably overkill for us.</div>
+        <div class="objection-a">Regulators don't adjust their requirements based on firm size. A 12-person RIA faces the same examination questions as a 500-person broker-dealer. And attackers target small and mid-size firms specifically — 61% of cyber attacks target SMBs. The cost of a breach for a small company is $3.31 million. That's not an expense most small firms can absorb. FCI is built for this environment — the advisory practice with a few advisors, the small branch, the local insurance agency.</div>
+      </div>
+
+      <div class="objection">
+        <div class="objection-q">We'll get to this after our next budget cycle / after the next exam / when we have time.</div>
+        <div class="objection-a">That's exactly when you don't want to be starting. Firms that wait until after an exam notice arrive spend weeks assembling documentation that FCI-managed firms already have. Every month without a managed program is a month of undocumented exposure. The gap analysis is 30 minutes. You'll know exactly where you stand and what timeline you actually need. The decision to move forward is entirely yours.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section" id="vocabulary">
+    <div class="section-label">Reference</div>
+    <div class="section-title">Vocabulary Reference</div>
+    <div class="section-intro">These words and phrases define FCI's language. Use them consistently across all assets. The list is not prescriptive — if a word is not here, it is likely not FCI's voice.</div>
+
+    <div class="block">
+      <div class="two-col">
+        <div class="col-card use">
+          <div class="col-card-label">Use</div>
+          <ul>
+            <li>Cybersecurity program (not "security")</li>
+            <li>Controls (not "protection," "tools," or "defenses")</li>
+            <li>Enforce, enforce controls (not "protect")</li>
+            <li>Manage (not "provide," "deliver," "offer")</li>
+            <li>Evidence (not "proof," "documentation," "records")</li>
+            <li>Sales offices (not "branches," "locations," "offices")</li>
+            <li>Regulatory exam, examination (not "audit," "assessment")</li>
+            <li>Cyber incident, cyber event (not "breach," "attack," "incident")</li>
+            <li>Incident response (not "breach response," "crisis management")</li>
+            <li>Endpoints (not "devices," "machines," "computers")</li>
+            <li>Regulators (not "compliance," "authorities," "officials")</li>
+            <li>Exam-ready (not "compliance-ready," "audit-ready")</li>
+            <li>Examiners (not "auditors," "inspectors," "regulators")</li>
+          </ul>
+        </div>
+        <div class="col-card avoid">
+          <div class="col-card-label">Avoid</div>
+          <ul>
+            <li>"We believe," "we aim," "we strive" — state what FCI does</li>
+            <li>"Comprehensive," "holistic," "end-to-end" — be specific</li>
+            <li>"Industry-leading," "best-in-class," "the best" — show, don't tell</li>
+            <li>"Cutting-edge," "next-generation" — FCI is reliable, not trendy</li>
+            <li>"Solutions" (alone) — be specific about what the solution does</li>
+            <li>"Cyber risk" (on its own) — name the risk specifically</li>
+            <li>"Security posture" — too abstract; use "controls"</li>
+            <li>"Leverage" — use "deploy," "implement," "run"</li>
+            <li>"Robust," "strong," "powerful" — quantify instead</li>
+            <li>Brand names of competitors or tools (unless necessary)</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section" id="retention">
+    <div class="section-label">Reference</div>
+    <div class="section-title">Retention & Expansion Messaging</div>
+    <div class="section-intro">After FCI is in place, the conversation shifts. The focus moves from implementation to value realization and expansion.</div>
+
+    <div class="block">
+      <h4 style="font-size: 15px; font-weight: 600; color: var(--text); margin-bottom: 12px;">The first year with FCI: what the firm sees</h4>
+      <div class="list-block">
+        <ul>
+          <li>Controls deployed across 100% of the target environment — no devices, no locations, no exceptions</li>
+          <li>Compliance documentation built continuously, not assembled after the fact</li>
+          <li>Exam support: FCI sits with the firm during every regulatory examination</li>
+          <li>Incident response: when a cyber event occurs, FCI is there from containment to remediation to final documentation</li>
+          <li>80% of time previously spent on manual compliance management returned to the firm</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="block">
+      <h4 style="font-size: 15px; font-weight: 600; color: var(--text); margin-bottom: 12px;">Expansion messaging: beyond the initial program</h4>
+      <p style="font-size: 14px; color: var(--body); line-height: 1.75; margin-bottom: 16px;">Once the initial program is in place, opportunities emerge:</p>
+      <div class="list-block">
+        <ul>
+          <li><strong>New locations:</strong> "As the firm grows, the program grows with it. Every new office, every new advisor, every new device is protected and documented before day one."</li>
+          <li><strong>New markets / regulations:</strong> "Expanding into a new market? FCI knows the regulatory requirements specific to RIAs, broker-dealers, and insurance carriers. The program adapts automatically."</li>
+          <li><strong>Enhanced incident response:</strong> "FCI can expand incident response retainer capacity — 24x7 response for events that require immediate containment and forensics."</li>
+          <li><strong>Cyber insurance optimization:</strong> "With complete, continuous documentation of controls, cyber insurance renewals become straightforward. Rates may improve as risk documentation demonstrates strong controls."</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="section" id="crisis">
+    <div class="section-label">Reference</div>
+    <div class="section-title">Crisis Communication Principles</div>
+    <div class="section-intro">When a cyber incident, regulatory action, or major operational disruption occurs, the communication principles shift dramatically. Calm and specificity dominate.</div>
+
+    <div class="block">
+      <div class="list-block">
+        <ul>
+          <li><strong>Speed over perfection:</strong> Communicate early and often. Updates are better than silence. Update again when new information emerges.</li>
+          <li><strong>Specificity over reassurance:</strong> Say what happened, what FCI is doing about it, and what the firm should expect next. Avoid vague assurances.</li>
+          <li><strong>Ownership over deflection:</strong> FCI states what it is responsible for and what the firm is responsible for. No finger-pointing.</li>
+          <li><strong>Actions over words:</strong> Describe what is being done. Avoid explanations that sound like excuses.</li>
+          <li><strong>Prepared over surprised:</strong> Every communication should show that FCI has seen this before and knows what to do next.</li>
+          <li><strong>Continuity over drama:</strong> The tone remains steady even when describing serious events. Avoid ALL CAPS, exclamation points, and emotional language.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="block">
+      <h4 style="font-size: 15px; font-weight: 600; color: var(--text); margin-bottom: 12px;">Template: incident notification</h4>
+      <div class="internal-quote">
+        <div class="internal-quote-label">Example structure</div>
+        <p>"At [time], FCI detected [specific event] on [specific system/device]. Immediate steps taken: [list actions]. Current status: [where containment stands]. Next steps: [what happens in the next 2, 4, 12, 24 hours]. Point of contact: [FCI team member]. Updates will be provided every [interval]."</p>
+      </div>
+    </div>
+
+    <div class="block">
+      <h4 style="font-size: 15px; font-weight: 600; color: var(--text); margin-bottom: 12px;">Template: regulatory response</h4>
+      <div class="internal-quote">
+        <div class="internal-quote-label">Example structure</div>
+        <p>"The firm received [notice type] from [regulator] on [date]. The request concerns [specific topic]. FCI is coordinating the firm's response. The documentation exists and is being compiled in [format]. Submission deadline: [date]. FCI will [specific actions]. The firm will receive drafts for review by [date]."</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════
+       FOOTER
+  ═══════════════════════════════════════════════ -->
+  <div class="page-footer">
+    <div class="page-footer-logo">FCI</div>
+    <div class="page-footer-note">EXPANDED MESSAGING ARCHITECTURE • APRIL 2026 • INTERNAL REFERENCE ONLY</div>
+  </div>
+
+</div>
+</div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     BACK TO TOP BUTTON
+═══════════════════════════════════════════════ -->
+<button class="back-to-top" aria-label="Back to top" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">↑</button>
+
+<!-- ═══════════════════════════════════════════════
+     SCRIPT: BACK TO TOP & THEME
+═══════════════════════════════════════════════ -->
+<script>
+  // Back to top button visibility
+  const backToTopBtn = document.querySelector('.back-to-top');
+
+  window.addEventListener('scroll', function() {
+    if (window.pageYOffset > 300) {
+      backToTopBtn.classList.add('show');
+    } else {
+      backToTopBtn.classList.remove('show');
+    }
+  });
+
+  // Theme toggle
+  function setHubTheme(mode) {
+    const html = document.documentElement;
+    const buttons = document.querySelectorAll('.hub-theme-toggle button');
+
+    buttons.forEach(btn => btn.classList.remove('active'));
+    document.querySelector(`[data-hub-mode="${mode}"]`).classList.add('active');
+
+    if (mode === 'system') {
+      html.removeAttribute('data-hub-theme');
+    } else {
+      html.setAttribute('data-hub-theme', mode);
+    }
+
+    localStorage.setItem('hub-theme', mode);
+  }
+
+  // Load saved theme on page load
+  const savedTheme = localStorage.getItem('hub-theme') || 'system';
+  setHubTheme(savedTheme);
+
+  // Sidebar nav active state
+  const sidebarLinks = document.querySelectorAll('.sidebar-nav-link');
+  const sections = document.querySelectorAll('.section');
+
+  function updateActiveNav() {
+    let current = '';
+    sections.forEach(section => {
+      const sectionTop = section.offsetTop - 100;
+      if (window.pageYOffset >= sectionTop) {
+        current = section.getAttribute('id');
+      }
+    });
+
+    sidebarLinks.forEach(link => {
+      link.classList.remove('active');
+      if (link.getAttribute('href').slice(1) === current) {
+        link.classList.add('active');
+      }
+    });
+  }
+
+  window.addEventListener('scroll', updateActiveNav);
+  updateActiveNav();
+</script>
+
+</body>
+</html>
