@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FCI — Cyber Bites</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Inter+Tight:wght@600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    *, ::before, ::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #060B14; --surface: #0D1626; --surface2: #111F33;
+      --sky: #0EA5E9; --sky2: rgba(14,165,233,0.12);
+      --emerald: #10B981; --emerald2: rgba(16,185,129,0.10);
+      --amber: #F59E0B; --amber2: rgba(245,158,11,0.10);
+      --text1: #F1F5F9; --text2: #94A3B8; --text3: #475569; --rule: #1A2B40;
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text1); min-height: 100vh; -webkit-font-smoothing: antialiased; }
+    ::selection { background: var(--sky); color: #fff; }
+    .bg-glow { position: fixed; inset: 0; pointer-events: none; z-index: 0; background: radial-gradient(70% 45% at 50% -5%, rgba(14,165,233,0.08) 0%, transparent 65%), radial-gradient(35% 28% at 6% 88%, rgba(16,185,129,0.05) 0%, transparent 55%); }
+
+    /* Nav */
+    .hub-nav { position: fixed; top: 0; left: 0; right: 0; height: 52px; z-index: 200; display: flex; align-items: center; justify-content: space-between; padding: 0 32px; background: rgba(6,11,20,0.88); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); border-bottom: 1px solid var(--rule); }
+    .hub-nav .back-nav { font-size: 13px; font-weight: 600; text-decoration: none; color: var(--text3); transition: color 0.15s; }
+    .hub-nav .back-nav:hover { color: var(--text1); }
+    .hub-theme-toggle { display: flex; align-items: center; background: var(--surface2); border: 1px solid var(--rule); border-radius: 8px; padding: 3px; gap: 2px; }
+    .hub-theme-toggle button { font-family: inherit; font-size: 11px; font-weight: 600; letter-spacing: 0.03em; color: var(--text3); background: transparent; border: none; cursor: pointer; padding: 4px 10px; border-radius: 6px; line-height: 1; transition: background 0.15s, color 0.15s; }
+    .hub-theme-toggle button:hover { color: var(--text1); }
+    .hub-theme-toggle button.active { background: var(--surface); color: var(--text1); box-shadow: 0 1px 3px rgba(0,0,0,0.15); }
+
+    /* Light */
+    html[data-hub-theme=light] .hub-nav { background: rgba(255,255,255,0.92); border-bottom-color: rgba(15,23,42,0.08); }
+    html[data-hub-theme=light] .hub-nav .back-nav { color: #475569; }
+    html[data-hub-theme=light] .hub-nav .back-nav:hover { color: #0F172A; }
+    html[data-hub-theme=light] .hub-theme-toggle { background: rgba(15,23,42,0.06); border-color: rgba(15,23,42,0.1); }
+    html[data-hub-theme=light] .hub-theme-toggle button { color: #94A3B8; }
+    html[data-hub-theme=light] .hub-theme-toggle button:hover { color: #0F172A; }
+    html[data-hub-theme=light] .hub-theme-toggle button.active { background: #fff; color: #0F172A; box-shadow: 0 1px 3px rgba(0,0,0,0.12); }
+    html[data-hub-theme=light] { --bg: #F8FAFC; --surface: #FFFFFF; --surface2: #F1F5F9; --text1: #0F172A; --text2: #475569; --text3: #94A3B8; --rule: #E2E8F0; }
+    html[data-hub-theme=light] body { background: #F8FAFC; }
+    html[data-hub-theme=light] .bg-glow { background: radial-gradient(70% 45% at 50% -5%, rgba(14,165,233,0.05) 0%, transparent 65%); }
+    @media (prefers-color-scheme: light) {
+      html:not([data-hub-theme=dark]) { --bg: #F8FAFC; --surface: #FFFFFF; --surface2: #F1F5F9; --text1: #0F172A; --text2: #475569; --text3: #94A3B8; --rule: #E2E8F0; }
+      html:not([data-hub-theme=dark]) body { background: #F8FAFC; }
+      html:not([data-hub-theme=dark]) .bg-glow { background: radial-gradient(70% 45% at 50% -5%, rgba(14,165,233,0.05) 0%, transparent 65%); }
+      html:not([data-hub-theme=dark]) .hub-nav { background: rgba(255,255,255,0.92); border-bottom-color: rgba(15,23,42,0.08); }
+      html:not([data-hub-theme=dark]) .hub-nav .back-nav { color: #475569; }
+      html:not([data-hub-theme=dark]) .hub-nav .back-nav:hover { color: #0F172A; }
+      html:not([data-hub-theme=dark]) .hub-theme-toggle { background: rgba(15,23,42,0.06); border-color: rgba(15,23,42,0.1); }
+      html:not([data-hub-theme=dark]) .hub-theme-toggle button { color: #94A3B8; }
+      html:not([data-hub-theme=dark]) .hub-theme-toggle button:hover { color: #0F172A; }
+      html:not([data-hub-theme=dark]) .hub-theme-toggle button.active { background: #fff; color: #0F172A; box-shadow: 0 1px 3px rgba(0,0,0,0.12); }
+    }
+
+    /* Header */
+    header { position: relative; z-index: 1; text-align: center; padding: 112px 24px 48px; }
+    .header-eyebrow { display: inline-block; font-size: 10px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--sky); border: 1px solid rgba(14,165,233,0.3); background: rgba(14,165,233,0.07); padding: 5px 16px; border-radius: 100px; margin-bottom: 24px; }
+    header h1 { font-family: 'Inter Tight', sans-serif; font-size: clamp(32px, 5vw, 48px); font-weight: 800; letter-spacing: -0.03em; line-height: 1.1; color: var(--text1); margin-bottom: 16px; }
+    header p { font-size: 15px; color: var(--text2); line-height: 1.7; max-width: 560px; margin: 0 auto; }
+
+    /* Filter bar */
+    .filter-bar { position: relative; z-index: 1; display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; padding: 0 24px 40px; }
+    .filter-btn { font-family: 'Inter', sans-serif; font-size: 12px; font-weight: 600; padding: 6px 14px; border-radius: 100px; border: 1px solid var(--rule); background: var(--surface); color: var(--text3); cursor: pointer; transition: all 0.15s; }
+    .filter-btn:hover { border-color: rgba(14,165,233,0.4); color: var(--text1); }
+    .filter-btn.active { background: var(--sky2); color: var(--sky); border-color: rgba(14,165,233,0.4); }
+
+    /* Content */
+    .content { position: relative; z-index: 1; max-width: 820px; width: 100%; margin: 0 auto; padding: 0 32px 100px; }
+
+    /* Bite cards */
+    .bite-card { background: var(--surface); border: 1px solid var(--rule); border-radius: 14px; padding: 28px 28px 24px; margin-bottom: 16px; transition: border-color 0.2s; }
+    .bite-card:hover { border-color: rgba(14,165,233,0.3); }
+    .bite-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; margin-bottom: 12px; }
+    .bite-title { font-family: 'Inter Tight', sans-serif; font-size: 17px; font-weight: 700; color: var(--text1); line-height: 1.3; }
+    .bite-tag { font-size: 10px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; padding: 3px 10px; border-radius: 100px; white-space: nowrap; flex-shrink: 0; }
+    .tag-zt { background: var(--sky2); color: var(--sky); border: 1px solid rgba(14,165,233,0.25); }
+    .tag-compliance { background: var(--amber2); color: var(--amber); border: 1px solid rgba(245,158,11,0.25); }
+    .tag-endpoint { background: var(--emerald2); color: var(--emerald); border: 1px solid rgba(16,185,129,0.25); }
+    .tag-user { background: rgba(168,85,247,0.10); color: #A855F7; border: 1px solid rgba(168,85,247,0.25); }
+    .tag-network { background: rgba(37,99,235,0.10); color: #2563EB; border: 1px solid rgba(37,99,235,0.25); }
+    .bite-body { font-size: 14px; color: var(--text2); line-height: 1.8; }
+    .bite-source { font-size: 11px; color: var(--text3); margin-top: 12px; }
+
+    /* Footer */
+    footer { position: relative; z-index: 1; text-align: center; padding: 0 24px 48px; }
+    .footer-inner { display: inline-flex; align-items: center; gap: 14px; }
+    .footer-dot { width: 3px; height: 3px; border-radius: 50%; background: var(--text3); }
+    footer span { font-size: 12px; color: var(--text3); }
+    .footer-logo { font-family: 'Inter Tight', sans-serif; font-size: 15px; font-weight: 700; color: var(--text3); }
+
+    @media (max-width: 640px) { .content { padding: 0 20px 80px; } .bite-header { flex-direction: column; } }
+  </style>
+</head>
+<body>
+<div class="bg-glow"></div>
+
+<nav class="hub-nav">
+  <a href="index.html" class="back-nav">&larr; Brand Hub</a>
+  <div class="hub-theme-toggle">
+    <button data-hub-mode="light" onclick="setHubTheme('light')">Light</button>
+    <button data-hub-mode="dark" onclick="setHubTheme('dark')">Dark</button>
+    <button data-hub-mode="system" onclick="setHubTheme('system')" class="active">System</button>
+  </div>
+</nav>
+
+<header>
+  <div class="header-eyebrow">Content Migration &middot; 40 Articles</div>
+  <h1>Cyber Bites</h1>
+  <p>Bite-sized cybersecurity guidance for financial services firms — rewritten in the FCI brand voice. Each piece is ready for the new website.</p>
+</header>
+
+<div class="filter-bar">
+  <button class="filter-btn active" onclick="filterBites('all')">All (40)</button>
+  <button class="filter-btn" onclick="filterBites('zt')">Zero Trust</button>
+  <button class="filter-btn" onclick="filterBites('endpoint')">Endpoints</button>
+  <button class="filter-btn" onclick="filterBites('user')">Users &amp; Access</button>
+  <button class="filter-btn" onclick="filterBites('network')">Networks</button>
+  <button class="filter-btn" onclick="filterBites('compliance')">Compliance</button>
+</div>
+
+<div class="content" id="bites-container">
+
+  <!-- ZERO TRUST SERIES -->
+  <div class="bite-card" data-cat="zt">
+    <div class="bite-header"><div class="bite-title">Zero Trust 1/4: Users</div><span class="bite-tag tag-zt">Zero Trust</span></div>
+    <div class="bite-body">A Zero Trust approach considers users, endpoints, software, and networks as potential threats until proven otherwise. It starts with users. Do you know who is accessing your systems? Identity verification through multi-factor authentication, single sign-on, and password management ensures that only authorized individuals can reach private data. The question is not whether your users are trusted — it is whether their identity has been verified at the time of access.</div>
+    <div class="bite-source">Source: fcicyber.com/zero-trust-1-4-users</div>
+  </div>
+
+  <div class="bite-card" data-cat="zt">
+    <div class="bite-header"><div class="bite-title">Zero Trust 2/4: Endpoints</div><span class="bite-tag tag-zt">Zero Trust</span></div>
+    <div class="bite-body">Any device used to access private data is an endpoint — and every endpoint is a potential entry point. Zero Trust requires that every device, whether corporate-owned or BYOD, has enforced cybersecurity settings, full-disk encryption, antivirus and anti-malware protection, and endpoint detection and response. If a device does not meet the security baseline, it should not access systems of private data. Managed enforcement — not user instructions — is what makes this work at scale.</div>
+    <div class="bite-source">Source: fcicyber.com/zero-trust-2-4-endpoints</div>
+  </div>
+
+  <div class="bite-card" data-cat="zt">
+    <div class="bite-header"><div class="bite-title">Zero Trust 3/4: Software</div><span class="bite-tag tag-zt">Zero Trust</span></div>
+    <div class="bite-body">Zero Trust software means hardening applications and validating that users and endpoints are compliant at the time of login. This includes vendor risk management, restricted websites and software, data exfiltration protection, and web application security gateways. The question is whether the software your firm uses has been configured to enforce security — not just installed.</div>
+    <div class="bite-source">Source: fcicyber.com/zero-trust-3-4-software</div>
+  </div>
+
+  <div class="bite-card" data-cat="zt">
+    <div class="bite-header"><div class="bite-title">Zero Trust 4/4: Networks</div><span class="bite-tag tag-zt">Zero Trust</span></div>
+    <div class="bite-body">Network security in a Zero Trust model means enforcing secure, encrypted communication inside and outside corporate networks. Security policies must be implemented at the network level — firewall hardening, secure remote communication via gateway VPN, and continuous monitoring. The network cannot be trusted simply because it is internal. Every connection is verified.</div>
+    <div class="bite-source">Source: fcicyber.com/zero-trust-4-4-networks</div>
+  </div>
+
+  <!-- ENDPOINT SECURITY -->
+  <div class="bite-card" data-cat="endpoint">
+    <div class="bite-header"><div class="bite-title">Managed Is Most Secure</div><span class="bite-tag tag-endpoint">Endpoints</span></div>
+    <div class="bite-body">For endpoint protection, you could provide instructions to your users or your IT team to manually configure settings — complex passwords, inactivity timeouts, personal firewalls, encryption. Or you could enforce them automatically, with tamper protection that prevents anyone from disabling or changing what has been configured. Managed enforcement eliminates the gap between policy and practice. When controls are enforced rather than requested, compliance is continuous — not aspirational.</div>
+    <div class="bite-source">Source: fcicyber.com/managed-is-most-secure</div>
+  </div>
+
+  <div class="bite-card" data-cat="endpoint">
+    <div class="bite-header"><div class="bite-title">Ensure Encryption</div><span class="bite-tag tag-endpoint">Endpoints</span></div>
+    <div class="bite-body">Encryption protects data at rest on your device and in transit across a network. If a device is lost or stolen, full-disk encryption makes the data unreadable to anyone without the decryption key. This is not optional — it is a regulatory requirement for firms handling private data. The question is whether encryption is enforced on every device, or left to the user to enable.</div>
+    <div class="bite-source">Source: fcicyber.com/ensure-encryption</div>
+  </div>
+
+  <div class="bite-card" data-cat="endpoint">
+    <div class="bite-header"><div class="bite-title">Removable Storage Device Encryption</div><span class="bite-tag tag-endpoint">Endpoints</span></div>
+    <div class="bite-body">If private data is backed up to an unencrypted external drive — a USB drive, for example — and that drive is lost or stolen, anyone can access its content. That constitutes a reportable breach. Enforced encryption of removable storage devices prevents this. The control can be applied without blocking the ability to read non-encrypted devices. The question is whether your firm enforces this or leaves it to chance.</div>
+    <div class="bite-source">Source: fcicyber.com/removable-storage-device-encryption</div>
+  </div>
+
+  <div class="bite-card" data-cat="endpoint">
+    <div class="bite-header"><div class="bite-title">Keep Your OS Current</div><span class="bite-tag tag-endpoint">Endpoints</span></div>
+    <div class="bite-body">Cybersecurity regulations require a currently supported operating system. Every OS has a lifecycle defined by the manufacturer during which critical security patches are released. Once an OS reaches end-of-life, no further patches are issued — leaving every known vulnerability permanently open. If your firm has devices running unsupported operating systems, those devices are non-compliant and exposed.</div>
+    <div class="bite-source">Source: fcicyber.com/keep-your-os-current</div>
+  </div>
+
+  <div class="bite-card" data-cat="endpoint">
+    <div class="bite-header"><div class="bite-title">Reboot Your Computer</div><span class="bite-tag tag-endpoint">Endpoints</span></div>
+    <div class="bite-body">One critical but simple action to improve cybersecurity and system performance: routine system reboot. Security patches, software updates, and configuration changes often require a restart to take effect. A device that has not been rebooted in weeks may be running with unpatched vulnerabilities and degraded performance. Some compliance frameworks require regular reboots as a documented practice.</div>
+    <div class="bite-source">Source: fcicyber.com/reboot-your-computer</div>
+  </div>
+
+  <div class="bite-card" data-cat="endpoint">
+    <div class="bite-header"><div class="bite-title">Printers &amp; Scanners</div><span class="bite-tag tag-endpoint">Endpoints</span></div>
+    <div class="bite-body">Printers and scanners are often forgotten endpoints — but they are important to your firm's cybersecurity posture. Some devices have features that store scanned documents or have network-accessible interfaces that can be exploited. If a printer or scanner is connected to your network and handles private data, it needs to be included in your security program.</div>
+    <div class="bite-source">Source: fcicyber.com/printers-and-scanners</div>
+  </div>
+
+  <div class="bite-card" data-cat="endpoint">
+    <div class="bite-header"><div class="bite-title">Big Cyber Risk: Unmanaged Devices</div><span class="bite-tag tag-endpoint">Endpoints</span></div>
+    <div class="bite-body">One of the biggest risks in cybersecurity is allowing unmanaged devices to access private data. When a device is unmanaged, the firm has no visibility into its security posture — no enforcement of encryption, no antivirus verification, no password policy compliance. The device could be compromised and the firm would not know. Every device that touches private data must be under management.</div>
+    <div class="bite-source">Source: fcicyber.com/big-cyber-risk-unmanaged-devices</div>
+  </div>
+
+  <!-- USER SECURITY -->
+  <div class="bite-card" data-cat="user">
+    <div class="bite-header"><div class="bite-title">Password Manager Best Practices</div><span class="bite-tag tag-user">Users &amp; Access</span></div>
+    <div class="bite-body">When using a password manager, create complex passwords and change them regularly. Implement multi-factor authentication so every login attempt requires user approval. Configure the app properly — for example, restrict usage to specific countries. Never allow browsers to save passwords, as stored browser credentials are a known attack vector. The password manager is only as secure as its configuration.</div>
+    <div class="bite-source">Source: fcicyber.com/password-manager-best-practices</div>
+  </div>
+
+  <div class="bite-card" data-cat="user">
+    <div class="bite-header"><div class="bite-title">Multifactor Authentication</div><span class="bite-tag tag-user">Users &amp; Access</span></div>
+    <div class="bite-body">Multi-factor authentication (MFA) for all user accounts is a regulatory expectation and a fundamental security control. MFA verifies identity through something the user knows, something they have, and something they are — before granting access. A password alone is not sufficient. The question is whether MFA is enforced across every application that accesses private data.</div>
+    <div class="bite-source">Source: fcicyber.com/multifactor-authentication</div>
+  </div>
+
+  <div class="bite-card" data-cat="user">
+    <div class="bite-header"><div class="bite-title">Complex Usernames Reduce Risk</div><span class="bite-tag tag-user">Users &amp; Access</span></div>
+    <div class="bite-body">A properly created username serves as additional security. Using a complex username — rather than an obvious email address or first-name format — diminishes the risk of malicious algorithms being able to predict credentials. The username is the first half of the authentication equation. Make it count.</div>
+    <div class="bite-source">Source: fcicyber.com/use-of-a-complex-username-diminishes-risk-of-malicious-algorithms</div>
+  </div>
+
+  <div class="bite-card" data-cat="user">
+    <div class="bite-header"><div class="bite-title">Password Manager App Security</div><span class="bite-tag tag-user">Users &amp; Access</span></div>
+    <div class="bite-body">A password manager provides the right balance between security and time-saving access. Credentials are robustly encrypted and accessible only through your master password and MFA. The alternative — reusing passwords, writing them down, or storing them in browsers — creates the kind of vulnerability that attackers actively exploit. Protect access to private data by strengthening credentials at the source.</div>
+    <div class="bite-source">Source: fcicyber.com/a-password-manager-app-offers-ideal-balance-between-security-and-time-saving-access</div>
+  </div>
+
+  <div class="bite-card" data-cat="user">
+    <div class="bite-header"><div class="bite-title">Beware of Phishing</div><span class="bite-tag tag-user">Users &amp; Access</span></div>
+    <div class="bite-body">Phishing remains a leading cybersecurity threat. Attackers use increasingly sophisticated tactics to obtain private data by exploiting human behavior — posing as a known contact or trusted institution to get the recipient to click, download, or disclose. Training helps, but it is not sufficient alone. Technical controls — email filtering, link inspection, and endpoint protection — reduce the attack surface that phishing exploits.</div>
+    <div class="bite-source">Source: fcicyber.com/beware-of-phishing</div>
+  </div>
+
+  <!-- NETWORK SECURITY -->
+  <div class="bite-card" data-cat="network">
+    <div class="bite-header"><div class="bite-title">Your Own Gateway VPN</div><span class="bite-tag tag-network">Networks</span></div>
+    <div class="bite-body">When working remotely or traveling, the best practice for securing data across the internet is use of a business-grade firewall with a gateway VPN. This encrypts all traffic between the device and the corporate network, regardless of where the user is located. Public Wi-Fi, hotel networks, and shared connections are all potential interception points. A gateway VPN eliminates that risk.</div>
+    <div class="bite-source">Source: fcicyber.com/your-own-gateway-vpn</div>
+  </div>
+
+  <div class="bite-card" data-cat="network">
+    <div class="bite-header"><div class="bite-title">Network Security</div><span class="bite-tag tag-network">Networks</span></div>
+    <div class="bite-body">A business-grade firewall is the first line of defense for your network. It provides advanced security features including VPN gateway to extend your secure network to remote users, intrusion prevention, content filtering, and traffic monitoring. Consumer-grade routers do not provide this level of protection. If your firm handles private data, the network must be secured at an enterprise level.</div>
+    <div class="bite-source">Source: fcicyber.com/network-security-tip</div>
+  </div>
+
+  <div class="bite-card" data-cat="network">
+    <div class="bite-header"><div class="bite-title">Travel Securely</div><span class="bite-tag tag-network">Networks</span></div>
+    <div class="bite-body">VPN usage when traveling is the best practice for protecting data across the internet. Two major threats to be aware of: public Wi-Fi networks that can be intercepted, and untrusted networks that may redirect traffic through malicious servers. A business-grade VPN connection back to your corporate firewall ensures that all data remains encrypted in transit — regardless of the network you are connected to.</div>
+    <div class="bite-source">Source: fcicyber.com/travel-securely</div>
+  </div>
+
+  <div class="bite-card" data-cat="network">
+    <div class="bite-header"><div class="bite-title">Smartphone Security</div><span class="bite-tag tag-network">Networks</span></div>
+    <div class="bite-body">Smartphone data is most secure when kept within your carrier's cellular network rather than free Wi-Fi. The cost savings of public Wi-Fi are not worth the security risk — these networks can be intercepted, spoofed, or used to deploy man-in-the-middle attacks. If your firm's data is accessed from a smartphone, that device and its network connection must be part of your security program.</div>
+    <div class="bite-source">Source: fcicyber.com/smartphone-security</div>
+  </div>
+
+  <div class="bite-card" data-cat="network">
+    <div class="bite-header"><div class="bite-title">Video Conferencing Best Practices</div><span class="bite-tag tag-network">Networks</span></div>
+    <div class="bite-body">Video conferencing software is essential for remote work — but it must be configured securely. Use meeting passwords, enable waiting rooms, restrict screen sharing to the host, and disable features that allow participants to join before the host. Ensure the platform uses end-to-end encryption. The convenience of virtual meetings should not come at the cost of data exposure.</div>
+    <div class="bite-source">Source: fcicyber.com/video-conferencing-best-practices</div>
+  </div>
+
+  <!-- COMPLIANCE & RISK -->
+  <div class="bite-card" data-cat="compliance">
+    <div class="bite-header"><div class="bite-title">Device Decommissioning</div><span class="bite-tag tag-compliance">Compliance</span></div>
+    <div class="bite-body">Your firm's cybersecurity program should include a procedure for decommissioning devices that will no longer be used. Regulators request that firms formally offboard, track, and retain records of devices that accessed or stored private data. A recent SEC audit requested a list of computers decommissioned in the prior year and evidence of their proper destruction. Two options: destroy the hard disk (with photographic evidence or a third-party certificate of destruction) or securely repurpose an encrypted disk using a low-level format. Record every decommission in your cyber folder and remove the device from your asset inventory.</div>
+    <div class="bite-source">Source: fcicyber.com/the-importance-of-device-decommissioning</div>
+  </div>
+
+  <div class="bite-card" data-cat="compliance">
+    <div class="bite-header"><div class="bite-title">Properly Decommission a Computer</div><span class="bite-tag tag-compliance">Compliance</span></div>
+    <div class="bite-body">There are two options to properly decommission a computer used to access or store private data: destroy or repurpose. You can destroy the hard disk and evidence the process, or securely repurpose an encrypted disk using the operating system's low-level format feature. Either way — document it. Regulators expect evidence of the process, not just a policy that describes it.</div>
+    <div class="bite-source">Source: fcicyber.com/properly-decommission-a-computer</div>
+  </div>
+
+  <div class="bite-card" data-cat="compliance">
+    <div class="bite-header"><div class="bite-title">NIST-Based Asset Inventory Report</div><span class="bite-tag tag-compliance">Compliance</span></div>
+    <div class="bite-body">In the event of an audit or breach, you may be required to demonstrate a list of your assets and their cybersecurity posture. A NIST-based asset inventory report provides this — an inventory of endpoints, their security configurations, and their compliance status. This is not a nice-to-have. It is the evidence that regulators, authorities, and cyber insurers will ask for.</div>
+    <div class="bite-source">Source: fcicyber.com/nist-based-asset-inventory-report</div>
+  </div>
+
+  <div class="bite-card" data-cat="compliance">
+    <div class="bite-header"><div class="bite-title">POAMs (Plan of Action &amp; Milestones)</div><span class="bite-tag tag-compliance">Compliance</span></div>
+    <div class="bite-body">When reviewing cybersecurity regulation requirements, perfection is not the expectation. What regulators and authorities want to see is continual improvement — a documented plan of action with milestones (POAMs) that shows the firm is identifying gaps, prioritizing remediation, and making measurable progress. A POAM demonstrates intentionality. It transforms findings into a compliance narrative.</div>
+    <div class="bite-source">Source: fcicyber.com/poams</div>
+  </div>
+
+  <div class="bite-card" data-cat="compliance">
+    <div class="bite-header"><div class="bite-title">Audit Preparedness</div><span class="bite-tag tag-compliance">Compliance</span></div>
+    <div class="bite-body">When it comes to audit preparedness, the question is whether your firm is a cyber ant or grasshopper. If you do not have a strong cybersecurity program and controls in place — with continuous evidence of compliance — a surprise audit or examination will expose gaps that are difficult to explain. The firms that perform best in examinations are the ones that treat compliance as an ongoing practice, not a last-minute exercise.</div>
+    <div class="bite-source">Source: fcicyber.com/audit-preparedness</div>
+  </div>
+
+  <div class="bite-card" data-cat="compliance">
+    <div class="bite-header"><div class="bite-title">Surprise Audit from Regulators</div><span class="bite-tag tag-compliance">Compliance</span></div>
+    <div class="bite-body">Are you ready for a surprise audit from regulators? Do you have all your cybersecurity program policies in place — and can you evidence them? Would you be able to produce documentation on demand? Regulators, authorities, and cyber insurers can request evidence at any time. The firms that respond confidently are the ones with continuous evidence production, not binders assembled after the call comes in.</div>
+    <div class="bite-source">Source: fcicyber.com/surprise-audit-from-regulators</div>
+  </div>
+
+  <div class="bite-card" data-cat="compliance">
+    <div class="bite-header"><div class="bite-title">Vendor Risk Management</div><span class="bite-tag tag-compliance">Compliance</span></div>
+    <div class="bite-body">The best way to minimize risk when working with a vendor that handles your private data is to perform vendor risk management — assessing the vendor's cybersecurity practices, certifications, and incident history before granting access to your environment. This is a regulatory expectation. If a vendor breach exposes your clients' data, the responsibility traces back to your firm.</div>
+    <div class="bite-source">Source: fcicyber.com/vendor-risk-management</div>
+  </div>
+
+  <div class="bite-card" data-cat="compliance">
+    <div class="bite-header"><div class="bite-title">Cybersecurity Insurance</div><span class="bite-tag tag-compliance">Compliance</span></div>
+    <div class="bite-body">Having cybersecurity insurance does not guarantee payout in the event of a claim. A claim could be denied from the outset if the firm cannot demonstrate that appropriate cybersecurity controls were in place at the time of the incident. Insurers are increasingly requiring evidence of specific technical controls — MFA, endpoint protection, encryption — before approving claims. The policy is only as good as the compliance posture behind it.</div>
+    <div class="bite-source">Source: fcicyber.com/cybersecurity-insurance</div>
+  </div>
+
+  <div class="bite-card" data-cat="compliance">
+    <div class="bite-header"><div class="bite-title">Cost of a Cyber Breach</div><span class="bite-tag tag-compliance">Compliance</span></div>
+    <div class="bite-body">The cost of a cyber breach can devastate a firm. Sixty percent of firms go out of business within six months of experiencing a breach. The damage ranges from direct financial losses and ransom payments to regulatory fines, legal fees, and reputational harm. Investment in cybersecurity protects the firm by mitigating the risk of breach and increasing the likelihood of a favorable outcome if one occurs.</div>
+    <div class="bite-source">Source: fcicyber.com/cost-of-a-cyber-breach</div>
+  </div>
+
+  <div class="bite-card" data-cat="compliance">
+    <div class="bite-header"><div class="bite-title">Cost vs. Benefits of Cybersecurity</div><span class="bite-tag tag-compliance">Compliance</span></div>
+    <div class="bite-body">Data breaches are costly — and the investment required to prevent them is a fraction of the cost of recovery. Damage from a breach includes financial losses, regulatory fines, legal exposure, client attrition, and reputational harm. The question is not whether cybersecurity is worth the investment. It is whether the firm can afford not to make it.</div>
+    <div class="bite-source">Source: fcicyber.com/cost-vs-benefits-of-cybersecurity</div>
+  </div>
+
+  <!-- THREATS & AWARENESS -->
+  <div class="bite-card" data-cat="user">
+    <div class="bite-header"><div class="bite-title">Ransomware Protection</div><span class="bite-tag tag-user">Users &amp; Access</span></div>
+    <div class="bite-body">Ransomware incidents are up significantly and remain a top cyber threat against the financial sector. Implementing layered defenses — endpoint detection and response, email filtering, network segmentation, regular backups, and user awareness training — reduces the risk. But the most effective protection is managed enforcement of controls that prevent ransomware from executing in the first place.</div>
+    <div class="bite-source">Source: fcicyber.com/ransomware-protection</div>
+  </div>
+
+  <div class="bite-card" data-cat="user">
+    <div class="bite-header"><div class="bite-title">Dark Web Data</div><span class="bite-tag tag-user">Users &amp; Access</span></div>
+    <div class="bite-body">Your private data or user credentials could be for sale on the dark web right now — put there by cybercriminals who work around the clock to steal and monetize compromised information. Dark web monitoring identifies when your firm's credentials appear in underground marketplaces, allowing you to respond before those credentials are used against you.</div>
+    <div class="bite-source">Source: fcicyber.com/dark-web-data</div>
+  </div>
+
+  <div class="bite-card" data-cat="user">
+    <div class="bite-header"><div class="bite-title">The Dark Web</div><span class="bite-tag tag-user">Users &amp; Access</span></div>
+    <div class="bite-body">The dark web is a hidden part of the internet used for illicit purposes. Hackers put stolen credentials there for sale — a password prefix alone can indicate that your credentials have been compromised. Monitoring the dark web for your firm's data is a proactive measure that turns a hidden threat into actionable intelligence.</div>
+    <div class="bite-source">Source: fcicyber.com/the-dark-web</div>
+  </div>
+
+  <div class="bite-card" data-cat="endpoint">
+    <div class="bite-header"><div class="bite-title">Hardening Systems of Private Data</div><span class="bite-tag tag-endpoint">Endpoints</span></div>
+    <div class="bite-body">Endpoint and network security get the most attention — but software hardening is often overlooked. When you start using an application, the default security settings are rarely sufficient. Financial services applications, CRMs, email platforms, and cloud tools all require security configuration review and hardening. The question is whether the software your firm relies on has been configured to enforce security, or left at defaults.</div>
+    <div class="bite-source">Source: fcicyber.com/hardening-systems-of-private-data</div>
+  </div>
+
+  <div class="bite-card" data-cat="user">
+    <div class="bite-header"><div class="bite-title">What Do Hackers See About Your Firm?</div><span class="bite-tag tag-user">Users &amp; Access</span></div>
+    <div class="bite-body">A Corporate Internet Attack Surface Assessment (CIASA) provides complete visibility of your business's attack surface — from internal networks to the farthest reaches of the internet where attackers operate. It discovers, classifies, and maps internet-facing corporate assets so you can see what hackers see before they exploit it.</div>
+    <div class="bite-source">Source: fcicyber.com/what-do-hackers-see-about-your-firm</div>
+  </div>
+
+  <div class="bite-card" data-cat="compliance">
+    <div class="bite-header"><div class="bite-title">Cybersecurity Risk Assessment</div><span class="bite-tag tag-compliance">Compliance</span></div>
+    <div class="bite-body">As firms face an increased rate of sophisticated cyberattacks, there is no better time to execute a cybersecurity risk assessment. Proactive vulnerability scans and network penetration testing identify weaknesses before attackers do. The assessment produces documented evidence of your firm's security posture — evidence that regulators, home offices, and cyber insurers increasingly require.</div>
+    <div class="bite-source">Source: fcicyber.com/cybersecurity-risk-assessment-2</div>
+  </div>
+
+  <div class="bite-card" data-cat="compliance">
+    <div class="bite-header"><div class="bite-title">Cybersecurity Risk Assessment (M&amp;A)</div><span class="bite-tag tag-compliance">Compliance</span></div>
+    <div class="bite-body">Are you a seller ready to exit, or a buyer ready to acquire? A cybersecurity risk assessment should be part of every M&amp;A transaction in financial services. For sellers, it demonstrates that the firm is secure and compliant — increasing valuation. For buyers, it identifies hidden cybersecurity liabilities before they become the acquiring firm's problem.</div>
+    <div class="bite-source">Source: fcicyber.com/cybersecurity-risk-assessment</div>
+  </div>
+
+  <div class="bite-card" data-cat="endpoint">
+    <div class="bite-header"><div class="bite-title">Hybrid Workforce Cybersecurity</div><span class="bite-tag tag-endpoint">Endpoints</span></div>
+    <div class="bite-body">The distinction between home, traveler, and office users is no longer operationally useful. Every user must be treated the same way — with the same level of enforcement, the same endpoint controls, the same network security. The hybrid workforce requires a security model that follows the user, not the location. Managed enforcement applied equally across every device, everywhere, is the only approach that scales.</div>
+    <div class="bite-source">Source: fcicyber.com/hybrid-workforce-cybersecurity</div>
+  </div>
+
+  <div class="bite-card" data-cat="user">
+    <div class="bite-header"><div class="bite-title">DLP Confusion</div><span class="bite-tag tag-user">Users &amp; Access</span></div>
+    <div class="bite-body">The confusion around "DLP" is fueled by the fact that the same acronym has two definitions: Data Leakage Prevention and Data Loss Protection. Both are important, but they address different risks. Data leakage prevention stops unauthorized transmission of data outside the firm. Data loss protection safeguards against accidental deletion or corruption. Your firm needs both — and needs to know which one is being discussed.</div>
+    <div class="bite-source">Source: fcicyber.com/dlp-confusion</div>
+  </div>
+
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <span class="footer-logo">FCI</span>
+    <div class="footer-dot"></div>
+    <span>Cyber Bites</span>
+    <div class="footer-dot"></div>
+    <span>Internal &middot; April 2026</span>
+  </div>
+</footer>
+
+<script>
+  function filterBites(cat) {
+    document.querySelectorAll('.filter-btn').forEach(function(b) { b.classList.remove('active'); });
+    event.target.classList.add('active');
+    document.querySelectorAll('.bite-card').forEach(function(c) {
+      if (cat === 'all' || c.dataset.cat === cat) { c.style.display = ''; }
+      else { c.style.display = 'none'; }
+    });
+  }
+  function setHubTheme(m) {
+    if (m === 'system') { document.documentElement.removeAttribute('data-hub-theme'); localStorage.removeItem('fci-hub-theme'); }
+    else { document.documentElement.setAttribute('data-hub-theme', m); localStorage.setItem('fci-hub-theme', m); }
+    document.querySelectorAll('.hub-theme-toggle button').forEach(function(b){ b.classList.toggle('active', b.dataset.hubMode === m); });
+  }
+  (function(){
+    var s = localStorage.getItem('fci-hub-theme') || 'system';
+    if (s !== 'system') document.documentElement.setAttribute('data-hub-theme', s);
+    document.addEventListener('DOMContentLoaded', function(){
+      document.querySelectorAll('.hub-theme-toggle button').forEach(function(b){ b.classList.toggle('active', b.dataset.hubMode === s); });
+    });
+  })();
+</script>
+</body>
+</html>
