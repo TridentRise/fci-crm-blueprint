@@ -1,0 +1,818 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FCI — Design Direction Prototype (Hero)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Inter+Tight:wght@600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  /* ══════════════════════════════════════════════════════
+     TOKENS
+  ══════════════════════════════════════════════════════ */
+  :root {
+    --font-display: 'Inter Tight', sans-serif;
+    --font-body: 'Inter', sans-serif;
+
+    /* Dark (default) */
+    --bg:           #05091A;
+    --bg-surface:   #080E22;
+    --text-hi:      #F0F8FF;
+    --text-mid:     #7EAED8;
+    --text-sub:     #3B6EAA;
+    --blue:         #2563EB;
+    --sky:          #0EA5E9;
+    --navy:         #1E3A6E;
+    --ruler:        rgba(37,99,235,0.14);
+    --nav-bg:       rgba(5,9,26,0.92);
+    --nav-border:   rgba(37,99,235,0.18);
+
+    /* Portal UI */
+    --ui-bg:        #080E22;
+    --ui-sidebar:   #060B1C;
+    --ui-card:      #0D1630;
+    --ui-border:    rgba(37,99,235,0.18);
+    --ui-text:      #C8DEFA;
+    --ui-muted:     #4A72A8;
+    --ui-active:    rgba(37,99,235,0.18);
+  }
+
+  body.theme-light {
+    --bg:           #EEF5FF;
+    --bg-surface:   #FFFFFF;
+    --text-hi:      #0C1830;
+    --text-mid:     #1E3A6E;
+    --text-sub:     #3B6EAA;
+    --ruler:        rgba(37,99,235,0.12);
+    --nav-bg:       rgba(238,245,255,0.92);
+    --nav-border:   rgba(37,99,235,0.14);
+
+    --ui-bg:        #FFFFFF;
+    --ui-sidebar:   #F0F6FF;
+    --ui-card:      #F8FAFF;
+    --ui-border:    rgba(37,99,235,0.14);
+    --ui-text:      #0F1E38;
+    --ui-muted:     #5A82B0;
+    --ui-active:    rgba(37,99,235,0.08);
+  }
+
+  /* ══════════════════════════════════════════════════════
+     RESET + BASE
+  ══════════════════════════════════════════════════════ */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--text-mid);
+    font-family: var(--font-body);
+    font-weight: 400;
+    overflow-x: hidden;
+    transition: background 0.4s, color 0.4s;
+  }
+
+  /* ══════════════════════════════════════════════════════
+     NAV
+  ══════════════════════════════════════════════════════ */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 48px; height: 56px;
+    background: var(--nav-bg);
+    border-bottom: 1px solid var(--nav-border);
+    backdrop-filter: blur(16px);
+  }
+  .nav-logo {
+    font-family: var(--font-display);
+    font-size: 20px; font-weight: 900; letter-spacing: .04em;
+    color: var(--sky);
+  }
+  .nav-links { display: flex; gap: 28px; list-style: none; }
+  .nav-links a {
+    font-size: 12px; font-weight: 500; letter-spacing: .10em;
+    text-transform: uppercase; color: var(--text-sub);
+    text-decoration: none; transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--sky); }
+  .nav-cta {
+    background: var(--blue) !important; color: #fff !important;
+    padding: 7px 18px !important; border-radius: 3px;
+    font-size: 11px !important; font-weight: 600 !important;
+    letter-spacing: .10em !important; text-transform: uppercase !important;
+    transition: background 0.2s !important;
+  }
+  .nav-cta:hover { background: var(--sky) !important; }
+
+  /* ══════════════════════════════════════════════════════
+     THEME TOGGLE
+  ══════════════════════════════════════════════════════ */
+  .theme-toggle {
+    position: fixed; top: 72px; right: 24px; z-index: 300;
+    display: flex; gap: 4px;
+    background: var(--bg-surface);
+    border: 1px solid var(--ruler);
+    border-radius: 6px; padding: 4px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.25);
+  }
+  .theme-btn {
+    font-family: var(--font-body);
+    font-size: 11px; font-weight: 600; letter-spacing: .08em;
+    text-transform: uppercase;
+    padding: 5px 14px; border-radius: 4px; border: none;
+    cursor: pointer; background: transparent; color: var(--text-sub);
+    transition: all 0.2s;
+  }
+  .theme-btn.active { background: var(--blue); color: #fff; }
+
+  /* ══════════════════════════════════════════════════════
+     HERO
+  ══════════════════════════════════════════════════════ */
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    overflow: hidden;
+  }
+
+  /* Canvas background */
+  .canvas-bg {
+    position: absolute; inset: 0; z-index: 0;
+  }
+  .canvas-bg canvas { width: 100%; height: 100%; display: block; }
+
+  /* ── Left: Content ── */
+  .hero-content {
+    position: absolute; left: 0; top: 0; bottom: 0;
+    width: 42%; z-index: 10;
+    display: flex; flex-direction: column; justify-content: center;
+    padding: 100px 56px 80px 56px;
+  }
+  .hero-content::after {
+    content: '';
+    position: absolute; inset: 0; z-index: -1;
+    background: linear-gradient(to right, var(--bg) 50%, rgba(5,9,26,0) 100%);
+  }
+  body.theme-light .hero-content::after {
+    background: linear-gradient(to right, var(--bg) 50%, rgba(238,245,255,0) 100%);
+  }
+
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 10px; font-weight: 600; letter-spacing: .20em;
+    text-transform: uppercase; color: var(--sky);
+    margin-bottom: 24px; opacity: 0.7;
+  }
+  .hero-badge-dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: #4ADE80;
+    box-shadow: 0 0 8px rgba(74,222,128,0.5);
+  }
+
+  .hero h1 {
+    font-family: var(--font-display);
+    font-size: clamp(36px, 4vw, 58px);
+    font-weight: 900;
+    line-height: 1.04;
+    letter-spacing: -0.04em;
+    color: var(--text-hi);
+    margin-bottom: 16px;
+  }
+
+  .hero-tagline {
+    font-family: var(--font-display);
+    font-size: clamp(18px, 1.8vw, 24px);
+    font-weight: 600;
+    color: var(--sky);
+    letter-spacing: -0.02em;
+    margin-bottom: 24px;
+  }
+
+  .hero-body {
+    font-size: 15px;
+    color: var(--text-mid);
+    line-height: 1.75;
+    max-width: 420px;
+    margin-bottom: 32px;
+    opacity: 0.85;
+  }
+
+  /* CTA row */
+  .cta-row {
+    display: flex; align-items: center; gap: 12px;
+    margin-bottom: 48px;
+  }
+  .btn {
+    font-family: var(--font-body);
+    font-size: 12px; font-weight: 600; letter-spacing: .08em;
+    text-transform: uppercase; text-decoration: none;
+    padding: 14px 28px; border-radius: 3px;
+    display: inline-flex; align-items: center; gap: 8px;
+    transition: all 0.2s;
+    cursor: pointer;
+  }
+  .btn-primary {
+    background: var(--blue); color: #fff; border: none;
+  }
+  .btn-primary:hover {
+    background: var(--sky); transform: translateY(-1px);
+    box-shadow: 0 6px 24px rgba(37,99,235,0.35);
+  }
+  .btn-secondary {
+    background: transparent; color: var(--text-mid);
+    border: 1px solid rgba(37,99,235,0.35);
+  }
+  .btn-secondary:hover {
+    border-color: var(--sky); color: var(--sky);
+  }
+  .btn-arrow { transition: transform 0.2s; }
+  .btn-primary:hover .btn-arrow { transform: translateX(3px); }
+
+  /* Stat cards */
+  .stats-row {
+    display: flex; gap: 16px;
+  }
+  .stat-card {
+    background: var(--bg-surface);
+    border: 1px solid var(--ruler);
+    border-radius: 8px;
+    padding: 16px 20px;
+    min-width: 140px;
+    transition: background 0.4s, border-color 0.4s;
+  }
+  .stat-number {
+    font-family: var(--font-display);
+    font-size: 28px; font-weight: 800;
+    color: var(--text-hi);
+    letter-spacing: -0.03em;
+    line-height: 1.1;
+  }
+  .stat-label {
+    font-size: 11px;
+    color: var(--text-sub);
+    margin-top: 4px;
+    line-height: 1.4;
+  }
+
+  /* ── Right: CISO Portal Mockup ── */
+  .portal-visual {
+    position: absolute;
+    top: 0; right: 0; bottom: 0;
+    width: 62%;
+    z-index: 5;
+    display: flex; align-items: center; justify-content: center;
+    padding: 56px 24px 32px 20px;
+    pointer-events: none;
+  }
+
+  /* Browser window */
+  .browser-outer {
+    width: 100%;
+    max-height: calc(100vh - 100px);
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow:
+      0 60px 120px rgba(0,0,0,0.60),
+      0 0 0 1px var(--ui-border),
+      0 0 60px rgba(37,99,235,0.10);
+    transform: perspective(1400px) rotateY(-12deg) rotateX(4deg) scale(0.90);
+    transform-origin: right center;
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+  }
+  .browser-chrome {
+    background: #111827;
+    padding: 10px 16px;
+    display: flex; align-items: center; gap: 12px;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+  body.theme-light .browser-chrome {
+    background: #E8EDF8;
+    border-bottom: 1px solid rgba(0,0,0,0.08);
+  }
+  .traffic { display: flex; gap: 6px; }
+  .traffic span { width: 11px; height: 11px; border-radius: 50%; display: block; }
+  .traffic .t-r { background: #FF5F57; }
+  .traffic .t-y { background: #FEBC2E; }
+  .traffic .t-g { background: #28C840; }
+  .address-bar {
+    flex: 1; max-width: 300px; margin: 0 auto;
+    background: rgba(255,255,255,0.06);
+    border-radius: 5px; padding: 4px 12px;
+    font-size: 11px; color: rgba(200,220,255,0.40);
+    font-family: var(--font-body); letter-spacing: .02em;
+  }
+  body.theme-light .address-bar {
+    background: rgba(0,0,0,0.05); color: rgba(30,58,110,0.45);
+  }
+  .soc-badge {
+    display: flex; align-items: center; gap: 6px;
+    font-size: 10px; font-weight: 500; color: rgba(200,220,255,0.40);
+    letter-spacing: .04em;
+  }
+  body.theme-light .soc-badge { color: rgba(30,58,110,0.40); }
+  .soc-dot {
+    width: 7px; height: 7px; border-radius: 50%;
+    background: #4ADE80;
+    box-shadow: 0 0 6px rgba(74,222,128,0.6);
+    animation: pulse-soc 2s ease-in-out infinite;
+  }
+  @keyframes pulse-soc {
+    0%,100% { box-shadow: 0 0 6px rgba(74,222,128,0.6); }
+    50%     { box-shadow: 0 0 14px rgba(74,222,128,0.9); }
+  }
+
+  /* Portal layout */
+  .portal-window {
+    display: grid;
+    grid-template-columns: 160px 1fr;
+    background: var(--ui-bg);
+    height: calc(100vh - 180px);
+    max-height: 600px;
+    overflow: hidden;
+    transition: background 0.4s;
+  }
+
+  /* Portal sidebar */
+  .portal-sidebar {
+    background: var(--ui-sidebar);
+    border-right: 1px solid var(--ui-border);
+    padding: 18px 0;
+    transition: background 0.4s, border-color 0.4s;
+  }
+  .ps-logo {
+    font-family: var(--font-display);
+    font-size: 14px; font-weight: 900; letter-spacing: .06em;
+    color: var(--sky); padding: 0 16px 16px;
+    border-bottom: 1px solid var(--ui-border); margin-bottom: 10px;
+  }
+  .ps-section {
+    font-size: 9px; font-weight: 600; letter-spacing: .18em;
+    text-transform: uppercase; color: var(--ui-muted);
+    padding: 12px 16px 5px;
+  }
+  .ps-item {
+    display: flex; align-items: center; gap: 8px;
+    padding: 7px 16px;
+    font-size: 11px; color: var(--ui-muted);
+    position: relative;
+  }
+  .ps-item.active {
+    background: var(--ui-active);
+    color: var(--ui-text);
+  }
+  .ps-item.active::before {
+    content: '';
+    position: absolute; left: 0; top: 4px; bottom: 4px;
+    width: 2px; background: var(--sky); border-radius: 0 2px 2px 0;
+  }
+  .ps-icon {
+    width: 14px; height: 14px; flex-shrink: 0; opacity: 0.55;
+  }
+  .ps-item.active .ps-icon { opacity: 1; }
+  .ps-badge {
+    margin-left: auto;
+    background: rgba(239,68,68,0.20); color: #F87171;
+    font-size: 9px; font-weight: 700;
+    padding: 1px 6px; border-radius: 10px;
+  }
+
+  /* Portal main */
+  .portal-main {
+    overflow: hidden;
+    display: flex; flex-direction: column;
+  }
+  .portal-topbar {
+    padding: 10px 18px;
+    border-bottom: 1px solid var(--ui-border);
+    display: flex; align-items: center; justify-content: space-between;
+    flex-shrink: 0;
+  }
+  .portal-topbar-title {
+    font-size: 12px; font-weight: 600; color: var(--ui-text);
+  }
+  .portal-topbar-right {
+    display: flex; align-items: center; gap: 8px;
+  }
+  .status-dot {
+    width: 7px; height: 7px; border-radius: 50%;
+    background: #4ADE80;
+    box-shadow: 0 0 6px rgba(74,222,128,0.6);
+  }
+  .status-label {
+    font-size: 10px; font-weight: 500; color: var(--ui-muted);
+  }
+
+  /* Stats row */
+  .portal-stats {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 1px; background: var(--ui-border);
+    flex-shrink: 0;
+  }
+  .pstat {
+    background: var(--ui-card);
+    padding: 14px 16px;
+    transition: background 0.4s;
+  }
+  .pstat-label {
+    font-size: 9px; font-weight: 600; letter-spacing: .14em;
+    text-transform: uppercase; color: var(--ui-muted);
+    margin-bottom: 5px;
+  }
+  .pstat-value {
+    font-family: var(--font-display);
+    font-size: 22px; font-weight: 800; color: var(--ui-text);
+    letter-spacing: -0.02em; line-height: 1;
+  }
+  .pstat-delta { font-size: 10px; font-weight: 500; margin-top: 3px; }
+  .pstat-delta.up   { color: #4ADE80; }
+  .pstat-delta.warn { color: #FBBF24; }
+  .pstat-delta.good { color: var(--sky); }
+
+  /* Charts */
+  .portal-charts {
+    display: grid; grid-template-columns: 1fr 180px;
+    gap: 1px; background: var(--ui-border);
+    flex: 1; min-height: 0;
+  }
+  .portal-chart-panel {
+    background: var(--ui-card);
+    padding: 12px 16px;
+    overflow: hidden;
+    transition: background 0.4s;
+  }
+  .chart-title {
+    font-size: 9.5px; font-weight: 600; letter-spacing: .12em;
+    text-transform: uppercase; color: var(--ui-muted);
+    margin-bottom: 8px;
+  }
+  .chart-area { width: 100%; height: calc(100% - 26px); }
+
+  /* Alerts */
+  .portal-alerts {
+    background: var(--ui-card);
+    border-top: 1px solid var(--ui-border);
+    flex-shrink: 0; padding: 8px 0;
+    transition: background 0.4s, border-color 0.4s;
+  }
+  .alert-row {
+    display: grid; grid-template-columns: 6px 1fr auto;
+    align-items: center; gap: 10px;
+    padding: 5px 16px;
+    font-size: 10px;
+  }
+  .alert-sev { width: 6px; height: 6px; border-radius: 50%; }
+  .alert-sev.high   { background: #EF4444; box-shadow: 0 0 4px rgba(239,68,68,0.5); }
+  .alert-sev.medium { background: #F59E0B; }
+  .alert-sev.low    { background: var(--sky); }
+  .alert-text { color: var(--ui-text); }
+  .alert-time { color: var(--ui-muted); font-size: 9px; }
+
+  /* ══════════════════════════════════════════════════════
+     PROTOTYPE LABEL
+  ══════════════════════════════════════════════════════ */
+  .proto-label {
+    position: fixed; bottom: 16px; left: 50%; transform: translateX(-50%);
+    font-family: 'JetBrains Mono', monospace; font-size: 11px;
+    color: var(--text-sub); background: var(--bg-surface);
+    border: 1px solid var(--ruler);
+    padding: 6px 16px; border-radius: 100px;
+    z-index: 300;
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <span class="nav-logo">FCI</span>
+  <ul class="nav-links">
+    <li><a href="#">Markets</a></li>
+    <li><a href="#">Managed Cybersecurity</a></li>
+    <li><a href="#">Assessment</a></li>
+    <li><a href="#">About</a></li>
+    <li><a href="#" class="nav-cta">CISO Portal</a></li>
+  </ul>
+</nav>
+
+<!-- Theme Toggle -->
+<div class="theme-toggle">
+  <button class="theme-btn active" id="btn-dark" onclick="setTheme('dark')">Dark</button>
+  <button class="theme-btn" id="btn-light" onclick="setTheme('light')">Light</button>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="canvas-bg"><canvas id="c-bg"></canvas></div>
+
+  <!-- Portal mockup — right -->
+  <div class="portal-visual">
+    <div class="browser-outer">
+      <div class="browser-chrome">
+        <div class="traffic">
+          <span class="t-r"></span><span class="t-y"></span><span class="t-g"></span>
+        </div>
+        <div class="address-bar">app.fcicyber.com · CISO Portal</div>
+        <div class="soc-badge"><span class="soc-dot"></span> SOC Active · 24/7</div>
+      </div>
+      <div class="portal-window">
+        <!-- Sidebar -->
+        <div class="portal-sidebar">
+          <div class="ps-logo">FCI</div>
+          <div class="ps-section">Main</div>
+          <div class="ps-item active">
+            <svg class="ps-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+            Overview
+          </div>
+          <div class="ps-item">
+            <svg class="ps-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+            Endpoints
+          </div>
+          <div class="ps-item">
+            <svg class="ps-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4M21 12c0 4.97-4.03 9-9 9S3 16.97 3 12 7.03 3 12 3s9 4.03 9 9z"/></svg>
+            Compliance
+          </div>
+          <div class="ps-item">
+            <svg class="ps-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            Alerts
+            <span class="ps-badge">7</span>
+          </div>
+          <div class="ps-section">Reports</div>
+          <div class="ps-item">
+            <svg class="ps-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 17v-2m3 2v-4m3 4v-6M3 3h18v18H3z"/></svg>
+            Analytics
+          </div>
+          <div class="ps-item">
+            <svg class="ps-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 10v6m0 0l-3-3m3 3l3-3M3 17V7a2 2 0 012-2h6l2 2h6a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>
+            Audit Export
+          </div>
+          <div class="ps-section">System</div>
+          <div class="ps-item">
+            <svg class="ps-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+            Settings
+          </div>
+        </div>
+
+        <!-- Main panel -->
+        <div class="portal-main">
+          <div class="portal-topbar">
+            <div class="portal-topbar-title">Overview — Q1 2026</div>
+            <div class="portal-topbar-right">
+              <div class="status-dot"></div>
+              <div class="status-label">SOC Active · 24/7</div>
+            </div>
+          </div>
+
+          <div class="portal-stats">
+            <div class="pstat">
+              <div class="pstat-label">Endpoints Monitored</div>
+              <div class="pstat-value">40,247</div>
+              <div class="pstat-delta up">↑ +312 this week</div>
+            </div>
+            <div class="pstat">
+              <div class="pstat-label">Compliance Score</div>
+              <div class="pstat-value">94<span style="font-size:12px;opacity:.5">/100</span></div>
+              <div class="pstat-delta good">↑ +2 pts from last month</div>
+            </div>
+            <div class="pstat">
+              <div class="pstat-label">Open Alerts</div>
+              <div class="pstat-value">7</div>
+              <div class="pstat-delta warn">↓ 3 resolved today</div>
+            </div>
+          </div>
+
+          <div class="portal-charts">
+            <div class="portal-chart-panel">
+              <div class="chart-title">Compliance Trend — 12 months</div>
+              <canvas id="c-linechart" class="chart-area"></canvas>
+            </div>
+            <div class="portal-chart-panel">
+              <div class="chart-title">Endpoint Health</div>
+              <canvas id="c-donut" class="chart-area"></canvas>
+            </div>
+          </div>
+
+          <div class="portal-alerts">
+            <div class="alert-row">
+              <div class="alert-sev high"></div>
+              <div class="alert-text">Unmanaged device detected — Branch Office 14</div>
+              <div class="alert-time">2 min ago</div>
+            </div>
+            <div class="alert-row">
+              <div class="alert-sev medium"></div>
+              <div class="alert-text">MFA policy gap — 3 field advisors</div>
+              <div class="alert-time">18 min ago</div>
+            </div>
+            <div class="alert-row">
+              <div class="alert-sev low"></div>
+              <div class="alert-text">SOC 2 Type II evidence package ready</div>
+              <div class="alert-time">1 hr ago</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Content — left -->
+  <div class="hero-content">
+    <div class="hero-badge">
+      <span class="hero-badge-dot"></span>
+      Serving financial services since 2003
+    </div>
+
+    <h1>Managed Cybersecurity for Financial Services.</h1>
+
+    <p class="hero-tagline">Security enforced. Compliance proven.</p>
+
+    <p class="hero-body">FCI implements and maintains the cybersecurity controls your firm needs to meet regulatory requirements, protect client data, and pass audits — without adding headcount or complexity.</p>
+
+    <div class="cta-row">
+      <a href="#" class="btn btn-primary">Request a Gap Analysis <span class="btn-arrow">→</span></a>
+      <a href="#" class="btn btn-secondary">Explore Services</a>
+    </div>
+
+    <div class="stats-row">
+      <div class="stat-card">
+        <div class="stat-number">700+</div>
+        <div class="stat-label">Financial firms<br>protected</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">24/7</div>
+        <div class="stat-label">SOC monitoring<br>& response</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">6</div>
+        <div class="stat-label">Security domains<br>fully managed</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Prototype label -->
+<div class="proto-label">FCI Design Direction — Hero v2 · Bold + Portal</div>
+
+<script>
+/* ══════════════════════════════════════════════════════
+   THEME
+══════════════════════════════════════════════════════ */
+let currentTheme = 'dark';
+function isDark() { return currentTheme === 'dark'; }
+function setTheme(t) {
+  currentTheme = t;
+  document.body.classList.remove('theme-light','theme-dark');
+  if (t === 'light') document.body.classList.add('theme-light');
+  document.getElementById('btn-dark').classList.toggle('active', t==='dark');
+  document.getElementById('btn-light').classList.toggle('active', t==='light');
+  drawLineChart();
+  drawDonut();
+}
+
+/* ══════════════════════════════════════════════════════
+   CANVAS BACKGROUND
+══════════════════════════════════════════════════════ */
+(function(){
+  const c = document.getElementById('c-bg');
+  function fit() {
+    const r = c.parentElement.getBoundingClientRect();
+    const d = window.devicePixelRatio || 1;
+    c.width = Math.round(r.width*d);
+    c.height = Math.round(r.height*d);
+    c.getContext('2d').setTransform(d,0,0,d,0,0);
+    return {W:r.width, H:r.height};
+  }
+  function draw() {
+    const {W,H} = fit();
+    const ctx = c.getContext('2d');
+    const dk = isDark();
+    ctx.fillStyle = dk ? '#05091A' : '#EEF5FF';
+    ctx.fillRect(0,0,W,H);
+    const g = ctx.createRadialGradient(W*0.7, H*0.4, 0, W*0.7, H*0.4, W*0.55);
+    g.addColorStop(0,   dk ? 'rgba(37,99,235,0.12)' : 'rgba(37,99,235,0.07)');
+    g.addColorStop(0.5, dk ? 'rgba(14,165,233,0.04)' : 'rgba(14,165,233,0.03)');
+    g.addColorStop(1,   'rgba(14,165,233,0)');
+    ctx.fillStyle = g; ctx.fillRect(0,0,W,H);
+    /* subtle grid */
+    ctx.strokeStyle = dk ? 'rgba(37,99,235,0.04)' : 'rgba(37,99,235,0.05)';
+    ctx.lineWidth = 1;
+    const sp = 44;
+    for (let x=0;x<W;x+=sp) { ctx.beginPath(); ctx.moveTo(x,0); ctx.lineTo(x,H); ctx.stroke(); }
+    for (let y=0;y<H;y+=sp) { ctx.beginPath(); ctx.moveTo(0,y); ctx.lineTo(W,y); ctx.stroke(); }
+    requestAnimationFrame(draw);
+  }
+  requestAnimationFrame(draw);
+})();
+
+/* ══════════════════════════════════════════════════════
+   LINE CHART (Compliance Trend)
+══════════════════════════════════════════════════════ */
+function drawLineChart() {
+  const canvas = document.getElementById('c-linechart');
+  const rect = canvas.getBoundingClientRect();
+  const dpr = window.devicePixelRatio||1;
+  canvas.width = Math.round(rect.width*dpr);
+  canvas.height = Math.round(rect.height*dpr);
+  const ctx = canvas.getContext('2d');
+  ctx.scale(dpr,dpr);
+  const W = rect.width, H = rect.height;
+  const dk = isDark();
+  ctx.clearRect(0,0,W,H);
+
+  const data = [78,80,79,82,84,83,86,88,89,91,92,94];
+  const mn=70, mx=100;
+  const pts = data.map((v,i)=>({
+    x: (i/(data.length-1))*W,
+    y: H - ((v-mn)/(mx-mn))*H
+  }));
+
+  ctx.strokeStyle = dk ? 'rgba(37,99,235,0.08)' : 'rgba(37,99,235,0.06)';
+  ctx.lineWidth = 0.5;
+  [75,85,95].forEach(v => {
+    const y = H - ((v-mn)/(mx-mn))*H;
+    ctx.beginPath(); ctx.moveTo(0,y); ctx.lineTo(W,y); ctx.stroke();
+    ctx.fillStyle = dk ? 'rgba(14,165,233,0.30)' : 'rgba(37,99,235,0.30)';
+    ctx.font = '9px Inter,sans-serif'; ctx.textAlign = 'left';
+    ctx.fillText(v+'%', 3, y-3);
+  });
+
+  const grad = ctx.createLinearGradient(0,0,0,H);
+  grad.addColorStop(0, dk ? 'rgba(37,99,235,0.18)' : 'rgba(37,99,235,0.10)');
+  grad.addColorStop(1, 'rgba(37,99,235,0)');
+  ctx.beginPath(); ctx.moveTo(pts[0].x, H);
+  pts.forEach(p => ctx.lineTo(p.x, p.y));
+  ctx.lineTo(pts[pts.length-1].x, H);
+  ctx.closePath(); ctx.fillStyle = grad; ctx.fill();
+
+  ctx.beginPath();
+  pts.forEach((p,i) => i===0 ? ctx.moveTo(p.x,p.y) : ctx.lineTo(p.x,p.y));
+  ctx.strokeStyle = dk ? 'rgba(14,165,233,0.85)' : 'rgba(37,99,235,0.75)';
+  ctx.lineWidth = 1.5; ctx.lineJoin = 'round'; ctx.stroke();
+
+  ctx.save();
+  ctx.shadowBlur = 8; ctx.shadowColor = 'rgba(14,165,233,0.7)';
+  ctx.beginPath(); ctx.arc(pts[pts.length-1].x, pts[pts.length-1].y, 3.5, 0, Math.PI*2);
+  ctx.fillStyle = 'rgba(14,165,233,0.90)'; ctx.fill();
+  ctx.restore();
+}
+
+/* ══════════════════════════════════════════════════════
+   DONUT CHART (Endpoint Health)
+══════════════════════════════════════════════════════ */
+function drawDonut() {
+  const canvas = document.getElementById('c-donut');
+  const rect = canvas.getBoundingClientRect();
+  const dpr = window.devicePixelRatio||1;
+  canvas.width = Math.round(rect.width*dpr);
+  canvas.height = Math.round(rect.height*dpr);
+  const ctx = canvas.getContext('2d');
+  ctx.scale(dpr,dpr);
+  const W = rect.width, H = rect.height;
+  const dk = isDark();
+  ctx.clearRect(0,0,W,H);
+
+  const cx = W/2, cy = H*0.42;
+  const R = Math.min(W,H*0.7)*0.38;
+  const lw = R*0.3;
+  const segs = [
+    { pct: 0.94, color: '#4ADE80' },
+    { pct: 0.04, color: '#FBBF24' },
+    { pct: 0.02, color: '#F87171' }
+  ];
+
+  let angle = -Math.PI/2;
+  segs.forEach(s => {
+    const sweep = s.pct * Math.PI * 2;
+    ctx.beginPath();
+    ctx.arc(cx, cy, R, angle, angle + sweep);
+    ctx.strokeStyle = s.color; ctx.lineWidth = lw;
+    ctx.lineCap = 'butt'; ctx.stroke();
+    angle += sweep;
+  });
+
+  ctx.fillStyle = dk ? 'var(--ui-text)' : '#0F1E38';
+  ctx.fillStyle = dk ? '#C8DEFA' : '#0F1E38';
+  ctx.font = 'bold 22px Inter Tight,sans-serif';
+  ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+  ctx.fillText('94%', cx, cy);
+
+  const legendY = cy + R + lw/2 + 20;
+  const items = [
+    { label: 'Compliant', color: '#4ADE80' },
+    { label: 'At Risk',   color: '#FBBF24' },
+    { label: 'Critical',  color: '#F87171' }
+  ];
+  ctx.font = '9px Inter,sans-serif';
+  ctx.textAlign = 'left';
+  items.forEach((it, i) => {
+    const y = legendY + i * 16;
+    ctx.fillStyle = it.color;
+    ctx.beginPath(); ctx.arc(10, y, 3, 0, Math.PI*2); ctx.fill();
+    ctx.fillStyle = dk ? '#7EAED8' : '#3B6EAA';
+    ctx.fillText(it.label, 20, y + 3);
+  });
+}
+
+/* Initial draw */
+setTimeout(() => { drawLineChart(); drawDonut(); }, 100);
+window.addEventListener('resize', () => { drawLineChart(); drawDonut(); });
+</script>
+
+</body>
+</html>
