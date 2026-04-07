@@ -1,0 +1,966 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FCI — AI Messaging</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Inter+Tight:wght@500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    /* ─── DESIGN TOKENS ──────────────────────────── */
+    :root {
+      --blue:       #2563EB;
+      --blue-dark:  #1D4ED8;
+      --sky:        #0EA5E9;
+      --deep-navy:  #1E3A6E;
+      --blue-tint:  #DBEAFE;
+      --blue-faint: #EFF6FF;
+      --offwhite:   #F8FAFC;
+      --white:      #FFFFFF;
+      --rule:       #E2E8F0;
+      --text:       #0F172A;
+      --body:       #475569;
+      --muted:      #64748B;
+      --faint:      #94A3B8;
+      --emerald:    #10B981;
+      --emerald-bg: #ECFDF5;
+      --emerald-b:  #A7F3D0;
+      --violet:     #7C3AED;
+      --violet-bg:  #F5F3FF;
+      --violet-b:   #DDD6FE;
+      --amber:      #D97706;
+      --amber-bg:   #FFFBEB;
+      --amber-b:    #FDE68A;
+      --rose:       #E11D48;
+      --rose-bg:    #FFF1F2;
+      --rose-b:     #FECDD3;
+    }
+
+    /* ─── RESET ──────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { font-size: 16px; scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--offwhite);
+      color: var(--text);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      padding-top: 52px;
+    }
+
+    /* ─── TOP NAV ────────────────────────────────── */
+    .hub-nav {
+      position: fixed; top: 0; left: 0; right: 0; height: 52px; z-index: 200;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 32px;
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(15,23,42,0.08);
+    }
+    .hub-nav .back-nav {
+      font-size: 13px; font-weight: 600; text-decoration: none;
+      color: #475569; transition: color 0.15s;
+    }
+    .hub-nav .back-nav:hover { color: #0F172A; }
+    .hub-theme-toggle {
+      display: flex; align-items: center;
+      background: rgba(15,23,42,0.06);
+      border: 1px solid rgba(15,23,42,0.1);
+      border-radius: 8px; padding: 3px; gap: 2px;
+    }
+    .hub-theme-toggle button {
+      font-family: inherit; font-size: 11px; font-weight: 600;
+      letter-spacing: 0.03em; color: #94A3B8;
+      background: transparent; border: none; cursor: pointer;
+      padding: 4px 10px; border-radius: 6px; line-height: 1;
+      transition: background 0.15s, color 0.15s;
+    }
+    .hub-theme-toggle button:hover { color: #0F172A; }
+    .hub-theme-toggle button.active {
+      background: #fff; color: #0F172A;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.12);
+    }
+
+    /* ─── LAYOUT ─────────────────────────────────── */
+    .wrap { max-width: 900px; margin: 0 auto; padding: 0 48px 120px; }
+
+    /* ─── HEADER ─────────────────────────────────── */
+    .site-header {
+      background: linear-gradient(135deg, var(--blue) 0%, #4F46E5 100%);
+      margin: 0 -48px;
+      padding: 56px 48px 48px;
+      position: relative;
+      overflow: hidden;
+    }
+    .site-header::before {
+      content: '';
+      position: absolute;
+      top: -100px; right: -100px;
+      width: 400px; height: 400px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.04);
+      pointer-events: none;
+    }
+    .site-header::after {
+      content: '';
+      position: absolute;
+      bottom: -60px; left: -60px;
+      width: 250px; height: 250px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.03);
+      pointer-events: none;
+    }
+    .header-eyebrow {
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.70);
+      margin-bottom: 20px;
+      position: relative; z-index: 1;
+    }
+    .header-logo {
+      font-family: 'Inter Tight', sans-serif;
+      font-size: 40px;
+      font-weight: 600;
+      letter-spacing: 0;
+      color: var(--white);
+      line-height: 1;
+      display: inline-flex;
+      align-items: baseline;
+      position: relative; z-index: 1;
+    }
+    .header-descriptor {
+      font-size: 14px;
+      font-weight: 400;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.75);
+      margin-top: 10px;
+      position: relative; z-index: 1;
+    }
+    .header-title {
+      font-family: 'Inter Tight', sans-serif;
+      font-size: clamp(26px, 3.5vw, 36px);
+      font-weight: 600;
+      color: var(--white);
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+      margin-top: 32px;
+      position: relative; z-index: 1;
+    }
+    .header-sub {
+      font-size: 15px;
+      color: rgba(255,255,255,0.82);
+      margin-top: 12px;
+      max-width: 600px;
+      line-height: 1.65;
+      position: relative; z-index: 1;
+    }
+    .header-back {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: 13px; font-weight: 500;
+      color: rgba(255,255,255,0.65);
+      text-decoration: none;
+      margin-bottom: 24px;
+      position: relative; z-index: 1;
+      transition: color 0.15s;
+    }
+    .header-back:hover { color: rgba(255,255,255,0.95); }
+
+    /* ─── TIMELINE NAV ───────────────────────────── */
+    .toc {
+      margin: 48px 0 0;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .toc a {
+      font-size: 14px;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      color: var(--blue);
+      background: var(--blue-tint);
+      padding: 7px 16px;
+      text-decoration: none;
+      border: 1px solid #BFDBFE;
+      transition: background 0.15s;
+    }
+    .toc a:hover { background: #BFDBFE; }
+
+    /* ─── SECTION HEADERS ────────────────────────── */
+    .section { margin-top: 72px; }
+
+    .section-label {
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--sky);
+      margin-bottom: 12px;
+    }
+
+    .section-title {
+      font-family: 'Inter Tight', sans-serif;
+      font-size: clamp(24px, 3vw, 32px);
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      color: var(--text);
+      line-height: 1.15;
+      margin-bottom: 8px;
+    }
+
+    .section-intro {
+      font-size: 15px;
+      color: var(--body);
+      max-width: 620px;
+      line-height: 1.75;
+      margin-bottom: 36px;
+      padding-bottom: 36px;
+      border-bottom: 1px solid var(--rule);
+    }
+
+    /* ─── BLOCKS ─────────────────────────────────── */
+    .block { margin-bottom: 32px; }
+
+    .block-label {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--sky);
+      margin-bottom: 10px;
+    }
+
+    .block-content {
+      font-size: 15px;
+      color: var(--body);
+      line-height: 1.75;
+      max-width: 720px;
+    }
+
+    /* ─── CALLOUT ────────────────────────────────── */
+    .callout {
+      background: var(--blue);
+      padding: 28px 36px;
+      margin: 36px 0;
+    }
+    .callout-label {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.70);
+      margin-bottom: 12px;
+    }
+    .callout-text {
+      font-family: 'Inter Tight', sans-serif;
+      font-size: clamp(17px, 2.2vw, 21px);
+      font-weight: 500;
+      color: var(--white);
+      letter-spacing: -0.01em;
+      line-height: 1.45;
+    }
+
+    /* ─── PROOF PILLS ────────────────────────────── */
+    .proof-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin: 16px 0 32px;
+    }
+    .proof-pill {
+      background: var(--blue-faint);
+      border: 1px solid #BFDBFE;
+      padding: 10px 20px;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--blue);
+      line-height: 1.4;
+    }
+    .proof-pill.emerald { background: var(--emerald-bg); border-color: var(--emerald-b); color: var(--emerald); }
+    .proof-pill.violet { background: var(--violet-bg); border-color: var(--violet-b); color: var(--violet); }
+    .proof-pill.amber { background: var(--amber-bg); border-color: var(--amber-b); color: var(--amber); }
+    .proof-pill.rose { background: var(--rose-bg); border-color: var(--rose-b); color: var(--rose); }
+
+    /* ─── CHAPTER CARD ───────────────────────────── */
+    .chapter-card {
+      background: var(--white);
+      border: 1px solid var(--rule);
+      padding: 36px 36px 32px;
+      margin: 16px 0 40px;
+      position: relative;
+    }
+    .chapter-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+    }
+    .chapter-card.ch-blue::before { background: linear-gradient(90deg, var(--blue), var(--sky)); }
+    .chapter-card.ch-emerald::before { background: linear-gradient(90deg, var(--emerald), #34D399); }
+    .chapter-card.ch-violet::before { background: linear-gradient(90deg, var(--violet), #A78BFA); }
+    .chapter-card.ch-amber::before { background: linear-gradient(90deg, var(--amber), #FBBF24); }
+
+    .chapter-number {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+    .ch-blue .chapter-number { color: var(--blue); }
+    .ch-emerald .chapter-number { color: var(--emerald); }
+    .ch-violet .chapter-number { color: var(--violet); }
+    .ch-amber .chapter-number { color: var(--amber); }
+
+    .chapter-title {
+      font-family: 'Inter Tight', sans-serif;
+      font-size: 20px;
+      font-weight: 600;
+      color: var(--text);
+      letter-spacing: -0.01em;
+      line-height: 1.2;
+      margin-bottom: 6px;
+    }
+    .chapter-period {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--muted);
+      margin-bottom: 20px;
+    }
+    .chapter-body {
+      font-size: 15px;
+      color: var(--body);
+      line-height: 1.75;
+      margin-bottom: 20px;
+    }
+    .chapter-body + .chapter-body { margin-top: -8px; }
+
+    .pillar-map {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 24px;
+    }
+    .pillar-tag {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      padding: 5px 12px;
+      border-radius: 4px;
+    }
+    .pillar-tag.p1 { background: var(--blue-faint); color: var(--blue); border: 1px solid #BFDBFE; }
+    .pillar-tag.p2 { background: var(--emerald-bg); color: var(--emerald); border: 1px solid var(--emerald-b); }
+    .pillar-tag.p3 { background: var(--violet-bg); color: var(--violet); border: 1px solid var(--violet-b); }
+    .pillar-tag.p4 { background: var(--amber-bg); color: var(--amber); border: 1px solid var(--amber-b); }
+
+    .proof-box {
+      background: var(--blue-faint);
+      border: 1px solid #BFDBFE;
+      padding: 20px 24px;
+      margin-top: 16px;
+    }
+    .proof-box-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--blue);
+      margin-bottom: 8px;
+    }
+    .proof-box p {
+      font-size: 14px;
+      color: var(--body);
+      line-height: 1.7;
+      font-style: italic;
+    }
+
+    /* ─── THROUGHLINE CALLOUT ─────────────────────── */
+    .throughline {
+      background: linear-gradient(135deg, var(--blue) 0%, #4F46E5 100%);
+      padding: 40px 40px;
+      margin: 48px 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .throughline::before {
+      content: '';
+      position: absolute;
+      top: -80px; right: -80px;
+      width: 300px; height: 300px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.04);
+      pointer-events: none;
+    }
+    .throughline-label {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.65);
+      margin-bottom: 16px;
+      position: relative; z-index: 1;
+    }
+    .throughline-text {
+      font-family: 'Inter Tight', sans-serif;
+      font-size: clamp(17px, 2.2vw, 21px);
+      font-weight: 500;
+      color: var(--white);
+      letter-spacing: -0.01em;
+      line-height: 1.55;
+      max-width: 680px;
+      position: relative; z-index: 1;
+    }
+    .throughline-text strong { font-weight: 700; }
+    .throughline-sub {
+      font-size: 15px;
+      color: rgba(255,255,255,0.78);
+      line-height: 1.7;
+      margin-top: 20px;
+      max-width: 680px;
+      position: relative; z-index: 1;
+    }
+
+    /* ─── INTEGRATION PLAN ───────────────────────── */
+    .plan-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin: 16px 0 32px;
+    }
+    .plan-card {
+      background: var(--white);
+      border: 1px solid var(--rule);
+      padding: 24px 24px 20px;
+      position: relative;
+    }
+    .plan-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+    }
+    .plan-card.pc-blue::before { background: var(--blue); }
+    .plan-card.pc-emerald::before { background: var(--emerald); }
+    .plan-card.pc-violet::before { background: var(--violet); }
+    .plan-card.pc-amber::before { background: var(--amber); }
+
+    .plan-card-title {
+      font-family: 'Inter Tight', sans-serif;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 8px;
+    }
+    .plan-card p {
+      font-size: 13px;
+      color: var(--body);
+      line-height: 1.65;
+    }
+
+    /* ─── LIST BLOCK ─────────────────────────────── */
+    .list-block {
+      background: var(--white);
+      border: 1px solid var(--rule);
+      padding: 28px 32px;
+      margin: 16px 0 32px;
+    }
+    .list-block ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+    .list-block li {
+      font-size: 14px;
+      color: var(--body);
+      padding: 12px 0;
+      border-bottom: 1px solid var(--rule);
+      line-height: 1.6;
+      padding-left: 20px;
+      position: relative;
+    }
+    .list-block li:last-child { border-bottom: none; }
+    .list-block li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 20px;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--sky);
+    }
+    .list-block li strong { color: var(--text); font-weight: 600; }
+
+    /* ─── ROLE GRID ──────────────────────────────── */
+    .role-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin: 16px 0 32px;
+    }
+    .role-card {
+      background: var(--white);
+      border: 1px solid var(--rule);
+      padding: 24px 24px;
+    }
+    .role-card-title {
+      font-family: 'Inter Tight', sans-serif;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--deep-navy);
+      margin-bottom: 8px;
+    }
+    .role-card p {
+      font-size: 13px;
+      color: var(--body);
+      line-height: 1.65;
+    }
+
+    /* ─── MARKET ROWS ────────────────────────────── */
+    .market-row {
+      background: var(--white);
+      border: 1px solid var(--rule);
+      padding: 20px 28px;
+      margin-bottom: 12px;
+      display: flex;
+      gap: 20px;
+      align-items: baseline;
+    }
+    .market-label {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--blue);
+      min-width: 240px;
+      flex-shrink: 0;
+    }
+    .market-row p {
+      font-size: 14px;
+      color: var(--body);
+      line-height: 1.65;
+    }
+
+    /* ─── BOUNDARY BOX ───────────────────────────── */
+    .boundary-box {
+      background: var(--blue-faint);
+      border: 1px solid #BFDBFE;
+      border-left: 4px solid var(--blue);
+      padding: 24px 28px;
+      margin: 36px 0;
+    }
+    .boundary-box-title {
+      font-family: 'Inter Tight', sans-serif;
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--deep-navy);
+      margin-bottom: 8px;
+    }
+    .boundary-box p {
+      font-size: 14px;
+      color: var(--body);
+      line-height: 1.7;
+    }
+
+    /* ─── FOOTER ──────────────────────────────────── */
+    .footer {
+      margin-top: 80px;
+      padding-top: 32px;
+      border-top: 1px solid var(--rule);
+      text-align: center;
+    }
+    .footer p {
+      font-size: 12px;
+      color: var(--faint);
+      line-height: 1.6;
+    }
+
+    /* ══════════════════════════════════════════
+       DARK MODE
+    ══════════════════════════════════════════ */
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --white:      #1E293B;
+        --offwhite:   #0F172A;
+        --rule:       #334155;
+        --text:       #F1F5F9;
+        --body:       #CBD5E1;
+        --muted:      #94A3B8;
+        --faint:      #64748B;
+        --blue-tint:  #172554;
+        --blue-faint: #1E293B;
+        --deep-navy:  #93C5FD;
+      }
+      body { background: #0F172A; }
+
+      /* Pillar tags in dark */
+      .pillar-tag.p1 { background: rgba(37,99,235,0.15); color: #93C5FD; border-color: rgba(37,99,235,0.3); }
+      .pillar-tag.p2 { background: rgba(16,185,129,0.15); color: #6EE7B7; border-color: rgba(16,185,129,0.3); }
+      .pillar-tag.p3 { background: rgba(124,58,237,0.15); color: #C4B5FD; border-color: rgba(124,58,237,0.3); }
+      .pillar-tag.p4 { background: rgba(217,119,6,0.15); color: #FCD34D; border-color: rgba(217,119,6,0.3); }
+
+      /* Proof pills in dark */
+      .proof-pill { background: #1E293B; border-color: #334155; color: #93C5FD; }
+      .proof-pill.emerald { background: rgba(16,185,129,0.12); border-color: rgba(16,185,129,0.25); color: #6EE7B7; }
+      .proof-pill.violet { background: rgba(124,58,237,0.12); border-color: rgba(124,58,237,0.25); color: #C4B5FD; }
+      .proof-pill.amber { background: rgba(217,119,6,0.12); border-color: rgba(217,119,6,0.25); color: #FCD34D; }
+      .proof-pill.rose { background: rgba(225,29,72,0.12); border-color: rgba(225,29,72,0.25); color: #FDA4AF; }
+
+      /* Proof box in dark */
+      .proof-box { background: #172554; border-color: rgba(37,99,235,0.25); }
+      .proof-box-label { color: #93C5FD; }
+      .proof-box p { color: #CBD5E1; }
+
+      /* Boundary box in dark */
+      .boundary-box { background: #172554; border-color: rgba(37,99,235,0.25); border-left-color: var(--blue); }
+      .boundary-box-title { color: #93C5FD; }
+
+      /* TOC in dark */
+      .toc a { background: #172554; color: #93C5FD; border-color: rgba(37,99,235,0.3); }
+      .toc a:hover { background: rgba(37,99,235,0.25); }
+
+      /* Market label in dark */
+      .market-label { color: #93C5FD; }
+
+      /* Role card title in dark */
+      .role-card-title { color: #93C5FD; }
+
+      /* Nav in dark */
+      html:not([data-hub-theme=light]) .hub-nav { background: rgba(8,14,28,0.9); border-bottom-color: rgba(255,255,255,0.07); }
+      html:not([data-hub-theme=light]) .hub-nav .back-nav { color: rgba(255,255,255,0.5); }
+      html:not([data-hub-theme=light]) .hub-nav .back-nav:hover { color: #fff; }
+      html:not([data-hub-theme=light]) .hub-theme-toggle { background: rgba(255,255,255,0.07); border-color: rgba(255,255,255,0.1); }
+      html:not([data-hub-theme=light]) .hub-theme-toggle button { color: rgba(255,255,255,0.35); }
+      html:not([data-hub-theme=light]) .hub-theme-toggle button:hover { color: #fff; }
+      html:not([data-hub-theme=light]) .hub-theme-toggle button.active { background: rgba(255,255,255,0.1); color: #fff; box-shadow: none; }
+    }
+
+    /* ── Force light when toggled ── */
+    html[data-hub-theme=light] {
+      --white:      #FFFFFF;
+      --offwhite:   #F8FAFC;
+      --rule:       #E2E8F0;
+      --text:       #0F172A;
+      --body:       #475569;
+      --muted:      #64748B;
+      --faint:      #94A3B8;
+      --blue-tint:  #DBEAFE;
+      --blue-faint: #EFF6FF;
+      --deep-navy:  #1E3A6E;
+    }
+    html[data-hub-theme=light] body { background: #F8FAFC; }
+
+    /* ── Force dark when toggled ── */
+    html[data-hub-theme=dark] {
+      --white:      #1E293B;
+      --offwhite:   #0F172A;
+      --rule:       #334155;
+      --text:       #F1F5F9;
+      --body:       #CBD5E1;
+      --muted:      #94A3B8;
+      --faint:      #64748B;
+      --blue-tint:  #172554;
+      --blue-faint: #1E293B;
+      --deep-navy:  #93C5FD;
+    }
+    html[data-hub-theme=dark] body { background: #0F172A; }
+    html[data-hub-theme=dark] .pillar-tag.p1 { background: rgba(37,99,235,0.15); color: #93C5FD; border-color: rgba(37,99,235,0.3); }
+    html[data-hub-theme=dark] .pillar-tag.p2 { background: rgba(16,185,129,0.15); color: #6EE7B7; border-color: rgba(16,185,129,0.3); }
+    html[data-hub-theme=dark] .pillar-tag.p3 { background: rgba(124,58,237,0.15); color: #C4B5FD; border-color: rgba(124,58,237,0.3); }
+    html[data-hub-theme=dark] .pillar-tag.p4 { background: rgba(217,119,6,0.15); color: #FCD34D; border-color: rgba(217,119,6,0.3); }
+    html[data-hub-theme=dark] .proof-pill { background: #1E293B; border-color: #334155; color: #93C5FD; }
+    html[data-hub-theme=dark] .proof-pill.emerald { background: rgba(16,185,129,0.12); border-color: rgba(16,185,129,0.25); color: #6EE7B7; }
+    html[data-hub-theme=dark] .proof-pill.violet { background: rgba(124,58,237,0.12); border-color: rgba(124,58,237,0.25); color: #C4B5FD; }
+    html[data-hub-theme=dark] .proof-pill.amber { background: rgba(217,119,6,0.12); border-color: rgba(217,119,6,0.25); color: #FCD34D; }
+    html[data-hub-theme=dark] .proof-pill.rose { background: rgba(225,29,72,0.12); border-color: rgba(225,29,72,0.25); color: #FDA4AF; }
+    html[data-hub-theme=dark] .proof-box { background: #172554; border-color: rgba(37,99,235,0.25); }
+    html[data-hub-theme=dark] .proof-box-label { color: #93C5FD; }
+    html[data-hub-theme=dark] .proof-box p { color: #CBD5E1; }
+    html[data-hub-theme=dark] .boundary-box { background: #172554; border-color: rgba(37,99,235,0.25); border-left-color: var(--blue); }
+    html[data-hub-theme=dark] .boundary-box-title { color: #93C5FD; }
+    html[data-hub-theme=dark] .toc a { background: #172554; color: #93C5FD; border-color: rgba(37,99,235,0.3); }
+    html[data-hub-theme=dark] .toc a:hover { background: rgba(37,99,235,0.25); }
+    html[data-hub-theme=dark] .market-label { color: #93C5FD; }
+    html[data-hub-theme=dark] .role-card-title { color: #93C5FD; }
+    html[data-hub-theme=dark] .hub-nav { background: rgba(8,14,28,0.9); border-bottom-color: rgba(255,255,255,0.07); }
+    html[data-hub-theme=dark] .hub-nav .back-nav { color: rgba(255,255,255,0.5); }
+    html[data-hub-theme=dark] .hub-nav .back-nav:hover { color: #fff; }
+    html[data-hub-theme=dark] .hub-theme-toggle { background: rgba(255,255,255,0.07); border-color: rgba(255,255,255,0.1); }
+    html[data-hub-theme=dark] .hub-theme-toggle button { color: rgba(255,255,255,0.35); }
+    html[data-hub-theme=dark] .hub-theme-toggle button:hover { color: #fff; }
+    html[data-hub-theme=dark] .hub-theme-toggle button.active { background: rgba(255,255,255,0.1); color: #fff; box-shadow: none; }
+
+    /* ─── RESPONSIVE ─────────────────────────────── */
+    @media (max-width: 720px) {
+      .wrap { padding: 0 24px 80px; }
+      .site-header { margin: 0 -24px; padding: 40px 24px 36px; }
+      .plan-grid, .role-grid { grid-template-columns: 1fr; }
+      .market-row { flex-direction: column; gap: 4px; }
+      .market-label { min-width: unset; }
+      body { padding-top: 52px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════
+     TOP NAV
+═══════════════════════════════════════════════ -->
+<nav class="hub-nav">
+  <a href="index.html" class="back-nav">← Brand Hub</a>
+  <div class="hub-theme-toggle">
+    <button data-hub-mode="light" onclick="setHubTheme('light')">Light</button>
+    <button data-hub-mode="dark" onclick="setHubTheme('dark')">Dark</button>
+    <button data-hub-mode="system" onclick="setHubTheme('system')" class="active">System</button>
+  </div>
+</nav>
+
+<div class="wrap">
+
+  <!-- ── HEADER ── -->
+  <div class="site-header">
+    <div class="header-eyebrow">FCI Rebranding Project</div>
+    <div class="header-logo">FCI</div>
+    <div class="header-descriptor">Field Compliance Inc.</div>
+    <div class="header-title">FCI &amp; AI — A Decade of Operational Capability</div>
+    <div class="header-sub">FCI's relationship with AI is not new, not reactive, and not a marketing angle. It is a decade-long operational capability that has deepened as the technology — and its risks — have evolved.</div>
+  </div>
+
+  <!-- ── TOC ── -->
+  <div class="toc">
+    <a href="#chapter1">Chapter 1 — Threat Detection</a>
+    <a href="#chapter2">Chapter 2 — SIEM &amp; Logs</a>
+    <a href="#chapter3">Chapter 3 — Cloud Hardening</a>
+    <a href="#chapter4">Chapter 4 — Strategy &amp; Policy</a>
+    <a href="#integration">Integration Plan</a>
+  </div>
+
+  <!-- ══════════════════════════════════════════════ -->
+  <!--  THE AI STORY ARC                             -->
+  <!-- ══════════════════════════════════════════════ -->
+
+  <div class="section" id="story">
+    <div class="section-label">The AI Story Arc</div>
+    <div class="section-title">Four Chapters, Four Pillars</div>
+    <div class="section-intro">The story has four chapters, and each one maps directly to FCI's existing messaging pillars. The progression is natural — from using AI to protect, to using AI to analyze, to protecting clients from AI, to helping clients govern AI.</div>
+  </div>
+
+  <!-- ── CHAPTER 1 ── -->
+  <div class="chapter-card ch-blue" id="chapter1">
+    <div class="chapter-number">Chapter 1</div>
+    <div class="chapter-title">AI-Driven Threat Detection</div>
+    <div class="chapter-period">2017 – present</div>
+    <div class="pillar-map">
+      <span class="pillar-tag p1">Pillar 1 — Cyber Tools &amp; Settings</span>
+      <span class="pillar-tag p3">Pillar 3 — Expert Knowledge, Applied at Scale</span>
+    </div>
+    <div class="chapter-body">FCI began integrating AI into its threat detection capabilities in 2017 — years before the current wave of AI awareness in financial services. The purpose was specific: detect and block threats more accurately than signature-based or rule-based methods alone. Traditional detection relies on matching known attack patterns. AI-driven detection identifies behavioral anomalies — deviations from baseline that indicate a threat even when the attack has never been seen before.</div>
+    <div class="chapter-body">This matters in the financial services sales office environment because the threat surface is distributed, unpredictable, and operates across devices and networks FCI does not control. Pattern-matching fails when the pattern is new. AI does not.</div>
+    <div class="proof-box">
+      <div class="proof-box-label">Proof Point Language</div>
+      <p>"FCI has deployed AI-driven threat detection since 2017 — identifying and blocking threats based on behavioral anomalies, not just known signatures. Across 40,000+ endpoints, this means threats are caught faster, with fewer false positives, and without relying on the threat having been seen before."</p>
+    </div>
+  </div>
+
+  <!-- ── CHAPTER 2 ── -->
+  <div class="chapter-card ch-emerald" id="chapter2">
+    <div class="chapter-number">Chapter 2</div>
+    <div class="chapter-title">AI-Enhanced SIEM &amp; Log Analysis</div>
+    <div class="chapter-period">Ongoing</div>
+    <div class="pillar-map">
+      <span class="pillar-tag p3">Pillar 3 — Expert Knowledge, Applied at Scale</span>
+      <span class="pillar-tag p4">Pillar 4 — Proof of Security &amp; Compliance</span>
+    </div>
+    <div class="chapter-body">FCI added AI to its Security Information and Event Management (SIEM) operations to analyze log data at a scale and speed that manual analysis cannot match. The result: patterns that indicate potential threats — lateral movement, unusual access patterns, credential misuse — are surfaced before they become incidents, and the evidence trail is preserved automatically.</div>
+    <div class="chapter-body">This is where AI directly strengthens FCI's documentation capability. AI-enhanced SIEM does not just detect — it documents. Every flagged event, every correlated pattern, every escalation creates a forensic trail that becomes part of the compliance evidence FCI produces for the firm.</div>
+    <div class="proof-box">
+      <div class="proof-box-label">Proof Point Language</div>
+      <p>"FCI's SIEM uses AI to analyze millions of log events across the client base — finding patterns that indicate threats before they become incidents. The analysis produces a forensic trail that feeds directly into the compliance documentation regulators and cyber insurers require."</p>
+    </div>
+  </div>
+
+  <!-- ── CHAPTER 3 ── -->
+  <div class="chapter-card ch-violet" id="chapter3">
+    <div class="chapter-number">Chapter 3</div>
+    <div class="chapter-title">AI Governance &amp; Cloud Application Hardening</div>
+    <div class="chapter-period">Current</div>
+    <div class="pillar-map">
+      <span class="pillar-tag p1">Pillar 1 — Cyber Tools &amp; Settings</span>
+      <span class="pillar-tag p2">Pillar 2 — Procedures &amp; Processes</span>
+    </div>
+    <div class="chapter-body">The same AI tools that create business value also create risk. Financial services firms use cloud applications — Microsoft 365, CRM platforms, AI-powered productivity tools — that may expose client data to AI models if default settings are left in place. FCI's cloud application security hardening now includes reviewing and enforcing controls on how AI features interact with the firm's data.</div>
+    <div class="chapter-body">This means configuring which AI features are enabled, which are restricted, and which are blocked entirely — based on what the firm's cybersecurity program requires and what regulators expect. The firm defines the policy. FCI implements the technical controls that enforce it.</div>
+    <div class="proof-box">
+      <div class="proof-box-label">Proof Point Language</div>
+      <p>"Cloud applications increasingly embed AI features that process data in ways firms may not expect. FCI hardens those applications — configuring, restricting, or blocking AI features to ensure the firm's client data is not exposed to models, training datasets, or third-party processing that the firm has not explicitly authorized."</p>
+    </div>
+  </div>
+
+  <!-- ── CHAPTER 4 ── -->
+  <div class="chapter-card ch-amber" id="chapter4">
+    <div class="chapter-number">Chapter 4</div>
+    <div class="chapter-title">AI Strategy, Policy &amp; Procedure Support</div>
+    <div class="chapter-period">Current</div>
+    <div class="pillar-map">
+      <span class="pillar-tag p2">Pillar 2 — Procedures &amp; Processes</span>
+      <span class="pillar-tag p3">Pillar 3 — Expert Knowledge, Applied at Scale</span>
+    </div>
+    <div class="chapter-body">AI governance is not just a technical problem — it is a policy and procedure problem. Firms need to define how employees and affiliates may use AI tools, what data may be entered into them, what disclosures are required, and how AI-generated outputs are reviewed before use. Regulators are already asking these questions. FINRA's examination priorities reference AI governance. The SEC has signaled that AI usage in advisory communications falls under existing supervision requirements.</div>
+    <div class="chapter-body">FCI provides support to help firms define their AI strategies, policies, and procedures. This is not FCI writing the firm's AI policy — the firm owns its program. FCI brings the expertise from working across 400+ financial services firms to help the firm make informed decisions about where AI creates value, where it creates risk, and how to document the controls that govern its use.</div>
+    <div class="chapter-body">The enforcement can go as far as the firm's program requires. If the policy says client data must not be transferred to an AI system, FCI implements the controls that block that transfer. If the policy says specific AI tools are not authorized for use on firm or controlled endpoints, FCI blocks access to those systems entirely. The technical enforcement matches the policy — from selective restriction to full prohibition — and the documentation proves the controls are in place.</div>
+    <div class="proof-box">
+      <div class="proof-box-label">Proof Point Language</div>
+      <p>"FCI supports firms in building their AI governance framework — defining which tools are approved, what data protections apply, how AI-generated outputs are supervised, and how the policies are documented for regulators. When the firm's policy requires it, FCI enforces those decisions technically — up to and including blocking the transfer of private data to AI systems and blocking access to unauthorized AI tools on controlled endpoints. The expertise comes from what FCI sees across 400+ financial services firms navigating the same questions."</p>
+    </div>
+  </div>
+
+  <!-- ── THROUGHLINE ── -->
+  <div class="throughline">
+    <div class="throughline-label">The Throughline</div>
+    <div class="throughline-text"><strong>FCI has been where AI meets cybersecurity longer than most firms have been thinking about it.</strong> The progression is natural — from using AI to protect, to using AI to analyze, to protecting clients from AI, to helping clients govern AI. Each chapter built on the one before it.</div>
+    <div class="throughline-sub">This is not a company that added an "AI" badge to its marketing. This is a company that has been operationally deploying and managing AI in a regulated environment for nearly a decade — and now applies that depth of experience to help firms navigate both sides of the AI equation: leveraging it for security and governing it for compliance.</div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════ -->
+  <!--  INTEGRATION PLAN                             -->
+  <!-- ══════════════════════════════════════════════ -->
+
+  <div class="section" id="integration">
+    <div class="section-label">Integration Plan</div>
+    <div class="section-title">How AI Enters the Messaging Architecture</div>
+    <div class="section-intro">AI is woven into the existing four pillars — not bolted on as a fifth. One anchor section tells the full story. Then AI language is integrated everywhere it naturally belongs.</div>
+  </div>
+
+  <!-- ── PILLAR MAPPING ── -->
+  <div class="block">
+    <div class="block-label">AI Woven Into the Four Pillars</div>
+  </div>
+
+  <div class="plan-grid">
+    <div class="plan-card pc-blue">
+      <div class="plan-card-title">Pillar 1 — Cyber Tools &amp; Settings</div>
+      <p>AI-driven threat detection as part of how FCI implements controls. Cloud app AI hardening as a current capability. This is where Chapters 1 and 3 live operationally.</p>
+    </div>
+    <div class="plan-card pc-emerald">
+      <div class="plan-card-title">Pillar 2 — Procedures &amp; Processes</div>
+      <p>AI governance support — helping firms define their AI policies and procedures. This is where Chapter 4 lives. The CISO Portal references AI policy templates and AI governance documentation.</p>
+    </div>
+    <div class="plan-card pc-violet">
+      <div class="plan-card-title">Pillar 3 — Expert Knowledge, Applied at Scale</div>
+      <p>AI-enhanced SIEM and the cross-client intelligence that AI analysis produces. This is where Chapter 2 lives. The "thousands of incidents" proof point is strengthened by "analyzed by AI across the full client base."</p>
+    </div>
+    <div class="plan-card pc-amber">
+      <div class="plan-card-title">Pillar 4 — Proof of Security &amp; Compliance</div>
+      <p>AI-generated forensic trails feed directly into compliance documentation. The proof is stronger because AI helps produce it continuously and at scale.</p>
+    </div>
+  </div>
+
+  <!-- ── COMPETITIVE POSITIONING ── -->
+  <div class="block">
+    <div class="block-label">AI in Competitive Positioning</div>
+    <div class="block-content">Most MSSPs have not been using AI since 2017. Most do not harden cloud app AI features. Most do not help firms build AI governance frameworks. This is a genuine differentiator — it slots into the "where most competitors stop" framework that already exists.</div>
+  </div>
+
+  <div class="proof-row">
+    <span class="proof-pill">AI since 2017</span>
+    <span class="proof-pill emerald">Cloud App AI Hardening</span>
+    <span class="proof-pill violet">AI Governance Frameworks</span>
+    <span class="proof-pill amber">Data Transfer Blocking</span>
+    <span class="proof-pill rose">Endpoint AI Access Control</span>
+  </div>
+
+  <!-- ── OBJECTION RESPONSES ── -->
+  <div class="block">
+    <div class="block-label">AI-Related Objection Responses</div>
+  </div>
+
+  <div class="list-block">
+    <ul>
+      <li>"We're worried about AI risk but don't know where to start."</li>
+      <li>"Our employees are using AI tools and we don't have a policy."</li>
+      <li>"How do we know your AI tools are safe / won't expose our data?"</li>
+    </ul>
+  </div>
+
+  <!-- ── ROLE-SPECIFIC MESSAGING ── -->
+  <div class="block">
+    <div class="block-label">Role-Specific AI Messaging</div>
+  </div>
+
+  <div class="role-grid">
+    <div class="role-card">
+      <div class="role-card-title">Board &amp; C-Level</div>
+      <p>AI governance as a fiduciary responsibility. Regulators are asking. Cyber insurers will be asking.</p>
+    </div>
+    <div class="role-card">
+      <div class="role-card-title">CISO &amp; CCO</div>
+      <p>AI as both a tool and a risk vector they are responsible for governing. FCI supports the framework.</p>
+    </div>
+    <div class="role-card">
+      <div class="role-card-title">Field Compliance Officer</div>
+      <p>Practical — what AI tools are approved, what the policies say, how to document compliance.</p>
+    </div>
+    <div class="role-card">
+      <div class="role-card-title">IT Manager</div>
+      <p>Technical — which AI features are enabled, which are blocked, how the controls are enforced.</p>
+    </div>
+  </div>
+
+  <!-- ── MARKET-SPECIFIC ANGLES ── -->
+  <div class="block">
+    <div class="block-label">Market-Specific AI Angles</div>
+  </div>
+
+  <div class="market-row">
+    <div class="market-label">Broker-dealers &amp; branch offices</div>
+    <p>FINRA examination priorities already reference AI governance. Home offices are beginning to require AI policies from branches.</p>
+  </div>
+  <div class="market-row">
+    <div class="market-label">Insurance carriers &amp; agencies</div>
+    <p>NAIC is developing AI governance guidelines. Carriers will push requirements to agencies.</p>
+  </div>
+  <div class="market-row">
+    <div class="market-label">RIAs</div>
+    <p>SEC has signaled AI usage in advisory communications falls under supervision requirements. Small firms especially need guidance.</p>
+  </div>
+
+  <!-- ── BOUNDARY ── -->
+  <div class="boundary-box">
+    <div class="boundary-box-title">What This Does Not Change</div>
+    <p>FCI's positioning does not become "an AI company." The four pillars remain the organizing logic. The proof-of-compliance differentiator remains the lead message. AI is a capability that makes every pillar stronger — it is not a fifth pillar. AI is how FCI does what it does, not what FCI is.</p>
+  </div>
+
+  <!-- ── FOOTER ── -->
+  <div class="footer">
+    <p>FCI &amp; AI Messaging — Working Document &middot; April 2026<br />All proof point language is suggested and should be reviewed for accuracy before use in any published asset.</p>
+  </div>
+
+</div>
+
+<script>
+  function setHubTheme(mode) {
+    const html = document.documentElement;
+    const buttons = document.querySelectorAll('.hub-theme-toggle button');
+
+    buttons.forEach(btn => btn.classList.remove('active'));
+    document.querySelector(`[data-hub-mode="${mode}"]`).classList.add('active');
+
+    if (mode === 'system') {
+      html.removeAttribute('data-hub-theme');
+    } else {
+      html.setAttribute('data-hub-theme', mode);
+    }
+
+    localStorage.setItem('hub-theme', mode);
+  }
+
+  // Load saved theme on page load
+  const savedTheme = localStorage.getItem('hub-theme') || 'system';
+  setHubTheme(savedTheme);
+</script>
+</body>
+</html>

@@ -38,7 +38,23 @@
       color: var(--text);
       line-height: 1.6;
       -webkit-font-smoothing: antialiased;
+      padding-top: 52px;
     }
+
+    /* ─── TOP NAV ────────────────────────────────── */
+    .hub-nav {
+      position: fixed; top: 0; left: 0; right: 0; height: 52px; z-index: 200;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 32px;
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(15,23,42,0.08);
+    }
+    .hub-nav .back-nav {
+      font-size: 13px; font-weight: 600; text-decoration: none;
+      color: #475569; transition: color 0.15s;
+    }
+    .hub-nav .back-nav:hover { color: #0F172A; }
 
     /* ─── LAYOUT ─────────────────────────────────── */
     .wrap { max-width: 900px; margin: 0 auto; padding: 0 48px 120px; }
@@ -421,33 +437,94 @@
 
     /* ─── HUB THEME TOGGLE ───────────────────────── */
     .hub-theme-toggle {
-      position: fixed; bottom: 20px; right: 20px;
-      display: flex; gap: 4px;
-      background: var(--white); border: 1px solid var(--rule);
-      border-radius: 8px; padding: 4px; z-index: 200;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+      display: flex; align-items: center;
+      background: rgba(15,23,42,0.06);
+      border: 1px solid rgba(15,23,42,0.1);
+      border-radius: 8px; padding: 3px; gap: 2px;
     }
     .hub-theme-toggle button {
-      border: none; background: transparent; cursor: pointer;
-      padding: 6px 10px; border-radius: 6px;
-      font-size: 13px; color: var(--muted);
+      font-family: inherit; font-size: 11px; font-weight: 600;
+      letter-spacing: 0.03em; color: #94A3B8;
+      background: transparent; border: none; cursor: pointer;
+      padding: 4px 10px; border-radius: 6px; line-height: 1;
       transition: background 0.15s, color 0.15s;
     }
-    .hub-theme-toggle button:hover { background: var(--blue-faint); }
-    .hub-theme-toggle button.active { background: var(--blue-tint); color: var(--blue); font-weight: 600; }
-
-    /* ─── DARK MODE ──────────────────────────────── */
-    [data-hub-theme="dark"] {
-      --offwhite: #0B1120; --white: #131C2E; --rule: #1E2D42;
-      --text: #E2E8F0; --body: #94A3B8; --muted: #64748B; --faint: #475569;
-      --blue-tint: rgba(37,99,235,0.12); --blue-faint: rgba(37,99,235,0.06);
+    .hub-theme-toggle button:hover { color: #0F172A; }
+    .hub-theme-toggle button.active {
+      background: #fff; color: #0F172A;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.12);
     }
-    [data-hub-theme="dark"] .site-header { background: #0E1B30; }
-    [data-hub-theme="dark"] .hub-theme-toggle { background: #131C2E; border-color: #1E2D42; }
-    [data-hub-theme="dark"] .hub-theme-toggle button:hover { background: rgba(37,99,235,0.1); }
-    [data-hub-theme="dark"] .hub-theme-toggle button.active { background: rgba(37,99,235,0.2); }
-    [data-hub-theme="dark"] .phase-card { border-top-color: var(--sky); }
-    [data-hub-theme="dark"] .reg-table th { background: rgba(37,99,235,0.08); }
+
+    /* ══════════════════════════════════════════
+       DARK MODE — system preference
+    ══════════════════════════════════════════ */
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --white:       #1E293B;
+        --offwhite:    #0F172A;
+        --rule:        #334155;
+        --text:        #F1F5F9;
+        --body:        #CBD5E1;
+        --muted:       #94A3B8;
+        --faint:       #64748B;
+        --blue-tint:   #172554;
+        --blue-faint:  #1E293B;
+        --deep-navy:   #93C5FD;
+        --amber-tint:  rgba(245,158,11,0.15);
+        --emerald-tint:rgba(16,185,129,0.15);
+      }
+      body { background: #0F172A; }
+      .phase-card { border-top-color: var(--sky); }
+      .reg-table th { background: rgba(37,99,235,0.08); }
+      .area-pill { background: #1E293B; border-color: #334155; color: #93C5FD; }
+      .toc a { background: #172554; color: #93C5FD; border-color: rgba(37,99,235,0.3); }
+      .toc a:hover { background: rgba(37,99,235,0.25); }
+      .layer-card-title { color: #93C5FD; }
+      .layer-title { color: #93C5FD; }
+      .motivation-title { color: #93C5FD; }
+      .phase-title { color: #93C5FD; }
+      html:not([data-hub-theme=light]) .hub-nav { background: rgba(8,14,28,0.9); border-bottom-color: rgba(255,255,255,0.07); }
+      html:not([data-hub-theme=light]) .hub-nav .back-nav { color: rgba(255,255,255,0.5); }
+      html:not([data-hub-theme=light]) .hub-nav .back-nav:hover { color: #fff; }
+      html:not([data-hub-theme=light]) .hub-theme-toggle { background: rgba(255,255,255,0.07); border-color: rgba(255,255,255,0.1); }
+      html:not([data-hub-theme=light]) .hub-theme-toggle button { color: rgba(255,255,255,0.35); }
+      html:not([data-hub-theme=light]) .hub-theme-toggle button:hover { color: #fff; }
+      html:not([data-hub-theme=light]) .hub-theme-toggle button.active { background: rgba(255,255,255,0.1); color: #fff; box-shadow: none; }
+    }
+
+    /* ── Force light ── */
+    html[data-hub-theme=light] {
+      --white: #FFFFFF; --offwhite: #F8FAFC; --rule: #E2E8F0;
+      --text: #0F172A; --body: #475569; --muted: #64748B; --faint: #94A3B8;
+      --blue-tint: #DBEAFE; --blue-faint: #EFF6FF; --deep-navy: #1E3A6E;
+      --amber-tint: #FEF3C7; --emerald-tint: #D1FAE5;
+    }
+    html[data-hub-theme=light] body { background: #F8FAFC; }
+
+    /* ── Force dark ── */
+    html[data-hub-theme=dark] {
+      --white: #1E293B; --offwhite: #0F172A; --rule: #334155;
+      --text: #F1F5F9; --body: #CBD5E1; --muted: #94A3B8; --faint: #64748B;
+      --blue-tint: #172554; --blue-faint: #1E293B; --deep-navy: #93C5FD;
+      --amber-tint: rgba(245,158,11,0.15); --emerald-tint: rgba(16,185,129,0.15);
+    }
+    html[data-hub-theme=dark] body { background: #0F172A; }
+    html[data-hub-theme=dark] .phase-card { border-top-color: var(--sky); }
+    html[data-hub-theme=dark] .reg-table th { background: rgba(37,99,235,0.08); }
+    html[data-hub-theme=dark] .area-pill { background: #1E293B; border-color: #334155; color: #93C5FD; }
+    html[data-hub-theme=dark] .toc a { background: #172554; color: #93C5FD; border-color: rgba(37,99,235,0.3); }
+    html[data-hub-theme=dark] .toc a:hover { background: rgba(37,99,235,0.25); }
+    html[data-hub-theme=dark] .layer-card-title { color: #93C5FD; }
+    html[data-hub-theme=dark] .layer-title { color: #93C5FD; }
+    html[data-hub-theme=dark] .motivation-title { color: #93C5FD; }
+    html[data-hub-theme=dark] .phase-title { color: #93C5FD; }
+    html[data-hub-theme=dark] .hub-nav { background: rgba(8,14,28,0.9); border-bottom-color: rgba(255,255,255,0.07); }
+    html[data-hub-theme=dark] .hub-nav .back-nav { color: rgba(255,255,255,0.5); }
+    html[data-hub-theme=dark] .hub-nav .back-nav:hover { color: #fff; }
+    html[data-hub-theme=dark] .hub-theme-toggle { background: rgba(255,255,255,0.07); border-color: rgba(255,255,255,0.1); }
+    html[data-hub-theme=dark] .hub-theme-toggle button { color: rgba(255,255,255,0.35); }
+    html[data-hub-theme=dark] .hub-theme-toggle button:hover { color: #fff; }
+    html[data-hub-theme=dark] .hub-theme-toggle button.active { background: rgba(255,255,255,0.1); color: #fff; box-shadow: none; }
 
     @media (max-width: 700px) {
       .wrap { padding: 0 24px 80px; }
@@ -458,6 +535,15 @@
   </style>
 </head>
 <body>
+
+<nav class="hub-nav">
+  <a href="index.html" class="back-nav">← Brand Hub</a>
+  <div class="hub-theme-toggle">
+    <button data-hub-mode="light" onclick="setHubTheme('light')">Light</button>
+    <button data-hub-mode="dark" onclick="setHubTheme('dark')">Dark</button>
+    <button data-hub-mode="system" onclick="setHubTheme('system')" class="active">System</button>
+  </div>
+</nav>
 
 <div class="wrap">
 
@@ -701,26 +787,21 @@
 
 </div>
 
-<!-- ─── HUB THEME TOGGLE ─── -->
-<div class="hub-theme-toggle">
-  <button data-hub-mode="system" onclick="setHubTheme('system')">Auto</button>
-  <button data-hub-mode="light" onclick="setHubTheme('light')">Light</button>
-  <button data-hub-mode="dark" onclick="setHubTheme('dark')">Dark</button>
-</div>
-
 <script>
-  function setHubTheme(m) {
-    if (m === 'system') { document.documentElement.removeAttribute('data-hub-theme'); localStorage.removeItem('fci-hub-theme'); }
-    else { document.documentElement.setAttribute('data-hub-theme', m); localStorage.setItem('fci-hub-theme', m); }
-    document.querySelectorAll('.hub-theme-toggle button').forEach(function(b){ b.classList.toggle('active', b.dataset.hubMode === m); });
+  function setHubTheme(mode) {
+    const html = document.documentElement;
+    const buttons = document.querySelectorAll('.hub-theme-toggle button');
+    buttons.forEach(btn => btn.classList.remove('active'));
+    document.querySelector(`[data-hub-mode="${mode}"]`).classList.add('active');
+    if (mode === 'system') {
+      html.removeAttribute('data-hub-theme');
+    } else {
+      html.setAttribute('data-hub-theme', mode);
+    }
+    localStorage.setItem('hub-theme', mode);
   }
-  (function(){
-    var s = localStorage.getItem('fci-hub-theme') || 'system';
-    if (s !== 'system') document.documentElement.setAttribute('data-hub-theme', s);
-    document.addEventListener('DOMContentLoaded', function(){
-      document.querySelectorAll('.hub-theme-toggle button').forEach(function(b){ b.classList.toggle('active', b.dataset.hubMode === s); });
-    });
-  })();
+  const savedTheme = localStorage.getItem('hub-theme') || 'system';
+  setHubTheme(savedTheme);
 </script>
 </body>
 </html>
