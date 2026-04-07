@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FCI — Speaking &amp; Media</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Inter+Tight:wght@600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    *, ::before, ::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #060B14; --surface: #0D1626; --surface2: #111F33;
+      --blue: #2563EB; --blue2: rgba(37,99,235,0.12);
+      --sky: #0EA5E9; --sky2: rgba(14,165,233,0.12);
+      --emerald: #10B981; --emerald2: rgba(16,185,129,0.10);
+      --amber: #F59E0B; --amber2: rgba(245,158,11,0.10);
+      --violet: #A855F7; --violet2: rgba(168,85,247,0.10);
+      --indigo: #6366F1; --indigo2: rgba(99,102,241,0.10);
+      --text1: #F1F5F9; --text2: #94A3B8; --text3: #475569; --rule: #1A2B40;
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text1); min-height: 100vh; -webkit-font-smoothing: antialiased; }
+    ::selection { background: var(--blue); color: #fff; }
+
+    .bg-glow {
+      position: fixed; inset: 0; pointer-events: none; z-index: 0;
+      background:
+        radial-gradient(70% 45% at 50% -5%, rgba(37,99,235,0.10) 0%, transparent 65%),
+        radial-gradient(35% 28% at 6% 88%, rgba(168,85,247,0.06) 0%, transparent 55%);
+    }
+
+    /* Nav */
+    .hub-nav {
+      position: fixed; top: 0; left: 0; right: 0; height: 52px; z-index: 200;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 32px;
+      background: rgba(6,11,20,0.88);
+      backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--rule);
+    }
+    .hub-nav .back-nav { font-size: 13px; font-weight: 600; text-decoration: none; color: var(--text3); transition: color 0.15s; }
+    .hub-nav .back-nav:hover { color: var(--text1); }
+    .hub-theme-toggle { display: flex; align-items: center; background: var(--surface2); border: 1px solid var(--rule); border-radius: 8px; padding: 3px; gap: 2px; }
+    .hub-theme-toggle button { font-family: inherit; font-size: 11px; font-weight: 600; letter-spacing: 0.03em; color: var(--text3); background: transparent; border: none; cursor: pointer; padding: 4px 10px; border-radius: 6px; line-height: 1; transition: background 0.15s, color 0.15s; }
+    .hub-theme-toggle button:hover { color: var(--text1); }
+    .hub-theme-toggle button.active { background: var(--surface); color: var(--text1); box-shadow: 0 1px 3px rgba(0,0,0,0.15); }
+
+    /* Light nav */
+    html[data-hub-theme=light] .hub-nav { background: rgba(255,255,255,0.92); border-bottom-color: rgba(15,23,42,0.08); }
+    html[data-hub-theme=light] .hub-nav .back-nav { color: #475569; }
+    html[data-hub-theme=light] .hub-nav .back-nav:hover { color: #0F172A; }
+    html[data-hub-theme=light] .hub-theme-toggle { background: rgba(15,23,42,0.06); border-color: rgba(15,23,42,0.1); }
+    html[data-hub-theme=light] .hub-theme-toggle button { color: #94A3B8; }
+    html[data-hub-theme=light] .hub-theme-toggle button:hover { color: #0F172A; }
+    html[data-hub-theme=light] .hub-theme-toggle button.active { background: #fff; color: #0F172A; box-shadow: 0 1px 3px rgba(0,0,0,0.12); }
+
+    /* Light mode */
+    html[data-hub-theme=light] { --bg: #F8FAFC; --surface: #FFFFFF; --surface2: #F1F5F9; --text1: #0F172A; --text2: #475569; --text3: #94A3B8; --rule: #E2E8F0; }
+    html[data-hub-theme=light] body { background: #F8FAFC; }
+    html[data-hub-theme=light] .bg-glow { background: radial-gradient(70% 45% at 50% -5%, rgba(37,99,235,0.06) 0%, transparent 65%); }
+    @media (prefers-color-scheme: light) {
+      html:not([data-hub-theme=dark]) { --bg: #F8FAFC; --surface: #FFFFFF; --surface2: #F1F5F9; --text1: #0F172A; --text2: #475569; --text3: #94A3B8; --rule: #E2E8F0; }
+      html:not([data-hub-theme=dark]) body { background: #F8FAFC; }
+      html:not([data-hub-theme=dark]) .bg-glow { background: radial-gradient(70% 45% at 50% -5%, rgba(37,99,235,0.06) 0%, transparent 65%); }
+      html:not([data-hub-theme=dark]) .hub-nav { background: rgba(255,255,255,0.92); border-bottom-color: rgba(15,23,42,0.08); }
+      html:not([data-hub-theme=dark]) .hub-nav .back-nav { color: #475569; }
+      html:not([data-hub-theme=dark]) .hub-nav .back-nav:hover { color: #0F172A; }
+      html:not([data-hub-theme=dark]) .hub-theme-toggle { background: rgba(15,23,42,0.06); border-color: rgba(15,23,42,0.1); }
+      html:not([data-hub-theme=dark]) .hub-theme-toggle button { color: #94A3B8; }
+      html:not([data-hub-theme=dark]) .hub-theme-toggle button:hover { color: #0F172A; }
+      html:not([data-hub-theme=dark]) .hub-theme-toggle button.active { background: #fff; color: #0F172A; box-shadow: 0 1px 3px rgba(0,0,0,0.12); }
+    }
+
+    /* Header */
+    header { position: relative; z-index: 1; text-align: center; padding: 112px 24px 48px; }
+    .header-eyebrow { display: inline-block; font-size: 10px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--indigo); border: 1px solid rgba(99,102,241,0.3); background: rgba(99,102,241,0.07); padding: 5px 16px; border-radius: 100px; margin-bottom: 24px; }
+    header h1 { font-family: 'Inter Tight', sans-serif; font-size: clamp(32px, 5vw, 48px); font-weight: 800; letter-spacing: -0.03em; line-height: 1.1; color: var(--text1); margin-bottom: 16px; }
+    header p { font-size: 15px; color: var(--text2); line-height: 1.7; max-width: 620px; margin: 0 auto; }
+
+    /* Main content */
+    .content { position: relative; z-index: 1; max-width: 860px; width: 100%; margin: 0 auto; padding: 0 32px 100px; }
+
+    /* Section dividers */
+    .section-divider {
+      display: flex; align-items: center; gap: 16px; margin: 56px 0 32px;
+    }
+    .section-divider .line { flex: 1; height: 1px; background: var(--rule); }
+    .section-divider .label { font-size: 11px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; white-space: nowrap; }
+
+    /* Speaker card */
+    .speaker-card {
+      background: var(--surface); border: 1px solid var(--rule); border-radius: 14px;
+      padding: 36px; margin-bottom: 32px;
+    }
+    .speaker-name { font-family: 'Inter Tight', sans-serif; font-size: 22px; font-weight: 800; letter-spacing: -0.02em; margin-bottom: 4px; }
+    .speaker-title { font-size: 13px; font-weight: 600; color: var(--indigo); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 20px; }
+    .speaker-bio { font-size: 15px; color: var(--text2); line-height: 1.75; }
+    .speaker-bio p { margin-bottom: 14px; }
+    .speaker-bio p:last-child { margin-bottom: 0; }
+    .speaker-topics { margin-top: 24px; padding-top: 20px; border-top: 1px solid var(--rule); }
+    .speaker-topics h4 { font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text3); margin-bottom: 12px; }
+    .topic-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+    .topic-tag { font-size: 12px; font-weight: 600; padding: 5px 14px; border-radius: 100px; background: var(--indigo2); color: var(--indigo); border: 1px solid rgba(99,102,241,0.2); }
+
+    /* Contact strip */
+    .contact-strip {
+      display: flex; flex-wrap: wrap; gap: 12px; margin-top: 20px; padding-top: 20px; border-top: 1px solid var(--rule);
+    }
+    .contact-item { font-size: 13px; color: var(--text2); }
+    .contact-item strong { color: var(--text1); font-weight: 600; }
+    .contact-item a { color: var(--indigo); text-decoration: none; font-weight: 600; }
+    .contact-item a:hover { text-decoration: underline; }
+
+    /* Timeline */
+    .timeline { display: flex; flex-direction: column; gap: 0; }
+    .timeline-item {
+      display: grid; grid-template-columns: 100px 1fr; gap: 24px;
+      padding: 20px 0; border-bottom: 1px solid var(--rule);
+      transition: background 0.15s;
+    }
+    .timeline-item:first-child { border-top: 1px solid var(--rule); }
+    .timeline-date { font-size: 12px; font-weight: 700; color: var(--text3); letter-spacing: 0.04em; padding-top: 2px; }
+    .timeline-body {}
+    .timeline-title { font-size: 15px; font-weight: 700; color: var(--text1); line-height: 1.4; margin-bottom: 4px; }
+    .timeline-desc { font-size: 13px; color: var(--text2); line-height: 1.6; }
+    .timeline-type { display: inline-block; font-size: 10px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; padding: 3px 10px; border-radius: 100px; margin-top: 8px; }
+    .type-conference { background: var(--blue2); color: var(--blue); border: 1px solid rgba(37,99,235,0.2); }
+    .type-media { background: var(--amber2); color: var(--amber); border: 1px solid rgba(245,158,11,0.2); }
+    .type-podcast { background: var(--emerald2); color: var(--emerald); border: 1px solid rgba(16,185,129,0.2); }
+    .type-webinar { background: var(--violet2); color: var(--violet); border: 1px solid rgba(168,85,247,0.2); }
+    .type-award { background: var(--sky2); color: var(--sky); border: 1px solid rgba(14,165,233,0.2); }
+
+    /* Media grid */
+    .media-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 16px; }
+    .media-card {
+      background: var(--surface); border: 1px solid var(--rule); border-radius: 12px;
+      padding: 24px; transition: border-color 0.15s, transform 0.15s;
+    }
+    .media-card:hover { border-color: var(--amber); transform: translateY(-2px); }
+    .media-outlet { font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--amber); margin-bottom: 8px; }
+    .media-headline { font-size: 14px; font-weight: 700; color: var(--text1); line-height: 1.4; margin-bottom: 6px; }
+    .media-date { font-size: 12px; color: var(--text3); }
+
+    /* Filter bar */
+    .filter-bar { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 28px; }
+    .filter-btn {
+      font-family: inherit; font-size: 12px; font-weight: 600;
+      padding: 6px 16px; border-radius: 100px; cursor: pointer;
+      background: var(--surface); border: 1px solid var(--rule); color: var(--text2);
+      transition: all 0.15s;
+    }
+    .filter-btn:hover { border-color: var(--indigo); color: var(--text1); }
+    .filter-btn.active { background: var(--indigo2); border-color: rgba(99,102,241,0.3); color: var(--indigo); }
+
+    /* Stats strip */
+    .stats-strip {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 16px;
+      margin-bottom: 8px;
+    }
+    .stat-box {
+      background: var(--surface); border: 1px solid var(--rule); border-radius: 12px;
+      padding: 20px; text-align: center;
+    }
+    .stat-num { font-family: 'Inter Tight', sans-serif; font-size: 28px; font-weight: 800; letter-spacing: -0.03em; }
+    .stat-label { font-size: 11px; font-weight: 600; color: var(--text3); text-transform: uppercase; letter-spacing: 0.06em; margin-top: 4px; }
+
+    /* Footer */
+    .hub-footer {
+      text-align: center; padding: 48px 24px; font-size: 12px; color: var(--text3);
+      border-top: 1px solid var(--rule); position: relative; z-index: 1;
+    }
+
+    /* Migration notes */
+    .migration-notes {
+      margin-top: 56px; padding: 28px; background: var(--surface); border: 1px solid var(--rule);
+      border-radius: 14px; font-size: 13px; color: var(--text3); line-height: 1.7;
+    }
+    .migration-notes h4 { font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text3); margin-bottom: 12px; }
+    .migration-notes ul { list-style: none; padding: 0; }
+    .migration-notes li { padding: 4px 0; padding-left: 16px; position: relative; }
+    .migration-notes li::before { content: "—"; position: absolute; left: 0; color: var(--text3); }
+
+    @media (max-width: 640px) {
+      .content { padding: 0 16px 80px; }
+      .timeline-item { grid-template-columns: 1fr; gap: 4px; }
+      .timeline-date { font-size: 11px; }
+      .speaker-card { padding: 24px; }
+      .media-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+<div class="bg-glow"></div>
+
+<nav class="hub-nav">
+  <a class="back-nav" href="index.html">&larr; FCI Brand Hub</a>
+  <div class="hub-theme-toggle">
+    <button onclick="document.documentElement.setAttribute('data-hub-theme','dark');this.classList.add('active');this.nextElementSibling.classList.remove('active')">Dark</button>
+    <button onclick="document.documentElement.setAttribute('data-hub-theme','light');this.classList.add('active');this.previousElementSibling.classList.remove('active')">Light</button>
+  </div>
+</nav>
+
+<header>
+  <div class="header-eyebrow">Speaking &amp; Media</div>
+  <h1>Conference Stages, Podcasts &amp; Press</h1>
+  <p>Brian Edelman and the FCI team regularly share cybersecurity expertise at industry conferences, on podcasts, and through media coverage. This page catalogs every appearance for the new website.</p>
+</header>
+
+<div class="content">
+
+  <!-- ═══ Stats ═══ -->
+  <div class="stats-strip">
+    <div class="stat-box"><div class="stat-num" style="color:var(--blue);">13+</div><div class="stat-label">Conferences</div></div>
+    <div class="stat-box"><div class="stat-num" style="color:var(--emerald);">2</div><div class="stat-label">Podcasts</div></div>
+    <div class="stat-box"><div class="stat-num" style="color:var(--amber);">10+</div><div class="stat-label">Media Citations</div></div>
+    <div class="stat-box"><div class="stat-num" style="color:var(--violet);">4</div><div class="stat-label">Webinars</div></div>
+  </div>
+
+  <!-- ═══ Speaker Profile ═══ -->
+  <div class="section-divider">
+    <div class="line"></div>
+    <div class="label" style="color: var(--indigo);">Featured Speaker</div>
+    <div class="line"></div>
+  </div>
+
+  <div class="speaker-card">
+    <div class="speaker-name">Brian Edelman</div>
+    <div class="speaker-title">CEO &amp; Cybersecurity Expert &middot; FCI</div>
+    <div class="speaker-bio">
+      <p>Brian Edelman is a nationally recognized cybersecurity expert and the CEO of FCI, which he founded in 1995. He specializes in cybersecurity protection and compliance for regulated financial services organizations — broker-dealers &amp; branch offices, insurance carriers &amp; agencies, and RIAs.</p>
+      <p>Brian holds a Certificate in Cybersecurity Risk Management from Harvard University and serves as a Cybersecurity Technology Expert on the Forbes NY Council. He brings deep expertise in federal and state cybersecurity regulations including SEC, NYDFS (23 NYCRR 500), NAIC, FINRA, HIPAA, CMMC, and FedRAMP.</p>
+      <p>He is regularly invited to speak at major industry conferences — T3, CNBC Financial Advisor Summit, Wells Fargo FiNet, FSI OneVoice, TradePMR Synergy — and is cited by publications including CNBC, Financial Planning, Forbes, PLANADVISER, PLANSPONSOR, and Investment News.</p>
+    </div>
+    <div class="speaker-topics">
+      <h4>Speaking Topics</h4>
+      <div class="topic-tags">
+        <span class="topic-tag">Zero Trust Architecture</span>
+        <span class="topic-tag">Cybersecurity Compliance</span>
+        <span class="topic-tag">SEC &amp; NYDFS Regulations</span>
+        <span class="topic-tag">Endpoint Security</span>
+        <span class="topic-tag">Cyber Insurance</span>
+        <span class="topic-tag">Data Exfiltration</span>
+        <span class="topic-tag">M&amp;A Due Diligence</span>
+        <span class="topic-tag">MFA &amp; Identity</span>
+      </div>
+    </div>
+    <div class="contact-strip">
+      <div class="contact-item"><strong>Press:</strong> <a href="mailto:press@fcicyber.com">press@fcicyber.com</a></div>
+      <div class="contact-item"><strong>Book Brian:</strong> Interviews, panels, keynotes, webinars</div>
+    </div>
+  </div>
+
+  <!-- ═══ Speaking Engagements ═══ -->
+  <div class="section-divider">
+    <div class="line"></div>
+    <div class="label" style="color: var(--blue);">Speaking Engagements</div>
+    <div class="line"></div>
+  </div>
+
+  <div class="filter-bar">
+    <button class="filter-btn active" onclick="filterTimeline('all',this)">All</button>
+    <button class="filter-btn" onclick="filterTimeline('conference',this)">Conferences</button>
+    <button class="filter-btn" onclick="filterTimeline('podcast',this)">Podcasts</button>
+    <button class="filter-btn" onclick="filterTimeline('webinar',this)">Webinars</button>
+    <button class="filter-btn" onclick="filterTimeline('award',this)">Awards</button>
+  </div>
+
+  <div class="timeline" id="timeline">
+
+    <div class="timeline-item" data-type="conference">
+      <div class="timeline-date">Mar 2026</div>
+      <div class="timeline-body">
+        <div class="timeline-title">T3 Conference 2026 — FCI Announces IT Support Services &amp; CISO Portal</div>
+        <div class="timeline-desc">FCI announced two new offerings at T3: IT Support Services for automation and shared endpoint operations, and the CISO Portal for centralized device management across distributed organizations.</div>
+        <span class="timeline-type type-conference">Conference</span>
+      </div>
+    </div>
+
+    <div class="timeline-item" data-type="award">
+      <div class="timeline-date">Mar 2025</div>
+      <div class="timeline-body">
+        <div class="timeline-title">T3 Technology Conference — Awards Announcement</div>
+        <div class="timeline-desc">FCI recognized at the 21st annual T3 Conference, the premier event for financial technology and innovation.</div>
+        <span class="timeline-type type-award">Award</span>
+      </div>
+    </div>
+
+    <div class="timeline-item" data-type="conference">
+      <div class="timeline-date">Mar 2025</div>
+      <div class="timeline-body">
+        <div class="timeline-title">T3 Conference 2025 — FCI Launches Cloud Application Security</div>
+        <div class="timeline-desc">FCI announced Cloud Application Security Services and expanded IT Support Services for endpoints and modern tech stacks at the T3 Conference in Dallas.</div>
+        <span class="timeline-type type-conference">Conference</span>
+      </div>
+    </div>
+
+    <div class="timeline-item" data-type="conference">
+      <div class="timeline-date">Sep 2023</div>
+      <div class="timeline-body">
+        <div class="timeline-title">Wells Fargo FiNet Annual Conference — Speaker</div>
+        <div class="timeline-desc">Brian Edelman presented cybersecurity best practices to Wells Fargo FiNet advisors at the annual conference.</div>
+        <span class="timeline-type type-conference">Conference</span>
+      </div>
+    </div>
+
+    <div class="timeline-item" data-type="webinar">
+      <div class="timeline-date">Jun 2023</div>
+      <div class="timeline-body">
+        <div class="timeline-title">Financial Planning Webinar — "Connected and Protected: The New Age of RIA Cybersecurity"</div>
+        <div class="timeline-desc">Featured cybersecurity speaker alongside Atria Wealth Solutions for Financial Planning's webinar on RIA cybersecurity practices.</div>
+        <span class="timeline-type type-webinar">Webinar</span>
+      </div>
+    </div>
+
+    <div class="timeline-item" data-type="conference">
+      <div class="timeline-date">May 2023</div>
+      <div class="timeline-body">
+        <div class="timeline-title">TradePMR Synergy23 — Speaker</div>
+        <div class="timeline-desc">Brian Edelman presented cybersecurity guidance to RIA attendees at TradePMR's Synergy23 conference in Tampa, FL.</div>
+        <span class="timeline-type type-conference">Conference</span>
+      </div>
+    </div>
+
+    <div class="timeline-item" data-type="conference">
+      <div class="timeline-date">Mar 2023</div>
+      <div class="timeline-body">
+        <div class="timeline-title">T3 Conference 2023 — Brian Edelman Presents</div>
+        <div class="timeline-desc">Presented at T3 in Tampa, FL alongside technology vendors, industry leaders, financial advisors, and financial services executives. FCI also launched Zero-Trust Complete at this event.</div>
+        <span class="timeline-type type-conference">Conference</span>
+      </div>
+    </div>
+
+    <div class="timeline-item" data-type="conference">
+      <div class="timeline-date">Feb 2023</div>
+      <div class="timeline-body">
+        <div class="timeline-title">Ebix Envision 2023 — User Group &amp; Expo</div>
+        <div class="timeline-desc">FCI participated in the Ebix Envision 2023 User Group &amp; Expo, joining Ebix users and solution partners to explore cybersecurity integrations.</div>
+        <span class="timeline-type type-conference">Conference</span>
+      </div>
+    </div>
+
+    <div class="timeline-item" data-type="webinar">
+      <div class="timeline-date">Oct 2023</div>
+      <div class="timeline-body">
+        <div class="timeline-title">Ebix Webinar — Guard Yourself Against An Expensive Data Breach</div>
+        <div class="timeline-desc">Brian Edelman co-hosted a comprehensive webinar with Ebix on cybersecurity and compliance, alongside Tony Wang and Giles Brown.</div>
+        <span class="timeline-type type-webinar">Webinar</span>
+      </div>
+    </div>
+
+    <div class="timeline-item" data-type="conference">
+      <div class="timeline-date">Nov 2022</div>
+      <div class="timeline-body">
+        <div class="timeline-title">CNBC 2022 Financial Advisor Summit — Featured Speaker</div>
+        <div class="timeline-desc">Brian Edelman joined host Eamon Javers, CNBC Senior Washington Correspondent, as a featured cybersecurity speaker for the "Securing Your Savings" segment.</div>
+        <span class="timeline-type type-conference">Conference</span>
+      </div>
+    </div>
+
+    <div class="timeline-item" data-type="conference">
+      <div class="timeline-date">Oct 2022</div>
+      <div class="timeline-body">
+        <div class="timeline-title">Cybersecurity Panel — Security, Privacy, Risk &amp; Compliance Retreat</div>
+        <div class="timeline-desc">FCI sponsored a cybersecurity panel discussion at Amelia Island, FL hosted by Sub-Four Capital, bringing together top C-level executives.</div>
+        <span class="timeline-type type-conference">Conference</span>
+      </div>
+    </div>
+
+    <div class="timeline-item" data-type="conference">
+      <div class="timeline-date">Sep 2022</div>
+      <div class="timeline-body">
+        <div class="timeline-title">InsureTech Connect, Las Vegas — Cyber Insurance Model</div>
+        <div class="timeline-desc">FCI presented a new model to improve commercial cyber insurance loss ratios through enhanced pre- and post-breach cyber risk management.</div>
+        <span class="timeline-type type-conference">Conference</span>
+      </div>
+    </div>
+
+    <div class="timeline-item" data-type="conference">
+      <div class="timeline-date">May 2022</div>
+      <div class="timeline-body">
+        <div class="timeline-title">CJK Group &amp; Sub-Four Capital — eDiscovery &amp; Information Governance Retreat</div>
+        <div class="timeline-desc">Brian Edelman joined fellow thought leaders at Lido House, Newport Beach, CA for panel discussions on eDiscovery and cybersecurity.</div>
+        <span class="timeline-type type-conference">Conference</span>
+      </div>
+    </div>
+
+    <div class="timeline-item" data-type="conference">
+      <div class="timeline-date">May 2022</div>
+      <div class="timeline-body">
+        <div class="timeline-title">AssetMark Investment Services — Advisor Presentation</div>
+        <div class="timeline-desc">Brian Edelman presented cybersecurity best practices for data protection and regulatory compliance to AssetMark's financial advisors.</div>
+        <span class="timeline-type type-conference">Conference</span>
+      </div>
+    </div>
+
+    <div class="timeline-item" data-type="conference">
+      <div class="timeline-date">2022</div>
+      <div class="timeline-body">
+        <div class="timeline-title">FSI OneVoice — CEO &amp; Ops Tech Panel</div>
+        <div class="timeline-desc">Brian Edelman participated in the CEO &amp; Operations Technology panel at the FSI OneVoice conference.</div>
+        <span class="timeline-type type-conference">Conference</span>
+      </div>
+    </div>
+
+    <div class="timeline-item" data-type="conference">
+      <div class="timeline-date">2022</div>
+      <div class="timeline-body">
+        <div class="timeline-title">T3 Enterprise Conference — Voice Commands &amp; Cybersecurity</div>
+        <div class="timeline-desc">Presented on the intersection of voice command technology and cybersecurity implications for financial services firms.</div>
+        <span class="timeline-type type-conference">Conference</span>
+      </div>
+    </div>
+
+    <div class="timeline-item" data-type="podcast">
+      <div class="timeline-date">2022</div>
+      <div class="timeline-body">
+        <div class="timeline-title">Insurance Town Podcast — Brian Edelman Interview</div>
+        <div class="timeline-desc">Brian Edelman discussed cybersecurity challenges facing the insurance industry and practical steps carriers and agencies should take.</div>
+        <span class="timeline-type type-podcast">Podcast</span>
+      </div>
+    </div>
+
+    <div class="timeline-item" data-type="podcast">
+      <div class="timeline-date">2019</div>
+      <div class="timeline-body">
+        <div class="timeline-title">ITZ On WealthTech Podcast Ep. 2 — Cybersecurity Armageddon</div>
+        <div class="timeline-desc">Brian Edelman explored worst-case cybersecurity scenarios and what wealth management firms need to do to protect client data.</div>
+        <span class="timeline-type type-podcast">Podcast</span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ═══ Media & Press ═══ -->
+  <div class="section-divider">
+    <div class="line"></div>
+    <div class="label" style="color: var(--amber);">Media &amp; Press Citations</div>
+    <div class="line"></div>
+  </div>
+
+  <div class="media-grid">
+
+    <div class="media-card">
+      <div class="media-outlet">CNBC</div>
+      <div class="media-headline">Featured Speaker — 2022 Financial Advisor Summit, "Securing Your Savings"</div>
+      <div class="media-date">Dec 2022</div>
+    </div>
+
+    <div class="media-card">
+      <div class="media-outlet">Financial Planning</div>
+      <div class="media-headline">Cybersecurity webinar, advisor survey feature, and multiple interview citations</div>
+      <div class="media-date">2022–2023</div>
+    </div>
+
+    <div class="media-card">
+      <div class="media-outlet">Forbes</div>
+      <div class="media-headline">Cited in "15 Ways to Leverage And Supplement AI In Your Cybersecurity Efforts"</div>
+      <div class="media-date">May 2022</div>
+    </div>
+
+    <div class="media-card">
+      <div class="media-outlet">PLANADVISER</div>
+      <div class="media-headline">Cited on cybersecurity liability for retirement plan management and personalization risks</div>
+      <div class="media-date">2023</div>
+    </div>
+
+    <div class="media-card">
+      <div class="media-outlet">PLANSPONSOR</div>
+      <div class="media-headline">Cited on cybersecurity for retirement plans following CNBC FA Summit appearance</div>
+      <div class="media-date">Dec 2022</div>
+    </div>
+
+    <div class="media-card">
+      <div class="media-outlet">Advisor Perspectives</div>
+      <div class="media-headline">Guest article: "Top Five Reasons a Security Assessment is Needed for M&amp;A Due Diligence"</div>
+      <div class="media-date">Apr 2022</div>
+    </div>
+
+    <div class="media-card">
+      <div class="media-outlet">Broker World</div>
+      <div class="media-headline">FCI highlighted as cybersecurity regulatory compliance solution for financial services</div>
+      <div class="media-date">Feb 2023</div>
+    </div>
+
+    <div class="media-card">
+      <div class="media-outlet">NAIFA Advisor Today</div>
+      <div class="media-headline">Featured on heightened geopolitical tensions driving cybersecurity alerts for life insurance</div>
+      <div class="media-date">May 2022</div>
+    </div>
+
+    <div class="media-card">
+      <div class="media-outlet">Investment News</div>
+      <div class="media-headline">Brian Edelman cited as cybersecurity expert source for financial advisor audiences</div>
+      <div class="media-date">Ongoing</div>
+    </div>
+
+    <div class="media-card">
+      <div class="media-outlet">Bob Veres — Inside Information</div>
+      <div class="media-headline">Special cybersecurity edition interview with Brian Edelman on data security and compliance</div>
+      <div class="media-date">Dec 2022</div>
+    </div>
+
+    <div class="media-card">
+      <div class="media-outlet">Ian McKenna / FT Adviser</div>
+      <div class="media-headline">Shared advice from Brian Edelman on what it takes to motivate firms toward cybersecurity action</div>
+      <div class="media-date">Mar 2024</div>
+    </div>
+
+    <div class="media-card">
+      <div class="media-outlet">Enterprise Security Magazine</div>
+      <div class="media-headline">FCI named among "Top 10 Endpoint Security Companies 2022"</div>
+      <div class="media-date">Jul 2022</div>
+    </div>
+
+    <div class="media-card">
+      <div class="media-outlet">T3 Technology Hub</div>
+      <div class="media-headline">Published article on OCSF (Open Cybersecurity Schema Framework) coalition launch</div>
+      <div class="media-date">Aug 2022</div>
+    </div>
+
+    <div class="media-card">
+      <div class="media-outlet">Tolerisk</div>
+      <div class="media-headline">Brian Edelman joins Advisory Board alongside 10 industry leaders</div>
+      <div class="media-date">Mar 2024</div>
+    </div>
+
+    <div class="media-card">
+      <div class="media-outlet">EVO Wealth Consulting</div>
+      <div class="media-headline">FCI featured as leading wealth technology provider in Wealth Technology Solution Guide</div>
+      <div class="media-date">Aug 2024</div>
+    </div>
+
+    <div class="media-card">
+      <div class="media-outlet">FPA</div>
+      <div class="media-headline">New modernized Cybersecurity Certificate Program for financial planners — FCI involvement</div>
+      <div class="media-date">Apr 2025</div>
+    </div>
+
+  </div>
+
+  <!-- ═══ Migration Notes ═══ -->
+  <div class="migration-notes">
+    <h4>Migration Notes</h4>
+    <ul>
+      <li>Content sourced from fcicyber.com/media-kit/ and fcicyber.com/fci-news/ (filtered by Speaking, Media, Interview, Podcast categories)</li>
+      <li>Brian Edelman's speaker bio rewritten in brand voice — removed old "MSSP" framing, positioned around regulated firm markets</li>
+      <li>Speaking topics derived from actual conference presentations and media citations</li>
+      <li>Timeline entries verified against news articles with dates; "2022" used where exact month not available</li>
+      <li>Media cards reference outlet name and topic — no copyrighted text reproduced</li>
+      <li>Role boundary checked: FCI implements controls and produces evidence; no language suggesting FCI manages the firm's program</li>
+      <li>Market naming follows approved order: broker-dealers &amp; branch offices, insurance carriers &amp; agencies, RIAs</li>
+      <li>Added 2024–2026 entries (Tolerisk, EVO, FPA, T3 2025/2026 announcements) from news page</li>
+    </ul>
+  </div>
+
+</div>
+
+<footer class="hub-footer">FCI Brand Hub &middot; Speaking &amp; Media &middot; Internal Reference</footer>
+
+<script>
+function filterTimeline(type, btn) {
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.timeline-item').forEach(item => {
+    if (type === 'all' || item.dataset.type === type) {
+      item.style.display = '';
+    } else {
+      item.style.display = 'none';
+    }
+  });
+}
+</script>
+</body>
+</html>
