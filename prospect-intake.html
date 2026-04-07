@@ -1,0 +1,1463 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FCI — Prospect Intake</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Inter+Tight:wght@600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    *, ::before, ::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:       #060B14;
+      --surface:  #0D1626;
+      --surface2: #111F33;
+      --surface3: #162032;
+      --blue:     #2563EB;
+      --sky:      #0EA5E9;
+      --amber:    #F59E0B;
+      --amber2:   rgba(245,158,11,0.10);
+      --emerald:  #10B981;
+      --emerald2: rgba(16,185,129,0.10);
+      --red:      #EF4444;
+      --red2:     rgba(239,68,68,0.10);
+      --text1:    #F1F5F9;
+      --text2:    #94A3B8;
+      --text3:    #475569;
+      --rule:     #1A2B40;
+      --nav-bg:   rgba(6,11,20,0.88);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text1);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    ::selection { background: var(--amber); color: #000; }
+
+    .bg-glow {
+      position: fixed; inset: 0; pointer-events: none; z-index: 0;
+      background:
+        radial-gradient(80% 50% at 50% -10%, rgba(245,158,11,0.12) 0%, transparent 65%),
+        radial-gradient(35% 28% at 6% 88%,  rgba(37,99,235,0.06) 0%, transparent 55%),
+        radial-gradient(35% 28% at 94% 82%, rgba(14,165,233,0.05) 0%, transparent 55%);
+    }
+
+    /* ── Top nav ── */
+    .topnav {
+      position: fixed; top: 0; left: 0; right: 0; height: 56px;
+      background: var(--nav-bg);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--rule);
+      display: flex; align-items: center; padding: 0 48px; z-index: 100;
+    }
+
+    .nav-logo {
+      font-family: 'Inter Tight', sans-serif;
+      font-size: 20px; font-weight: 800;
+      color: var(--text1); text-decoration: none;
+      letter-spacing: -0.02em;
+      display: inline-flex; align-items: baseline; gap: 1px;
+    }
+    .nav-logo .accent { color: var(--sky); }
+
+    .nav-back {
+      font-family: 'Inter', sans-serif;
+      font-size: 13px; font-weight: 600;
+      color: var(--text3); text-decoration: none;
+      margin-left: 28px;
+      display: inline-flex; align-items: center; gap: 6px;
+      transition: color 0.15s;
+    }
+    .nav-back:hover { color: var(--text2); }
+
+    /* ── Header ── */
+    header {
+      position: relative; z-index: 1;
+      text-align: center; padding: 128px 24px 56px;
+    }
+
+    .header-eyebrow {
+      display: inline-block;
+      font-size: 10px; font-weight: 700;
+      letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--amber);
+      border: 1px solid rgba(245,158,11,0.28);
+      background: rgba(245,158,11,0.07);
+      padding: 5px 16px; border-radius: 100px;
+      margin-bottom: 28px;
+    }
+
+    header h1 {
+      font-family: 'Inter Tight', sans-serif;
+      font-size: clamp(44px, 7vw, 72px);
+      font-weight: 800; letter-spacing: -0.035em; line-height: 1;
+      color: var(--text1); margin-bottom: 20px;
+    }
+    header h1 em { color: var(--amber); font-style: normal; }
+
+    header p {
+      font-size: 17px; color: var(--text2);
+      line-height: 1.7; max-width: 560px; margin: 0 auto;
+    }
+
+    /* ── Content area ── */
+    .content-section {
+      position: relative; z-index: 1; flex: 1;
+      max-width: 800px; width: 100%; margin: 0 auto; padding: 0 32px 112px;
+    }
+
+    /* ── Progress bar ── */
+    .progress-bar {
+      display: flex; gap: 8px; margin-bottom: 48px;
+    }
+    .progress-step {
+      flex: 1; height: 4px; border-radius: 2px;
+      background: var(--surface2); transition: background 0.3s;
+    }
+    .progress-step.active { background: var(--amber); }
+    .progress-step.done { background: var(--emerald); }
+    .progress-labels {
+      display: flex; gap: 8px; margin-bottom: 12px;
+    }
+    .progress-label {
+      flex: 1; font-size: 10px; font-weight: 600;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      color: var(--text3); text-align: center;
+      transition: color 0.3s;
+    }
+    .progress-label.active { color: var(--amber); }
+    .progress-label.done { color: var(--emerald); }
+
+    /* ── Form sections ── */
+    .form-section {
+      display: none; animation: fadeIn 0.3s ease;
+    }
+    .form-section.visible { display: block; }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(12px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .section-header {
+      margin-bottom: 36px;
+    }
+    .section-eyebrow {
+      font-size: 10px; font-weight: 700;
+      letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--amber); margin-bottom: 12px;
+    }
+    .section-title {
+      font-family: 'Inter Tight', sans-serif;
+      font-size: 28px; font-weight: 800;
+      letter-spacing: -0.02em; color: var(--text1);
+      margin-bottom: 8px;
+    }
+    .section-subtitle {
+      font-size: 14px; color: var(--text2); line-height: 1.7;
+    }
+
+    /* ── Form elements ── */
+    .field-group {
+      margin-bottom: 28px;
+    }
+    .field-row {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 20px;
+    }
+    @media (max-width: 600px) {
+      .field-row { grid-template-columns: 1fr; }
+    }
+
+    label {
+      display: block; font-size: 12px; font-weight: 600;
+      letter-spacing: 0.04em; color: var(--text2);
+      margin-bottom: 8px;
+    }
+    label .required { color: var(--amber); margin-left: 2px; }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="tel"],
+    input[type="number"],
+    input[type="date"],
+    select,
+    textarea {
+      width: 100%; font-family: 'Inter', sans-serif;
+      font-size: 14px; color: var(--text1);
+      background: var(--surface);
+      border: 1px solid var(--rule);
+      border-radius: 10px;
+      padding: 12px 16px;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      outline: none;
+    }
+    input:focus, select:focus, textarea:focus {
+      border-color: var(--amber);
+      box-shadow: 0 0 0 3px rgba(245,158,11,0.12);
+    }
+    input::placeholder, textarea::placeholder {
+      color: var(--text3);
+    }
+    select {
+      cursor: pointer;
+      -webkit-appearance: none; -moz-appearance: none; appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%2394A3B8'%3E%3Cpath d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 14px center;
+      padding-right: 36px;
+    }
+    select option {
+      background: var(--surface); color: var(--text1);
+    }
+    textarea { resize: vertical; min-height: 80px; }
+
+    /* ── Checkbox & radio groups ── */
+    .check-group {
+      display: flex; flex-wrap: wrap; gap: 10px;
+    }
+    .check-item {
+      display: flex; align-items: center; gap: 8px;
+      font-size: 13px; color: var(--text2);
+      background: var(--surface);
+      border: 1px solid var(--rule);
+      border-radius: 8px;
+      padding: 8px 14px; cursor: pointer;
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .check-item:hover { border-color: var(--text3); }
+    .check-item input { accent-color: var(--amber); }
+    .check-item.selected {
+      border-color: rgba(245,158,11,0.5);
+      background: rgba(245,158,11,0.06);
+      color: var(--text1);
+    }
+
+    /* ── Persona selector cards ── */
+    .persona-cards {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;
+      margin-bottom: 8px;
+    }
+    @media (max-width: 600px) {
+      .persona-cards { grid-template-columns: 1fr; }
+    }
+    .persona-card {
+      background: var(--surface);
+      border: 1px solid var(--rule);
+      border-radius: 12px;
+      padding: 24px 20px;
+      cursor: pointer; text-align: center;
+      transition: border-color 0.2s, background 0.2s, transform 0.2s;
+    }
+    .persona-card:hover { transform: translateY(-2px); border-color: var(--text3); }
+    .persona-card.selected {
+      border-color: var(--amber);
+      background: rgba(245,158,11,0.06);
+      box-shadow: 0 0 0 3px rgba(245,158,11,0.12);
+    }
+    .persona-card input { display: none; }
+    .persona-icon {
+      font-size: 28px; margin-bottom: 10px;
+    }
+    .persona-label {
+      font-family: 'Inter Tight', sans-serif;
+      font-size: 15px; font-weight: 700;
+      color: var(--text1); margin-bottom: 4px;
+    }
+    .persona-sub {
+      font-size: 11px; color: var(--text3); line-height: 1.5;
+    }
+
+    /* ── Self-assessment slider ── */
+    .assess-grid {
+      display: flex; flex-direction: column; gap: 20px;
+    }
+    .assess-item {
+      background: var(--surface);
+      border: 1px solid var(--rule);
+      border-radius: 12px;
+      padding: 20px 24px;
+    }
+    .assess-top {
+      display: flex; justify-content: space-between;
+      align-items: center; margin-bottom: 14px;
+    }
+    .assess-name {
+      font-size: 14px; font-weight: 700; color: var(--text1);
+    }
+    .assess-score {
+      font-family: 'Inter Tight', sans-serif;
+      font-size: 20px; font-weight: 800;
+      min-width: 32px; text-align: right;
+    }
+    .score-1 { color: var(--red); }
+    .score-2 { color: #F97316; }
+    .score-3 { color: var(--amber); }
+    .score-4 { color: #84CC16; }
+    .score-5 { color: var(--emerald); }
+
+    .assess-desc {
+      font-size: 11px; color: var(--text3); margin-bottom: 12px; line-height: 1.5;
+    }
+
+    input[type="range"] {
+      -webkit-appearance: none; appearance: none;
+      width: 100%; height: 6px;
+      background: var(--surface2);
+      border-radius: 3px; outline: none;
+      cursor: pointer;
+    }
+    input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none; appearance: none;
+      width: 20px; height: 20px;
+      background: var(--amber);
+      border-radius: 50%;
+      border: 3px solid var(--bg);
+      box-shadow: 0 2px 8px rgba(245,158,11,0.3);
+      cursor: pointer;
+    }
+    input[type="range"]::-moz-range-thumb {
+      width: 20px; height: 20px;
+      background: var(--amber);
+      border-radius: 50%;
+      border: 3px solid var(--bg);
+      box-shadow: 0 2px 8px rgba(245,158,11,0.3);
+      cursor: pointer;
+    }
+    .range-labels {
+      display: flex; justify-content: space-between;
+      font-size: 10px; color: var(--text3); margin-top: 6px;
+    }
+
+    /* ── Score summary ── */
+    .score-summary {
+      background: var(--surface);
+      border: 1px solid var(--rule);
+      border-radius: 14px;
+      padding: 28px 32px;
+      margin-top: 28px;
+      text-align: center;
+    }
+    .score-total {
+      font-family: 'Inter Tight', sans-serif;
+      font-size: 56px; font-weight: 800;
+      line-height: 1;
+    }
+    .score-out-of {
+      font-size: 14px; color: var(--text3);
+      margin-bottom: 8px;
+    }
+    .score-label {
+      font-size: 14px; font-weight: 600;
+      margin-top: 8px;
+    }
+
+    /* ── Conditional persona sections ── */
+    .persona-section { display: none; }
+    .persona-section.visible { display: block; }
+
+    /* ── Buttons ── */
+    .btn-row {
+      display: flex; gap: 12px; justify-content: space-between;
+      margin-top: 40px;
+    }
+    .btn {
+      font-family: 'Inter', sans-serif;
+      font-size: 14px; font-weight: 600;
+      padding: 12px 28px; border-radius: 10px;
+      cursor: pointer; border: none;
+      transition: transform 0.15s, box-shadow 0.15s, background 0.15s;
+    }
+    .btn:hover { transform: translateY(-1px); }
+    .btn-primary {
+      background: var(--amber); color: #000;
+      box-shadow: 0 4px 16px rgba(245,158,11,0.25);
+    }
+    .btn-primary:hover {
+      box-shadow: 0 6px 24px rgba(245,158,11,0.35);
+    }
+    .btn-secondary {
+      background: var(--surface2); color: var(--text2);
+      border: 1px solid var(--rule);
+    }
+    .btn-secondary:hover { color: var(--text1); }
+    .btn:disabled {
+      opacity: 0.4; cursor: not-allowed;
+      transform: none !important;
+    }
+
+    /* ── Submitted state ── */
+    .submit-success {
+      text-align: center; padding: 60px 0;
+    }
+    .success-icon {
+      font-size: 56px; margin-bottom: 20px;
+    }
+    .success-title {
+      font-family: 'Inter Tight', sans-serif;
+      font-size: 32px; font-weight: 800;
+      color: var(--text1); margin-bottom: 12px;
+    }
+    .success-text {
+      font-size: 15px; color: var(--text2);
+      line-height: 1.7; max-width: 420px;
+      margin: 0 auto;
+    }
+
+    /* ── Footer ── */
+    footer {
+      position: relative; z-index: 1;
+      text-align: center; padding: 0 24px 52px;
+    }
+    .footer-inner { display: inline-flex; align-items: center; gap: 14px; }
+    .footer-dot { width: 3px; height: 3px; border-radius: 50%; background: var(--text3); }
+    footer span { font-size: 12px; color: var(--text3); }
+    .footer-logo {
+      font-family: 'Inter Tight', sans-serif;
+      font-size: 15px; font-weight: 700;
+      color: var(--text3); letter-spacing: -0.01em;
+    }
+
+    /* ── Mobile ── */
+    @media (max-width: 720px) {
+      .topnav { padding: 0 24px; }
+      header { padding: 96px 20px 48px; }
+      .content-section { padding: 0 20px 80px; }
+      .field-row { grid-template-columns: 1fr; }
+      .persona-cards { grid-template-columns: 1fr; }
+      .score-total { font-size: 42px; }
+    }
+
+    /* -- Light mode -- */
+    html[data-theme="light"] {
+      --bg: #F8FAFC; --surface: #FFFFFF; --surface2: #F1F5F9; --surface3: #E8EDF4;
+      --text1: #0F172A; --text2: #475569; --text3: #94A3B8; --rule: #E2E8F0;
+      --nav-bg: rgba(248,250,252,0.92);
+    }
+    html[data-theme="light"] body { background: #F8FAFC; }
+    html[data-theme="light"] .bg-glow {
+      background:
+        radial-gradient(80% 50% at 50% -10%, rgba(245,158,11,0.06) 0%, transparent 65%),
+        radial-gradient(35% 28% at 6% 88%, rgba(37,99,235,0.03) 0%, transparent 55%),
+        radial-gradient(35% 28% at 94% 82%, rgba(14,165,233,0.02) 0%, transparent 55%);
+    }
+    @media (prefers-color-scheme: light) {
+      html:not([data-theme="dark"]) {
+        --bg: #F8FAFC; --surface: #FFFFFF; --surface2: #F1F5F9; --surface3: #E8EDF4;
+        --text1: #0F172A; --text2: #475569; --text3: #94A3B8; --rule: #E2E8F0;
+        --nav-bg: rgba(248,250,252,0.92);
+      }
+      html:not([data-theme="dark"]) body { background: #F8FAFC; }
+      html:not([data-theme="dark"]) .bg-glow {
+        background:
+          radial-gradient(80% 50% at 50% -10%, rgba(245,158,11,0.06) 0%, transparent 65%),
+          radial-gradient(35% 28% at 6% 88%, rgba(37,99,235,0.03) 0%, transparent 55%),
+          radial-gradient(35% 28% at 94% 82%, rgba(14,165,233,0.02) 0%, transparent 55%);
+      }
+    }
+    /* -- Theme toggle -- */
+    .theme-toggle {
+      margin-left: auto; display: flex; align-items: center;
+      background: var(--surface2); border: 1px solid var(--rule);
+      border-radius: 8px; padding: 3px; gap: 2px;
+    }
+    .theme-toggle button {
+      font-family: Inter, sans-serif; font-size: 11px; font-weight: 600;
+      letter-spacing: 0.03em; color: var(--text3); background: transparent;
+      border: none; cursor: pointer; padding: 4px 10px; border-radius: 6px;
+      transition: background 0.15s, color 0.15s; line-height: 1;
+    }
+    .theme-toggle button:hover { color: var(--text1); }
+    .theme-toggle button.active {
+      background: var(--surface); color: var(--text1);
+      box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+    }
+  </style>
+</head>
+<body>
+
+<div class="bg-glow"></div>
+
+<nav class="topnav">
+  <a class="nav-logo" href="index.html">FCI</a>
+  <a class="nav-back" href="sales.html">&larr; Sales Hub</a>
+  <div class="theme-toggle">
+    <button data-mode="light" onclick="setTheme('light')">Light</button>
+    <button data-mode="dark" onclick="setTheme('dark')">Dark</button>
+    <button data-mode="system" onclick="setTheme('system')" class="active">System</button>
+  </div>
+</nav>
+
+<header>
+  <div class="header-eyebrow">Sales &middot; Intake &amp; Discovery</div>
+  <h1>Prospect <em>Intake</em></h1>
+  <p>Prospect questionnaire, security self-assessment, and environment discovery — everything needed to build the proposal.</p>
+</header>
+
+<section class="content-section">
+
+  <!-- Progress -->
+  <div class="progress-labels" id="progressLabels">
+    <div class="progress-label active">Prospect</div>
+    <div class="progress-label">Firm Type</div>
+    <div class="progress-label">Environment</div>
+    <div class="progress-label">Self-Assessment</div>
+    <div class="progress-label">Deal &amp; Notes</div>
+  </div>
+  <div class="progress-bar" id="progressBar">
+    <div class="progress-step active"></div>
+    <div class="progress-step"></div>
+    <div class="progress-step"></div>
+    <div class="progress-step"></div>
+    <div class="progress-step"></div>
+  </div>
+
+  <form id="intakeForm" onsubmit="return false;">
+
+    <!-- ═══════════════════════════════════════════ -->
+    <!-- SECTION 1 — Prospect Info                   -->
+    <!-- ═══════════════════════════════════════════ -->
+    <div class="form-section visible" data-step="0">
+      <div class="section-header">
+        <div class="section-eyebrow">Step 1 of 5</div>
+        <div class="section-title">Prospect Information</div>
+        <div class="section-subtitle">Primary contact and firm details. This section can be filled by the prospect or the sales rep.</div>
+      </div>
+
+      <div class="field-group">
+        <div class="field-row">
+          <div>
+            <label>First Name <span class="required">*</span></label>
+            <input type="text" name="first_name" required placeholder="Jane" />
+          </div>
+          <div>
+            <label>Last Name <span class="required">*</span></label>
+            <input type="text" name="last_name" required placeholder="Doe" />
+          </div>
+        </div>
+      </div>
+
+      <div class="field-group">
+        <div class="field-row">
+          <div>
+            <label>Title / Role <span class="required">*</span></label>
+            <input type="text" name="title" required placeholder="CCO, Principal, VP of Operations" />
+          </div>
+          <div>
+            <label>Company <span class="required">*</span></label>
+            <input type="text" name="company" required placeholder="Firm name" />
+          </div>
+        </div>
+      </div>
+
+      <div class="field-group">
+        <div class="field-row">
+          <div>
+            <label>Email <span class="required">*</span></label>
+            <input type="email" name="email" required placeholder="jane@firm.com" />
+          </div>
+          <div>
+            <label>Phone</label>
+            <input type="tel" name="phone" placeholder="(555) 123-4567" />
+          </div>
+        </div>
+      </div>
+
+      <div class="field-group">
+        <div class="field-row">
+          <div>
+            <label>Company Website</label>
+            <input type="text" name="website" placeholder="www.firm.com" />
+          </div>
+          <div>
+            <label>How did you hear about FCI?</label>
+            <select name="referral_source">
+              <option value="">Select...</option>
+              <option>Referral</option>
+              <option>Conference / Event</option>
+              <option>Web Search</option>
+              <option>LinkedIn</option>
+              <option>Industry Publication</option>
+              <option>Existing Client</option>
+              <option>Other</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="btn-row" style="justify-content: flex-end;">
+        <button type="button" class="btn btn-primary" onclick="goStep(1)">Next &rarr;</button>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════ -->
+    <!-- SECTION 2 — Firm Type & Persona             -->
+    <!-- ═══════════════════════════════════════════ -->
+    <div class="form-section" data-step="1">
+      <div class="section-header">
+        <div class="section-eyebrow">Step 2 of 5</div>
+        <div class="section-title">Firm Type &amp; Regulatory Profile</div>
+        <div class="section-subtitle">Select your primary firm type. This determines which regulatory and compliance questions appear next.</div>
+      </div>
+
+      <div class="field-group">
+        <label>Firm Type <span class="required">*</span></label>
+        <div class="persona-cards">
+          <label class="persona-card" onclick="selectPersona(this, 'ria')">
+            <input type="radio" name="firm_type" value="RIA" required />
+            <div class="persona-icon">&#9878;</div>
+            <div class="persona-label">RIA</div>
+            <div class="persona-sub">Registered Investment Advisor — SEC / state-registered</div>
+          </label>
+          <label class="persona-card" onclick="selectPersona(this, 'bd')">
+            <input type="radio" name="firm_type" value="Broker-Dealer" />
+            <div class="persona-icon">&#9881;</div>
+            <div class="persona-label">Broker-Dealer</div>
+            <div class="persona-sub">FINRA member — independent or branch network</div>
+          </label>
+          <label class="persona-card" onclick="selectPersona(this, 'ins')">
+            <input type="radio" name="firm_type" value="Insurance" />
+            <div class="persona-icon">&#9741;</div>
+            <div class="persona-label">Insurance</div>
+            <div class="persona-sub">Carrier or agency — NAIC Model Law</div>
+          </label>
+        </div>
+      </div>
+
+      <!-- RIA-specific -->
+      <div class="persona-section" id="persona-ria">
+        <div class="field-group">
+          <div class="field-row">
+            <div>
+              <label>SEC or State Registered?</label>
+              <select name="ria_registration">
+                <option value="">Select...</option>
+                <option>SEC Registered</option>
+                <option>State Registered</option>
+                <option>Both / Dual</option>
+                <option>Unsure</option>
+              </select>
+            </div>
+            <div>
+              <label>AUM Range</label>
+              <select name="ria_aum">
+                <option value="">Select...</option>
+                <option>Under $500M</option>
+                <option>$500M &ndash; $1B</option>
+                <option>$1B &ndash; $5B</option>
+                <option>$5B &ndash; $10B</option>
+                <option>Over $10B</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="field-group">
+          <div class="field-row">
+            <div>
+              <label>Number of Advisors</label>
+              <input type="number" name="ria_advisors" placeholder="e.g. 45" />
+            </div>
+            <div>
+              <label>Last SEC Exam (year or approximate)</label>
+              <input type="text" name="ria_last_exam" placeholder="e.g. 2024" />
+            </div>
+          </div>
+        </div>
+        <div class="field-group">
+          <label>Do advisors work from home offices or personal devices?</label>
+          <select name="ria_remote">
+            <option value="">Select...</option>
+            <option>Yes &mdash; mostly remote / home office</option>
+            <option>Mixed &mdash; some office, some remote</option>
+            <option>No &mdash; primarily office-based</option>
+          </select>
+        </div>
+        <div class="field-group">
+          <label>Biggest compliance concern right now?</label>
+          <textarea name="ria_concern" placeholder="e.g. We have an exam coming up and no evidence package ready..."></textarea>
+        </div>
+      </div>
+
+      <!-- Broker-Dealer-specific -->
+      <div class="persona-section" id="persona-bd">
+        <div class="field-group">
+          <div class="field-row">
+            <div>
+              <label>Number of Registered Reps</label>
+              <input type="number" name="bd_reps" placeholder="e.g. 200" />
+            </div>
+            <div>
+              <label>Number of Branch Offices</label>
+              <input type="number" name="bd_branches" placeholder="e.g. 15" />
+            </div>
+          </div>
+        </div>
+        <div class="field-group">
+          <div class="field-row">
+            <div>
+              <label>Independent or Wirehouse?</label>
+              <select name="bd_model">
+                <option value="">Select...</option>
+                <option>Independent Broker-Dealer</option>
+                <option>Wirehouse / Full-Service</option>
+                <option>Hybrid</option>
+              </select>
+            </div>
+            <div>
+              <label>Last FINRA Exam (year or approximate)</label>
+              <input type="text" name="bd_last_exam" placeholder="e.g. 2023" />
+            </div>
+          </div>
+        </div>
+        <div class="field-group">
+          <label>Do you have Written Supervisory Procedures (WSPs) for cybersecurity?</label>
+          <select name="bd_wsp">
+            <option value="">Select...</option>
+            <option>Yes &mdash; documented and enforced</option>
+            <option>Yes &mdash; documented but not actively enforced</option>
+            <option>No formal WSPs for cyber</option>
+            <option>Unsure</option>
+          </select>
+        </div>
+        <div class="field-group">
+          <label>Biggest compliance concern right now?</label>
+          <textarea name="bd_concern" placeholder="e.g. FINRA is asking for evidence we can't produce across all branches..."></textarea>
+        </div>
+      </div>
+
+      <!-- Insurance-specific -->
+      <div class="persona-section" id="persona-ins">
+        <div class="field-group">
+          <div class="field-row">
+            <div>
+              <label>Carrier or Agency?</label>
+              <select name="ins_type">
+                <option value="">Select...</option>
+                <option>Insurance Carrier</option>
+                <option>Insurance Agency</option>
+                <option>MGA / MGU</option>
+                <option>Other</option>
+              </select>
+            </div>
+            <div>
+              <label>Number of Appointed Agents</label>
+              <input type="number" name="ins_agents" placeholder="e.g. 75" />
+            </div>
+          </div>
+        </div>
+        <div class="field-group">
+          <div class="field-row">
+            <div>
+              <label>States of Operation</label>
+              <input type="text" name="ins_states" placeholder="e.g. NY, NJ, CT, PA" />
+            </div>
+            <div>
+              <label>Subject to NYDFS 23 NYCRR 500?</label>
+              <select name="ins_nydfs">
+                <option value="">Select...</option>
+                <option>Yes</option>
+                <option>No</option>
+                <option>Unsure</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="field-group">
+          <label>Do field agents use personal devices for company business?</label>
+          <select name="ins_byod">
+            <option value="">Select...</option>
+            <option>Yes &mdash; mostly personal devices</option>
+            <option>Mixed &mdash; some company-issued, some BYOD</option>
+            <option>No &mdash; all company-issued</option>
+          </select>
+        </div>
+        <div class="field-group">
+          <label>Biggest compliance concern right now?</label>
+          <textarea name="ins_concern" placeholder="e.g. We need to demonstrate NAIC Model Law compliance but have no centralized visibility..."></textarea>
+        </div>
+      </div>
+
+      <div class="btn-row">
+        <button type="button" class="btn btn-secondary" onclick="goStep(0)">&larr; Back</button>
+        <button type="button" class="btn btn-primary" onclick="goStep(2)">Next &rarr;</button>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════ -->
+    <!-- SECTION 3 — IT & Cyber Environment          -->
+    <!-- ═══════════════════════════════════════════ -->
+    <div class="form-section" data-step="2">
+      <div class="section-header">
+        <div class="section-eyebrow">Step 3 of 5</div>
+        <div class="section-title">IT &amp; Cybersecurity Environment</div>
+        <div class="section-subtitle">Help us understand your current technology landscape. This information is used to scope a proposal and prepare for the security assessment.</div>
+      </div>
+
+      <div class="field-group">
+        <div class="field-row">
+          <div>
+            <label>Total Employees</label>
+            <input type="number" name="total_employees" placeholder="e.g. 120" />
+          </div>
+          <div>
+            <label>Total Endpoints (desktops, laptops, servers)</label>
+            <input type="number" name="total_endpoints" placeholder="e.g. 200" />
+          </div>
+        </div>
+      </div>
+
+      <div class="field-group">
+        <div class="field-row">
+          <div>
+            <label>Number of Office / Branch Locations</label>
+            <input type="number" name="locations" placeholder="e.g. 5" />
+          </div>
+          <div>
+            <label>Total Users (including remote)</label>
+            <input type="number" name="total_users" placeholder="e.g. 150" />
+          </div>
+        </div>
+      </div>
+
+      <div class="field-group">
+        <label>Current Security / IT Vendor</label>
+        <input type="text" name="current_vendor" placeholder="e.g. Internal IT, MSP name, or none" />
+      </div>
+
+      <div class="field-group">
+        <label>Endpoint Management / EDR Tool</label>
+        <input type="text" name="edr_tool" placeholder="e.g. CrowdStrike, SentinelOne, Windows Defender, none" />
+      </div>
+
+      <div class="field-group">
+        <label>Is MFA enforced across all users?</label>
+        <select name="mfa_status">
+          <option value="">Select...</option>
+          <option>Yes &mdash; enforced for all users</option>
+          <option>Partial &mdash; some users / apps only</option>
+          <option>No</option>
+          <option>Unsure</option>
+        </select>
+      </div>
+
+      <div class="field-group">
+        <label>Email Security</label>
+        <select name="email_security">
+          <option value="">Select...</option>
+          <option>Microsoft Defender for Office 365</option>
+          <option>Proofpoint</option>
+          <option>Mimecast</option>
+          <option>Barracuda</option>
+          <option>Built-in only (no add-on)</option>
+          <option>Other</option>
+          <option>Unsure</option>
+        </select>
+      </div>
+
+      <div class="field-group">
+        <label>Primary Cloud Platform</label>
+        <div class="check-group">
+          <label class="check-item" onclick="toggleCheck(this)">
+            <input type="checkbox" name="cloud[]" value="Microsoft 365" /> Microsoft 365
+          </label>
+          <label class="check-item" onclick="toggleCheck(this)">
+            <input type="checkbox" name="cloud[]" value="Google Workspace" /> Google Workspace
+          </label>
+          <label class="check-item" onclick="toggleCheck(this)">
+            <input type="checkbox" name="cloud[]" value="AWS" /> AWS
+          </label>
+          <label class="check-item" onclick="toggleCheck(this)">
+            <input type="checkbox" name="cloud[]" value="Azure" /> Azure
+          </label>
+          <label class="check-item" onclick="toggleCheck(this)">
+            <input type="checkbox" name="cloud[]" value="Other" /> Other
+          </label>
+        </div>
+      </div>
+
+      <div class="field-group">
+        <label>Do you have a SIEM or SOC today?</label>
+        <select name="siem_soc">
+          <option value="">Select...</option>
+          <option>Yes &mdash; managed SOC / SIEM</option>
+          <option>Yes &mdash; in-house SIEM only</option>
+          <option>No &mdash; no centralized monitoring</option>
+          <option>Unsure</option>
+        </select>
+      </div>
+
+      <div class="field-group">
+        <label>Backup &amp; Recovery Approach</label>
+        <select name="backup">
+          <option value="">Select...</option>
+          <option>Cloud backup (Veeam, Datto, etc.)</option>
+          <option>On-prem backup</option>
+          <option>Hybrid (cloud + on-prem)</option>
+          <option>No formal backup</option>
+          <option>Unsure</option>
+        </select>
+      </div>
+
+      <div class="field-group">
+        <label>Any cybersecurity incidents in the past 24 months?</label>
+        <select name="incident_history">
+          <option value="">Select...</option>
+          <option>No incidents</option>
+          <option>Minor incident (phishing, account compromise)</option>
+          <option>Significant incident (ransomware, data breach)</option>
+          <option>Prefer not to say</option>
+        </select>
+      </div>
+
+      <div class="btn-row">
+        <button type="button" class="btn btn-secondary" onclick="goStep(1)">&larr; Back</button>
+        <button type="button" class="btn btn-primary" onclick="goStep(3)">Next &rarr;</button>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════ -->
+    <!-- SECTION 4 — Self-Assessment Scoring         -->
+    <!-- ═══════════════════════════════════════════ -->
+    <div class="form-section" data-step="3">
+      <div class="section-header">
+        <div class="section-eyebrow">Step 4 of 5</div>
+        <div class="section-title">Security Readiness Self-Assessment</div>
+        <div class="section-subtitle">Rate your firm's current posture across six critical areas. 1 = no controls or visibility, 5 = fully enforced with evidence. Be honest — this helps us build a realistic proposal.</div>
+      </div>
+
+      <div class="assess-grid">
+
+        <div class="assess-item">
+          <div class="assess-top">
+            <div class="assess-name">Firm-Level Governance</div>
+            <div class="assess-score score-3" id="score-firm">3</div>
+          </div>
+          <div class="assess-desc">Written cybersecurity policies, incident response plan, board/executive reporting, vendor risk management, employee training program</div>
+          <input type="range" name="assess_firm" min="1" max="5" value="3" oninput="updateScore('firm', this.value)" />
+          <div class="range-labels"><span>No policies</span><span>Documented &amp; enforced</span></div>
+        </div>
+
+        <div class="assess-item">
+          <div class="assess-top">
+            <div class="assess-name">Endpoint Security</div>
+            <div class="assess-score score-3" id="score-endpoint">3</div>
+          </div>
+          <div class="assess-desc">Device inventory, EDR/antivirus on every device, encryption enforcement, patch management, BYOD controls</div>
+          <input type="range" name="assess_endpoint" min="1" max="5" value="3" oninput="updateScore('endpoint', this.value)" />
+          <div class="range-labels"><span>No visibility</span><span>Full coverage &amp; evidence</span></div>
+        </div>
+
+        <div class="assess-item">
+          <div class="assess-top">
+            <div class="assess-name">User &amp; Access Controls</div>
+            <div class="assess-score score-3" id="score-user">3</div>
+          </div>
+          <div class="assess-desc">MFA enforcement, VPN/Zero Trust access, role-based permissions, offboarding process, privileged account management</div>
+          <input type="range" name="assess_user" min="1" max="5" value="3" oninput="updateScore('user', this.value)" />
+          <div class="range-labels"><span>No MFA / open access</span><span>MFA + ZTA everywhere</span></div>
+        </div>
+
+        <div class="assess-item">
+          <div class="assess-top">
+            <div class="assess-name">Network Security</div>
+            <div class="assess-score score-3" id="score-network">3</div>
+          </div>
+          <div class="assess-desc">Firewall configuration, network segmentation, intrusion detection, DNS filtering, wireless security</div>
+          <input type="range" name="assess_network" min="1" max="5" value="3" oninput="updateScore('network', this.value)" />
+          <div class="range-labels"><span>Flat network / no monitoring</span><span>Segmented &amp; monitored</span></div>
+        </div>
+
+        <div class="assess-item">
+          <div class="assess-top">
+            <div class="assess-name">Cloud Application Security</div>
+            <div class="assess-score score-3" id="score-cloud">3</div>
+          </div>
+          <div class="assess-desc">Microsoft 365 hardening, conditional access policies, data sharing controls, email authentication (SPF/DKIM/DMARC), Secure Score</div>
+          <input type="range" name="assess_cloud" min="1" max="5" value="3" oninput="updateScore('cloud', this.value)" />
+          <div class="range-labels"><span>Default config</span><span>Hardened &amp; audited</span></div>
+        </div>
+
+        <div class="assess-item">
+          <div class="assess-top">
+            <div class="assess-name">Data Protection</div>
+            <div class="assess-score score-3" id="score-data">3</div>
+          </div>
+          <div class="assess-desc">Data classification, encryption at rest and in transit, DLP rules, backup testing, retention policies</div>
+          <input type="range" name="assess_data" min="1" max="5" value="3" oninput="updateScore('data', this.value)" />
+          <div class="range-labels"><span>No classification</span><span>Classified &amp; encrypted</span></div>
+        </div>
+
+      </div>
+
+      <div class="score-summary">
+        <div class="score-total" id="totalScore">18</div>
+        <div class="score-out-of">out of 30</div>
+        <div class="score-label" id="scoreLabel" style="color: var(--amber);">Moderate Readiness — Gaps Likely</div>
+      </div>
+
+      <!-- Hidden field for email -->
+      <input type="hidden" name="readiness_score" id="hiddenScore" value="18/30" />
+
+      <div class="btn-row">
+        <button type="button" class="btn btn-secondary" onclick="goStep(2)">&larr; Back</button>
+        <button type="button" class="btn btn-primary" onclick="goStep(4)">Next &rarr;</button>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════ -->
+    <!-- SECTION 5 — Deal Context & Notes            -->
+    <!-- ═══════════════════════════════════════════ -->
+    <div class="form-section" data-step="4">
+      <div class="section-header">
+        <div class="section-eyebrow">Step 5 of 5</div>
+        <div class="section-title">Proposal &amp; Deal Context</div>
+        <div class="section-subtitle">Scoping details and internal sales notes. This section is typically completed by the FCI sales rep.</div>
+      </div>
+
+      <div class="field-group">
+        <label>Applicable Regulations (select all that apply)</label>
+        <div class="check-group">
+          <label class="check-item" onclick="toggleCheck(this)">
+            <input type="checkbox" name="regulations[]" value="SEC Reg S-P" /> SEC Reg S-P
+          </label>
+          <label class="check-item" onclick="toggleCheck(this)">
+            <input type="checkbox" name="regulations[]" value="SEC Reg S-ID" /> SEC Reg S-ID
+          </label>
+          <label class="check-item" onclick="toggleCheck(this)">
+            <input type="checkbox" name="regulations[]" value="FINRA" /> FINRA Rules
+          </label>
+          <label class="check-item" onclick="toggleCheck(this)">
+            <input type="checkbox" name="regulations[]" value="NYDFS 23 NYCRR 500" /> NYDFS 23 NYCRR 500
+          </label>
+          <label class="check-item" onclick="toggleCheck(this)">
+            <input type="checkbox" name="regulations[]" value="NAIC Model Law" /> NAIC Model Law
+          </label>
+          <label class="check-item" onclick="toggleCheck(this)">
+            <input type="checkbox" name="regulations[]" value="State Privacy Laws" /> State Privacy Laws
+          </label>
+        </div>
+      </div>
+
+      <div class="field-group">
+        <div class="field-row">
+          <div>
+            <label>Current Contract End Date</label>
+            <input type="date" name="contract_end" />
+          </div>
+          <div>
+            <label>Decision Timeline</label>
+            <select name="timeline">
+              <option value="">Select...</option>
+              <option>Immediate (within 30 days)</option>
+              <option>Near-term (1&ndash;3 months)</option>
+              <option>Planning (3&ndash;6 months)</option>
+              <option>Future / exploratory</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="field-group">
+        <div class="field-row">
+          <div>
+            <label>Budget Range (annual)</label>
+            <select name="budget">
+              <option value="">Select...</option>
+              <option>Under $50K</option>
+              <option>$50K &ndash; $100K</option>
+              <option>$100K &ndash; $250K</option>
+              <option>$250K &ndash; $500K</option>
+              <option>Over $500K</option>
+              <option>Not yet defined</option>
+            </select>
+          </div>
+          <div>
+            <label>Decision Makers</label>
+            <input type="text" name="decision_makers" placeholder="e.g. CEO, CCO, Board" />
+          </div>
+        </div>
+      </div>
+
+      <div class="field-group">
+        <label>Services of Interest (select all that apply)</label>
+        <div class="check-group">
+          <label class="check-item" onclick="toggleCheck(this)">
+            <input type="checkbox" name="services[]" value="Managed Endpoint Security" /> Managed Endpoint Security
+          </label>
+          <label class="check-item" onclick="toggleCheck(this)">
+            <input type="checkbox" name="services[]" value="CISO Portal" /> CISO Portal
+          </label>
+          <label class="check-item" onclick="toggleCheck(this)">
+            <input type="checkbox" name="services[]" value="24/7 SOC" /> 24/7 SOC Monitoring
+          </label>
+          <label class="check-item" onclick="toggleCheck(this)">
+            <input type="checkbox" name="services[]" value="Security Assessment" /> Security Assessment
+          </label>
+          <label class="check-item" onclick="toggleCheck(this)">
+            <input type="checkbox" name="services[]" value="Pen Testing" /> Penetration Testing
+          </label>
+          <label class="check-item" onclick="toggleCheck(this)">
+            <input type="checkbox" name="services[]" value="M365 Hardening" /> M365 Hardening
+          </label>
+          <label class="check-item" onclick="toggleCheck(this)">
+            <input type="checkbox" name="services[]" value="Attack Surface Assessment" /> Attack Surface Assessment
+          </label>
+        </div>
+      </div>
+
+      <div class="field-group">
+        <label>What triggered this conversation? (pain point, event, regulatory pressure)</label>
+        <textarea name="trigger" placeholder="e.g. Failed a mock audit, upcoming SEC exam, board mandate, cyber insurance renewal..."></textarea>
+      </div>
+
+      <div class="field-group">
+        <label>Internal Sales Notes (rep only — not visible to prospect)</label>
+        <textarea name="sales_notes" placeholder="Deal context, champion details, competitive situation, next steps..." style="min-height: 100px;"></textarea>
+      </div>
+
+      <div class="btn-row">
+        <button type="button" class="btn btn-secondary" onclick="goStep(3)">&larr; Back</button>
+        <button type="submit" class="btn btn-primary" id="submitBtn">Submit Intake &rarr;</button>
+      </div>
+    </div>
+
+  </form>
+
+  <!-- Success state -->
+  <div id="successState" style="display:none;">
+    <div class="submit-success">
+      <div class="success-icon">&#10003;</div>
+      <div class="success-title">Copied to Clipboard</div>
+      <div class="success-text">The full intake summary has been copied to your clipboard and a draft email has been opened. Paste the summary into the email body or your CRM.</div>
+      <div style="margin-top: 28px; display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;">
+        <button class="btn btn-primary" onclick="openMailto()">Open Email Again</button>
+        <button class="btn btn-secondary" onclick="copyAgain()">Copy Again</button>
+        <button class="btn btn-secondary" onclick="resetForm()">New Intake</button>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <span class="footer-logo">FCI</span>
+    <div class="footer-dot"></div>
+    <span>Prospect Intake</span>
+    <div class="footer-dot"></div>
+    <span>Internal &middot; 2026</span>
+  </div>
+</footer>
+
+<script>
+  /* ── Theme ── */
+  function setTheme(m) {
+    if (m === 'system') { document.documentElement.removeAttribute('data-theme'); localStorage.removeItem('fci-theme'); }
+    else { document.documentElement.setAttribute('data-theme', m); localStorage.setItem('fci-theme', m); }
+    document.querySelectorAll('.theme-toggle button').forEach(function(b){ b.classList.toggle('active', b.dataset.mode === m); });
+  }
+  (function(){
+    var s = localStorage.getItem('fci-theme') || 'system';
+    if (s !== 'system') document.documentElement.setAttribute('data-theme', s);
+    document.addEventListener('DOMContentLoaded', function(){
+      document.querySelectorAll('.theme-toggle button').forEach(function(b){ b.classList.toggle('active', b.dataset.mode === s); });
+    });
+  })();
+
+  /* ── Step navigation ── */
+  var currentStep = 0;
+  var totalSteps = 5;
+
+  function goStep(n) {
+    if (n < 0 || n >= totalSteps) return;
+    document.querySelectorAll('.form-section').forEach(function(s){ s.classList.remove('visible'); });
+    document.querySelector('[data-step="' + n + '"]').classList.add('visible');
+    currentStep = n;
+    updateProgress();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function updateProgress() {
+    var steps = document.querySelectorAll('.progress-step');
+    var labels = document.querySelectorAll('.progress-label');
+    steps.forEach(function(s, i) {
+      s.className = 'progress-step';
+      if (i < currentStep) s.classList.add('done');
+      else if (i === currentStep) s.classList.add('active');
+    });
+    labels.forEach(function(l, i) {
+      l.className = 'progress-label';
+      if (i < currentStep) l.classList.add('done');
+      else if (i === currentStep) l.classList.add('active');
+    });
+  }
+
+  /* ── Persona selection ── */
+  function selectPersona(el, type) {
+    document.querySelectorAll('.persona-card').forEach(function(c){ c.classList.remove('selected'); });
+    el.classList.add('selected');
+    document.querySelectorAll('.persona-section').forEach(function(s){ s.classList.remove('visible'); });
+    var target = document.getElementById('persona-' + type);
+    if (target) target.classList.add('visible');
+  }
+
+  /* ── Checkbox toggle ── */
+  function toggleCheck(el) {
+    setTimeout(function(){
+      var cb = el.querySelector('input');
+      el.classList.toggle('selected', cb.checked);
+    }, 0);
+  }
+
+  /* ── Self-assessment scoring ── */
+  var scoreColors = { 1: 'score-1', 2: 'score-2', 3: 'score-3', 4: 'score-4', 5: 'score-5' };
+
+  function updateScore(area, val) {
+    val = parseInt(val);
+    var el = document.getElementById('score-' + area);
+    el.textContent = val;
+    el.className = 'assess-score ' + scoreColors[val];
+    updateTotal();
+  }
+
+  function updateTotal() {
+    var sliders = document.querySelectorAll('input[type="range"]');
+    var total = 0;
+    sliders.forEach(function(s){ total += parseInt(s.value); });
+    document.getElementById('totalScore').textContent = total;
+    document.getElementById('hiddenScore').value = total + '/30';
+
+    var labelEl = document.getElementById('scoreLabel');
+    var totalEl = document.getElementById('totalScore');
+    if (total <= 10) {
+      labelEl.textContent = 'Critical — Significant Gaps';
+      labelEl.style.color = 'var(--red)';
+      totalEl.style.color = 'var(--red)';
+    } else if (total <= 15) {
+      labelEl.textContent = 'Below Average — Multiple Gaps';
+      labelEl.style.color = '#F97316';
+      totalEl.style.color = '#F97316';
+    } else if (total <= 20) {
+      labelEl.textContent = 'Moderate Readiness — Gaps Likely';
+      labelEl.style.color = 'var(--amber)';
+      totalEl.style.color = 'var(--amber)';
+    } else if (total <= 25) {
+      labelEl.textContent = 'Good Posture — Room to Improve';
+      labelEl.style.color = '#84CC16';
+      totalEl.style.color = '#84CC16';
+    } else {
+      labelEl.textContent = 'Strong Posture — Well Prepared';
+      labelEl.style.color = 'var(--emerald)';
+      totalEl.style.color = 'var(--emerald)';
+    }
+  }
+
+  /* ── Build formatted summary from form data ── */
+  var lastSummary = '';
+
+  function buildSummary() {
+    var f = document.getElementById('intakeForm');
+    var g = function(n) { var el = f.querySelector('[name="' + n + '"]'); return el ? el.value || '' : ''; };
+    var checked = function(n) {
+      var els = f.querySelectorAll('[name="' + n + '"]:checked');
+      var vals = [];
+      els.forEach(function(e){ vals.push(e.value); });
+      return vals.join(', ') || 'None selected';
+    };
+    var sel = function(n) { var el = f.querySelector('[name="' + n + '"]'); return el ? (el.options ? el.options[el.selectedIndex].text : el.value) || '' : ''; };
+
+    var lines = [];
+    var hr = '────────────────────────────────────────';
+
+    lines.push('FCI SALES INTAKE — ' + new Date().toLocaleDateString('en-US', { year:'numeric', month:'long', day:'numeric' }));
+    lines.push(hr);
+
+    // Section 1
+    lines.push('');
+    lines.push('PROSPECT INFORMATION');
+    lines.push('  Name:        ' + g('first_name') + ' ' + g('last_name'));
+    lines.push('  Title:       ' + g('title'));
+    lines.push('  Company:     ' + g('company'));
+    lines.push('  Email:       ' + g('email'));
+    lines.push('  Phone:       ' + (g('phone') || '—'));
+    lines.push('  Website:     ' + (g('website') || '—'));
+    lines.push('  Referral:    ' + (sel('referral_source') || '—'));
+
+    // Section 2
+    lines.push('');
+    lines.push('FIRM TYPE & REGULATORY PROFILE');
+    var firmType = g('firm_type') || 'Not selected';
+    lines.push('  Firm Type:   ' + firmType);
+
+    if (firmType === 'RIA') {
+      lines.push('  Registration:  ' + (sel('ria_registration') || '—'));
+      lines.push('  AUM Range:     ' + (sel('ria_aum') || '—'));
+      lines.push('  Advisors:      ' + (g('ria_advisors') || '—'));
+      lines.push('  Last SEC Exam: ' + (g('ria_last_exam') || '—'));
+      lines.push('  Remote Work:   ' + (sel('ria_remote') || '—'));
+      lines.push('  Top Concern:   ' + (g('ria_concern') || '—'));
+    } else if (firmType === 'Broker-Dealer') {
+      lines.push('  Reps:          ' + (g('bd_reps') || '—'));
+      lines.push('  Branches:      ' + (g('bd_branches') || '—'));
+      lines.push('  Model:         ' + (sel('bd_model') || '—'));
+      lines.push('  Last FINRA Exam: ' + (g('bd_last_exam') || '—'));
+      lines.push('  WSPs:          ' + (sel('bd_wsp') || '—'));
+      lines.push('  Top Concern:   ' + (g('bd_concern') || '—'));
+    } else if (firmType === 'Insurance') {
+      lines.push('  Type:          ' + (sel('ins_type') || '—'));
+      lines.push('  Agents:        ' + (g('ins_agents') || '—'));
+      lines.push('  States:        ' + (g('ins_states') || '—'));
+      lines.push('  NYDFS 500:     ' + (sel('ins_nydfs') || '—'));
+      lines.push('  BYOD:          ' + (sel('ins_byod') || '—'));
+      lines.push('  Top Concern:   ' + (g('ins_concern') || '—'));
+    }
+
+    // Section 3
+    lines.push('');
+    lines.push('IT & CYBERSECURITY ENVIRONMENT');
+    lines.push('  Employees:       ' + (g('total_employees') || '—'));
+    lines.push('  Endpoints:       ' + (g('total_endpoints') || '—'));
+    lines.push('  Locations:       ' + (g('locations') || '—'));
+    lines.push('  Users:           ' + (g('total_users') || '—'));
+    lines.push('  Current Vendor:  ' + (g('current_vendor') || '—'));
+    lines.push('  EDR / Endpoint:  ' + (g('edr_tool') || '—'));
+    lines.push('  MFA Status:      ' + (sel('mfa_status') || '—'));
+    lines.push('  Email Security:  ' + (sel('email_security') || '—'));
+    lines.push('  Cloud Platform:  ' + checked('cloud[]'));
+    lines.push('  SIEM / SOC:      ' + (sel('siem_soc') || '—'));
+    lines.push('  Backup:          ' + (sel('backup') || '—'));
+    lines.push('  Incidents (24mo):' + (sel('incident_history') || '—'));
+
+    // Section 4
+    lines.push('');
+    lines.push('SECURITY READINESS SELF-ASSESSMENT');
+    var areas = [
+      ['assess_firm', 'Firm Governance'],
+      ['assess_endpoint', 'Endpoint Security'],
+      ['assess_user', 'User & Access'],
+      ['assess_network', 'Network Security'],
+      ['assess_cloud', 'Cloud App Security'],
+      ['assess_data', 'Data Protection']
+    ];
+    var total = 0;
+    areas.forEach(function(a) {
+      var v = parseInt(g(a[0])) || 3;
+      total += v;
+      var bar = '';
+      for (var i = 0; i < 5; i++) bar += i < v ? '█' : '░';
+      lines.push('  ' + bar + '  ' + v + '/5  ' + a[1]);
+    });
+    lines.push('  ──────────────────');
+    var label = total <= 10 ? 'CRITICAL' : total <= 15 ? 'BELOW AVERAGE' : total <= 20 ? 'MODERATE' : total <= 25 ? 'GOOD' : 'STRONG';
+    lines.push('  TOTAL: ' + total + '/30 — ' + label);
+
+    // Section 5
+    lines.push('');
+    lines.push('PROPOSAL & DEAL CONTEXT');
+    lines.push('  Regulations:     ' + checked('regulations[]'));
+    lines.push('  Contract End:    ' + (g('contract_end') || '—'));
+    lines.push('  Timeline:        ' + (sel('timeline') || '—'));
+    lines.push('  Budget:          ' + (sel('budget') || '—'));
+    lines.push('  Decision Makers: ' + (g('decision_makers') || '—'));
+    lines.push('  Services:        ' + checked('services[]'));
+    lines.push('  Trigger:         ' + (g('trigger') || '—'));
+
+    var notes = g('sales_notes');
+    if (notes) {
+      lines.push('');
+      lines.push('INTERNAL SALES NOTES');
+      lines.push('  ' + notes.replace(/\n/g, '\n  '));
+    }
+
+    lines.push('');
+    lines.push(hr);
+    lines.push('Generated from FCI Sales Hub — ' + new Date().toLocaleString());
+
+    return lines.join('\n');
+  }
+
+  /* ── Clipboard + mailto ── */
+  function submitIntake() {
+    var summary = buildSummary();
+    lastSummary = summary;
+
+    navigator.clipboard.writeText(summary).then(function() {
+      openMailto();
+      showSuccess();
+    }).catch(function() {
+      // Fallback: select from textarea
+      var ta = document.createElement('textarea');
+      ta.value = summary;
+      ta.style.cssText = 'position:fixed;left:-9999px;';
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand('copy');
+      document.body.removeChild(ta);
+      openMailto();
+      showSuccess();
+    });
+  }
+
+  function openMailto() {
+    var f = document.getElementById('intakeForm');
+    var company = f.querySelector('[name="company"]').value || 'New Prospect';
+    var subject = encodeURIComponent('FCI Sales Intake — ' + company);
+    var body = encodeURIComponent(lastSummary);
+    // mailto has a ~2000 char URL limit in some clients; truncate body if needed
+    var mailto = 'mailto:mpytura@fcicyber.com?subject=' + subject + '&body=' + body;
+    if (mailto.length > 2000) {
+      mailto = 'mailto:mpytura@fcicyber.com?subject=' + subject + '&body=' + encodeURIComponent('Full intake summary is on your clipboard — paste it here.\n\n(The form data was too long for a mailto link.)');
+    }
+    window.open(mailto, '_blank');
+  }
+
+  function copyAgain() {
+    navigator.clipboard.writeText(lastSummary).then(function() {
+      var btn = event.target;
+      btn.textContent = 'Copied!';
+      setTimeout(function(){ btn.textContent = 'Copy Again'; }, 1500);
+    });
+  }
+
+  function showSuccess() {
+    document.getElementById('intakeForm').style.display = 'none';
+    document.querySelector('.progress-bar').style.display = 'none';
+    document.querySelector('.progress-labels').style.display = 'none';
+    document.getElementById('successState').style.display = 'block';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  /* ── Wire up submit button ── */
+  var form = document.getElementById('intakeForm');
+  document.getElementById('submitBtn').addEventListener('click', function(e) {
+    e.preventDefault();
+    submitIntake();
+  });
+
+  function resetForm() {
+    form.reset();
+    form.style.display = 'block';
+    document.querySelector('.progress-bar').style.display = 'flex';
+    document.querySelector('.progress-labels').style.display = 'flex';
+    document.getElementById('successState').style.display = 'none';
+    document.querySelectorAll('.persona-card').forEach(function(c){ c.classList.remove('selected'); });
+    document.querySelectorAll('.persona-section').forEach(function(s){ s.classList.remove('visible'); });
+    document.querySelectorAll('.check-item').forEach(function(c){ c.classList.remove('selected'); });
+    document.querySelectorAll('input[type="range"]').forEach(function(s){ s.value = 3; });
+    document.querySelectorAll('.assess-score').forEach(function(s){ s.textContent = '3'; s.className = 'assess-score score-3'; });
+    lastSummary = '';
+    updateTotal();
+    goStep(0);
+  }
+</script>
+</body>
+</html>
