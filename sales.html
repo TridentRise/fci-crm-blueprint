@@ -521,13 +521,7 @@
     <div class="progress-step"></div>
   </div>
 
-  <form id="intakeForm" action="https://formsubmit.co/mpytura@fcicyber.com" method="POST">
-
-    <!-- FormSubmit config -->
-    <input type="hidden" name="_subject" value="FCI Sales Intake — New Submission" />
-    <input type="hidden" name="_captcha" value="false" />
-    <input type="hidden" name="_template" value="table" />
-    <input type="text" name="_honey" style="display:none" />
+  <form id="intakeForm" onsubmit="return false;">
 
     <!-- ═══════════════════════════════════════════ -->
     <!-- SECTION 1 — Prospect Info                   -->
@@ -1142,10 +1136,12 @@
   <div id="successState" style="display:none;">
     <div class="submit-success">
       <div class="success-icon">&#10003;</div>
-      <div class="success-title">Intake Submitted</div>
-      <div class="success-text">Form data has been sent to mpytura@fcicyber.com. The prospect's readiness score and all responses are included in the email.</div>
-      <div style="margin-top: 32px;">
-        <button class="btn btn-secondary" onclick="resetForm()">Submit Another</button>
+      <div class="success-title">Copied to Clipboard</div>
+      <div class="success-text">The full intake summary has been copied to your clipboard and a draft email has been opened. Paste the summary into the email body or your CRM.</div>
+      <div style="margin-top: 28px; display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;">
+        <button class="btn btn-primary" onclick="openMailto()">Open Email Again</button>
+        <button class="btn btn-secondary" onclick="copyAgain()">Copy Again</button>
+        <button class="btn btn-secondary" onclick="resetForm()">New Intake</button>
       </div>
     </div>
   </div>
@@ -1265,36 +1261,186 @@
     }
   }
 
-  /* ── Form submission via FormSubmit ── */
-  var form = document.getElementById('intakeForm');
-  form.addEventListener('submit', function(e) {
-    e.preventDefault();
-    var btn = document.getElementById('submitBtn');
-    btn.disabled = true;
-    btn.textContent = 'Submitting...';
+  /* ── Build formatted summary from form data ── */
+  var lastSummary = '';
 
-    var data = new FormData(form);
+  function buildSummary() {
+    var f = document.getElementById('intakeForm');
+    var g = function(n) { var el = f.querySelector('[name="' + n + '"]'); return el ? el.value || '' : ''; };
+    var checked = function(n) {
+      var els = f.querySelectorAll('[name="' + n + '"]:checked');
+      var vals = [];
+      els.forEach(function(e){ vals.push(e.value); });
+      return vals.join(', ') || 'None selected';
+    };
+    var sel = function(n) { var el = f.querySelector('[name="' + n + '"]'); return el ? (el.options ? el.options[el.selectedIndex].text : el.value) || '' : ''; };
 
-    fetch(form.action, {
-      method: 'POST',
-      body: data,
-      headers: { 'Accept': 'application/json' }
-    }).then(function(res) {
-      if (res.ok || res.status === 200 || res.status === 302) {
-        form.style.display = 'none';
-        document.querySelector('.progress-bar').style.display = 'none';
-        document.querySelector('.progress-labels').style.display = 'none';
-        document.getElementById('successState').style.display = 'block';
-      } else {
-        btn.disabled = false;
-        btn.textContent = 'Submit Intake →';
-        alert('Submission failed. Please try again or contact support.');
-      }
-    }).catch(function() {
-      btn.disabled = false;
-      btn.textContent = 'Submit Intake →';
-      alert('Network error. Please check your connection and try again.');
+    var lines = [];
+    var hr = '────────────────────────────────────────';
+
+    lines.push('FCI SALES INTAKE — ' + new Date().toLocaleDateString('en-US', { year:'numeric', month:'long', day:'numeric' }));
+    lines.push(hr);
+
+    // Section 1
+    lines.push('');
+    lines.push('PROSPECT INFORMATION');
+    lines.push('  Name:        ' + g('first_name') + ' ' + g('last_name'));
+    lines.push('  Title:       ' + g('title'));
+    lines.push('  Company:     ' + g('company'));
+    lines.push('  Email:       ' + g('email'));
+    lines.push('  Phone:       ' + (g('phone') || '—'));
+    lines.push('  Website:     ' + (g('website') || '—'));
+    lines.push('  Referral:    ' + (sel('referral_source') || '—'));
+
+    // Section 2
+    lines.push('');
+    lines.push('FIRM TYPE & REGULATORY PROFILE');
+    var firmType = g('firm_type') || 'Not selected';
+    lines.push('  Firm Type:   ' + firmType);
+
+    if (firmType === 'RIA') {
+      lines.push('  Registration:  ' + (sel('ria_registration') || '—'));
+      lines.push('  AUM Range:     ' + (sel('ria_aum') || '—'));
+      lines.push('  Advisors:      ' + (g('ria_advisors') || '—'));
+      lines.push('  Last SEC Exam: ' + (g('ria_last_exam') || '—'));
+      lines.push('  Remote Work:   ' + (sel('ria_remote') || '—'));
+      lines.push('  Top Concern:   ' + (g('ria_concern') || '—'));
+    } else if (firmType === 'Broker-Dealer') {
+      lines.push('  Reps:          ' + (g('bd_reps') || '—'));
+      lines.push('  Branches:      ' + (g('bd_branches') || '—'));
+      lines.push('  Model:         ' + (sel('bd_model') || '—'));
+      lines.push('  Last FINRA Exam: ' + (g('bd_last_exam') || '—'));
+      lines.push('  WSPs:          ' + (sel('bd_wsp') || '—'));
+      lines.push('  Top Concern:   ' + (g('bd_concern') || '—'));
+    } else if (firmType === 'Insurance') {
+      lines.push('  Type:          ' + (sel('ins_type') || '—'));
+      lines.push('  Agents:        ' + (g('ins_agents') || '—'));
+      lines.push('  States:        ' + (g('ins_states') || '—'));
+      lines.push('  NYDFS 500:     ' + (sel('ins_nydfs') || '—'));
+      lines.push('  BYOD:          ' + (sel('ins_byod') || '—'));
+      lines.push('  Top Concern:   ' + (g('ins_concern') || '—'));
+    }
+
+    // Section 3
+    lines.push('');
+    lines.push('IT & CYBERSECURITY ENVIRONMENT');
+    lines.push('  Employees:       ' + (g('total_employees') || '—'));
+    lines.push('  Endpoints:       ' + (g('total_endpoints') || '—'));
+    lines.push('  Locations:       ' + (g('locations') || '—'));
+    lines.push('  Users:           ' + (g('total_users') || '—'));
+    lines.push('  Current Vendor:  ' + (g('current_vendor') || '—'));
+    lines.push('  EDR / Endpoint:  ' + (g('edr_tool') || '—'));
+    lines.push('  MFA Status:      ' + (sel('mfa_status') || '—'));
+    lines.push('  Email Security:  ' + (sel('email_security') || '—'));
+    lines.push('  Cloud Platform:  ' + checked('cloud[]'));
+    lines.push('  SIEM / SOC:      ' + (sel('siem_soc') || '—'));
+    lines.push('  Backup:          ' + (sel('backup') || '—'));
+    lines.push('  Incidents (24mo):' + (sel('incident_history') || '—'));
+
+    // Section 4
+    lines.push('');
+    lines.push('SECURITY READINESS SELF-ASSESSMENT');
+    var areas = [
+      ['assess_firm', 'Firm Governance'],
+      ['assess_endpoint', 'Endpoint Security'],
+      ['assess_user', 'User & Access'],
+      ['assess_network', 'Network Security'],
+      ['assess_cloud', 'Cloud App Security'],
+      ['assess_data', 'Data Protection']
+    ];
+    var total = 0;
+    areas.forEach(function(a) {
+      var v = parseInt(g(a[0])) || 3;
+      total += v;
+      var bar = '';
+      for (var i = 0; i < 5; i++) bar += i < v ? '█' : '░';
+      lines.push('  ' + bar + '  ' + v + '/5  ' + a[1]);
     });
+    lines.push('  ──────────────────');
+    var label = total <= 10 ? 'CRITICAL' : total <= 15 ? 'BELOW AVERAGE' : total <= 20 ? 'MODERATE' : total <= 25 ? 'GOOD' : 'STRONG';
+    lines.push('  TOTAL: ' + total + '/30 — ' + label);
+
+    // Section 5
+    lines.push('');
+    lines.push('PROPOSAL & DEAL CONTEXT');
+    lines.push('  Regulations:     ' + checked('regulations[]'));
+    lines.push('  Contract End:    ' + (g('contract_end') || '—'));
+    lines.push('  Timeline:        ' + (sel('timeline') || '—'));
+    lines.push('  Budget:          ' + (sel('budget') || '—'));
+    lines.push('  Decision Makers: ' + (g('decision_makers') || '—'));
+    lines.push('  Services:        ' + checked('services[]'));
+    lines.push('  Trigger:         ' + (g('trigger') || '—'));
+
+    var notes = g('sales_notes');
+    if (notes) {
+      lines.push('');
+      lines.push('INTERNAL SALES NOTES');
+      lines.push('  ' + notes.replace(/\n/g, '\n  '));
+    }
+
+    lines.push('');
+    lines.push(hr);
+    lines.push('Generated from FCI Sales Hub — ' + new Date().toLocaleString());
+
+    return lines.join('\n');
+  }
+
+  /* ── Clipboard + mailto ── */
+  function submitIntake() {
+    var summary = buildSummary();
+    lastSummary = summary;
+
+    navigator.clipboard.writeText(summary).then(function() {
+      openMailto();
+      showSuccess();
+    }).catch(function() {
+      // Fallback: select from textarea
+      var ta = document.createElement('textarea');
+      ta.value = summary;
+      ta.style.cssText = 'position:fixed;left:-9999px;';
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand('copy');
+      document.body.removeChild(ta);
+      openMailto();
+      showSuccess();
+    });
+  }
+
+  function openMailto() {
+    var f = document.getElementById('intakeForm');
+    var company = f.querySelector('[name="company"]').value || 'New Prospect';
+    var subject = encodeURIComponent('FCI Sales Intake — ' + company);
+    var body = encodeURIComponent(lastSummary);
+    // mailto has a ~2000 char URL limit in some clients; truncate body if needed
+    var mailto = 'mailto:mpytura@fcicyber.com?subject=' + subject + '&body=' + body;
+    if (mailto.length > 2000) {
+      mailto = 'mailto:mpytura@fcicyber.com?subject=' + subject + '&body=' + encodeURIComponent('Full intake summary is on your clipboard — paste it here.\n\n(The form data was too long for a mailto link.)');
+    }
+    window.open(mailto, '_blank');
+  }
+
+  function copyAgain() {
+    navigator.clipboard.writeText(lastSummary).then(function() {
+      var btn = event.target;
+      btn.textContent = 'Copied!';
+      setTimeout(function(){ btn.textContent = 'Copy Again'; }, 1500);
+    });
+  }
+
+  function showSuccess() {
+    document.getElementById('intakeForm').style.display = 'none';
+    document.querySelector('.progress-bar').style.display = 'none';
+    document.querySelector('.progress-labels').style.display = 'none';
+    document.getElementById('successState').style.display = 'block';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  /* ── Wire up submit button ── */
+  var form = document.getElementById('intakeForm');
+  document.getElementById('submitBtn').addEventListener('click', function(e) {
+    e.preventDefault();
+    submitIntake();
   });
 
   function resetForm() {
@@ -1308,6 +1454,7 @@
     document.querySelectorAll('.check-item').forEach(function(c){ c.classList.remove('selected'); });
     document.querySelectorAll('input[type="range"]').forEach(function(s){ s.value = 3; });
     document.querySelectorAll('.assess-score').forEach(function(s){ s.textContent = '3'; s.className = 'assess-score score-3'; });
+    lastSummary = '';
     updateTotal();
     goStep(0);
   }
