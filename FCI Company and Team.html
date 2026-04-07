@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FCI — Company &amp; Team</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Inter+Tight:wght@600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    *, ::before, ::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #060B14; --surface: #0D1626; --surface2: #111F33;
+      --blue: #2563EB; --blue2: rgba(37,99,235,0.12);
+      --sky: #0EA5E9; --sky2: rgba(14,165,233,0.12);
+      --emerald: #10B981; --emerald2: rgba(16,185,129,0.10);
+      --amber: #F59E0B; --amber2: rgba(245,158,11,0.10);
+      --violet: #A855F7; --violet2: rgba(168,85,247,0.10);
+      --text1: #F1F5F9; --text2: #94A3B8; --text3: #475569; --rule: #1A2B40;
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text1); min-height: 100vh; -webkit-font-smoothing: antialiased; }
+    ::selection { background: var(--blue); color: #fff; }
+
+    .bg-glow {
+      position: fixed; inset: 0; pointer-events: none; z-index: 0;
+      background:
+        radial-gradient(70% 45% at 50% -5%, rgba(37,99,235,0.10) 0%, transparent 65%),
+        radial-gradient(35% 28% at 6% 88%, rgba(168,85,247,0.06) 0%, transparent 55%);
+    }
+
+    /* Nav */
+    .hub-nav {
+      position: fixed; top: 0; left: 0; right: 0; height: 52px; z-index: 200;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 32px;
+      background: rgba(6,11,20,0.88);
+      backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--rule);
+    }
+    .hub-nav .back-nav { font-size: 13px; font-weight: 600; text-decoration: none; color: var(--text3); transition: color 0.15s; }
+    .hub-nav .back-nav:hover { color: var(--text1); }
+    .hub-theme-toggle { display: flex; align-items: center; background: var(--surface2); border: 1px solid var(--rule); border-radius: 8px; padding: 3px; gap: 2px; }
+    .hub-theme-toggle button { font-family: inherit; font-size: 11px; font-weight: 600; letter-spacing: 0.03em; color: var(--text3); background: transparent; border: none; cursor: pointer; padding: 4px 10px; border-radius: 6px; line-height: 1; transition: background 0.15s, color 0.15s; }
+    .hub-theme-toggle button:hover { color: var(--text1); }
+    .hub-theme-toggle button.active { background: var(--surface); color: var(--text1); box-shadow: 0 1px 3px rgba(0,0,0,0.15); }
+
+    /* Light nav */
+    html[data-hub-theme=light] .hub-nav { background: rgba(255,255,255,0.92); border-bottom-color: rgba(15,23,42,0.08); }
+    html[data-hub-theme=light] .hub-nav .back-nav { color: #475569; }
+    html[data-hub-theme=light] .hub-nav .back-nav:hover { color: #0F172A; }
+    html[data-hub-theme=light] .hub-theme-toggle { background: rgba(15,23,42,0.06); border-color: rgba(15,23,42,0.1); }
+    html[data-hub-theme=light] .hub-theme-toggle button { color: #94A3B8; }
+    html[data-hub-theme=light] .hub-theme-toggle button:hover { color: #0F172A; }
+    html[data-hub-theme=light] .hub-theme-toggle button.active { background: #fff; color: #0F172A; box-shadow: 0 1px 3px rgba(0,0,0,0.12); }
+
+    /* Light mode */
+    html[data-hub-theme=light] { --bg: #F8FAFC; --surface: #FFFFFF; --surface2: #F1F5F9; --text1: #0F172A; --text2: #475569; --text3: #94A3B8; --rule: #E2E8F0; }
+    html[data-hub-theme=light] body { background: #F8FAFC; }
+    html[data-hub-theme=light] .bg-glow { background: radial-gradient(70% 45% at 50% -5%, rgba(37,99,235,0.06) 0%, transparent 65%); }
+    @media (prefers-color-scheme: light) {
+      html:not([data-hub-theme=dark]) { --bg: #F8FAFC; --surface: #FFFFFF; --surface2: #F1F5F9; --text1: #0F172A; --text2: #475569; --text3: #94A3B8; --rule: #E2E8F0; }
+      html:not([data-hub-theme=dark]) body { background: #F8FAFC; }
+      html:not([data-hub-theme=dark]) .bg-glow { background: radial-gradient(70% 45% at 50% -5%, rgba(37,99,235,0.06) 0%, transparent 65%); }
+      html:not([data-hub-theme=dark]) .hub-nav { background: rgba(255,255,255,0.92); border-bottom-color: rgba(15,23,42,0.08); }
+      html:not([data-hub-theme=dark]) .hub-nav .back-nav { color: #475569; }
+      html:not([data-hub-theme=dark]) .hub-nav .back-nav:hover { color: #0F172A; }
+      html:not([data-hub-theme=dark]) .hub-theme-toggle { background: rgba(15,23,42,0.06); border-color: rgba(15,23,42,0.1); }
+      html:not([data-hub-theme=dark]) .hub-theme-toggle button { color: #94A3B8; }
+      html:not([data-hub-theme=dark]) .hub-theme-toggle button:hover { color: #0F172A; }
+      html:not([data-hub-theme=dark]) .hub-theme-toggle button.active { background: #fff; color: #0F172A; box-shadow: 0 1px 3px rgba(0,0,0,0.12); }
+    }
+
+    /* Header */
+    header { position: relative; z-index: 1; text-align: center; padding: 112px 24px 48px; }
+    .header-eyebrow { display: inline-block; font-size: 10px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--violet); border: 1px solid rgba(168,85,247,0.3); background: rgba(168,85,247,0.07); padding: 5px 16px; border-radius: 100px; margin-bottom: 24px; }
+    header h1 { font-family: 'Inter Tight', sans-serif; font-size: clamp(32px, 5vw, 48px); font-weight: 800; letter-spacing: -0.03em; line-height: 1.1; color: var(--text1); margin-bottom: 16px; }
+    header p { font-size: 15px; color: var(--text2); line-height: 1.7; max-width: 560px; margin: 0 auto; }
+
+    /* Main content */
+    .content { position: relative; z-index: 1; max-width: 820px; width: 100%; margin: 0 auto; padding: 0 32px 100px; }
+
+    /* Section dividers */
+    .section-divider { display: flex; align-items: center; gap: 16px; margin: 56px 0 28px; }
+    .section-divider:first-child { margin-top: 0; }
+    .section-divider .line { flex: 1; height: 1px; background: var(--rule); }
+    .section-divider .label { font-size: 11px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--text3); white-space: nowrap; }
+
+    /* Copy blocks */
+    .copy-section { margin-bottom: 40px; }
+    .copy-label { font-size: 10px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--violet); margin-bottom: 16px; }
+    .copy-h2 { font-family: 'Inter Tight', sans-serif; font-size: 24px; font-weight: 700; letter-spacing: -0.02em; color: var(--text1); margin-bottom: 16px; line-height: 1.2; }
+    .copy-body { font-size: 15px; color: var(--text2); line-height: 1.8; }
+    .copy-body p { margin-bottom: 16px; }
+    .copy-body p:last-child { margin-bottom: 0; }
+
+    /* Stats */
+    .stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin: 32px 0; }
+    .stat-card { background: var(--surface); border: 1px solid var(--rule); border-radius: 12px; padding: 24px; text-align: center; }
+    .stat-num { font-family: 'Inter Tight', sans-serif; font-size: 32px; font-weight: 800; color: var(--text1); margin-bottom: 4px; }
+    .stat-label { font-size: 12px; font-weight: 600; color: var(--text3); letter-spacing: 0.05em; }
+
+    /* Team cards */
+    .team-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    .team-card { background: var(--surface); border: 1px solid var(--rule); border-radius: 14px; padding: 28px 24px; }
+    .team-name { font-family: 'Inter Tight', sans-serif; font-size: 18px; font-weight: 700; color: var(--text1); margin-bottom: 4px; }
+    .team-role { font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--violet); margin-bottom: 14px; }
+    .team-bio { font-size: 14px; color: var(--text2); line-height: 1.75; }
+    .team-card.full-width { grid-column: 1 / -1; }
+
+    /* Contact info */
+    .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    .contact-card { background: var(--surface); border: 1px solid var(--rule); border-radius: 14px; padding: 28px 24px; }
+    .contact-label { font-size: 10px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--blue); margin-bottom: 12px; }
+    .contact-value { font-size: 15px; color: var(--text1); line-height: 1.7; font-weight: 500; }
+    .contact-note { font-size: 13px; color: var(--text3); margin-top: 8px; line-height: 1.5; }
+
+    /* Source tag */
+    .source-tag { display: inline-block; font-size: 10px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; padding: 3px 10px; border-radius: 100px; margin-bottom: 16px; }
+    .source-new { background: rgba(16,185,129,0.10); color: var(--emerald); border: 1px solid rgba(16,185,129,0.25); }
+    .source-rewrite { background: rgba(245,158,11,0.10); color: var(--amber); border: 1px solid rgba(245,158,11,0.25); }
+    .source-original { background: var(--blue2); color: var(--blue); border: 1px solid rgba(37,99,235,0.25); }
+
+    /* Footer */
+    footer { position: relative; z-index: 1; text-align: center; padding: 0 24px 48px; }
+    .footer-inner { display: inline-flex; align-items: center; gap: 14px; }
+    .footer-dot { width: 3px; height: 3px; border-radius: 50%; background: var(--text3); }
+    footer span { font-size: 12px; color: var(--text3); }
+    .footer-logo { font-family: 'Inter Tight', sans-serif; font-size: 15px; font-weight: 700; color: var(--text3); }
+
+    @media (max-width: 640px) {
+      .content { padding: 0 20px 80px; }
+      .stats-grid { grid-template-columns: 1fr; }
+      .team-grid { grid-template-columns: 1fr; }
+      .contact-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+<div class="bg-glow"></div>
+
+<nav class="hub-nav">
+  <a href="index.html" class="back-nav">&larr; Brand Hub</a>
+  <div class="hub-theme-toggle">
+    <button data-hub-mode="light" onclick="setHubTheme('light')">Light</button>
+    <button data-hub-mode="dark" onclick="setHubTheme('dark')">Dark</button>
+    <button data-hub-mode="system" onclick="setHubTheme('system')" class="active">System</button>
+  </div>
+</nav>
+
+<header>
+  <div class="header-eyebrow">Content Migration &middot; Company &amp; Team</div>
+  <h1>Company &amp; Team</h1>
+  <p>Rewritten company profile, leadership bios, careers content, and contact information — all aligned with the new brand voice and messaging architecture.</p>
+</header>
+
+<div class="content">
+
+  <!-- ═══════════════════════════════════════ -->
+  <!-- ABOUT FCI -->
+  <!-- ═══════════════════════════════════════ -->
+  <div class="section-divider">
+    <div class="line"></div>
+    <div class="label" style="color: var(--violet);">About FCI</div>
+    <div class="line"></div>
+  </div>
+
+  <div class="copy-section">
+    <span class="source-tag source-original">From Website Copy</span>
+    <div class="copy-label">Page Hero</div>
+    <div class="copy-h2">30 years in financial services. Not 30 years in cybersecurity with a financial services practice.</div>
+    <div class="copy-body">
+      <p>FCI was founded to serve one market. We have never pivoted. Every investment, every hire, every tool we have built has been designed for the way financial services sales offices actually operate — regulated, exposed, and structurally different from every other industry in ways generic security providers were never designed to handle.</p>
+    </div>
+  </div>
+
+  <div class="copy-section">
+    <span class="source-tag source-original">From Website Copy</span>
+    <div class="copy-label">Our Story</div>
+    <div class="copy-body">
+      <p>Financial services sales offices present a security challenge that most managed security service providers have never fully understood. Independent advisors, appointed agents, branch offices with their own devices and their own networks — the sales office model creates an attack surface that was never designed for centralized IT management.</p>
+      <p>A typical MSSP deploys endpoint protection or runs a SOC — then hands the client a dashboard and a phone number. The client is still responsible for configuring controls, writing policies, producing compliance evidence, and responding to regulatory examinations. FCI does all of that. The four pillars — Cyber Tools &amp; Settings, Procedures &amp; Processes, Expert Knowledge Applied at Scale, and Proof of Security &amp; Compliance — are not sold separately. They are one service, delivered by one team.</p>
+      <p>Over 30 years, we have developed the operational expertise, regulatory fluency, and purpose-built technology that this market requires. FCI uses AI to enforce controls, detect threats, and produce compliance evidence across six security domains — at a scale that would be impossible manually. Our CISO Portal was designed specifically for firms managing compliance across sales office networks. Our SOC analysts understand the regulatory context of what they are protecting. Our implementation approach is calibrated to financial firms that cannot afford user friction or IT downtime.</p>
+      <p>Today we implement controls and produce evidence of compliance across more than 40,000 endpoints for more than 400 clients — broker-dealers &amp; branch offices, insurance carriers &amp; agencies, and RIAs. We hold SOC 2 Type 1 certification and a 100% SecurityScorecard rating. We are independently verified, not self-described.</p>
+    </div>
+  </div>
+
+  <div class="stats-grid">
+    <div class="stat-card"><div class="stat-num">400+</div><div class="stat-label">Clients in Financial Services</div></div>
+    <div class="stat-card"><div class="stat-num">40,000+</div><div class="stat-label">Endpoints Under Management</div></div>
+    <div class="stat-card"><div class="stat-num">30+</div><div class="stat-label">Years Serving Financial Services</div></div>
+    <div class="stat-card"><div class="stat-num">100%</div><div class="stat-label">SecurityScorecard Rating</div></div>
+    <div class="stat-card"><div class="stat-num">SOC 2</div><div class="stat-label">Type 1 Certified Annually</div></div>
+    <div class="stat-card"><div class="stat-num">24/7</div><div class="stat-label">Human-Led SOC</div></div>
+  </div>
+
+  <div class="copy-section">
+    <span class="source-tag source-original">From Website Copy</span>
+    <div class="copy-label">What Makes FCI Different</div>
+    <div class="copy-body">
+      <p>Most managed security service providers serve financial services as one vertical among many. They deploy endpoint protection or run a SOC — then hand the client a dashboard and a phone number. They do not produce the documentation regulators actually ask for. They do not sit with the firm during an examination. They do not manage incident response. They do not enforce controls across devices they did not sell.</p>
+      <p>FCI does all four — because the financial services sales office requires all four. Our managed cybersecurity services were designed from the beginning for the sales office model — the BYOD environments, the independent branch offices, the compliance requirements that extend to every appointed agent and registered rep, not just the home office.</p>
+      <p>This specificity is not a marketing claim. It is operational DNA. Our tools, our workflows, our SOC analysts, and our CISO Portal are all built around one question: what does it take to keep a financial services sales office compliant, protected, and exam-ready — continuously?</p>
+    </div>
+  </div>
+
+  <div class="copy-section">
+    <span class="source-tag source-new">New — Brand Voice</span>
+    <div class="copy-label">Facts &amp; Certifications</div>
+    <div class="copy-body">
+      <p>Founded in 1995. Dedicated exclusively to cybersecurity protection and compliance for financial services. Headquarters and Security Operations Center in New Jersey. Three redundant data centers in the United States. Annual SOC 2 Type 1 certification. Multidisciplinary cyber team — fingerprinted, background-checked, U.S.-based. No call center agents. No call scripts. No automation without human oversight.</p>
+      <p>Regulatory fluency operationalized across SEC, FINRA, NYDFS, and NAIC — not just documented, but built into every control enforcement and evidence production workflow.</p>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════ -->
+  <!-- LEADERSHIP TEAM -->
+  <!-- ═══════════════════════════════════════ -->
+  <div class="section-divider">
+    <div class="line"></div>
+    <div class="label" style="color: var(--violet);">Leadership Team</div>
+    <div class="line"></div>
+  </div>
+
+  <div class="team-grid">
+
+    <div class="team-card">
+      <div class="team-name">Brian Edelman</div>
+      <div class="team-role">CEO &amp; Founder</div>
+      <div class="team-bio">Founded FCI in 1995 with a single focus: cybersecurity for financial services. Nationally recognized cybersecurity expert specializing in protection and compliance for regulated firms. Deep expertise in federal and state cybersecurity regulations including NYDFS 23 NYCRR 500, SEC, FINRA, and NAIC requirements. Regular speaker at T3, Financial Planning Association, and major industry conferences. Cited by CNBC, Financial Planning Magazine, Investment News, and Forbes. Cybersecurity Technology Expert, Forbes NY Council. Certificate in Cybersecurity Risk Management, Harvard University.</div>
+    </div>
+
+    <div class="team-card">
+      <div class="team-name">Eric Edelman</div>
+      <div class="team-role">President</div>
+      <div class="team-bio">15 years leading FCI's service delivery and daily operations. Responsible for ensuring every client engagement meets the standard — world-class customer experience, consistent service quality, and operational reliability. Deep understanding of how financial services firms actually operate, which translates directly into services and solutions calibrated to what compliance officers, CISOs, and operations leaders need.</div>
+    </div>
+
+    <div class="team-card">
+      <div class="team-name">Vincent Guyaux</div>
+      <div class="team-role">Business Advisor</div>
+      <div class="team-bio">Corporate management, sales, and business development expertise across North America, Asia, and Europe. Joined FCI in 2017 to build the sales and business development team. Co-founder and Chairman of the Board at Buckler, a Cybersecurity Program Management System. Previously held leadership roles at Croesus (portfolio management software), Metafoam, Imaginum, Locus Dialog (acquired by InfoSpace), and Apple, where he earned two President's Club awards. Certificate in Cybersecurity Risk Management, Harvard University.</div>
+    </div>
+
+    <div class="team-card">
+      <div class="team-name">Brian Rohllf</div>
+      <div class="team-role">Director, Cybersecurity Services</div>
+      <div class="team-bio">Senior cybersecurity strategist and project leader. With FCI since 2006, he has developed, enhanced, and supported the SaaS services that clients in cyber-regulated industries depend on. Expert in federal and state cybersecurity regulations. Leads the team of technicians implementing NIST-based cybersecurity compliance services to enterprise field offices across North America. Has led numerous incident assessments and breach investigations, including cases resulting in the recovery of fraudulently wired funds. B.S. in Computer Science, SUNY Albany.</div>
+    </div>
+
+    <div class="team-card">
+      <div class="team-name">Melody Lugo</div>
+      <div class="team-role">Operations Manager</div>
+      <div class="team-bio">With FCI since 2012. Progressed from marketing and communications to Operations Manager in 2017 by consistently taking on more responsibility and delivering results. Plans and monitors daily operations, revises and formulates policies, and drives their implementation. Continuously improves management systems, processes, and best practices to meet client expectations. The operational backbone of FCI — the person the team relies on for any and all issues.</div>
+    </div>
+
+    <div class="team-card">
+      <div class="team-name">Michael Pytura</div>
+      <div class="team-role">Sales Manager</div>
+      <div class="team-bio">Technology industry professional and former financial advisor with over 22 years of experience in sales and business development. Joined FCI in 2018. Previously built an insurance and financial services firm from scratch, growing it to one of the most successful in the region in two years — earning a place in the Region Builder's Club. Held senior sales positions in telecom and IT before that. Brings a practitioner's understanding of what financial services firms actually face.</div>
+    </div>
+
+    <div class="team-card">
+      <div class="team-name">Ben Gunay</div>
+      <div class="team-role">Account Manager</div>
+      <div class="team-bio">Focused on cybersecurity for financial services independent branch offices. Strong interpersonal and analytical skills applied to account management, problem solving, and client service. Known for data-driven decision-making, persuasive communication, and consistent follow-through.</div>
+    </div>
+
+    <div class="team-card">
+      <div class="team-name">Pamela Rasey</div>
+      <div class="team-role">Marketing Manager</div>
+      <div class="team-bio">Professional marketing executive with over 25 years of experience across a range of industries and company sizes. Works with FCI to build and maintain a strong, consistent brand across online and offline channels. Expertise in aligning offerings with markets to drive business results — from investor communications to client-facing campaigns.</div>
+    </div>
+
+    <div class="team-card full-width">
+      <div class="team-name">Cyber Technical Team</div>
+      <div class="team-role">Engineering &amp; Operations</div>
+      <div class="team-bio">A diverse team of technical resources with expertise spanning financial services regulations, managed cybersecurity operations, security tooling, IT infrastructure, software integration, and best practices. Every FCI cyber expert is fingerprinted, background-checked, operates under split-role access controls, and uses MFA for all applications. U.S.-based. No outsourced call center agents.</div>
+    </div>
+
+  </div>
+
+  <!-- ═══════════════════════════════════════ -->
+  <!-- CAREERS -->
+  <!-- ═══════════════════════════════════════ -->
+  <div class="section-divider">
+    <div class="line"></div>
+    <div class="label" style="color: var(--violet);">Careers</div>
+    <div class="line"></div>
+  </div>
+
+  <div class="copy-section">
+    <span class="source-tag source-rewrite">Rewritten</span>
+    <div class="copy-label">Working at FCI</div>
+    <div class="copy-h2">Shape the future of financial services cybersecurity.</div>
+    <div class="copy-body">
+      <p>FCI is a team of cybersecurity experts, trained technicians, and thought leaders focused on one mission: protecting the firms that manage other people's money. We serve broker-dealers &amp; branch offices, insurance carriers &amp; agencies, and RIAs — and every role at FCI connects directly to that mission.</p>
+      <p>We are a diverse team with multiple nationalities, a high retention rate, and a culture that values the full person — not just output. Fair salary, meaningful benefits, and a flexible work environment that has been in place since before remote work became an industry trend.</p>
+    </div>
+  </div>
+
+  <div class="copy-section">
+    <span class="source-tag source-rewrite">Rewritten</span>
+    <div class="copy-label">Benefits</div>
+    <div class="copy-body">
+      <p>Health insurance. Paid time off. Learning and development opportunities. Flexible work arrangements. An equal opportunity employer — FCI prohibits unlawful discrimination based on race, color, religion, sex, sexual orientation, gender identity, age, or any other consideration made unlawful by applicable federal, state, or local laws.</p>
+      <p>Interested? Send your resume to <strong>info@fcicyber.com</strong>.</p>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════ -->
+  <!-- CONTACT & LOCATION -->
+  <!-- ═══════════════════════════════════════ -->
+  <div class="section-divider">
+    <div class="line"></div>
+    <div class="label" style="color: var(--violet);">Contact &amp; Location</div>
+    <div class="line"></div>
+  </div>
+
+  <div class="contact-grid">
+
+    <div class="contact-card">
+      <div class="contact-label">General Inquiries</div>
+      <div class="contact-value">(888) 434-6443</div>
+      <div class="contact-value">info@fcicyber.com</div>
+    </div>
+
+    <div class="contact-card">
+      <div class="contact-label">Technical Support</div>
+      <div class="contact-value">973-227-8878</div>
+      <div class="contact-value">support@fcicyber.com</div>
+      <div class="contact-note">Mon&ndash;Fri, 8:00 AM &ndash; 5:30 PM ET<br>Excluding nationally observed holidays</div>
+    </div>
+
+    <div class="contact-card" style="grid-column: 1 / -1;">
+      <div class="contact-label">Headquarters</div>
+      <div class="contact-value">140 E. Ridgewood Avenue, Suite 415, South Tower<br>Paramus, NJ 07652</div>
+      <div class="contact-note">Security Operations Center in Bloomfield, NJ &middot; Three redundant data centers in the United States</div>
+    </div>
+
+  </div>
+
+  <!-- ═══════════════════════════════════════ -->
+  <!-- NOTES -->
+  <!-- ═══════════════════════════════════════ -->
+  <div class="section-divider">
+    <div class="line"></div>
+    <div class="label" style="color: var(--text3);">Migration Notes</div>
+    <div class="line"></div>
+  </div>
+
+  <div class="copy-section">
+    <div class="copy-body" style="font-size: 13px; color: var(--text3);">
+      <p><strong>What changed from fcicyber.com:</strong> Company overview rewritten to use Website Copy document language (already approved). Team bios lightly edited for consistency: removed redundant phrasing, tightened language, maintained all factual claims. Brian Edelman's title updated from "Cybersecurity Expert / CEO" to "CEO &amp; Founder" for the header, with expertise detailed in the bio. Careers content rewritten to remove outdated COVID-19 references and align with current brand voice. Contact info preserved as-is. All content follows the five brand voice characteristics: authoritative not aggressive, specific not abstract, direct not hedged, respectful of the reader's intelligence, calm under pressure.</p>
+      <p><strong>Role boundary check:</strong> No instances of "FCI manages the program." Company description uses "implement controls and produce evidence of compliance" language. "Managed cybersecurity services" used correctly (not "managed cybersecurity program").</p>
+      <p><strong>Market naming check:</strong> Markets listed in correct order: broker-dealers &amp; branch offices, insurance carriers &amp; agencies, RIAs. Ampersands used throughout.</p>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <span class="footer-logo">FCI</span>
+    <div class="footer-dot"></div>
+    <span>Company &amp; Team</span>
+    <div class="footer-dot"></div>
+    <span>Internal &middot; April 2026</span>
+  </div>
+</footer>
+
+<script>
+  function setHubTheme(m) {
+    if (m === 'system') { document.documentElement.removeAttribute('data-hub-theme'); localStorage.removeItem('fci-hub-theme'); }
+    else { document.documentElement.setAttribute('data-hub-theme', m); localStorage.setItem('fci-hub-theme', m); }
+    document.querySelectorAll('.hub-theme-toggle button').forEach(function(b){ b.classList.toggle('active', b.dataset.hubMode === m); });
+  }
+  (function(){
+    var s = localStorage.getItem('fci-hub-theme') || 'system';
+    if (s !== 'system') document.documentElement.setAttribute('data-hub-theme', s);
+    document.addEventListener('DOMContentLoaded', function(){
+      document.querySelectorAll('.hub-theme-toggle button').forEach(function(b){ b.classList.toggle('active', b.dataset.hubMode === s); });
+    });
+  })();
+</script>
+</body>
+</html>
