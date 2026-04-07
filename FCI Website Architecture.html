@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FCI — Website Architecture</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Inter+Tight:wght@600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    *, ::before, ::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #060B14; --surface: #0D1626; --surface2: #111F33;
+      --blue: #2563EB; --blue2: rgba(37,99,235,0.12);
+      --sky: #0EA5E9; --sky2: rgba(14,165,233,0.12);
+      --emerald: #10B981; --emerald2: rgba(16,185,129,0.10);
+      --amber: #F59E0B; --amber2: rgba(245,158,11,0.10);
+      --violet: #A855F7; --violet2: rgba(168,85,247,0.10);
+      --indigo: #6366F1; --indigo2: rgba(99,102,241,0.10);
+      --red: #EF4444; --red2: rgba(239,68,68,0.10);
+      --text1: #F1F5F9; --text2: #94A3B8; --text3: #475569; --rule: #1A2B40;
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text1); min-height: 100vh; -webkit-font-smoothing: antialiased; }
+    ::selection { background: var(--blue); color: #fff; }
+
+    .bg-glow {
+      position: fixed; inset: 0; pointer-events: none; z-index: 0;
+      background:
+        radial-gradient(70% 45% at 50% -5%, rgba(37,99,235,0.10) 0%, transparent 65%),
+        radial-gradient(35% 28% at 6% 88%, rgba(168,85,247,0.06) 0%, transparent 55%);
+    }
+
+    /* Nav */
+    .hub-nav {
+      position: fixed; top: 0; left: 0; right: 0; height: 52px; z-index: 200;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 32px;
+      background: rgba(6,11,20,0.88);
+      backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--rule);
+    }
+    .hub-nav .back-nav { font-size: 13px; font-weight: 600; text-decoration: none; color: var(--text3); transition: color 0.15s; }
+    .hub-nav .back-nav:hover { color: var(--text1); }
+    .hub-theme-toggle { display: flex; align-items: center; background: var(--surface2); border: 1px solid var(--rule); border-radius: 8px; padding: 3px; gap: 2px; }
+    .hub-theme-toggle button { font-family: inherit; font-size: 11px; font-weight: 600; letter-spacing: 0.03em; color: var(--text3); background: transparent; border: none; cursor: pointer; padding: 4px 10px; border-radius: 6px; line-height: 1; transition: background 0.15s, color 0.15s; }
+    .hub-theme-toggle button:hover { color: var(--text1); }
+    .hub-theme-toggle button.active { background: var(--surface); color: var(--text1); box-shadow: 0 1px 3px rgba(0,0,0,0.15); }
+
+    /* Light nav */
+    html[data-hub-theme=light] .hub-nav { background: rgba(255,255,255,0.92); border-bottom-color: rgba(15,23,42,0.08); }
+    html[data-hub-theme=light] .hub-nav .back-nav { color: #475569; }
+    html[data-hub-theme=light] .hub-nav .back-nav:hover { color: #0F172A; }
+    html[data-hub-theme=light] .hub-theme-toggle { background: rgba(15,23,42,0.06); border-color: rgba(15,23,42,0.1); }
+    html[data-hub-theme=light] .hub-theme-toggle button { color: #94A3B8; }
+    html[data-hub-theme=light] .hub-theme-toggle button:hover { color: #0F172A; }
+    html[data-hub-theme=light] .hub-theme-toggle button.active { background: #fff; color: #0F172A; box-shadow: 0 1px 3px rgba(0,0,0,0.12); }
+
+    /* Light mode */
+    html[data-hub-theme=light] { --bg: #F8FAFC; --surface: #FFFFFF; --surface2: #F1F5F9; --text1: #0F172A; --text2: #475569; --text3: #94A3B8; --rule: #E2E8F0; }
+    html[data-hub-theme=light] body { background: #F8FAFC; }
+    html[data-hub-theme=light] .bg-glow { background: radial-gradient(70% 45% at 50% -5%, rgba(37,99,235,0.06) 0%, transparent 65%); }
+    @media (prefers-color-scheme: light) {
+      html:not([data-hub-theme=dark]) { --bg: #F8FAFC; --surface: #FFFFFF; --surface2: #F1F5F9; --text1: #0F172A; --text2: #475569; --text3: #94A3B8; --rule: #E2E8F0; }
+      html:not([data-hub-theme=dark]) body { background: #F8FAFC; }
+      html:not([data-hub-theme=dark]) .bg-glow { background: radial-gradient(70% 45% at 50% -5%, rgba(37,99,235,0.06) 0%, transparent 65%); }
+      html:not([data-hub-theme=dark]) .hub-nav { background: rgba(255,255,255,0.92); border-bottom-color: rgba(15,23,42,0.08); }
+      html:not([data-hub-theme=dark]) .hub-nav .back-nav { color: #475569; }
+      html:not([data-hub-theme=dark]) .hub-nav .back-nav:hover { color: #0F172A; }
+      html:not([data-hub-theme=dark]) .hub-theme-toggle { background: rgba(15,23,42,0.06); border-color: rgba(15,23,42,0.1); }
+      html:not([data-hub-theme=dark]) .hub-theme-toggle button { color: #94A3B8; }
+      html:not([data-hub-theme=dark]) .hub-theme-toggle button:hover { color: #0F172A; }
+      html:not([data-hub-theme=dark]) .hub-theme-toggle button.active { background: #fff; color: #0F172A; box-shadow: 0 1px 3px rgba(0,0,0,0.12); }
+    }
+
+    /* Header */
+    header { position: relative; z-index: 1; text-align: center; padding: 112px 24px 48px; }
+    .header-eyebrow { display: inline-block; font-size: 10px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--blue); border: 1px solid rgba(37,99,235,0.3); background: rgba(37,99,235,0.07); padding: 5px 16px; border-radius: 100px; margin-bottom: 24px; }
+    header h1 { font-family: 'Inter Tight', sans-serif; font-size: clamp(32px, 5vw, 48px); font-weight: 800; letter-spacing: -0.03em; line-height: 1.1; color: var(--text1); margin-bottom: 16px; }
+    header p { font-size: 15px; color: var(--text2); line-height: 1.7; max-width: 660px; margin: 0 auto; }
+
+    /* Main content */
+    .content { position: relative; z-index: 1; max-width: 900px; width: 100%; margin: 0 auto; padding: 0 32px 100px; }
+
+    /* Section dividers */
+    .section-divider {
+      display: flex; align-items: center; gap: 16px; margin: 56px 0 28px;
+    }
+    .section-divider .line { flex: 1; height: 1px; background: var(--rule); }
+    .section-divider .label { font-size: 11px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; white-space: nowrap; }
+
+    /* Spec box */
+    .spec-box {
+      background: var(--surface); border: 1px solid var(--rule); border-radius: 14px;
+      padding: 28px; margin-bottom: 20px;
+    }
+    .spec-box h3 { font-family: 'Inter Tight', sans-serif; font-size: 16px; font-weight: 800; letter-spacing: -0.01em; margin-bottom: 14px; }
+    .spec-box p { font-size: 14px; color: var(--text2); line-height: 1.7; margin-bottom: 10px; }
+    .spec-box p:last-child { margin-bottom: 0; }
+    .spec-row { display: flex; gap: 8px; align-items: baseline; padding: 6px 0; }
+    .spec-label { font-size: 12px; font-weight: 700; color: var(--text3); text-transform: uppercase; letter-spacing: 0.06em; min-width: 120px; flex-shrink: 0; }
+    .spec-value { font-size: 14px; color: var(--text1); }
+
+    /* Sitemap tree */
+    .sitemap { margin-bottom: 20px; }
+    .site-section {
+      background: var(--surface); border: 1px solid var(--rule); border-radius: 14px;
+      margin-bottom: 12px; overflow: hidden;
+    }
+    .site-section-header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 16px 24px; cursor: pointer; user-select: none;
+      transition: background 0.15s;
+    }
+    .site-section-header:hover { background: var(--surface2); }
+    .site-section-title { font-size: 15px; font-weight: 700; }
+    .site-section-meta { display: flex; gap: 8px; align-items: center; }
+    .page-count { font-size: 11px; font-weight: 700; color: var(--text3); letter-spacing: 0.04em; }
+    .site-section-body { display: none; border-top: 1px solid var(--rule); }
+    .site-section.open .site-section-body { display: block; }
+
+    .page-row {
+      display: grid; grid-template-columns: 1fr 140px 120px; gap: 16px;
+      padding: 14px 24px; border-bottom: 1px solid var(--rule); align-items: center;
+    }
+    .page-row:last-child { border-bottom: none; }
+    .page-name { font-size: 14px; font-weight: 600; }
+    .page-route { font-size: 12px; color: var(--text3); font-family: 'SF Mono', 'Fira Code', monospace; }
+    .page-status { font-size: 10px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; padding: 3px 12px; border-radius: 100px; text-align: center; }
+    .status-ready { background: var(--emerald2); color: var(--emerald); border: 1px solid rgba(16,185,129,0.2); }
+    .status-partial { background: var(--amber2); color: var(--amber); border: 1px solid rgba(245,158,11,0.2); }
+    .status-needed { background: var(--red2); color: var(--red); border: 1px solid rgba(239,68,68,0.2); }
+    .status-cms { background: var(--violet2); color: var(--violet); border: 1px solid rgba(168,85,247,0.2); }
+
+    .page-note { font-size: 12px; color: var(--text3); line-height: 1.5; padding: 0 24px 14px; }
+
+    /* Legend */
+    .legend { display: flex; flex-wrap: wrap; gap: 16px; margin-bottom: 28px; }
+    .legend-item { display: flex; align-items: center; gap: 6px; }
+    .legend-label { font-size: 12px; color: var(--text2); }
+
+    /* Gap list */
+    .gap-item {
+      background: var(--surface); border: 1px solid var(--rule); border-radius: 12px;
+      padding: 20px 24px; margin-bottom: 10px;
+    }
+    .gap-item:hover { border-color: var(--amber); }
+    .gap-title { font-size: 14px; font-weight: 700; margin-bottom: 4px; }
+    .gap-desc { font-size: 13px; color: var(--text2); line-height: 1.6; }
+    .gap-source { font-size: 12px; color: var(--text3); margin-top: 6px; font-style: italic; }
+
+    /* Footer */
+    .hub-footer {
+      text-align: center; padding: 48px 24px; font-size: 12px; color: var(--text3);
+      border-top: 1px solid var(--rule); position: relative; z-index: 1;
+    }
+
+    @media (max-width: 640px) {
+      .content { padding: 0 16px 80px; }
+      .page-row { grid-template-columns: 1fr; gap: 4px; }
+      .spec-row { flex-direction: column; gap: 2px; }
+    }
+  </style>
+</head>
+<body>
+<div class="bg-glow"></div>
+
+<nav class="hub-nav">
+  <a class="back-nav" href="index.html">&larr; FCI Brand Hub</a>
+  <div class="hub-theme-toggle">
+    <button onclick="document.documentElement.setAttribute('data-hub-theme','dark');this.classList.add('active');this.nextElementSibling.classList.remove('active')">Dark</button>
+    <button onclick="document.documentElement.setAttribute('data-hub-theme','light');this.classList.add('active');this.previousElementSibling.classList.remove('active')">Light</button>
+  </div>
+</nav>
+
+<header>
+  <div class="header-eyebrow">Phase 4 — Website Build</div>
+  <h1>Website Architecture</h1>
+  <p>Complete sitemap, tech stack, content readiness status, and Phase 3 gaps for the new FCI website. FastAPI + HTMX, Honest Code methodology, 24 pages across 7 sections.</p>
+</header>
+
+<div class="content">
+
+  <!-- ═══ TECH STACK ═══ -->
+  <div class="section-divider">
+    <div class="line"></div>
+    <div class="label" style="color: var(--blue);">Tech Stack</div>
+    <div class="line"></div>
+  </div>
+
+  <div class="spec-box">
+    <h3>Honest Code &middot; FastAPI + HTMX</h3>
+    <div class="spec-row"><div class="spec-label">Backend</div><div class="spec-value">FastAPI &mdash; route handlers at the boundary, pure functions in app/logic/</div></div>
+    <div class="spec-row"><div class="spec-label">Frontend</div><div class="spec-value">HTMX &mdash; server-rendered HTML, fragment swaps, no client-side state store</div></div>
+    <div class="spec-row"><div class="spec-label">Templates</div><div class="spec-value">Jinja2 &mdash; base.html shell, page templates, _fragment.html partials for HTMX</div></div>
+    <div class="spec-row"><div class="spec-label">CSS</div><div class="spec-value">Custom properties in :root, BEM naming, one file per component, no Tailwind</div></div>
+    <div class="spec-row"><div class="spec-label">Data</div><div class="spec-value">TypedDict over classes, pure functions, dict-lookup polymorphism</div></div>
+    <div class="spec-row"><div class="spec-label">News CMS</div><div class="spec-value">Admin route with auth &mdash; create/edit/publish news articles and Cyber Bites via HTMX forms</div></div>
+    <div class="spec-row"><div class="spec-label">Database</div><div class="spec-value">SQLite (news articles, Cyber Bites, contact form submissions) &mdash; SQL over caches (P09)</div></div>
+    <div class="spec-row"><div class="spec-label">Hosting</div><div class="spec-value">TBD &mdash; Railway, Render, Fly.io, or self-hosted (needs persistent storage for SQLite + CMS)</div></div>
+    <div class="spec-row"><div class="spec-label">Domain</div><div class="spec-value">fcicyber.com (existing) &mdash; DNS cutover from WordPress when ready</div></div>
+  </div>
+
+  <div class="spec-box">
+    <h3>Project Structure (Honest Code)</h3>
+    <p style="font-family: 'SF Mono', 'Fira Code', monospace; font-size: 13px; line-height: 2; color: var(--text2);">
+      app/<br>
+      &nbsp;&nbsp;main.py &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&mdash; app creation, router inclusion, lifespan<br>
+      &nbsp;&nbsp;routes/<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;pages.py &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&mdash; public page routes (/, /about, /markets/...)<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;news.py &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&mdash; news listing + detail routes<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;cyber_bites.py &nbsp;&mdash; cyber bites listing + detail<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;contact.py &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&mdash; contact form handler<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;admin.py &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&mdash; CMS admin routes (auth-protected)<br>
+      &nbsp;&nbsp;logic/<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;content.py &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&mdash; pure functions for content retrieval/filtering<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;contact.py &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&mdash; pure validation/formatting<br>
+      &nbsp;&nbsp;templates/<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;base.html &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&mdash; shell (nav, footer, theme toggle)<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;pages/ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&mdash; full page templates<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;fragments/ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&mdash; HTMX partial responses<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;admin/ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&mdash; CMS templates<br>
+      &nbsp;&nbsp;static/<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;css/ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&mdash; component CSS files (BEM)<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;images/ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&mdash; logos, hero assets, team photos<br>
+      &nbsp;&nbsp;db.py &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&mdash; SQLite connection (context manager, P12)<br>
+      tests/<br>
+      &nbsp;&nbsp;test_pure.py &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&mdash; pure assertions, zero mocks (P10)<br>
+      &nbsp;&nbsp;test_routes.py &nbsp;&nbsp;&nbsp;&mdash; integration via httpx.AsyncClient
+    </p>
+  </div>
+
+  <!-- ═══ SITEMAP ═══ -->
+  <div class="section-divider">
+    <div class="line"></div>
+    <div class="label" style="color: var(--emerald);">Full Sitemap &mdash; 24 Pages</div>
+    <div class="line"></div>
+  </div>
+
+  <div class="legend">
+    <div class="legend-item"><span class="page-status status-ready">Ready</span><span class="legend-label">Approved copy in hub</span></div>
+    <div class="legend-item"><span class="page-status status-partial">Partial</span><span class="legend-label">Content exists, needs work</span></div>
+    <div class="legend-item"><span class="page-status status-needed">Needed</span><span class="legend-label">Phase 3 &mdash; must write</span></div>
+    <div class="legend-item"><span class="page-status status-cms">CMS</span><span class="legend-label">Database-driven</span></div>
+  </div>
+
+  <div class="sitemap">
+
+    <!-- 1. PRIMARY NAV -->
+    <div class="site-section open">
+      <div class="site-section-header" onclick="this.parentElement.classList.toggle('open')">
+        <div class="site-section-title">1 &middot; Primary Navigation</div>
+        <div class="site-section-meta"><span class="page-count">6 pages</span></div>
+      </div>
+      <div class="site-section-body">
+        <div class="page-row">
+          <div><div class="page-name">Homepage</div><div class="page-route">/</div></div>
+          <div class="page-status status-ready">Ready</div>
+          <div style="font-size:12px;color:var(--text3)">Website Copy</div>
+        </div>
+        <div class="page-row">
+          <div><div class="page-name">About FCI</div><div class="page-route">/about</div></div>
+          <div class="page-status status-ready">Ready</div>
+          <div style="font-size:12px;color:var(--text3)">Website Copy + Company &amp; Team</div>
+        </div>
+        <div class="page-row">
+          <div><div class="page-name">What Changes</div><div class="page-route">/results</div></div>
+          <div class="page-status status-ready">Ready</div>
+          <div style="font-size:12px;color:var(--text3)">Website Copy</div>
+        </div>
+        <div class="page-row">
+          <div><div class="page-name">News</div><div class="page-route">/news</div></div>
+          <div class="page-status status-cms">CMS</div>
+          <div style="font-size:12px;color:var(--text3)">40 articles migrated</div>
+        </div>
+        <div class="page-row">
+          <div><div class="page-name">Contact</div><div class="page-route">/contact</div></div>
+          <div class="page-status status-partial">Partial</div>
+          <div style="font-size:12px;color:var(--text3)">Info in Company &amp; Team</div>
+        </div>
+        <div class="page-row">
+          <div><div class="page-name">Support</div><div class="page-route">/support</div></div>
+          <div class="page-status status-needed">Needed</div>
+          <div style="font-size:12px;color:var(--text3)">Needs dedicated page copy</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2. MARKETS -->
+    <div class="site-section open">
+      <div class="site-section-header" onclick="this.parentElement.classList.toggle('open')">
+        <div class="site-section-title">2 &middot; Markets (Who We Serve)</div>
+        <div class="site-section-meta"><span class="page-count">4 pages</span></div>
+      </div>
+      <div class="site-section-body">
+        <div class="page-row">
+          <div><div class="page-name">Markets Overview</div><div class="page-route">/markets</div></div>
+          <div class="page-status status-needed">Needed</div>
+          <div style="font-size:12px;color:var(--text3)">Landing page for all 3 markets</div>
+        </div>
+        <div class="page-row">
+          <div><div class="page-name">Broker-Dealers &amp; Branch Offices</div><div class="page-route">/markets/broker-dealers</div></div>
+          <div class="page-status status-ready">Ready</div>
+          <div style="font-size:12px;color:var(--text3)">Website Copy + One-Pager</div>
+        </div>
+        <div class="page-row">
+          <div><div class="page-name">Insurance Carriers &amp; Agencies</div><div class="page-route">/markets/insurance</div></div>
+          <div class="page-status status-ready">Ready</div>
+          <div style="font-size:12px;color:var(--text3)">Website Copy + One-Pager</div>
+        </div>
+        <div class="page-row">
+          <div><div class="page-name">Registered Investment Advisers</div><div class="page-route">/markets/rias</div></div>
+          <div class="page-status status-ready">Ready</div>
+          <div style="font-size:12px;color:var(--text3)">Website Copy + One-Pager</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3. SOLUTIONS -->
+    <div class="site-section open">
+      <div class="site-section-header" onclick="this.parentElement.classList.toggle('open')">
+        <div class="site-section-title">3 &middot; Solutions (What We Do)</div>
+        <div class="site-section-meta"><span class="page-count">6 pages</span></div>
+      </div>
+      <div class="site-section-body">
+        <div class="page-row">
+          <div><div class="page-name">Solutions Overview</div><div class="page-route">/solutions</div></div>
+          <div class="page-status status-needed">Needed</div>
+          <div style="font-size:12px;color:var(--text3)">Landing page for all solutions</div>
+        </div>
+        <div class="page-row">
+          <div><div class="page-name">Managed Cybersecurity</div><div class="page-route">/solutions/managed-cybersecurity</div></div>
+          <div class="page-status status-ready">Ready</div>
+          <div style="font-size:12px;color:var(--text3)">Website Copy</div>
+        </div>
+        <div class="page-row">
+          <div><div class="page-name">Zero Trust</div><div class="page-route">/solutions/zero-trust</div></div>
+          <div class="page-status status-ready">Ready</div>
+          <div style="font-size:12px;color:var(--text3)">Website Copy</div>
+        </div>
+        <div class="page-row">
+          <div><div class="page-name">The CISO Portal</div><div class="page-route">/solutions/ciso-portal</div></div>
+          <div class="page-status status-ready">Ready</div>
+          <div style="font-size:12px;color:var(--text3)">Website Copy + White Paper + Design Ref</div>
+        </div>
+        <div class="page-row">
+          <div><div class="page-name">Compliance &amp; Exam Readiness</div><div class="page-route">/solutions/compliance</div></div>
+          <div class="page-status status-ready">Ready</div>
+          <div style="font-size:12px;color:var(--text3)">Website Copy</div>
+        </div>
+        <div class="page-row">
+          <div><div class="page-name">Security Assessment</div><div class="page-route">/solutions/security-assessment</div></div>
+          <div class="page-status status-ready">Ready</div>
+          <div style="font-size:12px;color:var(--text3)">Website Copy + Assessment hub page</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 4. RESOURCES -->
+    <div class="site-section open">
+      <div class="site-section-header" onclick="this.parentElement.classList.toggle('open')">
+        <div class="site-section-title">4 &middot; Resources</div>
+        <div class="site-section-meta"><span class="page-count">4 pages</span></div>
+      </div>
+      <div class="site-section-body">
+        <div class="page-row">
+          <div><div class="page-name">Cyber Bites</div><div class="page-route">/resources/cyber-bites</div></div>
+          <div class="page-status status-cms">CMS</div>
+          <div style="font-size:12px;color:var(--text3)">40 bites migrated</div>
+        </div>
+        <div class="page-row">
+          <div><div class="page-name">Speaking &amp; Media</div><div class="page-route">/resources/speaking</div></div>
+          <div class="page-status status-ready">Ready</div>
+          <div style="font-size:12px;color:var(--text3)">Speaking &amp; Media hub page</div>
+        </div>
+        <div class="page-row">
+          <div><div class="page-name">FAQs / Questions</div><div class="page-route">/resources/questions</div></div>
+          <div class="page-status status-partial">Partial</div>
+          <div style="font-size:12px;color:var(--text3)">Question Layer draft exists</div>
+        </div>
+        <div class="page-row">
+          <div><div class="page-name">FCI &amp; AI</div><div class="page-route">/resources/ai</div></div>
+          <div class="page-status status-partial">Partial</div>
+          <div style="font-size:12px;color:var(--text3)">AI Messaging hub page exists</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 5. COMPANY -->
+    <div class="site-section open">
+      <div class="site-section-header" onclick="this.parentElement.classList.toggle('open')">
+        <div class="site-section-title">5 &middot; Company</div>
+        <div class="site-section-meta"><span class="page-count">2 pages</span></div>
+      </div>
+      <div class="site-section-body">
+        <div class="page-row">
+          <div><div class="page-name">Team &amp; Leadership</div><div class="page-route">/company/team</div></div>
+          <div class="page-status status-ready">Ready</div>
+          <div style="font-size:12px;color:var(--text3)">Company &amp; Team hub page</div>
+        </div>
+        <div class="page-row">
+          <div><div class="page-name">Careers</div><div class="page-route">/company/careers</div></div>
+          <div class="page-status status-ready">Ready</div>
+          <div style="font-size:12px;color:var(--text3)">Rewritten in Company &amp; Team</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 6. LEGAL / UTILITY -->
+    <div class="site-section open">
+      <div class="site-section-header" onclick="this.parentElement.classList.toggle('open')">
+        <div class="site-section-title">6 &middot; Legal &amp; Utility</div>
+        <div class="site-section-meta"><span class="page-count">2 pages</span></div>
+      </div>
+      <div class="site-section-body">
+        <div class="page-row">
+          <div><div class="page-name">Privacy Policy</div><div class="page-route">/privacy</div></div>
+          <div class="page-status status-needed">Needed</div>
+          <div style="font-size:12px;color:var(--text3)">Legal review required</div>
+        </div>
+        <div class="page-row">
+          <div><div class="page-name">Terms of Service</div><div class="page-route">/terms</div></div>
+          <div class="page-status status-needed">Needed</div>
+          <div style="font-size:12px;color:var(--text3)">Legal review required</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ═══ NAVIGATION STRUCTURE ═══ -->
+  <div class="section-divider">
+    <div class="line"></div>
+    <div class="label" style="color: var(--indigo);">Navigation Structure</div>
+    <div class="line"></div>
+  </div>
+
+  <div class="spec-box">
+    <h3>Primary Nav (Desktop)</h3>
+    <p style="font-size: 14px; color: var(--text1); line-height: 2;">
+      <strong>Markets</strong> &rarr; Broker-Dealers &amp; Branch Offices &middot; Insurance Carriers &amp; Agencies &middot; RIAs<br>
+      <strong>Solutions</strong> &rarr; Managed Cybersecurity &middot; Zero Trust &middot; CISO Portal &middot; Compliance &middot; Security Assessment<br>
+      <strong>Resources</strong> &rarr; Cyber Bites &middot; Speaking &amp; Media &middot; Questions &middot; FCI &amp; AI<br>
+      <strong>About</strong> &rarr; About FCI &middot; Team &middot; Careers &middot; What Changes<br>
+      <strong>News</strong> (direct link)<br>
+      <strong>Contact</strong> (CTA button)
+    </p>
+  </div>
+
+  <div class="spec-box">
+    <h3>Footer</h3>
+    <p style="font-size: 14px; color: var(--text2); line-height: 2;">
+      Three columns: Markets (3 links) &middot; Solutions (5 links) &middot; Company (About, Team, Careers, News, Contact)<br>
+      Bottom bar: &copy; FCI &middot; Privacy Policy &middot; Terms of Service &middot; Support: 973-227-8878 &middot; General: 888-434-6443
+    </p>
+  </div>
+
+  <!-- ═══ CONTENT READINESS ═══ -->
+  <div class="section-divider">
+    <div class="line"></div>
+    <div class="label" style="color: var(--emerald);">Content Readiness Summary</div>
+    <div class="line"></div>
+  </div>
+
+  <div class="spec-box">
+    <h3>By Status</h3>
+    <div class="spec-row"><div class="spec-label" style="color:var(--emerald);">Ready (15)</div><div class="spec-value">Homepage, About, What Changes, 3 Markets, 5 Solutions, Speaking, Team, Careers</div></div>
+    <div class="spec-row"><div class="spec-label" style="color:var(--amber);">Partial (3)</div><div class="spec-value">Contact, FAQs/Questions, FCI &amp; AI</div></div>
+    <div class="spec-row"><div class="spec-label" style="color:var(--red);">Needed (4)</div><div class="spec-value">Support, Markets Overview, Solutions Overview, Privacy/Terms</div></div>
+    <div class="spec-row"><div class="spec-label" style="color:var(--violet);">CMS (2)</div><div class="spec-value">News (40 seed articles), Cyber Bites (40 seed bites)</div></div>
+  </div>
+
+  <!-- ═══ PHASE 3 GAPS ═══ -->
+  <div class="section-divider">
+    <div class="line"></div>
+    <div class="label" style="color: var(--amber);">Phase 3 — Content Gaps to Fill</div>
+    <div class="line"></div>
+  </div>
+
+  <div class="gap-item">
+    <div class="gap-title">1 &middot; Markets Overview Page</div>
+    <div class="gap-desc">A landing page that introduces all three markets with a brief positioning statement for each, linking down to the individual market pages. Sets the stage for why FCI serves these specific industries.</div>
+    <div class="gap-source">Source: write new, informed by Messaging Architecture v2 positioning</div>
+  </div>
+
+  <div class="gap-item">
+    <div class="gap-title">2 &middot; Solutions Overview Page</div>
+    <div class="gap-desc">A landing page that maps FCI's solution set: Managed Cybersecurity, Zero Trust, CISO Portal, Compliance &amp; Exam Readiness, Security Assessment. Should clarify how they relate to each other and which problems each solves.</div>
+    <div class="gap-source">Source: write new, informed by Website Copy service sections</div>
+  </div>
+
+  <div class="gap-item">
+    <div class="gap-title">3 &middot; Contact Page Copy</div>
+    <div class="gap-desc">Dedicated contact page with form, phone numbers, HQ address, and a clear "what happens next" statement. Contact info exists in Company &amp; Team but needs a standalone page treatment with a form.</div>
+    <div class="gap-source">Source: polish from Company &amp; Team contact section</div>
+  </div>
+
+  <div class="gap-item">
+    <div class="gap-title">4 &middot; Support Page Copy</div>
+    <div class="gap-desc">Dedicated support page for existing clients — phone number (973-227-8878), support hours, what to do in an emergency/breach, and how to reach the SOC. Distinct from the sales-oriented Contact page.</div>
+    <div class="gap-source">Source: write new, informed by old fcicyber.com support info + Company &amp; Team</div>
+  </div>
+
+  <div class="gap-item">
+    <div class="gap-title">5 &middot; FAQs / Questions Page Polish</div>
+    <div class="gap-desc">The Question Layer working draft has the strategy (They Ask, You Answer). Needs to be turned into actual Q&amp;A content for each market and solution page, plus a standalone questions page.</div>
+    <div class="gap-source">Source: expand from Question Layer — Working Draft</div>
+  </div>
+
+  <div class="gap-item">
+    <div class="gap-title">6 &middot; FCI &amp; AI Page Polish</div>
+    <div class="gap-desc">The AI Messaging hub page covers the story arc and four pillars. Needs to be adapted from internal reference into a public-facing page that positions FCI's AI approach for prospects.</div>
+    <div class="gap-source">Source: adapt from FCI AI Messaging hub page</div>
+  </div>
+
+  <div class="gap-item">
+    <div class="gap-title">7 &middot; Privacy Policy &amp; Terms of Service</div>
+    <div class="gap-desc">Standard legal pages. These typically require legal review — can be drafted but should be reviewed by counsel before publishing.</div>
+    <div class="gap-source">Source: draft new, legal review required</div>
+  </div>
+
+  <!-- ═══ BUILD ORDER ═══ -->
+  <div class="section-divider">
+    <div class="line"></div>
+    <div class="label" style="color: var(--violet);">Recommended Build Order</div>
+    <div class="line"></div>
+  </div>
+
+  <div class="spec-box">
+    <h3>Sprint 1 — Foundation</h3>
+    <p><strong>Goal:</strong> FastAPI app skeleton, base template, theme system, nav/footer, homepage rendering.</p>
+    <p>Set up the project structure per Honest Code. Create base.html with the nav structure, dark/light theme toggle (matching the hub design system), and footer. Render the homepage from the approved Website Copy content. Deploy to staging.</p>
+  </div>
+
+  <div class="spec-box">
+    <h3>Sprint 2 — Core Pages</h3>
+    <p><strong>Goal:</strong> All "Ready" static pages live — About, What Changes, 3 Markets, 5 Solutions, Team, Careers.</p>
+    <p>These all have approved copy in the hub. Convert each to Jinja2 templates inheriting from base.html. HTMX fragments for market/solution selector interactions. This is 13 pages with content already written.</p>
+  </div>
+
+  <div class="spec-box">
+    <h3>Sprint 3 — CMS + Dynamic Content</h3>
+    <p><strong>Goal:</strong> News and Cyber Bites running from SQLite, with admin interface for publishing.</p>
+    <p>Seed the database with the 40 migrated news articles and 40 Cyber Bites. Build listing pages with HTMX-powered filters and pagination. Build admin routes for create/edit/publish behind authentication.</p>
+  </div>
+
+  <div class="spec-box">
+    <h3>Sprint 4 — Phase 3 Content + Polish</h3>
+    <p><strong>Goal:</strong> Fill the 7 content gaps, build Contact form, Speaking &amp; Media page, Support page.</p>
+    <p>Write Markets Overview, Solutions Overview, Contact page, Support page. Polish the Question Layer into live FAQ content. Adapt the AI Messaging page. Draft Privacy Policy and Terms of Service.</p>
+  </div>
+
+  <div class="spec-box">
+    <h3>Sprint 5 — Launch Prep</h3>
+    <p><strong>Goal:</strong> DNS cutover, SEO, redirects, final QA.</p>
+    <p>Set up 301 redirects from old WordPress URLs to new routes. Meta tags, Open Graph, structured data. Performance testing. Security headers. DNS cutover from WordPress to FastAPI. Monitor for 404s post-launch.</p>
+  </div>
+
+</div>
+
+<footer class="hub-footer">FCI Brand Hub &middot; Website Architecture &middot; Phase 4 Plan</footer>
+</body>
+</html>
