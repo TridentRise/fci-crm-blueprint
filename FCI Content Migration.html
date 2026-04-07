@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FCI — Content Migration Inventory</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Inter+Tight:wght@600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    *, ::before, ::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #060B14; --surface: #0D1626; --surface2: #111F33;
+      --blue: #2563EB; --blue2: rgba(37,99,235,0.12);
+      --sky: #0EA5E9; --sky2: rgba(14,165,233,0.12);
+      --emerald: #10B981; --emerald2: rgba(16,185,129,0.10);
+      --amber: #F59E0B; --amber2: rgba(245,158,11,0.10);
+      --red: #EF4444; --red2: rgba(239,68,68,0.10);
+      --violet: #A855F7; --violet2: rgba(168,85,247,0.10);
+      --text1: #F1F5F9; --text2: #94A3B8; --text3: #475569; --rule: #1A2B40;
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text1); min-height: 100vh; -webkit-font-smoothing: antialiased; }
+    ::selection { background: var(--blue); color: #fff; }
+
+    .bg-glow {
+      position: fixed; inset: 0; pointer-events: none; z-index: 0;
+      background:
+        radial-gradient(70% 45% at 50% -5%, rgba(37,99,235,0.10) 0%, transparent 65%),
+        radial-gradient(35% 28% at 6% 88%, rgba(16,185,129,0.06) 0%, transparent 55%);
+    }
+
+    /* Nav */
+    .hub-nav {
+      position: fixed; top: 0; left: 0; right: 0; height: 52px; z-index: 200;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 32px;
+      background: rgba(6,11,20,0.88);
+      backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--rule);
+    }
+    .hub-nav .back-nav {
+      font-size: 13px; font-weight: 600; text-decoration: none;
+      color: var(--text3); transition: color 0.15s;
+    }
+    .hub-nav .back-nav:hover { color: var(--text1); }
+    .hub-theme-toggle {
+      display: flex; align-items: center;
+      background: var(--surface2); border: 1px solid var(--rule);
+      border-radius: 8px; padding: 3px; gap: 2px;
+    }
+    .hub-theme-toggle button {
+      font-family: inherit; font-size: 11px; font-weight: 600;
+      letter-spacing: 0.03em; color: var(--text3);
+      background: transparent; border: none; cursor: pointer;
+      padding: 4px 10px; border-radius: 6px; line-height: 1;
+      transition: background 0.15s, color 0.15s;
+    }
+    .hub-theme-toggle button:hover { color: var(--text1); }
+    .hub-theme-toggle button.active { background: var(--surface); color: var(--text1); box-shadow: 0 1px 3px rgba(0,0,0,0.15); }
+
+    /* Light mode nav */
+    html[data-hub-theme=light] .hub-nav { background: rgba(255,255,255,0.92); border-bottom-color: rgba(15,23,42,0.08); }
+    html[data-hub-theme=light] .hub-nav .back-nav { color: #475569; }
+    html[data-hub-theme=light] .hub-nav .back-nav:hover { color: #0F172A; }
+    html[data-hub-theme=light] .hub-theme-toggle { background: rgba(15,23,42,0.06); border-color: rgba(15,23,42,0.1); }
+    html[data-hub-theme=light] .hub-theme-toggle button { color: #94A3B8; }
+    html[data-hub-theme=light] .hub-theme-toggle button:hover { color: #0F172A; }
+    html[data-hub-theme=light] .hub-theme-toggle button.active { background: #fff; color: #0F172A; box-shadow: 0 1px 3px rgba(0,0,0,0.12); }
+
+    /* Light mode */
+    html[data-hub-theme=light] { --bg: #F8FAFC; --surface: #FFFFFF; --surface2: #F1F5F9; --text1: #0F172A; --text2: #475569; --text3: #94A3B8; --rule: #E2E8F0; }
+    html[data-hub-theme=light] body { background: #F8FAFC; }
+    html[data-hub-theme=light] .bg-glow { background: radial-gradient(70% 45% at 50% -5%, rgba(37,99,235,0.06) 0%, transparent 65%); }
+    @media (prefers-color-scheme: light) {
+      html:not([data-hub-theme=dark]) { --bg: #F8FAFC; --surface: #FFFFFF; --surface2: #F1F5F9; --text1: #0F172A; --text2: #475569; --text3: #94A3B8; --rule: #E2E8F0; }
+      html:not([data-hub-theme=dark]) body { background: #F8FAFC; }
+      html:not([data-hub-theme=dark]) .bg-glow { background: radial-gradient(70% 45% at 50% -5%, rgba(37,99,235,0.06) 0%, transparent 65%); }
+      html:not([data-hub-theme=dark]) .hub-nav { background: rgba(255,255,255,0.92); border-bottom-color: rgba(15,23,42,0.08); }
+      html:not([data-hub-theme=dark]) .hub-nav .back-nav { color: #475569; }
+      html:not([data-hub-theme=dark]) .hub-nav .back-nav:hover { color: #0F172A; }
+      html:not([data-hub-theme=dark]) .hub-theme-toggle { background: rgba(15,23,42,0.06); border-color: rgba(15,23,42,0.1); }
+      html:not([data-hub-theme=dark]) .hub-theme-toggle button { color: #94A3B8; }
+      html:not([data-hub-theme=dark]) .hub-theme-toggle button:hover { color: #0F172A; }
+      html:not([data-hub-theme=dark]) .hub-theme-toggle button.active { background: #fff; color: #0F172A; box-shadow: 0 1px 3px rgba(0,0,0,0.12); }
+    }
+
+    /* Header */
+    header { position: relative; z-index: 1; text-align: center; padding: 112px 24px 48px; }
+    .header-eyebrow {
+      display: inline-block; font-size: 10px; font-weight: 700;
+      letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--blue); border: 1px solid rgba(37,99,235,0.3);
+      background: rgba(37,99,235,0.07); padding: 5px 16px; border-radius: 100px; margin-bottom: 24px;
+    }
+    header h1 {
+      font-family: 'Inter Tight', sans-serif;
+      font-size: clamp(32px, 5vw, 48px); font-weight: 800;
+      letter-spacing: -0.03em; line-height: 1.1; color: var(--text1); margin-bottom: 16px;
+    }
+    header p { font-size: 15px; color: var(--text2); line-height: 1.7; max-width: 560px; margin: 0 auto; }
+
+    /* Stats bar */
+    .stats-bar {
+      position: relative; z-index: 1;
+      display: flex; justify-content: center; gap: 32px; flex-wrap: wrap;
+      padding: 0 24px 48px;
+    }
+    .stat-item { text-align: center; }
+    .stat-num { font-family: 'Inter Tight', sans-serif; font-size: 28px; font-weight: 800; color: var(--text1); }
+    .stat-label { font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text3); margin-top: 4px; }
+
+    /* Main content */
+    .content { position: relative; z-index: 1; max-width: 960px; width: 100%; margin: 0 auto; padding: 0 32px 100px; }
+
+    /* Section dividers */
+    .section-divider {
+      display: flex; align-items: center; gap: 16px;
+      margin: 56px 0 24px;
+    }
+    .section-divider:first-child { margin-top: 0; }
+    .section-divider .line { flex: 1; height: 1px; background: var(--rule); }
+    .section-divider .label {
+      font-size: 11px; font-weight: 700; letter-spacing: 0.18em;
+      text-transform: uppercase; white-space: nowrap;
+    }
+
+    /* Status badges */
+    .badge {
+      display: inline-block; font-size: 10px; font-weight: 700;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      padding: 3px 10px; border-radius: 100px;
+    }
+    .badge-migrate { background: var(--emerald2); color: var(--emerald); border: 1px solid rgba(16,185,129,0.25); }
+    .badge-archive { background: var(--blue2); color: var(--blue); border: 1px solid rgba(37,99,235,0.25); }
+    .badge-drop { background: var(--red2); color: var(--red); border: 1px solid rgba(239,68,68,0.25); }
+    .badge-done { background: var(--violet2); color: var(--violet); border: 1px solid rgba(168,85,247,0.25); }
+
+    /* Content items */
+    .item-group {
+      background: var(--surface); border: 1px solid var(--rule);
+      border-radius: 14px; overflow: hidden; margin-bottom: 16px;
+    }
+    .item-group-header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 20px 24px; cursor: pointer; user-select: none;
+      transition: background 0.15s;
+    }
+    .item-group-header:hover { background: var(--surface2); }
+    .item-group-title {
+      font-family: 'Inter Tight', sans-serif;
+      font-size: 18px; font-weight: 700; color: var(--text1);
+    }
+    .item-group-count {
+      font-size: 12px; font-weight: 600; color: var(--text3);
+    }
+    .item-group-body {
+      border-top: 1px solid var(--rule);
+    }
+    .item-row {
+      display: flex; align-items: flex-start; gap: 16px;
+      padding: 14px 24px;
+      border-bottom: 1px solid var(--rule);
+      font-size: 14px;
+    }
+    .item-row:last-child { border-bottom: none; }
+    .item-title { flex: 1; color: var(--text1); font-weight: 500; line-height: 1.5; }
+    .item-date { font-size: 12px; color: var(--text3); font-weight: 500; white-space: nowrap; min-width: 90px; text-align: right; }
+    .item-url { font-size: 11px; color: var(--text3); word-break: break-all; margin-top: 2px; }
+    .item-desc { font-size: 13px; color: var(--text2); line-height: 1.6; margin-top: 4px; }
+
+    /* Legend */
+    .legend {
+      display: flex; gap: 16px; flex-wrap: wrap;
+      padding: 20px 0; margin-bottom: 24px;
+    }
+    .legend-item { display: flex; align-items: center; gap: 8px; }
+    .legend-label { font-size: 12px; color: var(--text2); }
+
+    /* Footer */
+    footer { position: relative; z-index: 1; text-align: center; padding: 0 24px 48px; }
+    .footer-inner { display: inline-flex; align-items: center; gap: 14px; }
+    .footer-dot { width: 3px; height: 3px; border-radius: 50%; background: var(--text3); }
+    footer span { font-size: 12px; color: var(--text3); }
+    .footer-logo { font-family: 'Inter Tight', sans-serif; font-size: 15px; font-weight: 700; color: var(--text3); }
+
+    @media (max-width: 640px) {
+      .content { padding: 0 20px 80px; }
+      .stats-bar { gap: 20px; }
+      .item-row { flex-direction: column; gap: 8px; }
+      .item-date { text-align: left; }
+    }
+  </style>
+</head>
+<body>
+<div class="bg-glow"></div>
+
+<nav class="hub-nav">
+  <a href="index.html" class="back-nav">&larr; Brand Hub</a>
+  <div class="hub-theme-toggle">
+    <button data-hub-mode="light" onclick="setHubTheme('light')">Light</button>
+    <button data-hub-mode="dark" onclick="setHubTheme('dark')">Dark</button>
+    <button data-hub-mode="system" onclick="setHubTheme('system')" class="active">System</button>
+  </div>
+</nav>
+
+<header>
+  <div class="header-eyebrow">Phase 2 &middot; Website Prep</div>
+  <h1>Content Migration Inventory</h1>
+  <p>Complete catalog of fcicyber.com content with migration decisions. This is the master checklist for everything that needs to happen before the new website launches.</p>
+</header>
+
+<div class="stats-bar">
+  <div class="stat-item"><div class="stat-num">35+</div><div class="stat-label">News Articles</div></div>
+  <div class="stat-item"><div class="stat-num">40</div><div class="stat-label">Cyber Bites</div></div>
+  <div class="stat-item"><div class="stat-num">8</div><div class="stat-label">Team Members</div></div>
+  <div class="stat-item"><div class="stat-num">8</div><div class="stat-label">Service Pages</div></div>
+  <div class="stat-item"><div class="stat-num">6</div><div class="stat-label">Whitepapers</div></div>
+</div>
+
+<div class="content">
+
+  <div class="legend">
+    <div class="legend-item"><span class="badge badge-migrate">Migrate &amp; Polish</span><span class="legend-label">Bring to new site</span></div>
+    <div class="legend-item"><span class="badge badge-archive">Archive</span><span class="legend-label">Hub reference only</span></div>
+    <div class="legend-item"><span class="badge badge-drop">Drop</span><span class="legend-label">Not migrating</span></div>
+    <div class="legend-item"><span class="badge badge-done">Done</span><span class="legend-label">Already in hub</span></div>
+  </div>
+
+  <!-- ═══════════════════════════════════════ -->
+  <!-- NEWS & PRESS RELEASES -->
+  <!-- ═══════════════════════════════════════ -->
+  <div class="section-divider">
+    <div class="line"></div>
+    <div class="label" style="color: var(--emerald);">News &amp; Press Releases &mdash; <span class="badge badge-migrate">Migrate All</span></div>
+    <div class="line"></div>
+  </div>
+
+  <div class="item-group">
+    <div class="item-group-header" onclick="this.parentElement.classList.toggle('open')">
+      <div class="item-group-title">News Articles (35+)</div>
+      <div class="item-group-count">Click to expand &darr;</div>
+    </div>
+    <div class="item-group-body" style="display:none;">
+      <div class="item-row"><div class="item-title">FCI Announces IT Support Services to Extend Internal IT Teams</div><div class="item-date">Mar 9, 2026</div></div>
+      <div class="item-row"><div class="item-title">FCI Launches CISO Portal for Financial Services Distributed Organizations</div><div class="item-date">Mar 9, 2026</div></div>
+      <div class="item-row"><div class="item-title">FPA Launches New Cybersecurity Certificate Program for Financial Planners</div><div class="item-date">Apr 2, 2025</div></div>
+      <div class="item-row"><div class="item-title">Annual Awards Announced at T3 Technology Conference</div><div class="item-date">Mar 6, 2025</div></div>
+      <div class="item-row"><div class="item-title">FCI Launches Cloud Application Security Services</div><div class="item-date">Mar 4, 2025</div></div>
+      <div class="item-row"><div class="item-title">FCI Partners With EVO Wealth Consulting</div><div class="item-date">Aug 6, 2024</div></div>
+      <div class="item-row"><div class="item-title">FCI CEO Brian Edelman Joins Tolerisk Advisory Board</div><div class="item-date">Mar 19, 2024</div></div>
+      <div class="item-row"><div class="item-title">Ian McKenna Shares Advice from Brian Edelman</div><div class="item-date">Mar 4, 2024</div></div>
+      <div class="item-row"><div class="item-title">FCI Mentioned In 2024 T3 / Information Advisor Software Survey</div><div class="item-date">Jan 25, 2024</div></div>
+      <div class="item-row"><div class="item-title">FCI Invites Vendors to Add Zero Trust MFA Feature</div><div class="item-date">Jan 22, 2024</div></div>
+      <div class="item-row"><div class="item-title">FCI Announces Alignment with New NYDFS Requirements</div><div class="item-date">Jan 22, 2024</div></div>
+      <div class="item-row"><div class="item-title">EBIX: Guard Yourself Against An Expensive Data Breach (Webinar)</div><div class="item-date">Oct 10, 2023</div></div>
+      <div class="item-row"><div class="item-title">Ebix Hosts Webinar Featuring FCI CEO Brian Edelman</div><div class="item-date">Sep 28, 2023</div></div>
+      <div class="item-row"><div class="item-title">Brian Edelman to Speak at Wells Fargo FiNet Annual Conference</div><div class="item-date">Sep 27, 2023</div></div>
+      <div class="item-row"><div class="item-title">Financial Planning Interviews Cybersecurity Expert Brian Edelman</div><div class="item-date">Jul 5, 2023</div></div>
+      <div class="item-row"><div class="item-title">Financial Planning Webinar Features Brian Edelman</div><div class="item-date">Jun 6, 2023</div></div>
+      <div class="item-row"><div class="item-title">Brian Edelman to Speak at TradePMR Synergy23 Conference</div><div class="item-date">May 30, 2023</div></div>
+      <div class="item-row"><div class="item-title">Brian Edelman Guidance for Retirement Plan Cybersecurity (PLANADVISER)</div><div class="item-date">Apr 3, 2023</div></div>
+      <div class="item-row"><div class="item-title">FCI Launches Zero-Trust Complete</div><div class="item-date">Mar 28, 2023</div></div>
+      <div class="item-row"><div class="item-title">Brian Edelman Presents at T3 Conference 2023</div><div class="item-date">Mar 13, 2023</div></div>
+      <div class="item-row"><div class="item-title">FCI Participates in Ebix Envision 2023</div><div class="item-date">Feb 21, 2023</div></div>
+      <div class="item-row"><div class="item-title">Broker World Highlights FCI as Cybersecurity Compliance Solution</div><div class="item-date">Feb 1, 2023</div></div>
+      <div class="item-row"><div class="item-title">Brian Edelman Cited in PLANADVISER Article</div><div class="item-date">Jan 11, 2023</div></div>
+      <div class="item-row"><div class="item-title">Bob Veres Interviews Brian Edelman (Inside Information)</div><div class="item-date">Dec 11, 2022</div></div>
+      <div class="item-row"><div class="item-title">PLANSPONSOR Article Cites Brian Edelman</div><div class="item-date">Dec 7, 2022</div></div>
+      <div class="item-row"><div class="item-title">Brian Edelman Named Featured Speaker at CNBC 2022 FA Summit</div><div class="item-date">Nov 21, 2022</div></div>
+      <div class="item-row"><div class="item-title">FCI Sponsored Cybersecurity Panel Discussion (Amelia Island)</div><div class="item-date">Oct 17, 2022</div></div>
+      <div class="item-row"><div class="item-title">FCI Shares Cyber Insurance Model at InsureTech Connect</div><div class="item-date">Sep 20, 2022</div></div>
+      <div class="item-row"><div class="item-title">FCI Article About OCSF in T3 Technology Hub</div><div class="item-date">Aug 17, 2022</div></div>
+      <div class="item-row"><div class="item-title">FCI Layers Zero Trust Across Four Critical Areas</div><div class="item-date">Jul 26, 2022</div></div>
+      <div class="item-row"><div class="item-title">FCI Named Top 10 Endpoint Security Companies 2022</div><div class="item-date">Jul 12, 2022</div></div>
+      <div class="item-row"><div class="item-title">Brian Edelman Joins CJK Group &amp; Sub-Four Capital Panel</div><div class="item-date">May 26, 2022</div></div>
+      <div class="item-row"><div class="item-title">Brian Edelman Presents to AssetMark Advisors</div><div class="item-date">May 13, 2022</div></div>
+      <div class="item-row"><div class="item-title">CISA Security Alert: Protecting Against Threats to MSPs</div><div class="item-date">May 11, 2022</div></div>
+      <div class="item-row"><div class="item-title">Forbes Cites Brian Edelman on AI in Cybersecurity</div><div class="item-date">May 10, 2022</div></div>
+      <div class="item-row"><div class="item-title">Brian Edelman Featured in NAIFA's Advisor Today</div><div class="item-date">May 6, 2022</div></div>
+      <div class="item-row"><div class="item-title">FCI Expands Co-Managed Cybersecurity Solutions</div><div class="item-date">Apr 19, 2022</div></div>
+      <div class="item-row"><div class="item-title">Financial Planning Article Cites Brian Edelman</div><div class="item-date">Apr 7, 2022</div></div>
+      <div class="item-row"><div class="item-title">Advisor Perspectives Publishes Brian Edelman M&amp;A Article</div><div class="item-date">Apr 5, 2022</div></div>
+      <div class="item-row"><div class="item-title">FCI Deepens Data Exfiltration Protection</div><div class="item-date">Mar 28, 2022</div></div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════ -->
+  <!-- CYBER BITES -->
+  <!-- ═══════════════════════════════════════ -->
+  <div class="section-divider">
+    <div class="line"></div>
+    <div class="label" style="color: var(--emerald);">Cyber Bites &mdash; <span class="badge badge-migrate">Migrate All</span></div>
+    <div class="line"></div>
+  </div>
+
+  <div class="item-group">
+    <div class="item-group-header" onclick="this.parentElement.classList.toggle('open')">
+      <div class="item-group-title">Cyber Bites &amp; Compliance Tips (40)</div>
+      <div class="item-group-count">Click to expand &darr;</div>
+    </div>
+    <div class="item-group-body" style="display:none;">
+      <div class="item-row"><div class="item-title">Password Manager Best Practices</div></div>
+      <div class="item-row"><div class="item-title">Removable Storage Device Encryption</div></div>
+      <div class="item-row"><div class="item-title">The Importance of Device Decommissioning</div></div>
+      <div class="item-row"><div class="item-title">What Do Hackers See About Your Firm? (CIASA)</div></div>
+      <div class="item-row"><div class="item-title">Big Cyber Risk: Unmanaged Devices</div></div>
+      <div class="item-row"><div class="item-title">Zero Trust 4/4: Networks</div></div>
+      <div class="item-row"><div class="item-title">Zero Trust 3/4: Software</div></div>
+      <div class="item-row"><div class="item-title">Zero Trust 2/4: Endpoints</div></div>
+      <div class="item-row"><div class="item-title">Zero Trust 1/4: Users</div></div>
+      <div class="item-row"><div class="item-title">Managed Is Most Secure</div></div>
+      <div class="item-row"><div class="item-title">Hardening Systems of Private Data</div></div>
+      <div class="item-row"><div class="item-title">Ransomware Protection</div></div>
+      <div class="item-row"><div class="item-title">Cybersecurity Risk Assessment</div></div>
+      <div class="item-row"><div class="item-title">Beware of Phishing</div></div>
+      <div class="item-row"><div class="item-title">Your Own Gateway VPN</div></div>
+      <div class="item-row"><div class="item-title">Ensure Encryption</div></div>
+      <div class="item-row"><div class="item-title">Keep Your OS Current</div></div>
+      <div class="item-row"><div class="item-title">Audit Preparedness</div></div>
+      <div class="item-row"><div class="item-title">Hybrid Workforce Cybersecurity</div></div>
+      <div class="item-row"><div class="item-title">NIST-based Asset Inventory Report</div></div>
+      <div class="item-row"><div class="item-title">POAMs (Plan of Action &amp; Milestones)</div></div>
+      <div class="item-row"><div class="item-title">DLP Confusion (Data Leakage vs. Data Loss)</div></div>
+      <div class="item-row"><div class="item-title">Reboot Your Computer</div></div>
+      <div class="item-row"><div class="item-title">Vendor Risk Management</div></div>
+      <div class="item-row"><div class="item-title">Cost vs Benefits of Cybersecurity</div></div>
+      <div class="item-row"><div class="item-title">Smartphone Security</div></div>
+      <div class="item-row"><div class="item-title">Dark Web Data</div></div>
+      <div class="item-row"><div class="item-title">Multifactor Authentication</div></div>
+      <div class="item-row"><div class="item-title">Network Security (Business-Grade Firewall)</div></div>
+      <div class="item-row"><div class="item-title">Video Conferencing Best Practices</div></div>
+      <div class="item-row"><div class="item-title">Cost of a Cyber Breach</div></div>
+      <div class="item-row"><div class="item-title">Travel Securely (VPN)</div></div>
+      <div class="item-row"><div class="item-title">Cybersecurity Insurance</div></div>
+      <div class="item-row"><div class="item-title">Cybersecurity Risk Assessment (M&amp;A)</div></div>
+      <div class="item-row"><div class="item-title">Surprise Audit from Regulators</div></div>
+      <div class="item-row"><div class="item-title">Printers and Scanners</div></div>
+      <div class="item-row"><div class="item-title">The Dark Web</div></div>
+      <div class="item-row"><div class="item-title">Properly Decommission a Computer</div></div>
+      <div class="item-row"><div class="item-title">Password Manager App Security</div></div>
+      <div class="item-row"><div class="item-title">Complex Username for Diminished Risk</div></div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════ -->
+  <!-- COMPANY & TEAM -->
+  <!-- ═══════════════════════════════════════ -->
+  <div class="section-divider">
+    <div class="line"></div>
+    <div class="label" style="color: var(--emerald);">Company &amp; Team &mdash; <span class="badge badge-migrate">Migrate &amp; Rewrite</span></div>
+    <div class="line"></div>
+  </div>
+
+  <div class="item-group">
+    <div class="item-group-header" onclick="this.parentElement.classList.toggle('open')">
+      <div class="item-group-title">Company Pages</div>
+      <div class="item-group-count">Click to expand &darr;</div>
+    </div>
+    <div class="item-group-body" style="display:none;">
+      <div class="item-row"><div class="item-title"><strong>Company Overview</strong><div class="item-desc">FCI description as NIST-based MSSP. Facts: Founded 1995, HQ Bloomfield NJ, 3 data centers, annual SOC 2 Type 1 certification, multidisciplinary cyber team. Lists competitive advantages and industry verticals served.</div></div></div>
+      <div class="item-row"><div class="item-title"><strong>Team Bios (8 members)</strong><div class="item-desc">Brian Edelman (CEO), Eric Edelman (President), Vincent Guyaux (Business Advisor), Brian Rohllf (Director Cybersecurity Services), Melody Lugo (Operations Manager), Michael Pytura (Sales Manager), Ben Gunay (Account Manager), Pamela Rasey (Marketing Manager). Plus "Cyber Technical Team" section.</div></div></div>
+      <div class="item-row"><div class="item-title"><strong>Working at FCI (Careers)</strong><div class="item-desc">Culture page with benefits listing (health insurance, PTO, learning &amp; development), diversity statement, remote work policy. Resume submissions to info@fcicyber.com.</div></div></div>
+      <div class="item-row"><div class="item-title"><strong>Office Location</strong><div class="item-desc">140 E. Ridgewood Avenue, Suite 415, South Tower, Paramus, NJ 07652</div></div></div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════ -->
+  <!-- SPEAKING & MEDIA -->
+  <!-- ═══════════════════════════════════════ -->
+  <div class="section-divider">
+    <div class="line"></div>
+    <div class="label" style="color: var(--emerald);">Speaking &amp; Media &mdash; <span class="badge badge-migrate">Migrate &amp; Feature</span></div>
+    <div class="line"></div>
+  </div>
+
+  <div class="item-group">
+    <div class="item-group-header" onclick="this.parentElement.classList.toggle('open')">
+      <div class="item-group-title">Conferences, Podcasts &amp; Media</div>
+      <div class="item-group-count">Click to expand &darr;</div>
+    </div>
+    <div class="item-group-body" style="display:none;">
+      <div class="item-row"><div class="item-title">T3 Conference 2025 &mdash; Awards announcement</div><div class="item-date">Mar 2025</div></div>
+      <div class="item-row"><div class="item-title">T3 Conference 2023 &mdash; Brian Edelman speaker</div><div class="item-date">Mar 2023</div></div>
+      <div class="item-row"><div class="item-title">T3 Enterprise Conference &mdash; Voice Commands &amp; Cybersecurity</div><div class="item-date">2022</div></div>
+      <div class="item-row"><div class="item-title">Wells Fargo FiNet Annual Conference &mdash; Speaker</div><div class="item-date">Sep 2023</div></div>
+      <div class="item-row"><div class="item-title">TradePMR Synergy23 &mdash; Speaker</div><div class="item-date">May 2023</div></div>
+      <div class="item-row"><div class="item-title">CNBC 2022 Financial Advisor Summit &mdash; Featured Speaker</div><div class="item-date">Nov 2022</div></div>
+      <div class="item-row"><div class="item-title">InsureTech Connect, Las Vegas &mdash; Cyber Insurance Model</div><div class="item-date">Sep 2022</div></div>
+      <div class="item-row"><div class="item-title">AssetMark Investment Services &mdash; Advisor Presentation</div><div class="item-date">May 2022</div></div>
+      <div class="item-row"><div class="item-title">CJK Group &amp; Sub-Four Capital Panel &mdash; eDiscovery Retreat</div><div class="item-date">May 2022</div></div>
+      <div class="item-row"><div class="item-title">FSI OneVoice &mdash; CEO &amp; Ops Tech Panel</div><div class="item-date">2022</div></div>
+      <div class="item-row"><div class="item-title">Insurance Town Podcast &mdash; Brian Edelman Interview</div><div class="item-date">2022</div></div>
+      <div class="item-row"><div class="item-title">ITZ On WealthTech Podcast Ep. 2 &mdash; Cybersecurity Armageddon</div><div class="item-date">2019</div></div>
+      <div class="item-row"><div class="item-title">Ebix Envision 2023 User Group &amp; Expo</div><div class="item-date">Feb 2023</div></div>
+      <div class="item-row"><div class="item-title"><strong>Media citations:</strong> CNBC, Financial Planning, Forbes, PLANADVISER, PLANSPONSOR, Advisor Perspectives, Broker World, NAIFA Advisor Today, Investment News, Bob Veres Inside Information</div></div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════ -->
+  <!-- SUPPORT & CONTACT -->
+  <!-- ═══════════════════════════════════════ -->
+  <div class="section-divider">
+    <div class="line"></div>
+    <div class="label" style="color: var(--emerald);">Support &amp; Contact &mdash; <span class="badge badge-migrate">Migrate &amp; Polish</span></div>
+    <div class="line"></div>
+  </div>
+
+  <div class="item-group">
+    <div class="item-group-header" onclick="this.parentElement.classList.toggle('open')">
+      <div class="item-group-title">Support &amp; Contact Info</div>
+      <div class="item-group-count">Click to expand &darr;</div>
+    </div>
+    <div class="item-group-body" style="display:none;">
+      <div class="item-row"><div class="item-title"><strong>Support Page</strong><div class="item-desc">Business hours: 8:00 AM &ndash; 5:30 PM ET, Mon&ndash;Fri. Phone: 973-227-8878. Email: support@fcicyber.com. Client login portal link.</div></div></div>
+      <div class="item-row"><div class="item-title"><strong>Contact Us Page</strong><div class="item-desc">General: (888) 434-6443 / info@fcicyber.com. Address: 140 E. Ridgewood Ave, Suite 415, South Tower, Paramus, NJ 07652. Contact form: Name, Company, Telephone, Email, Message.</div></div></div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════ -->
+  <!-- SERVICE & PRODUCT PAGES (ARCHIVE) -->
+  <!-- ═══════════════════════════════════════ -->
+  <div class="section-divider">
+    <div class="line"></div>
+    <div class="label" style="color: var(--blue);">Service &amp; Product Pages &mdash; <span class="badge badge-archive">Archive as Reference</span></div>
+    <div class="line"></div>
+  </div>
+
+  <div class="item-group">
+    <div class="item-group-header" onclick="this.parentElement.classList.toggle('open')">
+      <div class="item-group-title">Service &amp; Product Pages (8)</div>
+      <div class="item-group-count">Click to expand &darr;</div>
+    </div>
+    <div class="item-group-body" style="display:none;">
+      <div class="item-row"><div class="item-title"><strong>Professional Services</strong><div class="item-desc">Cyber Safeguard Evidencing &amp; Scanning, CISO Compliance Enablement, Hardening Services, Cyber Consulting. Includes M&amp;A security assessment module.</div></div></div>
+      <div class="item-row"><div class="item-title"><strong>Security Automation (SOAR Platform)</strong><div class="item-desc">Managed Endpoint &amp; Network Protection, Evidence of Compliance (NIST-based Asset Inventory, SIEM, Safeguards Scanning), Zero Trust Ecosystem (Users, Endpoints, Software, Networks), Web App Security Gateway, DLP.</div></div></div>
+      <div class="item-row"><div class="item-title"><strong>Co-Managed Cybersecurity Services</strong><div class="item-desc">Partnership model for enterprises with internal IT teams and MSPs. Custom Zero Trust ecosystem design, clear roles &amp; responsibilities, vendor risk management.</div></div></div>
+      <div class="item-row"><div class="item-title"><strong>Service Providers</strong><div class="item-desc">Solutions for service providers working with financial services clients.</div></div></div>
+      <div class="item-row"><div class="item-title"><strong>ProtectIT</strong><div class="item-desc">Policy enforcement system with asset inventory.</div></div></div>
+      <div class="item-row"><div class="item-title"><strong>ExchangeSync (Integration-as-a-Service)</strong><div class="item-desc">Cybersecurity integration services for financial platforms.</div></div></div>
+      <div class="item-row"><div class="item-title"><strong>Digital Forensics</strong><div class="item-desc">Post-breach eDiscovery and forensics services.</div></div></div>
+      <div class="item-row"><div class="item-title"><strong>Commercial Cyber Insurance</strong><div class="item-desc">Guidance and solutions for cyber insurance compliance.</div></div></div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════ -->
+  <!-- THOUGHT LEADERSHIP (ARCHIVE) -->
+  <!-- ═══════════════════════════════════════ -->
+  <div class="section-divider">
+    <div class="line"></div>
+    <div class="label" style="color: var(--blue);">Thought Leadership &mdash; <span class="badge badge-archive">Archive as Reference</span></div>
+    <div class="line"></div>
+  </div>
+
+  <div class="item-group">
+    <div class="item-group-header" onclick="this.parentElement.classList.toggle('open')">
+      <div class="item-group-title">Whitepapers &amp; Guides (6)</div>
+      <div class="item-group-count">Click to expand &darr;</div>
+    </div>
+    <div class="item-group-body" style="display:none;">
+      <div class="item-row"><div class="item-title">Top 5 Ways Financial Services Can Leverage NIST for Compliance</div></div>
+      <div class="item-row"><div class="item-title">Merger &amp; Acquisition Security Assessment Guide</div></div>
+      <div class="item-row"><div class="item-title">How to Properly Decommission a Computer</div></div>
+      <div class="item-row"><div class="item-title">FINRA's Guidance &amp; Insights Concerning Cybersecurity</div></div>
+      <div class="item-row"><div class="item-title">Preserving Attorney-Client Privilege for Cybersecurity Vulnerabilities</div></div>
+      <div class="item-row"><div class="item-title">Hardening Systems of Private Data (Facebook, LinkedIn)</div></div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════ -->
+  <!-- DROPPED SECTIONS -->
+  <!-- ═══════════════════════════════════════ -->
+  <div class="section-divider">
+    <div class="line"></div>
+    <div class="label" style="color: var(--red);">Not Migrating &mdash; <span class="badge badge-drop">Dropped</span></div>
+    <div class="line"></div>
+  </div>
+
+  <div class="item-group">
+    <div class="item-group-header" onclick="this.parentElement.classList.toggle('open')">
+      <div class="item-group-title">Dropped Content</div>
+      <div class="item-group-count">Click to expand &darr;</div>
+    </div>
+    <div class="item-group-body" style="display:none;">
+      <div class="item-row"><div class="item-title"><strong>Compliance Corner</strong> &mdash; Regulatory update section (SEC, FINRA, NYDFS, NAIC). Dropped per Vincent's decision.</div></div>
+      <div class="item-row"><div class="item-title"><strong>Industry Vertical Pages</strong> &mdash; Banking, Healthcare, Government Contractors, Insurance (as standalone vertical). Dropped &mdash; the three core markets are covered through one-pagers and website copy.</div></div>
+      <div class="item-row"><div class="item-title"><strong>NIST Framework Page</strong> &mdash; Standalone NIST implementation page.</div></div>
+      <div class="item-row"><div class="item-title"><strong>FFR Partnership Offering</strong> &mdash; Specific partner offering page.</div></div>
+      <div class="item-row"><div class="item-title"><strong>POAMs Page</strong> &mdash; Plan of Action &amp; Milestones standalone page.</div></div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════ -->
+  <!-- ALREADY IN HUB -->
+  <!-- ═══════════════════════════════════════ -->
+  <div class="section-divider">
+    <div class="line"></div>
+    <div class="label" style="color: var(--violet);">Already Complete &mdash; <span class="badge badge-done">In Hub</span></div>
+    <div class="line"></div>
+  </div>
+
+  <div class="item-group">
+    <div class="item-group-header" onclick="this.parentElement.classList.toggle('open')">
+      <div class="item-group-title">Content Already in the Hub</div>
+      <div class="item-group-count">Click to expand &darr;</div>
+    </div>
+    <div class="item-group-body" style="display:none;">
+      <div class="item-row"><div class="item-title">Brand Guidelines</div></div>
+      <div class="item-row"><div class="item-title">Logo Exploration</div></div>
+      <div class="item-row"><div class="item-title">Messaging Architecture v2</div></div>
+      <div class="item-row"><div class="item-title">AI Messaging</div></div>
+      <div class="item-row"><div class="item-title">Question Layer (Implementation Plan &amp; Working Draft)</div></div>
+      <div class="item-row"><div class="item-title">Website Copy (all pages)</div></div>
+      <div class="item-row"><div class="item-title">Security Assessment</div></div>
+      <div class="item-row"><div class="item-title">One-Pagers: Broker-Dealers &amp; Branch Offices, Insurance Carriers &amp; Agencies, RIAs, End-Client, Sanctuary Wealth</div></div>
+      <div class="item-row"><div class="item-title">CISO Portal: Design Reference, White Paper, Redesign, 10 Directions</div></div>
+      <div class="item-row"><div class="item-title">Executive Overview Deck (.pptx)</div></div>
+      <div class="item-row"><div class="item-title">Hero Gallery (29 proposals) &amp; Five Concepts</div></div>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <span class="footer-logo">FCI</span>
+    <div class="footer-dot"></div>
+    <span>Content Migration</span>
+    <div class="footer-dot"></div>
+    <span>Internal &middot; April 2026</span>
+  </div>
+</footer>
+
+<script>
+  // Expand/collapse toggle
+  document.querySelectorAll('.item-group-header').forEach(function(h) {
+    h.addEventListener('click', function() {
+      var body = this.nextElementSibling;
+      var count = this.querySelector('.item-group-count');
+      if (body.style.display === 'none') {
+        body.style.display = 'block';
+        count.textContent = 'Click to collapse \u2191';
+      } else {
+        body.style.display = 'none';
+        count.textContent = 'Click to expand \u2193';
+      }
+    });
+  });
+
+  // Theme toggle
+  function setHubTheme(m) {
+    if (m === 'system') { document.documentElement.removeAttribute('data-hub-theme'); localStorage.removeItem('fci-hub-theme'); }
+    else { document.documentElement.setAttribute('data-hub-theme', m); localStorage.setItem('fci-hub-theme', m); }
+    document.querySelectorAll('.hub-theme-toggle button').forEach(function(b){ b.classList.toggle('active', b.dataset.hubMode === m); });
+  }
+  (function(){
+    var s = localStorage.getItem('fci-hub-theme') || 'system';
+    if (s !== 'system') document.documentElement.setAttribute('data-hub-theme', s);
+    document.addEventListener('DOMContentLoaded', function(){
+      document.querySelectorAll('.hub-theme-toggle button').forEach(function(b){ b.classList.toggle('active', b.dataset.hubMode === s); });
+    });
+  })();
+</script>
+</body>
+</html>
