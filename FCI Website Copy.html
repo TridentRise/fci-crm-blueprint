@@ -23,7 +23,7 @@
     }
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { font-size: 16px; scroll-behavior: smooth; }
-    body { font-family: 'Inter', sans-serif; background: var(--offwhite); color: var(--text); -webkit-font-smoothing: antialiased; }
+    body { font-family: 'Inter', sans-serif; background: var(--offwhite); color: var(--text); -webkit-font-smoothing: antialiased; padding-top: 52px; }
 
     /* ── SITE HEADER ── */
     .back-nav {
@@ -43,6 +43,7 @@
         .site-header {
       background: var(--blue);
       padding: 56px 64px 48px;
+      padding-left: calc(280px + 64px);
       position: relative; overflow: hidden;
     }
     .site-header::before {
@@ -78,22 +79,7 @@
       position: relative; z-index: 1;
     }
 
-    /* ── NAV ── */
-    .nav-wrap {
-      background: var(--white); border-bottom: 1px solid var(--rule);
-      padding: 0 64px; position: sticky; top: 0; z-index: 100;
-    }
-    .nav { display: flex; gap: 0; overflow-x: auto; }
-    .nav a {
-      font-size: 14px; font-weight: 500; letter-spacing: 0.06em;
-      color: var(--muted); text-decoration: none; padding: 16px 20px;
-      white-space: nowrap; border-bottom: 2px solid transparent;
-      transition: color 0.15s, border-color 0.15s;
-    }
-    .nav a:hover { color: var(--blue); border-bottom-color: var(--tint); }
-    .nav a.active { color: var(--blue); border-bottom-color: var(--blue); }
-
-    /* ── LAYOUT ── */
+/* ── LAYOUT ── */
     .wrap { max-width: 900px; margin: 0 auto; padding: 0 64px 120px; }
 
     /* ── PAGE SECTION ── */
@@ -101,6 +87,7 @@
       margin-top: 72px;
       padding-top: 40px;
       border-top: 2px solid var(--blue);
+      scroll-margin-top: 80px;
     }
     .page-section:first-of-type { margin-top: 56px; }
 
@@ -149,12 +136,12 @@
     .copy-note {
       font-size: 14px; color: var(--muted); font-style: italic;
       background: var(--faint); border-left: 3px solid var(--sky);
-      padding: 10px 16px; margin-top: 12px; line-height: 1.6;
+      padding: 10px 16px; margin-top: 12px; margin-bottom: 24px; line-height: 1.6;
     }
 
     /* ── COPY GRID: modules within a section ── */
     .copy-module { margin-bottom: 32px; padding-bottom: 32px; border-bottom: 1px dashed var(--rule); }
-    .copy-module:last-child { border-bottom: none; padding-bottom: 0; }
+    .copy-module:last-child, .copy-module:last-of-type { border-bottom: none; padding-bottom: 0; }
 
     .module-tag {
       font-size: 11px; font-weight: 700; letter-spacing: 0.2em;
@@ -209,7 +196,7 @@
     }
 
     /* ── TWO-COL ── */
-    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 20px; }
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 20px; margin-bottom: 24px; }
     @media (max-width: 680px) { .two-col { grid-template-columns: 1fr; } }
 
     .col-card {
@@ -254,42 +241,7 @@
       text-transform: uppercase;
     }
 
-    /* ── NIST BLOCK ── */
-    .nist-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 12px;
-      margin-top: 20px;
-    }
-    .nist-cell {
-      border-top: 3px solid var(--blue);
-      padding: 16px;
-      background: var(--white);
-      border: 1px solid var(--rule);
-      border-top: 3px solid var(--blue);
-    }
-    .nist-function {
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--sky);
-      margin-bottom: 6px;
-    }
-    .nist-title {
-      font-family: 'Inter Tight', sans-serif;
-      font-size: 15px;
-      font-weight: 600;
-      color: var(--text);
-      margin-bottom: 6px;
-    }
-    .nist-body {
-      font-size: 13px;
-      color: var(--body);
-      line-height: 1.55;
-    }
-
-    /* ── CLIENT STORIES ── */
+/* ── CLIENT STORIES ── */
     .case-studies-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -396,9 +348,11 @@
       body { background: #0F172A; }
       .testimonial-block { background: #1E293B; }
       .case-card { background: #1E293B; border-color: #334155; }
-      .nist-cell { background: #1E293B; border-color: #334155; }
-      .site-footer { background: #0F172A; border-top-color: var(--blue); }
+.site-footer { background: #0F172A; border-top-color: var(--blue); }
       .footer-bottom { border-color: #334155; }
+
+      .sidebar-nav { background: #1E293B; border-color: #334155; }
+      .sidebar-nav-link.active { background: var(--tint); color: var(--blue); }
       .nav-wrap { background: #1E293B; border-color: #334155; }
       .module-copy { background: #1E293B; }
       .cta-persona { background: #1E293B; border-color: #334155; }
@@ -414,10 +368,69 @@
     }
 
     /* ══════════════════════════════════════════
+       QUESTION LAYER ELEMENT
+    ══════════════════════════════════════════ */
+    .question-element {
+      background: var(--faint);
+      border-left: 4px solid var(--sky);
+      padding: 14px 20px;
+      margin-top: 12px;
+      margin-bottom: 24px;
+    }
+    .question-element p {
+      font-size: 15px;
+      font-style: italic;
+      color: var(--text);
+      line-height: 1.65;
+    }
+    .question-element .q-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--sky);
+      margin-bottom: 6px;
+      font-style: normal;
+    }
+
+    /* Dedicated questions wall */
+    .question-wall {
+      margin-top: 24px;
+    }
+    .question-wall .q-group {
+      margin-bottom: 24px;
+    }
+    .question-wall .q-group-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--sky);
+      margin-bottom: 12px;
+    }
+    .question-wall .q-item {
+      background: var(--faint);
+      border-left: 4px solid var(--sky);
+      padding: 12px 20px;
+      margin-bottom: 8px;
+      font-size: 15px;
+      font-style: italic;
+      color: var(--text);
+      line-height: 1.65;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      .question-element { background: #1E293B; }
+      .question-wall .q-item { background: #1E293B; }
+    }
+
+    /* ══════════════════════════════════════════
        MOBILE
     ══════════════════════════════════════════ */
     @media (max-width: 680px) {
-      .hero { padding: 36px 24px 32px; }
+      .sidebar-nav { display: none; }
+      .main-content { margin-left: 0; }
+            .hero { padding: 36px 24px 32px; }
       .nav-wrap { padding: 0 16px; }
       .nav a { padding: 12px 12px; font-size: 13px; }
       .wrap { padding: 0 20px 80px; }
@@ -426,8 +439,7 @@
       .cta-display .cta-button { width: 100%; text-align: center; }
       .proof-band { flex-direction: column; gap: 16px; padding: 20px 24px; }
       .cta-persona { padding: 20px; flex-direction: column; gap: 16px; }
-      .nist-grid { grid-template-columns: 1fr 1fr; }
-      .footer-grid { grid-template-columns: 1fr 1fr; gap: 24px; }
+.footer-grid { grid-template-columns: 1fr 1fr; gap: 24px; }
       .site-footer { padding: 32px 20px; }
     }
 
@@ -480,6 +492,82 @@
       html:not([data-hub-theme=light]) .hub-theme-toggle button:hover { color: #fff; }
       html:not([data-hub-theme=light]) .hub-theme-toggle button.active { background: rgba(255,255,255,0.1); color: #fff; box-shadow: none; }
     }
+    /* ── SIDEBAR NAV ── */
+    .sidebar-nav {
+      position: fixed;
+      left: 0;
+      top: 52px;
+      width: 280px;
+      height: calc(100vh - 52px);
+      background: var(--white);
+      border-right: 1px solid var(--rule);
+      padding: 24px 0;
+      overflow-y: auto;
+      z-index: 100;
+    }
+    .sidebar-nav-inner {
+      padding: 0 20px;
+    }
+    .sidebar-nav-section {
+      margin-bottom: 28px;
+    }
+    .sidebar-nav-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 10px;
+      display: block;
+    }
+    .sidebar-nav-list {
+      list-style: none;
+    }
+    .sidebar-nav-item {
+      margin-bottom: 0;
+    }
+    .sidebar-nav-link {
+      display: block;
+      font-size: 13px;
+      color: var(--body);
+      text-decoration: none;
+      padding: 8px 12px;
+      margin-bottom: 4px;
+      border-radius: 4px;
+      transition: background 0.15s, color 0.15s;
+    }
+    .sidebar-nav-link:hover {
+      background: var(--tint);
+      color: var(--blue);
+    }
+    .sidebar-nav-link.active {
+      background: var(--tint);
+      color: var(--blue-dark);
+      font-weight: 600;
+    }
+    .copy-block[id] {
+      scroll-margin-top: 80px;
+    }
+    .sidebar-nav-sub {
+      padding-left: 12px;
+    }
+    .sidebar-nav-link-sub {
+      font-size: 12px;
+      padding: 5px 12px;
+      color: var(--muted);
+    }
+
+    /* ─── MAIN CONTENT WITH SIDEBAR ──────────────── */
+    .main-with-sidebar {
+      display: flex;
+    }
+    .main-content {
+      flex: 1;
+      margin-left: 280px;
+    }
+    .wrap { max-width: 900px; margin: 0 auto; padding: 0 64px 120px; margin-left: 0; }
+
+
 </style>
 </head>
 <body>
@@ -494,29 +582,51 @@
   <div class="header-sub">Complete copy for the new fcicyber.com — homepage, market pages, solutions, and about. Each section is labeled with its placement on the page. Notes in blue indicate design or layout direction for the developer.</div>
 </div>
 
-<!-- ══ NAV ══════════════════════════════════════════════════════════════════ -->
-<div class="nav-wrap">
-  <nav class="nav">
-    <a href="#homepage" class="active">Homepage</a>
-    <a href="#broker-dealer">Broker-Dealers &amp; Branch Offices</a>
-    <a href="#insurance">Insurance Carriers &amp; Agencies</a>
-    <a href="#ria">RIAs</a>
-    <a href="#solutions">Solutions Overview</a>
-    <a href="#ciso-portal">CISO Portal</a>
-    <a href="#zero-trust">Zero Trust</a>
-    <a href="#soc">24x7 SOC</a>
-    <a href="#compliance">Compliance Readiness</a>
-    <a href="#security-assessment">Security Assessment</a>
-    <a href="#client-stories">Client Stories</a>
-    <a href="#about">About</a>
+<div class="main-with-sidebar">
+  <nav class="sidebar-nav">
+    <div class="sidebar-nav-inner">
+      <div class="sidebar-nav-section">
+        <span class="sidebar-nav-label">Pages</span>
+        <ul class="sidebar-nav-list">
+          <li class="sidebar-nav-item"><a href="#homepage" class="sidebar-nav-link active">Homepage</a></li>
+        </ul>
+      </div>
+      <div class="sidebar-nav-section">
+        <span class="sidebar-nav-label">Markets</span>
+        <ul class="sidebar-nav-list">
+          <li class="sidebar-nav-item"><a href="#broker-dealer" class="sidebar-nav-link">Broker-Dealers &amp; Branch Offices</a></li>
+          <li class="sidebar-nav-item"><a href="#insurance" class="sidebar-nav-link">Insurance Carriers &amp; Agencies</a></li>
+          <li class="sidebar-nav-item"><a href="#ria" class="sidebar-nav-link">RIAs</a></li>
+        </ul>
+      </div>
+      <div class="sidebar-nav-section">
+        <span class="sidebar-nav-label">Services</span>
+        <ul class="sidebar-nav-list">
+          <li class="sidebar-nav-item"><a href="#security-assessment" class="sidebar-nav-link">Security Assessment</a></li>
+          <li class="sidebar-nav-item"><a href="#managed-cybersecurity" class="sidebar-nav-link">Managed Cybersecurity</a></li>
+          <li class="sidebar-nav-item sidebar-nav-sub"><a href="#endpoint-security" class="sidebar-nav-link sidebar-nav-link-sub">Endpoint Security</a></li>
+          <li class="sidebar-nav-item sidebar-nav-sub"><a href="#user-security" class="sidebar-nav-link sidebar-nav-link-sub">User Security</a></li>
+          <li class="sidebar-nav-item sidebar-nav-sub"><a href="#network-security" class="sidebar-nav-link sidebar-nav-link-sub">Network Security</a></li>
+          <li class="sidebar-nav-item sidebar-nav-sub"><a href="#data-security" class="sidebar-nav-link sidebar-nav-link-sub">Data Security</a></li>
+          <li class="sidebar-nav-item sidebar-nav-sub"><a href="#cloud-app-security" class="sidebar-nav-link sidebar-nav-link-sub">Cloud App Security</a></li>
+          <li class="sidebar-nav-item sidebar-nav-sub"><a href="#firm-security" class="sidebar-nav-link sidebar-nav-link-sub">Firm Security</a></li>
+          <li class="sidebar-nav-item"><a href="#zero-trust" class="sidebar-nav-link">Zero Trust</a></li>
+          <li class="sidebar-nav-item"><a href="#ciso-portal" class="sidebar-nav-link">CISO Portal</a></li>
+          <li class="sidebar-nav-item"><a href="#compliance" class="sidebar-nav-link">Compliance Readiness</a></li>
+        </ul>
+      </div>
+      <div class="sidebar-nav-section">
+        <span class="sidebar-nav-label">More</span>
+        <ul class="sidebar-nav-list">
+          <li class="sidebar-nav-item"><a href="#client-stories" class="sidebar-nav-link">Client Stories</a></li>
+          <li class="sidebar-nav-item"><a href="#about" class="sidebar-nav-link">About</a></li>
+        </ul>
+      </div>
+    </div>
   </nav>
-</div>
+  <div class="main-content">
+    <div class="wrap">
 
-<div class="wrap">
-
-  <!-- ══════════════════════════════════════════════════════════════════════
-       PAGE 1: HOMEPAGE
-  ══════════════════════════════════════════════════════════════════════ -->
   <div class="page-section" id="homepage">
     <div class="page-label">Page 1</div>
     <div class="page-title">Homepage</div>
@@ -530,28 +640,40 @@
       <div class="copy-module">
         <div class="module-tag">H1 — Main Headline</div>
         <div class="module-copy">
-          <p>Security enforced. Compliance proven.</p>
+          <p>Managed Cybersecurity for Financial Services</p>
         </div>
       </div>
 
       <div class="copy-module">
         <div class="module-tag">H2 — Sub-Headline</div>
         <div class="module-copy">
+          <p>Security enforced. Compliance proven.</p>
+        </div>
+      </div>
+
+      <div class="copy-module">
+        <div class="module-tag">H3 — Supporting Copy</div>
+        <div class="module-copy">
           <p>FCI manages cybersecurity for sales offices of broker-dealers and branch offices, insurance carriers and agencies, and RIAs — enforcing the tools, settings, and procedures required by regulators, home offices, and cyber insurers.</p>
         </div>
+      </div>
+
+      <div class="question-element">
+        <div class="q-label">Question Layer</div>
+        <p>If a regulator examined your sales offices tomorrow, could you prove every device is protected?</p>
       </div>
 
       <div class="copy-module">
         <div class="module-tag">CTA Button</div>
         <div class="module-copy">
-          <p>Request a Gap Analysis</p>
+          <p>Request a 30-Minute Gap Analysis</p>
         </div>
       </div>
 
       <div class="copy-module">
         <div class="module-tag">Secondary Link (below CTA)</div>
         <div class="module-copy">
-          <p>See how it works →</p>
+          <p>Explore Managed Cybersecurity Services →</p>
         </div>
       </div>
     </div>
@@ -586,6 +708,11 @@
         </div>
       </div>
 
+      <div class="question-element">
+        <div class="q-label">Question Layer</div>
+        <p>How many hours does your team spend assembling compliance evidence before each exam — and is it ever fully complete?</p>
+      </div>
+
       <div class="copy-module">
         <div class="module-tag">Body Copy</div>
         <div class="module-copy">
@@ -608,7 +735,12 @@
 
       <div class="copy-module">
         <div class="module-tag">Section Headline</div>
-        <div class="module-copy"><p>Four things every sales office needs. Delivered as one managed service.</p></div>
+        <div class="module-copy"><p>Everything every sales office needs. Delivered as one managed service.</p></div>
+      </div>
+
+      <div class="question-element">
+        <div class="q-label">Question Layer</div>
+        <p>What if the tools, the procedures, the expertise, and the proof were all part of the same service?</p>
       </div>
 
       <div class="copy-module">
@@ -654,6 +786,11 @@
         <div class="module-copy"><p>Three markets. One managed service. Built for the sales office.</p></div>
       </div>
 
+      <div class="question-element">
+        <div class="q-label">Question Layer</div>
+        <p>Which of these describes the compliance challenge your firm is facing right now?</p>
+      </div>
+
       <div class="copy-module">
         <div class="module-tag">Card 1 — Broker-Dealers &amp; Branch Offices</div>
         <div class="module-copy">
@@ -682,6 +819,104 @@
       </div>
     </div>
 
+    <!-- SECURITY ASSESSMENT OVERVIEW -->
+    <div class="copy-block">
+      <div class="section-label">Security Assessment — Overview</div>
+      <div class="copy-note">Design direction: Compact section — four items displayed as cards or a horizontal row. Each links to the Security Assessment page. Short and scannable.</div>
+
+      <div class="copy-module">
+        <div class="module-tag">Section Headline</div>
+        <div class="module-copy"><p>Start with a clear picture of where you stand.</p></div>
+      </div>
+
+      <div class="question-element">
+        <div class="q-label">Question Layer</div>
+        <p>Do you know exactly where your firm's security gaps are — or are you waiting for an examiner to find them first?</p>
+      </div>
+
+      <div class="copy-module">
+        <div class="module-tag">Body Copy</div>
+        <div class="module-copy"><p>Before any controls are deployed, FCI assesses your firm's current security posture — identifying gaps, vulnerabilities, and exposure across four dimensions.</p></div>
+      </div>
+
+      <div class="two-col">
+        <div class="col-card">
+          <div class="col-card-label">Gap Analysis</div>
+          <div class="col-card-body">A 30-minute assessment of what controls are in place, what is missing, and what your next exam or renewal will require.</div>
+        </div>
+        <div class="col-card">
+          <div class="col-card-label">Network Pen &amp; Vulnerability Scan</div>
+          <div class="col-card-body">Penetration testing and vulnerability scanning across your internal network and endpoints — evidence your examiner will accept.</div>
+        </div>
+        <div class="col-card">
+          <div class="col-card-label">Public-Facing Assessment</div>
+          <div class="col-card-body">External scan of your firm's internet-facing attack surface — DNS, web properties, email configuration, and exposed services.</div>
+        </div>
+        <div class="col-card">
+          <div class="col-card-label">Cloud App Assessment</div>
+          <div class="col-card-body">Configuration review of Microsoft 365, Google Workspace, and key cloud services — identifying misconfigurations and policy gaps.</div>
+        </div>
+      </div>
+
+      <div class="copy-module">
+        <div class="module-tag">Link</div>
+        <div class="module-copy"><p>Learn about Security Assessments →</p></div>
+      </div>
+    </div>
+
+    <!-- MANAGED CYBERSECURITY OVERVIEW -->
+    <div class="copy-block">
+      <div class="section-label">Managed Cybersecurity — Overview</div>
+      <div class="copy-note">Design direction: Six items displayed as a compact grid (3x2 or 6-across). Each links to its subsection on the Managed Cybersecurity page. Visual, scannable, minimal copy.</div>
+
+      <div class="copy-module">
+        <div class="module-tag">Section Headline</div>
+        <div class="module-copy"><p>Six security domains. One AI-driven managed service.</p></div>
+      </div>
+
+      <div class="question-element">
+        <div class="q-label">Question Layer</div>
+        <p>How many separate tools and vendors does your firm use to cover endpoint, network, user, data, cloud, and firm security — and can any one of them show a regulator the full picture?</p>
+      </div>
+
+      <div class="copy-module">
+        <div class="module-tag">Body Copy</div>
+        <div class="module-copy"><p>FCI manages cybersecurity across six domains — using AI to enforce controls, detect threats, and produce compliance evidence at a scale that would be impossible manually. Every domain is managed as part of one integrated service.</p></div>
+      </div>
+
+      <div class="two-col">
+        <div class="col-card">
+          <div class="col-card-label">Endpoint Security</div>
+          <div class="col-card-body">Protection and response across every device — including BYOD.</div>
+        </div>
+        <div class="col-card">
+          <div class="col-card-label">User Security</div>
+          <div class="col-card-body">Identity protection across your entire distributed network.</div>
+        </div>
+        <div class="col-card">
+          <div class="col-card-label">Network Security</div>
+          <div class="col-card-body">Secure the networks your advisors actually use — office, home, and field.</div>
+        </div>
+        <div class="col-card">
+          <div class="col-card-label">Data Security</div>
+          <div class="col-card-body">Encryption, exfiltration protection, and backup across every location.</div>
+        </div>
+        <div class="col-card">
+          <div class="col-card-label">Cloud App Security</div>
+          <div class="col-card-body">Visibility and control across M365 and your cloud environment.</div>
+        </div>
+        <div class="col-card">
+          <div class="col-card-label">Firm Security</div>
+          <div class="col-card-body">24x7 SOC, incident response, and the operational backbone that ties it all together.</div>
+        </div>
+      </div>
+
+      <div class="copy-module">
+        <div class="module-tag">Link</div>
+        <div class="module-copy"><p>See the CISO Portal →</p></div>
+      </div>
+    </div>
+
     <!-- CISO PORTAL SPOTLIGHT -->
     <div class="copy-block">
       <div class="section-label">CISO Portal Spotlight Section</div>
@@ -695,6 +930,11 @@
       <div class="copy-module">
         <div class="module-tag">Section Headline</div>
         <div class="module-copy"><p>The CISO Portal: where your compliance record lives.</p></div>
+      </div>
+
+      <div class="question-element">
+        <div class="q-label">Question Layer</div>
+        <p>What if your compliance evidence assembled itself — continuously, automatically — instead of requiring weeks of manual preparation before every exam?</p>
       </div>
 
       <div class="copy-module">
@@ -730,6 +970,11 @@
         <div class="module-copy"><p>30 years of operational proof. Not marketing claims.</p></div>
       </div>
 
+      <div class="question-element">
+        <div class="q-label">Question Layer</div>
+        <p>When was the last time your cybersecurity provider could show you 30 years of financial services experience — and the certifications to back it up?</p>
+      </div>
+
       <div class="copy-module">
         <div class="module-tag">Body Copy</div>
         <div class="module-copy">
@@ -756,25 +1001,83 @@
       </div>
     </div>
 
+    <!-- DEDICATED QUESTIONS SECTION -->
+    <div class="copy-block">
+      <div class="section-label">Questions Section — "Questions Your Firm Should Be Able to Answer"</div>
+      <div class="copy-note">Design direction: Clean, minimal layout. Questions only — no explanations, no product mentions. White or light background, generous spacing. Each question is its own line with the sky-blue left border treatment. Grouped by theme with subtle overline labels. Positioned between "Why Trust FCI" and the closing CTA. The purpose is emotional: the reader should pause on at least two or three questions and think "I don't actually have a good answer to that."</div>
+
+      <div class="copy-module">
+        <div class="module-tag">Section Title</div>
+        <div class="module-copy"><p>Questions Your Firm Should Be Able to Answer</p></div>
+      </div>
+
+      <div class="question-wall">
+        <div class="q-group">
+          <div class="q-group-label">Regulatory Readiness</div>
+          <div class="q-item">If a regulatory examiner arrived at your office tomorrow, could you produce your cybersecurity evidence by the end of the day?</div>
+          <div class="q-item">Can your firm show documented proof that every sales office, every device, and every user is covered by enforced security controls?</div>
+          <div class="q-item">When was the last time your compliance documentation was updated — and does it reflect what is actually deployed, or just what was planned?</div>
+          <div class="q-item">Do your written supervisory procedures have technical enforcement evidence behind them — or are they policies on paper?</div>
+        </div>
+
+        <div class="q-group">
+          <div class="q-group-label">Breach &amp; Incident Preparedness</div>
+          <div class="q-item">If a cyber incident occurred at one of your branch offices today, could you prove the other branches were protected?</div>
+          <div class="q-item">Does your current provider offer incident response — containment, remediation, documentation, and communication — or just monitoring?</div>
+          <div class="q-item">What happens to your cyber insurance claim if you cannot produce evidence of controls that were in place at the time of the breach?</div>
+        </div>
+
+        <div class="q-group">
+          <div class="q-group-label">Compliance Operations</div>
+          <div class="q-item">How many hours does your compliance team spend manually assembling evidence before every exam, audit, or cyber insurance renewal?</div>
+          <div class="q-item">Are you confident that every advisor, every agent, every registered representative in your network is running enforced endpoint protection right now?</div>
+          <div class="q-item">If your cyber insurer asked for MFA enforcement records across every user in your firm today, could you produce them?</div>
+        </div>
+
+        <div class="q-group">
+          <div class="q-group-label">The Gap Between Policy &amp; Proof</div>
+          <div class="q-item">Is there a gap between the security program your firm has written and what you can actually prove is enforced in the field?</div>
+          <div class="q-item">How many separate tools and vendors would you need to contact to assemble a complete picture of your firm's security posture?</div>
+          <div class="q-item">Can your compliance team see the enforcement status of every device in your network right now — or would they need to ask IT to build a report?</div>
+        </div>
+
+        <div class="q-group">
+          <div class="q-group-label">Cyber Insurance</div>
+          <div class="q-item">At your last cyber insurance renewal, could you document every control your insurer asked about — or did you check boxes you weren't 100% sure of?</div>
+          <div class="q-item">If a claim is filed after a breach, will your documentation prove the controls were in place — or will it prove they weren't?</div>
+          <div class="q-item">Is your cyber insurance renewal package pre-formatted to match your insurer's questionnaire — or do you start from scratch every year?</div>
+        </div>
+      </div>
+
+      <div class="question-element" style="margin-top: 24px;">
+        <p>If you paused on any of these — that is exactly why FCI exists.</p>
+      </div>
+    </div>
+
     <!-- HOMEPAGE CTA -->
     <div class="copy-block">
       <div class="section-label">Homepage Closing CTA</div>
 
+      <div class="question-element">
+        <div class="q-label">Question Layer</div>
+        <p>Ready to stop preparing for exams and start showing them?</p>
+      </div>
+
       <div class="copy-module">
         <div class="module-tag">CTA Headline</div>
-        <div class="module-copy"><p>Your employees and affiliates will not notice a difference. Your regulator will.</p></div>
+        <div class="module-copy"><p>Your employees and affiliates will not notice a difference. Your regulators will.</p></div>
       </div>
 
       <div class="copy-module">
         <div class="module-tag">CTA Body</div>
         <div class="module-copy">
-          <p>Request a Gap Analysis. In 30 minutes, you will have a clear picture of what controls must be in place, what is missing, and what your next regulatory exam, home office audit, or cyber insurance renewal will ask for.</p>
+          <p>Request a 30-Minute Gap Analysis. In 30 minutes, you will have a clear picture of what controls must be in place, what is missing, and what your next regulatory exam, home office audit, or cyber insurance renewal will ask for.</p>
         </div>
       </div>
 
       <div class="copy-module">
         <div class="module-tag">CTA Button</div>
-        <div class="module-copy"><p>Request a Gap Analysis</p></div>
+        <div class="module-copy"><p>Request a 30-Minute Gap Analysis</p></div>
       </div>
 
       <div class="copy-module">
@@ -782,134 +1085,8 @@
         <div class="module-copy"><p>No obligation. No long sales process. A 30-minute conversation and a clear picture of where you stand.</p></div>
       </div>
     </div>
-  </div><!-- /homepage -->
+  </div>
 
-
-  <!-- ══════════════════════════════════════════════════════════════════════
-       PAGE 2: REGISTERED INVESTMENT ADVISERS
-  ══════════════════════════════════════════════════════════════════════ -->
-  <div class="page-section" id="ria">
-    <div class="page-label">Page 2 — Who We Serve</div>
-    <div class="page-title">Registered Investment Advisers</div>
-    <div class="page-desc">Audience: RIA principals, managing partners, CCOs. Core fears: exam deficiency, breach eroding the client trust the entire business depends on, compliance burden consuming advisor time. RIAs operate under a fiduciary standard — a cybersecurity breach does not just create regulatory exposure, it erodes the relationship the business is built on.</div>
-
-    <div class="copy-block">
-      <div class="section-label">Page Hero</div>
-
-      <div class="copy-module">
-        <div class="module-tag">H1</div>
-        <div class="module-copy"><p>Your practice stays compliant. Your advisors stay focused. Your next exam stays calm.</p></div>
-      </div>
-
-      <div class="copy-module">
-        <div class="module-tag">Sub-Head</div>
-        <div class="module-copy"><p>FCI extends cybersecurity controls to every affiliated advisor — regardless of location, device ownership, or technical expertise — and produces the SEC-aligned documentation that examiners and cyber insurers require, continuously and automatically.</p></div>
-      </div>
-    </div>
-
-    <div class="copy-block">
-      <div class="section-label">The Problem You're Living With</div>
-
-      <div class="copy-module">
-        <div class="module-tag">Section Headline</div>
-        <div class="module-copy"><p>Your advisors work from places your IT team has never seen.</p></div>
-      </div>
-
-      <div class="copy-module">
-        <div class="module-tag">Body Copy</div>
-        <div class="module-copy">
-          <p>Many RIAs operate through a model where advisors work from their own offices, using their own devices, on networks the firm does not manage. Client data flows through personal laptops, email accounts, and cloud applications that may or may not meet regulatory standards.</p>
-          <p>SEC examination priorities increasingly include cybersecurity — specifically evidence of controls rather than descriptions of policies. The SEC's cybersecurity rules require written policies, periodic risk assessments, and documentation upon examination. Cyber insurers require proof of specific controls — MFA, endpoint protection, access controls, incident response plans — before renewing policies.</p>
-          <p>A smaller RIA faces the same documentation requirements as a larger one. The SEC and the cyber insurer ask the same questions regardless of firm size. For most RIAs, the honest answer is: the evidence is not fully there. Not because no one cared — but because building it manually across every advisor location is a full-time job, and no one has the time.</p>
-        </div>
-      </div>
-    </div>
-
-    <div class="copy-block">
-      <div class="section-label">What Changes With FCI</div>
-
-      <div class="copy-module">
-        <div class="module-tag">Section Headline</div>
-        <div class="module-copy"><p>Controls enforced across every advisor. Evidence assembled without your team lifting a finger.</p></div>
-      </div>
-
-      <div class="copy-module">
-        <div class="module-tag">What Changes on Day One</div>
-        <div class="module-copy">
-          <p>FCI takes a complete inventory of every device associated with the firm. Leadership receives a clear view of the full cybersecurity posture — often for the first time. Most RIAs discover endpoints and access paths they did not know existed.</p>
-          <p>From that point, controls deploy automatically: MFA on every device, Always-On VPN for every advisor session, endpoint protection running silently in the background. Your advisors will not notice a difference in how they work. The documentation of what is in place starts building from that moment forward through the CISO Portal.</p>
-        </div>
-      </div>
-
-      <div class="copy-module">
-        <div class="module-tag">Benefit List</div>
-        <div class="module-copy">
-          <p>Your advisors keep their workflow exactly as it is — controls run silently in the background</p>
-          <p>SEC and FINRA exam documentation assembles continuously — no manual prep, no last-minute scramble</p>
-          <p>Every advisor device is inventoried, monitored, and verified compliant — including BYOD and home offices</p>
-          <p>Zero Trust access controls prevent a single compromised device from reaching the rest of your network</p>
-          <p>24x7 SOC monitoring detects and responds to threats before they become incidents</p>
-          <p>Your cyber insurer sees documented evidence of controls at renewal — reducing friction and supporting your claim defensibility</p>
-        </div>
-      </div>
-    </div>
-
-    <div class="copy-block">
-      <div class="section-label">What You Can Show the Examiner</div>
-
-      <div class="copy-module">
-        <div class="module-tag">Section Headline</div>
-        <div class="module-copy"><p>When the SEC or FINRA notice arrives, you open the CISO Portal.</p></div>
-      </div>
-
-      <div class="copy-module">
-        <div class="module-tag">Body Copy</div>
-        <div class="module-copy">
-          <p>The complete evidence package is already assembled. Not a folder of screenshots. Not a spreadsheet rebuilt under deadline pressure. A structured, timestamped compliance record mapped to the specific questions examiners ask.</p>
-        </div>
-      </div>
-
-      <div class="copy-module">
-        <div class="module-tag">Evidence Artifacts List</div>
-        <div class="module-copy">
-          <p>Device inventory with control verification for every advisor endpoint</p>
-          <p>Regulation S-P and FINRA Rule 4370 cybersecurity program documentation</p>
-          <p>MFA, VPN, and endpoint encryption enforcement records</p>
-          <p>Written Information Security Policy aligned to current SEC and FINRA expectations</p>
-          <p>Vendor due diligence file for FCI (SOC 2 Type 1, SecurityScorecard, NIST CSF mapping)</p>
-          <p>Incident log and response documentation</p>
-          <p>Access control and user provisioning records</p>
-        </div>
-      </div>
-    </div>
-
-    <div class="copy-block">
-      <div class="section-label">Closing Line</div>
-      <div class="copy-module">
-        <div class="module-tag">Closing Statement</div>
-        <div class="module-copy"><p>Your employees and affiliates will not notice a difference. Your regulator will.</p></div>
-      </div>
-    </div>
-
-    <div class="testimonial-block">
-      <div class="testimonial-quote">"FCI CEO Brian Edelman is one of the few real cybersecurity experts who understand compliance — a true thought leader."</div>
-      <div class="testimonial-name">Joel Bruckenstein</div>
-      <div class="testimonial-org">Technology Tools for Today (T3)</div>
-    </div>
-
-    <div class="cta-display">
-      <div>
-        <div class="cta-label">Next Step</div>
-        <div class="cta-text">Request a 30-minute Gap Analysis — see your exposure and exam readiness today.</div>
-      </div>
-      <a href="#" class="cta-button">Request a Gap Analysis</a>
-    </div>
-  </div><!-- /ria -->
-
-
-  <!-- ══════════════════════════════════════════════════════════════════════
-       PAGE 3: BROKER-DEALERS & BRANCH OFFICES
-  ══════════════════════════════════════════════════════════════════════ -->
   <div class="page-section" id="broker-dealer">
     <div class="page-label">Page 3 — Who We Serve</div>
     <div class="page-title">Broker-Dealers &amp; Branch Offices</div>
@@ -923,9 +1100,39 @@
         <div class="module-copy"><p>Controls enforced across every rep. Evidence assembled before the examiner walks in.</p></div>
       </div>
 
+      <div class="question-element">
+        <div class="q-label">Question Layer</div>
+        <p>If FINRA asked for evidence of endpoint protection across every registered representative tomorrow, could your home office produce it?</p>
+      </div>
+
       <div class="copy-module">
         <div class="module-tag">Sub-Head</div>
         <div class="module-copy"><p>The broker-dealer home office sets the compliance program. That program must reach every branch and every registered representative, including those working from independent offices or home locations. FCI enforces controls across the full branch network — and produces FINRA and SEC-aligned evidence continuously, so the home office can confirm every branch is in good order before the examiner asks.</p></div>
+      </div>
+    </div>
+
+    <!-- WHAT CHANGES FOR YOU -->
+    <div class="copy-block">
+      <div class="section-label">What Changes for You</div>
+      <div class="copy-note">Design direction: Four compact cards, one per role. Short and direct — the visitor finds their title and reads what FCI means for them specifically.</div>
+
+      <div class="two-col">
+        <div class="col-card">
+          <div class="col-card-label">Owner / Managing Partner</div>
+          <div class="col-card-body">Your firm's regulatory standing and client trust are protected by controls that run across every branch and every rep — without requiring you to build a security team or manage technology. When the examiner or cyber insurer asks, the documentation is already there.</div>
+        </div>
+        <div class="col-card">
+          <div class="col-card-label">CISO / CCO</div>
+          <div class="col-card-body">The gap between your written policies and what you can actually prove in the field closes on day one. Controls enforce across every branch, every rep device. The CISO Portal produces FINRA and SEC-aligned evidence continuously — you stop preparing for exams and start showing them.</div>
+        </div>
+        <div class="col-card">
+          <div class="col-card-label">Field Compliance Officer</div>
+          <div class="col-card-body">You no longer chase branches for documentation or verify controls office by office. FCI enforces the home office's security requirements across every location automatically — and the evidence of that enforcement is visible in real time through the CISO Portal.</div>
+        </div>
+        <div class="col-card">
+          <div class="col-card-label">IT Manager</div>
+          <div class="col-card-body">FCI works alongside your existing infrastructure — it is not a replacement. Endpoint protection, patching, and monitoring deploy without requiring you to visit branches or configure devices remotely. Your workload decreases. Your visibility increases.</div>
+        </div>
       </div>
     </div>
 
@@ -935,6 +1142,10 @@
       <div class="copy-module">
         <div class="module-tag">Section Headline</div>
         <div class="module-copy"><p>FINRA expects evidence of supervision. Your reps work from places you cannot see.</p></div>
+      </div>
+      <div class="question-element">
+        <div class="q-label">Question Layer</div>
+        <p>How many of your registered representatives are working from devices and networks that your IT team has never verified?</p>
       </div>
 
       <div class="copy-module">
@@ -953,6 +1164,10 @@
       <div class="copy-module">
         <div class="module-tag">Section Headline</div>
         <div class="module-copy"><p>Network-wide enforcement. Exam evidence that builds itself. One portal to show the examiner.</p></div>
+      </div>
+      <div class="question-element">
+        <div class="q-label">Question Layer</div>
+        <p>What would it mean for your compliance team if FINRA exam evidence was already assembled — before the examination notice arrived?</p>
       </div>
 
       <div class="copy-module">
@@ -981,6 +1196,10 @@
         <div class="module-tag">Section Headline</div>
         <div class="module-copy"><p>The FINRA or SEC examiner will ask for your cybersecurity evidence. FCI builds it while your reps are working — not after the exam notice arrives.</p></div>
       </div>
+      <div class="question-element">
+        <div class="q-label">Question Layer</div>
+        <p>Can your firm produce device inventory logs, MFA enforcement records, and written supervisory procedure documentation — for every branch — on demand?</p>
+      </div>
 
       <div class="copy-module">
         <div class="module-tag">Evidence Artifacts List</div>
@@ -1001,14 +1220,10 @@
         <div class="cta-label">Next Step</div>
         <div class="cta-text">Request a 30-minute Gap Analysis — see your branch network exposure and exam readiness today.</div>
       </div>
-      <a href="#" class="cta-button">Request a Gap Analysis</a>
+      <a href="#" class="cta-button">Request a 30-Minute Gap Analysis</a>
     </div>
-  </div><!-- /broker-dealer -->
+  </div>
 
-
-  <!-- ══════════════════════════════════════════════════════════════════════
-       PAGE 4: INSURANCE CARRIERS & AGENCIES
-  ══════════════════════════════════════════════════════════════════════ -->
   <div class="page-section" id="insurance">
     <div class="page-label">Page 4 — Who We Serve</div>
     <div class="page-title">Insurance Carriers &amp; Agencies</div>
@@ -1022,9 +1237,39 @@
         <div class="module-copy"><p>Security controls that reach every appointed agent. Evidence your cyber insurer will accept.</p></div>
       </div>
 
+      <div class="question-element">
+        <div class="q-label">Question Layer</div>
+        <p>If a cyber incident hit one of your appointed agencies today, could you document the controls that were in place at the time it happened?</p>
+      </div>
+
       <div class="copy-module">
         <div class="module-tag">Sub-Head</div>
         <div class="module-copy"><p>Your appointed agents and independent field offices operate outside your direct IT control. State regulators and your own cyber insurer both expect proof that controls extend to the field. FCI delivers that proof — continuously.</p></div>
+      </div>
+    </div>
+
+    <!-- WHAT CHANGES FOR YOU -->
+    <div class="copy-block">
+      <div class="section-label">What Changes for You</div>
+      <div class="copy-note">Design direction: Four compact cards, one per role. Short and direct — the visitor finds their title and reads what FCI means for them specifically.</div>
+
+      <div class="two-col">
+        <div class="col-card">
+          <div class="col-card-label">Owner / Executive Leadership</div>
+          <div class="col-card-body">Your carrier's regulatory standing and client trust are protected by controls that reach every appointed agent and field agency — without building an internal security team. When state regulators or your cyber insurer ask for evidence, it is already assembled.</div>
+        </div>
+        <div class="col-card">
+          <div class="col-card-label">CISO / CCO</div>
+          <div class="col-card-body">The gap between your security program and what you can prove in the field closes immediately. FCI enforces NAIC-aligned controls across every agency and produces the documentation state examiners require — continuously, not in a scramble after the notice arrives.</div>
+        </div>
+        <div class="col-card">
+          <div class="col-card-label">Field Compliance Officer</div>
+          <div class="col-card-body">You stop chasing agencies for attestations and verifying controls location by location. FCI enforces the carrier's requirements across every appointed agent automatically — and the CISO Portal shows real-time enforcement status across the entire distribution network.</div>
+        </div>
+        <div class="col-card">
+          <div class="col-card-label">IT Manager</div>
+          <div class="col-card-body">FCI extends security controls to field agencies without adding to your infrastructure or your workload. Endpoint protection, patching, and monitoring deploy to agent devices you have never managed — and report back through a single dashboard.</div>
+        </div>
       </div>
     </div>
 
@@ -1034,6 +1279,10 @@
       <div class="copy-module">
         <div class="module-tag">Section Headline</div>
         <div class="module-copy"><p>Your agency network creates compliance exposure that most security providers were not designed to reach.</p></div>
+      </div>
+      <div class="question-element">
+        <div class="q-label">Question Layer</div>
+        <p>How does your carrier prove to state regulators that cybersecurity controls actually reach your independent agents — the ones using their own devices, in their own offices, on their own networks?</p>
       </div>
 
       <div class="copy-module">
@@ -1052,6 +1301,10 @@
       <div class="copy-module">
         <div class="module-tag">Section Headline</div>
         <div class="module-copy"><p>Controls extended to every appointed agent and independent agency. Documentation your regulator and your cyber insurer are already asking for.</p></div>
+      </div>
+      <div class="question-element">
+        <div class="q-label">Question Layer</div>
+        <p>What if your next NAIC filing and your next cyber insurance renewal could pull from the same evidence — already assembled, already formatted?</p>
       </div>
 
       <div class="copy-module">
@@ -1072,6 +1325,10 @@
       <div class="copy-module">
         <div class="module-tag">Section Headline</div>
         <div class="module-copy"><p>Your cyber insurer will ask what controls you had in place. FCI makes sure you have an answer before they ask.</p></div>
+      </div>
+      <div class="question-element">
+        <div class="q-label">Question Layer</div>
+        <p>If a claim is filed after a breach, will your documentation prove the controls were there — or will it prove they weren't?</p>
       </div>
 
       <div class="copy-module">
@@ -1108,66 +1365,282 @@
         <div class="cta-label">Next Step</div>
         <div class="cta-text">Request a 30-minute Gap Analysis — see your agency network exposure and NAIC compliance posture.</div>
       </div>
-      <a href="#" class="cta-button">Request a Gap Analysis</a>
-    </div>
-  </div><!-- /insurance -->
-
-
-
-
-  <!-- ══════════════════════════════════════════════════════════════════════
-       PAGE 4b: NIST FRAMEWORK EXPLAINER (inline callout on Solutions page)
-  ══════════════════════════════════════════════════════════════════════ -->
-  <div class="page-section" id="nist">
-    <div class="page-label">Page 5 — Solutions · NIST Reference</div>
-    <div class="page-title">FCI and the NIST Framework</div>
-    <div class="page-desc">A brief explainer for visitors who want to understand how FCI's services map to the NIST Cybersecurity Framework. Not required reading — but useful for technical buyers and exam preparation. Sits either as a callout within the Solutions page or as a linked modal.</div>
-
-    <div class="copy-block">
-      <div class="section-label">What Is the NIST Framework?</div>
-      <div class="copy-module">
-        <div class="module-tag">Intro Copy</div>
-        <div class="module-copy">
-          <p>The NIST Cybersecurity Framework (NIST CSF) is the standard that regulators, examiners, and cyber insurers use to evaluate whether a firm's security program is real. SEC examiners reference it. FINRA guidance maps to it. NAIC state examiners expect it. When someone asks if your controls are adequate, the NIST CSF is usually the benchmark they mean.</p>
-          <p>FCI maps every managed control to one of four NIST functions. The CISO Portal shows enforcement status by function — so when your examiner asks which NIST controls you have in place, you have the answer ready.</p>
-        </div>
-      </div>
-    </div>
-
-    <div class="copy-block">
-      <div class="section-label">The Four NIST Functions — and What FCI Manages</div>
-      <div class="nist-grid">
-        <div class="nist-cell">
-          <div class="nist-function">Identify</div>
-          <div class="nist-title">Zero Trust Complete · Evidence of Compliance</div>
-          <div class="nist-body">Know every device, every user, and every access path across your distributed network. FCI inventories the full attack surface and documents your compliance posture continuously.</div>
-        </div>
-        <div class="nist-cell">
-          <div class="nist-function">Protect</div>
-          <div class="nist-title">Managed Endpoint &amp; Network Protection · Data Exfiltration Protection</div>
-          <div class="nist-body">Deploy and enforce safeguards across every endpoint — BYOD included — without user involvement. MFA, Always-On VPN, encryption, and EDR enforced automatically.</div>
-        </div>
-        <div class="nist-cell">
-          <div class="nist-function">Detect &amp; Respond</div>
-          <div class="nist-title">Managed Detection &amp; Incident Response</div>
-          <div class="nist-body">FCI's 24x7 SOC monitors every endpoint across your distributed network. When an alert requires a human response, a human responds — not a ticket queue.</div>
-        </div>
-        <div class="nist-cell">
-          <div class="nist-function">Recover</div>
-          <div class="nist-title">Event Recovery &amp; Breach Support</div>
-          <div class="nist-body">When an incident occurs, FCI supports the full recovery process — containment, remediation, and documentation that satisfies both cyber insurers and regulators.</div>
-        </div>
-      </div>
+      <a href="#" class="cta-button">Request a 30-Minute Gap Analysis</a>
     </div>
   </div>
 
-  <!-- ══════════════════════════════════════════════════════════════════════
-       PAGE 5: SOLUTIONS OVERVIEW
-  ══════════════════════════════════════════════════════════════════════ -->
-  <div class="page-section" id="solutions">
-    <div class="page-label">Page 5 — Solutions</div>
-    <div class="page-title">Solutions Overview</div>
-    <div class="page-desc">Entry page to the solutions section. Routes visitors to individual solution pages. Frames FCI's services as an integrated system, not a menu of features.</div>
+  <div class="page-section" id="ria">
+    <div class="page-label">Page 2 — Who We Serve</div>
+    <div class="page-title">Registered Investment Advisers</div>
+    <div class="page-desc">Audience: RIA principals, managing partners, CCOs. Core fears: exam deficiency, breach eroding the client trust the entire business depends on, compliance burden consuming advisor time. RIAs operate under a fiduciary standard — a cybersecurity breach does not just create regulatory exposure, it erodes the relationship the business is built on.</div>
+
+    <div class="copy-block">
+      <div class="section-label">Page Hero</div>
+
+      <div class="copy-module">
+        <div class="module-tag">H1</div>
+        <div class="module-copy"><p>Your practice stays compliant. Your advisors stay focused. Your next exam stays calm.</p></div>
+      </div>
+
+      <div class="question-element">
+        <div class="q-label">Question Layer</div>
+        <p>If the SEC examined your firm next month, could you show documented evidence of controls across every advisor — including those working from home?</p>
+      </div>
+
+      <div class="copy-module">
+        <div class="module-tag">Sub-Head</div>
+        <div class="module-copy"><p>FCI extends cybersecurity controls to every affiliated advisor — regardless of location, device ownership, or technical expertise — and produces the SEC-aligned documentation that examiners and cyber insurers require, continuously and automatically.</p></div>
+      </div>
+    </div>
+
+    <!-- WHAT CHANGES FOR YOU -->
+    <div class="copy-block">
+      <div class="section-label">What Changes for You</div>
+      <div class="copy-note">Design direction: Four compact cards, one per role. Short and direct — the visitor finds their title and reads what FCI means for them specifically.</div>
+
+      <div class="two-col">
+        <div class="col-card">
+          <div class="col-card-label">Owner / Managing Partner</div>
+          <div class="col-card-body">The client trust you spent decades building is protected by controls that run across every advisor, every device, every location — without asking you to build a security team. When the SEC examiner or cyber insurer asks, the evidence is already assembled. You made the decision. The service runs itself.</div>
+        </div>
+        <div class="col-card">
+          <div class="col-card-label">CCO / Compliance Lead</div>
+          <div class="col-card-body">The gap between your written policies and what you can prove to an examiner closes on day one. FCI enforces controls across every advisor endpoint and produces SEC-aligned documentation continuously. You stop rebuilding evidence every exam cycle and start showing a living compliance record.</div>
+        </div>
+        <div class="col-card">
+          <div class="col-card-label">Field Compliance Officer</div>
+          <div class="col-card-body">You no longer verify controls advisor by advisor or chase down documentation from remote offices. FCI enforces the firm's security requirements across every location automatically — and the CISO Portal shows real-time enforcement status across your entire advisor network.</div>
+        </div>
+        <div class="col-card">
+          <div class="col-card-label">IT Manager</div>
+          <div class="col-card-body">FCI works alongside your existing setup — it handles the compliance and regulatory documentation layer while deploying endpoint protection, patching, and monitoring to advisor devices you may have never managed directly. Your workload goes down. Your coverage goes up.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="copy-block">
+      <div class="section-label">The Problem You're Living With</div>
+
+      <div class="copy-module">
+        <div class="module-tag">Section Headline</div>
+        <div class="module-copy"><p>Your advisors work from places your IT team has never seen.</p></div>
+      </div>
+      <div class="question-element">
+        <div class="q-label">Question Layer</div>
+        <p>Do you know how many of your advisors' devices have endpoint protection running right now — and can you prove it to an examiner?</p>
+      </div>
+
+      <div class="copy-module">
+        <div class="module-tag">Body Copy</div>
+        <div class="module-copy">
+          <p>Many RIAs operate through a model where advisors work from their own offices, using their own devices, on networks the firm does not manage. Client data flows through personal laptops, email accounts, and cloud applications that may or may not meet regulatory standards.</p>
+          <p>SEC examination priorities increasingly include cybersecurity — specifically evidence of controls rather than descriptions of policies. The SEC's cybersecurity rules require written policies, periodic risk assessments, and documentation upon examination. Cyber insurers require proof of specific controls — MFA, endpoint protection, access controls, incident response plans — before renewing policies.</p>
+          <p>A smaller RIA faces the same documentation requirements as a larger one. The SEC and the cyber insurer ask the same questions regardless of firm size. For most RIAs, the honest answer is: the evidence is not fully there. Not because no one cared — but because building it manually across every advisor location is a full-time job, and no one has the time.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="copy-block">
+      <div class="section-label">What Changes With FCI</div>
+
+      <div class="copy-module">
+        <div class="module-tag">Section Headline</div>
+        <div class="module-copy"><p>Controls enforced across every advisor. Evidence assembled without your team lifting a finger.</p></div>
+      </div>
+      <div class="question-element">
+        <div class="q-label">Question Layer</div>
+        <p>What would your CCO do with the 80% of compliance management time they'd get back?</p>
+      </div>
+
+      <div class="copy-module">
+        <div class="module-tag">What Changes on Day One</div>
+        <div class="module-copy">
+          <p>FCI takes a complete inventory of every device associated with the firm. Leadership receives a clear view of the full cybersecurity posture — often for the first time. Most RIAs discover endpoints and access paths they did not know existed.</p>
+          <p>From that point, controls deploy automatically: MFA on every device, Always-On VPN for every advisor session, endpoint protection running silently in the background. Your advisors will not notice a difference in how they work. The documentation of what is in place starts building from that moment forward through the CISO Portal.</p>
+        </div>
+      </div>
+
+      <div class="copy-module">
+        <div class="module-tag">Benefit List</div>
+        <div class="module-copy">
+          <p>Your advisors keep their workflow exactly as it is — controls run silently in the background</p>
+          <p>SEC and FINRA exam documentation assembles continuously — no manual prep, no last-minute scramble</p>
+          <p>Every advisor device is inventoried, monitored, and verified compliant — including BYOD and home offices</p>
+          <p>Zero Trust access controls prevent a single compromised device from reaching the rest of your network</p>
+          <p>24x7 SOC monitoring detects and responds to threats before they become incidents</p>
+          <p>Your cyber insurer sees documented evidence of controls at renewal — reducing friction and supporting your claim defensibility</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="copy-block">
+      <div class="section-label">What You Can Show the Examiner</div>
+
+      <div class="copy-module">
+        <div class="module-tag">Section Headline</div>
+        <div class="module-copy"><p>When the SEC or FINRA notice arrives, you open the CISO Portal.</p></div>
+      </div>
+      <div class="question-element">
+        <div class="q-label">Question Layer</div>
+        <p>When the exam notice arrives, do you start preparing — or do you just open the portal?</p>
+      </div>
+
+      <div class="copy-module">
+        <div class="module-tag">Body Copy</div>
+        <div class="module-copy">
+          <p>The complete evidence package is already assembled. Not a folder of screenshots. Not a spreadsheet rebuilt under deadline pressure. A structured, timestamped compliance record mapped to the specific questions examiners ask.</p>
+        </div>
+      </div>
+
+      <div class="copy-module">
+        <div class="module-tag">Evidence Artifacts List</div>
+        <div class="module-copy">
+          <p>Device inventory with control verification for every advisor endpoint</p>
+          <p>Regulation S-P and FINRA Rule 4370 cybersecurity program documentation</p>
+          <p>MFA, VPN, and endpoint encryption enforcement records</p>
+          <p>Written Information Security Policy aligned to current SEC and FINRA expectations</p>
+          <p>Vendor due diligence file for FCI (SOC 2 Type 1, SecurityScorecard, NIST CSF mapping)</p>
+          <p>Incident log and response documentation</p>
+          <p>Access control and user provisioning records</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="copy-block">
+      <div class="section-label">Closing Line</div>
+      <div class="copy-module">
+        <div class="module-tag">Closing Statement</div>
+        <div class="module-copy"><p>Your employees and affiliates will not notice a difference. Your regulators will.</p></div>
+      </div>
+    </div>
+
+    <div class="testimonial-block">
+      <div class="testimonial-quote">"FCI CEO Brian Edelman is one of the few real cybersecurity experts who understand compliance — a true thought leader."</div>
+      <div class="testimonial-name">Joel Bruckenstein</div>
+      <div class="testimonial-org">Technology Tools for Today (T3)</div>
+    </div>
+
+    <div class="cta-display">
+      <div>
+        <div class="cta-label">Next Step</div>
+        <div class="cta-text">Request a 30-minute Gap Analysis — see your exposure and exam readiness today.</div>
+      </div>
+      <a href="#" class="cta-button">Request a 30-Minute Gap Analysis</a>
+    </div>
+  </div>
+
+  <div class="page-section" id="security-assessment">
+    <div class="page-label">Security Assessment</div>
+    <div class="page-title">Security Assessment</div>
+    <div class="page-desc">A security assessment is not a single test. It is a layered process that begins with understanding what the firm has in place today and ends with a verified view of its exposure from the outside.</div>
+
+    <!-- HERO -->
+    <div class="copy-block">
+      <div class="section-label">Page Hero</div>
+      <div class="copy-module">
+        <div class="module-tag">H1</div>
+        <div class="module-copy"><p>Know exactly where your firm stands. Before your regulator asks.</p></div>
+      </div>
+      <div class="copy-module">
+        <div class="module-tag">Sub-Head</div>
+        <div class="module-copy"><p>FCI's Security Assessment is a layered, four-part evaluation of your firm's cybersecurity posture — covering controls, vulnerabilities, cloud configuration, and external exposure. In 60 to 80 percent of assessments, we find compliance gaps the firm did not know existed.</p></div>
+      </div>
+    </div>
+
+    <!-- THE FOUR LAYERS -->
+    <div class="copy-block">
+      <div class="section-label">The Four Layers</div>
+      <div class="copy-note">Design direction: Four cards in a row, numbered Layer 1 through Layer 4. Each links to a short description below.</div>
+
+      <div class="two-col">
+        <div class="col-card">
+          <div class="col-card-label">Layer 1 — Gap Analysis</div>
+          <div class="col-card-title">What controls are in place — and can the firm prove it?</div>
+          <div class="col-card-body">FCI evaluates the firm's security posture across six domains: Firm, Endpoint, User, Network, Cloud App, and Data. For each, we assess what controls exist and whether the firm has the evidence to prove it — the evidence a regulator, insurer, or home office would require. In 30 minutes, the firm knows exactly where the gaps are.</div>
+        </div>
+        <div class="col-card">
+          <div class="col-card-label">Layer 2 — Network Pen Testing &amp; Vulnerability Scanning</div>
+          <div class="col-card-title">Can someone break in? What exposures exist right now?</div>
+          <div class="col-card-body">Penetration testing simulates real-world attacks against the firm's infrastructure — both from outside and from inside the network. Vulnerability scanning systematically identifies known weaknesses: missing patches, misconfigured services, open ports. Together, they give the firm a real-world stress test and a prioritized inventory of risk. FCI performs both internal and external testing — internal testing is now required by NYDFS and expected by most regulators.</div>
+        </div>
+        <div class="col-card">
+          <div class="col-card-label">Layer 3 — Cloud App Hardening</div>
+          <div class="col-card-title">Is your Microsoft 365 environment configured securely?</div>
+          <div class="col-card-body">Microsoft 365 is where most firms store sensitive client data and communicate daily — and it is a primary attack surface. FCI reviews email security, data sharing permissions, conditional access policies, and MFA enforcement against best practices. The average organization's Microsoft Secure Score is between 30% and 45%. Most firms do not know their number.</div>
+        </div>
+        <div class="col-card">
+          <div class="col-card-label">Layer 4 — External Attack Surface</div>
+          <div class="col-card-title">What can an attacker — or an insurer — see from the outside?</div>
+          <div class="col-card-body">This layer scans everything visible from outside the firm: public-facing servers, open ports, DNS records, email authentication, SSL certificates, and the corporate website. Cyber insurance carriers now use automated tools to verify a firm's external posture before underwriting or renewing a policy. A poor result can directly affect insurability and premium pricing.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- THREE-PHASE DELIVERY -->
+    <div class="copy-block">
+      <div class="section-label">How FCI Delivers — Three Phases</div>
+      <div class="copy-note">Design direction: Three numbered cards or a horizontal timeline. Emphasize the differentiator: FCI helps fix what it finds, then proves it.</div>
+
+      <div class="copy-module">
+        <div class="module-tag">Differentiator</div>
+        <div class="module-copy"><p>Most vendors deliver a report and walk away. When FCI finds problems, it helps resolve them — and then proves it.</p></div>
+      </div>
+
+      <div class="two-col">
+        <div class="col-card">
+          <div class="col-card-label">Phase 1 — Draft Report</div>
+          <div class="col-card-body">Detailed findings with risk ratings and remediation recommendations. The firm sees exactly what was found, how severe it is, and what needs to happen next.</div>
+        </div>
+        <div class="col-card">
+          <div class="col-card-label">Phase 2 — Remediation Window</div>
+          <div class="col-card-body">A defined window for the firm to address the findings — with FCI's team available to help implement fixes and close gaps. The firm is not left to figure it out alone.</div>
+        </div>
+      </div>
+
+      <div class="copy-module">
+        <div class="module-tag">Phase 3 — Final Report</div>
+        <div class="module-copy"><p>After remediation, FCI re-tests and delivers a final report that reflects the firm's improved posture. This is the report the firm presents to regulators, insurers, and home offices. It demonstrates not just that issues were found, but that they were resolved.</p></div>
+      </div>
+    </div>
+
+    <!-- WHY FIRMS REQUEST AN ASSESSMENT -->
+    <div class="copy-block">
+      <div class="section-label">Why Firms Run Security Assessments</div>
+
+      <div class="two-col">
+        <div class="col-card">
+          <div class="col-card-label">Self-Validation</div>
+          <div class="col-card-body">The firm wants to know where it stands — confirming its posture is solid, or identifying weaknesses and building the case for budget to address them.</div>
+        </div>
+        <div class="col-card">
+          <div class="col-card-label">Regulatory Requirement</div>
+          <div class="col-card-body">SEC, FINRA, NYDFS, and state insurance departments ask for copies of security assessments during examinations. Having a current assessment ready is a compliance expectation.</div>
+        </div>
+        <div class="col-card">
+          <div class="col-card-label">Home Office Requirement</div>
+          <div class="col-card-body">The home office, carrier, or enterprise above the sales office requires annual assessments as part of its oversight — either as a standing requirement or triggered by an incident or audit finding.</div>
+        </div>
+        <div class="col-card">
+          <div class="col-card-label">Mergers &amp; Acquisitions</div>
+          <div class="col-card-body">On the sell side, a strong assessment adds credibility. On the buy side, the acquirer needs to understand and reduce liability. A poor assessment can directly reduce acquisition value.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CTA -->
+    <div class="cta-display">
+      <div>
+        <div class="cta-label">Start Here</div>
+        <div class="cta-text">A Security Assessment starts with a 30-minute Gap Analysis. Results in two to four weeks.</div>
+      </div>
+      <a href="#" class="cta-button">Request a 30-Minute Gap Analysis</a>
+    </div>
+  </div>
+
+  <div class="page-section" id="managed-cybersecurity">
+    <div class="page-label">Page 5 — Managed Cybersecurity</div>
+    <div class="page-title">Managed Cybersecurity</div>
+    <div class="page-desc">FCI's managed cybersecurity program organized by security domain. Each layer works together as an integrated service — every component feeds the CISO Portal, every action produces evidence, every alert reaches a human analyst.</div>
 
     <div class="copy-block">
       <div class="section-label">Page Hero</div>
@@ -1179,71 +1652,256 @@
 
       <div class="copy-module">
         <div class="module-tag">Sub-Head</div>
-        <div class="module-copy"><p>FCI's solutions work together as an integrated managed service — not a stack of disconnected tools. Every component feeds the CISO Portal. Every action produces evidence. Every alert reaches a human analyst.</p></div>
+        <div class="module-copy"><p>FCI's managed cybersecurity program covers six security domains — endpoint, user, network, data, cloud app, and firm. Every domain is managed as part of one integrated service, not a stack of disconnected tools.</p></div>
+      </div>
+    </div>
+
+    <!-- ── ENDPOINT SECURITY ── -->
+    <div class="copy-block" id="endpoint-security">
+      <div class="section-label">Endpoint Security</div>
+      <div class="copy-note">Design direction: Each subsection below is a distinct security domain. Can be displayed as full-width sections with anchored navigation from the sidebar.</div>
+
+      <div class="copy-module">
+        <div class="module-tag">Headline</div>
+        <div class="module-copy"><p>Protection and response across every device — including BYOD.</p></div>
+      </div>
+
+      <div class="copy-module">
+        <div class="module-tag">Body Copy</div>
+        <div class="module-copy">
+          <p>Automated safeguard enforcement, EDR with MXDR, DLP, RMM, OS patching, and attended remote IT support. NIST CSF-mapped. Enforced without user involvement.</p>
+          <p>FCI implements and maintains endpoint protection across every device on the firm's network — company-owned, BYOD, and home office. Controls deploy automatically. Employees and affiliates do not need to configure, approve, or interact with them. When a threat is detected, FCI's SOC analysts respond in real time — containing the incident before it spreads.</p>
+        </div>
+      </div>
+
+      <div class="copy-module">
+        <div class="module-tag">Capabilities</div>
+        <div class="module-copy">
+          <p>Endpoint Detection &amp; Response (EDR) with Managed Extended Detection &amp; Response (MXDR)</p>
+          <p>Data Loss Prevention (DLP) enforced at the device level</p>
+          <p>Remote Monitoring &amp; Management (RMM) across all endpoints</p>
+          <p>Automated OS patching and software updates</p>
+          <p>Attended remote IT support for end users</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── USER SECURITY ── -->
+    <div class="copy-block" id="user-security">
+      <div class="section-label">User Security</div>
+
+      <div class="copy-module">
+        <div class="module-tag">Headline</div>
+        <div class="module-copy"><p>Protect every identity across your distributed network.</p></div>
+      </div>
+
+      <div class="copy-module">
+        <div class="module-tag">Body Copy</div>
+        <div class="module-copy">
+          <p>Centralized phishing-resistant MFA, user lifecycle management, and dark web monitoring for leaked credentials — covering every rep, advisor, and field agent.</p>
+          <p>Identity is the most targeted attack surface in financial services. FCI manages authentication, access provisioning, and credential monitoring across every user in the firm's network — from onboarding to offboarding, with no gaps in between.</p>
+        </div>
+      </div>
+
+      <div class="copy-module">
+        <div class="module-tag">Capabilities</div>
+        <div class="module-copy">
+          <p>Phishing-resistant multi-factor authentication (MFA) — enforced, not optional</p>
+          <p>User lifecycle management — provisioning, role changes, and offboarding</p>
+          <p>Dark web monitoring for compromised credentials</p>
+          <p>Security awareness training and phishing simulation</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── NETWORK SECURITY ── -->
+    <div class="copy-block" id="network-security">
+      <div class="section-label">Network Security</div>
+
+      <div class="copy-module">
+        <div class="module-tag">Headline</div>
+        <div class="module-copy"><p>Secure the networks your advisors actually use.</p></div>
+      </div>
+
+      <div class="copy-module">
+        <div class="module-tag">Body Copy</div>
+        <div class="module-copy">
+          <p>Physical firewall and Wi-Fi management, Always-On VPN with cloud-based firewall, ISP and DNS control, infrastructure management, and full network lifecycle coverage — including field offices and home networks.</p>
+          <p>Financial services firms operate across dozens or hundreds of locations — branch offices, home offices, client meeting spaces. FCI manages network security across every location, ensuring consistent protection regardless of where advisors, agents, and representatives connect.</p>
+        </div>
+      </div>
+
+      <div class="copy-module">
+        <div class="module-tag">Capabilities</div>
+        <div class="module-copy">
+          <p>Physical firewall and Wi-Fi management at branch and field offices</p>
+          <p>Always-On VPN with cloud-based firewall for remote and home networks</p>
+          <p>ISP and DNS control</p>
+          <p>Infrastructure lifecycle management</p>
+          <p>Full network coverage — office, home, and field locations</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── DATA SECURITY ── -->
+    <div class="copy-block" id="data-security">
+      <div class="section-label">Data Security</div>
+
+      <div class="copy-module">
+        <div class="module-tag">Headline</div>
+        <div class="module-copy"><p>Protect the data your clients trust you to keep private.</p></div>
+      </div>
+
+      <div class="copy-module">
+        <div class="module-tag">Body Copy</div>
+        <div class="module-copy">
+          <p>Sales offices hold the most sensitive financial information of the country's wealthiest families — wills, trusts, account statements, insurance policies, investment portfolios. FCI implements data protection controls that prevent exfiltration, enforce encryption, and maintain backup and recovery — continuously, across every device and location.</p>
+        </div>
+      </div>
+
+      <div class="copy-module">
+        <div class="module-tag">Capabilities</div>
+        <div class="module-copy">
+          <p>Encryption at rest and in transit</p>
+          <p>Data exfiltration protection</p>
+          <p>Data leakage protection (DLP)</p>
+          <p>Backup and recovery</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── CLOUD APP SECURITY ── -->
+    <div class="copy-block" id="cloud-app-security">
+      <div class="section-label">Cloud App Security</div>
+
+      <div class="copy-module">
+        <div class="module-tag">Headline</div>
+        <div class="module-copy"><p>Visibility and control across your cloud environment.</p></div>
+      </div>
+
+      <div class="copy-module">
+        <div class="module-tag">Body Copy</div>
+        <div class="module-copy">
+          <p>M365 hardening and templated configuration, centralized SIEM logging, configuration change tracking, and 24x7 SOC with MXDR — so nothing in your cloud environment goes unmonitored.</p>
+          <p>Cloud applications are where most of the daily work happens — email, file sharing, collaboration, CRM. FCI hardens and monitors the cloud environment to the same standard as on-premise infrastructure, ensuring consistent security posture across every platform the firm uses.</p>
+        </div>
+      </div>
+
+      <div class="copy-module">
+        <div class="module-tag">Capabilities</div>
+        <div class="module-copy">
+          <p>Microsoft 365 hardening and templated configuration</p>
+          <p>Centralized SIEM logging across cloud applications</p>
+          <p>Configuration change tracking and drift detection</p>
+          <p>24x7 SOC monitoring with MXDR for cloud environments</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── FIRM SECURITY ── -->
+    <div class="copy-block" id="firm-security">
+      <div class="section-label">Firm Security</div>
+      <div class="copy-note">Design direction: This is the umbrella layer — the operational backbone that ties every domain together. Includes SOC, incident response, and the coordination layer that makes everything else work as one managed service.</div>
+
+      <div class="copy-module">
+        <div class="module-tag">Headline</div>
+        <div class="module-copy"><p>The operational backbone. 24x7 monitoring, incident response, and the coordination that makes everything else work as one service.</p></div>
+      </div>
+
+      <div class="copy-module">
+        <div class="module-tag">Body Copy</div>
+        <div class="module-copy">
+          <p>Every module FCI manages feeds into a single command center. The CISO Portal gives your security and compliance teams real-time visibility, one-click controls, and continuously assembled audit evidence — mapped to the regulatory frameworks your examiners use.</p>
+          <p>FCI's security operations center monitors your entire distributed network around the clock. When a threat is detected, trained analysts investigate and respond — within the incident, not in a follow-up email. Your team is notified with context, not with raw alerts that require interpretation under pressure.</p>
+          <p>Every incident is documented from the moment of detection through containment and recovery. That documentation becomes part of your CISO Portal compliance record — available to show regulators and cyber insurers that incidents were identified, contained, and handled according to your documented response plan.</p>
+        </div>
+      </div>
+
+      <div class="copy-module">
+        <div class="module-tag">Capabilities</div>
+        <div class="module-copy">
+          <p>24x7 Security Operations Center (SOC) — human-led monitoring and response</p>
+          <p>Mass vulnerability response — coordinated coverage for zero-day events</p>
+          <p>Security incident response — containment, remediation, documentation, and communication</p>
+          <p>Breach support — regulatory notification, insurer coordination, and recovery</p>
+          <p>CISO Portal — real-time compliance posture, one-click controls, audit-ready evidence</p>
+          <p>Security Officer support and cyber software instance management</p>
+          <p>Support system and scheduling</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="page-section" id="zero-trust">
+    <div class="page-label">Page 7 — Solutions</div>
+    <div class="page-title">Zero Trust</div>
+    <div class="page-desc">Explains Zero Trust in plain language for financial firm executives. Focuses on containing field exposure — not technical architecture.</div>
+
+    <div class="copy-block">
+      <div class="section-label">Page Hero</div>
+
+      <div class="copy-module">
+        <div class="module-tag">H1</div>
+        <div class="module-copy"><p>Verify every user, device, and network. Before they reach anything.</p></div>
+      </div>
+
+      <div class="copy-module">
+        <div class="module-tag">Sub-Head</div>
+        <div class="module-copy"><p>Zero Trust is not a product. It is a principle: nothing on your network is trusted by default. Every access request is verified — user identity, device health, location, and context — before a connection is allowed. FCI deploys this model pragmatically for firms with distributed field operations.</p></div>
       </div>
     </div>
 
     <div class="copy-block">
-      <div class="section-label">Firm Security — Umbrella Layer</div>
-      <div class="copy-note">Design direction: Full-width band at top of solutions stack. Links to CISO Portal page. This is what ties every module together.</div>
+      <div class="section-label">Why This Matters for Your Firm</div>
+
       <div class="copy-module">
-        <div class="module-tag">Band Headline</div>
-        <div class="module-copy"><p>Firm Security — CISO Portal · Security Officer Support · Cyber Software Instances · Support System &amp; Scheduling</p></div>
+        <div class="module-tag">Section Headline</div>
+        <div class="module-copy"><p>When one device is compromised, Zero Trust determines how far the damage spreads.</p></div>
       </div>
+
       <div class="copy-module">
-        <div class="module-tag">Band Description</div>
-        <div class="module-copy"><p>Every module FCI manages feeds into a single command center. The CISO Portal gives your security and compliance teams real-time visibility, one-click controls, and continuously assembled audit evidence — mapped to the regulatory frameworks your examiners use.</p></div>
+        <div class="module-tag">Body Copy</div>
+        <div class="module-copy">
+          <p>In a traditional network model, a compromised device in a branch office or field agency has access to everything that device user normally reaches. Client data. Internal systems. Other network connections.</p>
+          <p>In a Zero Trust model, that same device — once flagged — can reach nothing it has not been explicitly authorized to access. The blast radius of any incident is contained at the source.</p>
+          <p>For financial firms with dozens or hundreds of field locations, Zero Trust is not a luxury. It is the architecture that makes distributed operations defensible.</p>
+        </div>
       </div>
     </div>
 
     <div class="copy-block">
-      <div class="section-label">Solutions Grid — Seven Modules</div>
-      <div class="copy-note">Design direction: 4-column top row (Endpoint, User, Cloud App, Network) + full-width bands for Data Security, Security Assessments, and Incident Response beneath. Each module card links to its dedicated page.</div>
+      <div class="section-label">How FCI Deploys Zero Trust</div>
 
-      <div class="two-col">
-        <div class="col-card">
-          <div class="col-card-label">Endpoint Security</div>
-          <div class="col-card-title">Protection and response across every device — including BYOD.</div>
-          <div class="col-card-body">Automated safeguard enforcement, EDR with MXDR, DLP, RMM, OS patching, and attended remote IT support. NIST CSF-mapped. Enforced without user involvement.</div>
-        </div>
-        <div class="col-card">
-          <div class="col-card-label">User Security</div>
-          <div class="col-card-title">Protect every identity across your distributed network.</div>
-          <div class="col-card-body">Centralized phishing-resistant MFA, user lifecycle management, and dark web monitoring for leaked credentials — covering every rep, advisor, and field agent.</div>
-        </div>
-        <div class="col-card">
-          <div class="col-card-label">Cloud App Security</div>
-          <div class="col-card-title">Visibility and control across your cloud environment.</div>
-          <div class="col-card-body">M365 hardening and templated configuration, centralized SIEM logging, configuration change tracking, and 24x7 SOC with MXDR — so nothing in your cloud environment goes unmonitored.</div>
-        </div>
-        <div class="col-card">
-          <div class="col-card-label">Network Security</div>
-          <div class="col-card-title">Secure the networks your advisors actually use.</div>
-          <div class="col-card-body">Physical firewall and Wi-Fi management, Always-On VPN with cloud-based firewall, ISP and DNS control, infrastructure management, and full network lifecycle coverage — including field offices and home networks.</div>
-        </div>
-      </div>
-
-      <div class="copy-module" style="margin-top: 16px;">
-        <div class="module-tag">Full-Width Band</div>
-        <div class="module-copy"><p>Data Security — Encryption At-Rest &amp; In-Transit · Data Exfiltration Protection · Data Leakage Protection · Backup</p></div>
+      <div class="copy-module">
+        <div class="module-tag">Always-On VPN</div>
+        <div class="module-copy"><p>Every advisor and rep session runs through FCI's managed VPN — automatically, without requiring the user to connect manually. Every session is encrypted. Every connection is logged. Regulators see consistent, verifiable evidence of encrypted access across your entire network.</p></div>
       </div>
 
       <div class="copy-module">
-        <div class="module-tag">Full-Width Band</div>
-        <div class="module-copy"><p>Security Assessments — Penetration Testing &amp; Vulnerability Scanning &amp; Evidencing of Network, Endpoints, and Cloud Apps</p></div>
+        <div class="module-tag">Identity Verification</div>
+        <div class="module-copy"><p>Multi-factor authentication enforced on every device and every access point. Not optional. Not user-configured. Deployed and maintained by FCI — consistently, without drift.</p></div>
       </div>
 
       <div class="copy-module">
-        <div class="module-tag">Foundation Band (always visible)</div>
-        <div class="module-copy"><p>Mass Vulnerability Response · Security Incident Response · Breach Support</p></div>
+        <div class="module-tag">Device Trust</div>
+        <div class="module-copy"><p>Every device requesting access to firm systems is verified against a current health baseline — encryption status, patch level, endpoint protection active. Devices that fall out of compliance are flagged before they create exposure.</p></div>
+      </div>
+
+      <div class="copy-module">
+        <div class="module-tag">Access Segmentation</div>
+        <div class="module-copy"><p>Access is granted by role, office, and supervisor — mapped from your directory services. Field advisors reach what they need. They cannot reach what they don't. A compromise in one location stays in one location.</p></div>
       </div>
     </div>
-  </div><!-- /solutions -->
 
+    <div class="cta-display">
+      <div>
+        <div class="cta-label">Next Step</div>
+        <div class="cta-text">See how Zero Trust applies to your specific field model — in a 30-minute assessment.</div>
+      </div>
+      <a href="#" class="cta-button">Request Assessment</a>
+    </div>
+  </div>
 
-  <!-- ══════════════════════════════════════════════════════════════════════
-       PAGE 6: CISO PORTAL
-  ══════════════════════════════════════════════════════════════════════ -->
   <div class="page-section" id="ciso-portal">
     <div class="page-label">Page 6 — Solutions</div>
     <div class="page-title">The CISO Portal</div>
@@ -1361,148 +2019,8 @@
       </div>
       <a href="#" class="cta-button">Request a Demo</a>
     </div>
-  </div><!-- /ciso-portal -->
+  </div>
 
-
-  <!-- ══════════════════════════════════════════════════════════════════════
-       PAGE 7: ZERO TRUST / ALWAYS-ON VPN
-  ══════════════════════════════════════════════════════════════════════ -->
-  <div class="page-section" id="zero-trust">
-    <div class="page-label">Page 7 — Solutions</div>
-    <div class="page-title">Zero Trust</div>
-    <div class="page-desc">Explains Zero Trust in plain language for financial firm executives. Focuses on containing field exposure — not technical architecture.</div>
-
-    <div class="copy-block">
-      <div class="section-label">Page Hero</div>
-
-      <div class="copy-module">
-        <div class="module-tag">H1</div>
-        <div class="module-copy"><p>Verify every user, device, and network. Before they reach anything.</p></div>
-      </div>
-
-      <div class="copy-module">
-        <div class="module-tag">Sub-Head</div>
-        <div class="module-copy"><p>Zero Trust is not a product. It is a principle: nothing on your network is trusted by default. Every access request is verified — user identity, device health, location, and context — before a connection is allowed. FCI deploys this model pragmatically for firms with distributed field operations.</p></div>
-      </div>
-    </div>
-
-    <div class="copy-block">
-      <div class="section-label">Why This Matters for Your Firm</div>
-
-      <div class="copy-module">
-        <div class="module-tag">Section Headline</div>
-        <div class="module-copy"><p>When one device is compromised, Zero Trust determines how far the damage spreads.</p></div>
-      </div>
-
-      <div class="copy-module">
-        <div class="module-tag">Body Copy</div>
-        <div class="module-copy">
-          <p>In a traditional network model, a compromised device in a branch office or field agency has access to everything that device user normally reaches. Client data. Internal systems. Other network connections.</p>
-          <p>In a Zero Trust model, that same device — once flagged — can reach nothing it has not been explicitly authorized to access. The blast radius of any incident is contained at the source.</p>
-          <p>For financial firms with dozens or hundreds of field locations, Zero Trust is not a luxury. It is the architecture that makes distributed operations defensible.</p>
-        </div>
-      </div>
-    </div>
-
-    <div class="copy-block">
-      <div class="section-label">How FCI Deploys Zero Trust</div>
-
-      <div class="copy-module">
-        <div class="module-tag">Always-On VPN</div>
-        <div class="module-copy"><p>Every advisor and rep session runs through FCI's managed VPN — automatically, without requiring the user to connect manually. Every session is encrypted. Every connection is logged. Regulators see consistent, verifiable evidence of encrypted access across your entire network.</p></div>
-      </div>
-
-      <div class="copy-module">
-        <div class="module-tag">Identity Verification</div>
-        <div class="module-copy"><p>Multi-factor authentication enforced on every device and every access point. Not optional. Not user-configured. Deployed and maintained by FCI — consistently, without drift.</p></div>
-      </div>
-
-      <div class="copy-module">
-        <div class="module-tag">Device Trust</div>
-        <div class="module-copy"><p>Every device requesting access to firm systems is verified against a current health baseline — encryption status, patch level, endpoint protection active. Devices that fall out of compliance are flagged before they create exposure.</p></div>
-      </div>
-
-      <div class="copy-module">
-        <div class="module-tag">Access Segmentation</div>
-        <div class="module-copy"><p>Access is granted by role, office, and supervisor — mapped from your directory services. Field advisors reach what they need. They cannot reach what they don't. A compromise in one location stays in one location.</p></div>
-      </div>
-    </div>
-
-    <div class="cta-display">
-      <div>
-        <div class="cta-label">Next Step</div>
-        <div class="cta-text">See how Zero Trust applies to your specific field model — in a 30-minute assessment.</div>
-      </div>
-      <a href="#" class="cta-button">Request Assessment</a>
-    </div>
-  </div><!-- /zero-trust -->
-
-
-  <!-- ══════════════════════════════════════════════════════════════════════
-       PAGE 8: 24x7 SOC / MXDR
-  ══════════════════════════════════════════════════════════════════════ -->
-  <div class="page-section" id="soc">
-    <div class="page-label">Page 8 — Solutions</div>
-    <div class="page-title">24x7 SOC / Managed Detection &amp; Response</div>
-    <div class="page-desc">Emphasizes human-led response over automation. The differentiator here is that analysts act, not just alert.</div>
-
-    <div class="copy-block">
-      <div class="section-label">Page Hero</div>
-
-      <div class="copy-module">
-        <div class="module-tag">H1</div>
-        <div class="module-copy"><p>Someone is watching. Every endpoint. Every hour. And they respond — not just alert.</p></div>
-      </div>
-
-      <div class="copy-module">
-        <div class="module-tag">Sub-Head</div>
-        <div class="module-copy"><p>FCI's security operations center monitors your entire distributed network around the clock. When a threat is detected, trained analysts investigate and respond — within the incident, not in a follow-up email.</p></div>
-      </div>
-    </div>
-
-    <div class="copy-block">
-      <div class="section-label">The Difference Between Monitoring and Response</div>
-
-      <div class="copy-module">
-        <div class="module-tag">Body Copy</div>
-        <div class="module-copy">
-          <p>Most managed security services generate alerts. A system detects something. A ticket is created. Someone on your team receives a notification and decides what to do next.</p>
-          <p>FCI's MXDR model works differently. When our SOC detects a threat, analysts act — containing the incident, preserving evidence, and initiating response — before it escalates. Your team is notified with context, not with raw alerts that require interpretation under pressure.</p>
-          <p>Every incident is documented from the moment of detection through containment and recovery. That documentation becomes part of your CISO Portal compliance record — available to show regulators and cyber insurers that incidents were identified, contained, and handled according to your documented response plan.</p>
-        </div>
-      </div>
-    </div>
-
-    <div class="copy-block">
-      <div class="section-label">What the SOC Covers</div>
-
-      <div class="copy-module">
-        <div class="module-tag">Coverage List</div>
-        <div class="module-copy">
-          <p>24x7 endpoint threat monitoring — every device on your distributed network</p>
-          <p>Behavioral analysis and anomaly detection beyond traditional signature-based tools</p>
-          <p>Insider threat monitoring — unusual access patterns, data movement, and policy violations</p>
-          <p>Real-time alerting with analyst triage — your team receives context, not noise</p>
-          <p>Active incident containment — analysts act within the incident, not after it</p>
-          <p>Forensic evidence collection and preservation — audit-ready documentation from the first moment of detection</p>
-          <p>Mass vulnerability response — coordinated coverage for zero-day events affecting your network</p>
-        </div>
-      </div>
-    </div>
-
-    <div class="cta-display">
-      <div>
-        <div class="cta-label">Next Step</div>
-        <div class="cta-text">See what SOC coverage looks like for your specific network — in a 30-minute walkthrough.</div>
-      </div>
-      <a href="#" class="cta-button">Request a Walkthrough</a>
-    </div>
-  </div><!-- /soc -->
-
-
-  <!-- ══════════════════════════════════════════════════════════════════════
-       PAGE 9: COMPLIANCE & EXAM READINESS
-  ══════════════════════════════════════════════════════════════════════ -->
   <div class="page-section" id="compliance">
     <div class="page-label">Page 9 — Solutions</div>
     <div class="page-title">Compliance &amp; Exam Readiness</div>
@@ -1570,75 +2088,8 @@
       </div>
       <a href="#" class="cta-button">Request Assessment</a>
     </div>
-  </div><!-- /compliance -->
+  </div>
 
-
-  <!-- ══════════════════════════════════════════════════════════════════════
-       PAGE 9: SECURITY ASSESSMENT
-  ══════════════════════════════════════════════════════════════════════ -->
-  <div class="page-section" id="security-assessment">
-    <div class="page-label">Page 9 — Security Assessment</div>
-    <div class="page-title">Security Assessment</div>
-    <div class="page-desc">A dedicated entry point for both buyer types: the firm that needs to prove its posture internally, and the C-level that wants independent verification. Simple page — lead with the problem, show the tiers, close with the CTA. Full copy to be provided.</div>
-
-    <div class="copy-block">
-      <div class="section-label">Page Hero</div>
-      <div class="copy-module">
-        <div class="module-tag">H1</div>
-        <div class="module-copy"><p>Know exactly where your firm stands. Before your regulator asks.</p></div>
-      </div>
-      <div class="copy-module">
-        <div class="module-tag">Sub-Head</div>
-        <div class="module-copy"><p>FCI's Security Assessment gives you an objective, third-party picture of your current cybersecurity posture — the gaps your examiner will find, and a clear map of what to do about them. In 60 to 80 percent of assessments, we find compliance gaps the firm did not know existed.</p></div>
-      </div>
-    </div>
-
-    <div class="copy-block">
-      <div class="section-label">Two Reasons Firms Request an Assessment</div>
-      <div class="two-col">
-        <div class="col-card">
-          <div class="col-card-label">Ready to Act</div>
-          <div class="col-card-title">You need evidence to justify the investment internally.</div>
-          <div class="col-card-body">You know your posture needs to improve. The Security Assessment gives your leadership team the objective findings they need to approve a program — and gives you the roadmap to execute it.</div>
-        </div>
-        <div class="col-card">
-          <div class="col-card-label">Seeking Verification</div>
-          <div class="col-card-title">You want independent confirmation of what you have been told.</div>
-          <div class="col-card-body">Your team tells you security is under control. Your regulator expects you to prove it. A third-party assessment gives you the independent evidence that answers both questions.</div>
-        </div>
-      </div>
-    </div>
-
-    <div class="copy-block">
-      <div class="section-label">Assessment Tiers</div>
-      <div class="copy-note">Design direction: Three-tier table or card stack. Simple, scannable. No technical jargon in the names — describe the scope.</div>
-      <div class="copy-module">
-        <div class="module-tag">Tier 1 — Foundation (minimum for most RIAs)</div>
-        <div class="module-copy"><p>Network penetration testing and vulnerability scanning. Produces a verified picture of your internal and external attack surface. Required evidence for most regulatory frameworks and cyber insurance renewals.</p></div>
-      </div>
-      <div class="copy-module">
-        <div class="module-tag">Tier 2 — Expanded (public-facing applications)</div>
-        <div class="module-copy"><p>Includes Tier 1 plus assessment of any public-facing applications and external domain exposure. We provide a URL or application access point — FCI tests everything visible from outside the perimeter.</p></div>
-      </div>
-      <div class="copy-module">
-        <div class="module-tag">Tier 3 — Full (cloud and application configuration)</div>
-        <div class="module-copy"><p>Includes Tiers 1 and 2 plus cloud infrastructure hardening review and application configuration assessment. Covers Microsoft 365, Google Workspace, and key cloud services your firm uses. Full-scope evidence package for complex regulatory requirements.</p></div>
-      </div>
-    </div>
-
-    <div class="cta-display">
-      <div>
-        <div class="cta-label">Start Here</div>
-        <div class="cta-text">A Security Assessment takes 30 minutes to scope. Results in two to four weeks.</div>
-      </div>
-      <a href="#" class="cta-button">Request an Assessment</a>
-    </div>
-  </div><!-- /security-assessment -->
-
-
-  <!-- ══════════════════════════════════════════════════════════════════════
-       CLIENT STORIES
-  ══════════════════════════════════════════════════════════════════════ -->
   <div class="page-section" id="client-stories">
     <div class="page-label">Client Stories</div>
     <div class="page-title">What changes when a firm works with FCI</div>
@@ -1712,12 +2163,8 @@
       </div>
 
     </div>
-  </div><!-- /client-stories -->
+  </div>
 
-
-  <!-- ══════════════════════════════════════════════════════════════════════
-       PAGE 10: ABOUT
-  ══════════════════════════════════════════════════════════════════════ -->
   <div class="page-section" id="about">
     <div class="page-label">Page 10 — About</div>
     <div class="page-title">About FCI</div>
@@ -1745,7 +2192,7 @@
         <div class="module-copy">
           <p>Financial services sales offices present a security challenge that most managed security service providers have never fully understood. Independent advisors, appointed agents, branch offices with their own devices and their own networks — the sales office model creates an attack surface that was never designed for centralized IT management.</p>
           <p>A typical MSSP deploys endpoint protection or runs a SOC — then hands the client a dashboard and a phone number. The client is still responsible for configuring controls, writing policies, producing compliance evidence, and responding to regulatory examinations. FCI does all of that. The four pillars — Cyber Tools &amp; Settings, Procedures &amp; Processes, Expert Knowledge Applied at Scale, and Proof of Security &amp; Compliance — are not sold separately. They are one service, delivered by one team.</p>
-          <p>Over 30 years, we have developed the operational expertise, regulatory fluency, and purpose-built technology that this market requires. Our CISO Portal was designed specifically for firms managing compliance across sales office networks. Our SOC analysts understand the regulatory context of what they are protecting. Our implementation approach is calibrated to financial firms that cannot afford user friction or IT downtime.</p>
+          <p>Over 30 years, we have developed the operational expertise, regulatory fluency, and purpose-built technology that this market requires. FCI uses AI to enforce controls, detect threats, and produce compliance evidence across six security domains — at a scale that would be impossible manually. Our CISO Portal was designed specifically for firms managing compliance across sales office networks. Our SOC analysts understand the regulatory context of what they are protecting. Our implementation approach is calibrated to financial firms that cannot afford user friction or IT downtime.</p>
           <p>Today we manage more than 40,000 endpoints across more than 400 clients — broker-dealers and branch offices, insurance carriers and agencies, and RIAs. We hold SOC 2 Type 1 certification and a 100% SecurityScorecard rating. We are independently verified, not self-described.</p>
         </div>
       </div>
@@ -1784,34 +2231,32 @@
     <div class="cta-display">
       <div>
         <div class="cta-label">Start a Conversation</div>
-        <div class="cta-text">Request a Gap Analysis. In 30 minutes, you will have a clear picture of what controls must be in place, what is missing, and what your next regulatory exam, home office audit, or cyber insurance renewal will ask for.</div>
+        <div class="cta-text">Request a 30-Minute Gap Analysis. In 30 minutes, you will have a clear picture of what controls must be in place, what is missing, and what your next regulatory exam, home office audit, or cyber insurance renewal will ask for.</div>
       </div>
-      <a href="#" class="cta-button">Request a Gap Analysis</a>
+      <a href="#" class="cta-button">Request a 30-Minute Gap Analysis</a>
     </div>
-  </div><!-- /about -->
+  </div>
 
-
-  <!-- ══════════════════════════════════════════════════════════════════════
-       FOOTER — COMPANY NAVIGATION
-  ══════════════════════════════════════════════════════════════════════ -->
-  <div class="site-footer">
+      <div class="site-footer">
     <div class="footer-grid">
       <div class="footer-col">
-        <div class="footer-col-label">Who We Serve</div>
+        <div class="footer-col-label">Markets</div>
         <a href="#broker-dealer">Broker-Dealers &amp; Branch Offices</a>
         <a href="#insurance">Insurance Carriers &amp; Agencies</a>
         <a href="#ria">RIAs</a>
       </div>
       <div class="footer-col">
-        <div class="footer-col-label">Solutions</div>
-        <a href="#solutions">Solutions Overview</a>
-        <a href="#nist">NIST Framework</a>
-        <a href="#ciso-portal">The CISO Portal</a>
+        <div class="footer-col-label">Services</div>
         <a href="#security-assessment">Security Assessment</a>
+        <a href="#managed-cybersecurity">Managed Cybersecurity</a>
+        <a href="#zero-trust">Zero Trust</a>
+        <a href="#ciso-portal">CISO Portal</a>
+        <a href="#compliance">Compliance Readiness</a>
       </div>
       <div class="footer-col">
         <div class="footer-col-label">Company</div>
         <a href="#about">About FCI</a>
+        <a href="#client-stories">Client Stories</a>
         <a href="#">Team</a>
         <a href="#">Media &amp; Press Kit</a>
         <a href="#">Working at FCI</a>
@@ -1829,21 +2274,24 @@
     </div>
   </div>
 
-</div><!-- /wrap -->
+    </div><!-- /wrap -->
+  </div><!-- /main-content -->
+</div><!-- /main-with-sidebar -->
+
 
 <script>
-  // Simple nav active state on scroll
-  const sections = document.querySelectorAll('.page-section');
-  const navLinks = document.querySelectorAll('.nav a');
+  // Nav active state on scroll — observes both page sections and sub-sections
+  const sections = document.querySelectorAll('.page-section, .copy-block[id]');
+  const navLinks = document.querySelectorAll('.sidebar-nav-link');
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(e => {
       if (e.isIntersecting) {
         navLinks.forEach(a => a.classList.remove('active'));
-        const link = document.querySelector(`.nav a[href="#${e.target.id}"]`);
+        const link = document.querySelector(`.sidebar-nav-link[href="#${e.target.id}"]`);
         if (link) link.classList.add('active');
       }
     });
-  }, { threshold: 0.25 });
+  }, { threshold: 0.15 });
   sections.forEach(s => observer.observe(s));
 </script>
 

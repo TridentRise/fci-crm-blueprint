@@ -347,6 +347,61 @@
       line-height: 1.45;
     }
 
+    /* ─── QUESTION LAYER ──────────────────────────── */
+    .question-element {
+      background: var(--blue-faint);
+      border-left: 4px solid var(--sky);
+      padding: 16px 24px;
+      margin: 20px 0;
+    }
+    .question-element p {
+      font-size: 15px;
+      font-style: italic;
+      color: var(--text);
+      line-height: 1.65;
+      margin: 0;
+    }
+    .question-element .q-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--sky);
+      margin-bottom: 6px;
+      font-style: normal;
+    }
+    .question-block {
+      background: var(--white);
+      border: 2px solid var(--blue);
+      padding: 32px 36px;
+      margin-top: 40px;
+    }
+    .question-block .qb-title {
+      font-family: 'Inter Tight', sans-serif;
+      font-size: 18px; font-weight: 600;
+      color: var(--text); margin-bottom: 20px;
+    }
+    .question-block .qb-item {
+      background: var(--blue-faint);
+      border-left: 4px solid var(--sky);
+      padding: 12px 20px;
+      margin-bottom: 8px;
+      font-size: 15px;
+      font-style: italic;
+      color: var(--text);
+      line-height: 1.65;
+    }
+    .question-block .qb-transition {
+      margin-top: 20px;
+      padding: 14px 20px;
+      border-left: 4px solid var(--blue);
+      background: var(--blue-faint);
+      font-size: 15px;
+      font-style: italic;
+      color: var(--text);
+      line-height: 1.65;
+    }
+
     /* ─── REGULATORY TABLE ────────────────────────── */
     .reg-table {
       width: 100%;
@@ -579,6 +634,10 @@
   <div class="section" id="layers">
     <div class="section-label">Section 1</div>
     <div class="section-title">The Four Layers of Security Assessment</div>
+    <div class="question-element">
+      <div class="q-label">Question Layer</div>
+      <p>What would your firm find if it ran a full security assessment today — and would you be confident showing the results to a regulator?</p>
+    </div>
     <div class="section-intro">A security assessment is not a single test. It is a layered process that begins with understanding what the firm has in place today and ends with a verified view of its exposure from the outside. Each layer addresses a different dimension of risk.</div>
 
     <!-- Layer overview diagram -->
@@ -605,6 +664,10 @@
     <!-- ── LAYER 1: GAP ANALYSIS ─────────────────── -->
     <div class="layer" id="gap-analysis">
       <div class="layer-title">Layer 1 — Gap Analysis</div>
+      <div class="question-element">
+        <div class="q-label">Question Layer</div>
+        <p>Do you know exactly where your firm's security gaps are — or are you waiting for an examiner to find them first?</p>
+      </div>
       <p>The gap analysis is the foundational layer. It discusses the firm's security posture across six areas:</p>
 
       <div class="area-row">
@@ -624,6 +687,10 @@
     <!-- ── LAYER 2: NETWORK PEN TESTING & VULNERABILITY SCANNING ──────────── -->
     <div class="layer" id="pen-testing">
       <div class="layer-title">Layer 2 — Network Penetration Testing &amp; Vulnerability Scanning (Internal &amp; External)</div>
+      <div class="question-element">
+        <div class="q-label">Question Layer</div>
+        <p>Have you tested what happens when an attacker is already inside your network — or have you only tested the perimeter?</p>
+      </div>
       <p>Network penetration testing simulates real-world attacks against the firm's infrastructure to identify exploitable weaknesses before an attacker does. Traditionally, this testing focused on external-facing systems — testing from the outside in. That is changing. Regulators are now requiring firms to test from the inside as well. Internal penetration testing evaluates what an attacker could do after gaining initial access — moving laterally through the network, escalating privileges, and reaching sensitive data.</p>
       <p>Vulnerability scanning is the other half of the equation. Where penetration testing asks "can someone break in?", vulnerability scanning asks "what exposures exist right now?" It systematically identifies known weaknesses across the network — missing patches, misconfigured services, outdated software, and open ports — and produces a prioritized list of findings the firm can act on. Together, penetration testing and vulnerability scanning give the firm both a real-world stress test and a comprehensive inventory of risk.</p>
 
@@ -675,9 +742,9 @@
       <p>Microsoft measures this directly with the <a href="https://learn.microsoft.com/en-us/defender-xdr/microsoft-secure-score" target="_blank"><strong>Microsoft Secure Score</strong></a> — a percentage-based rating of the firm's security configuration. The average organization scores between 30% and 45%. Most firms do not know their number. If yours cannot tell you the score — or explain what is driving it down — that is the gap.</p>
       <p>FCI assesses the current configuration, identifies gaps, and tightens the settings to reduce the attack surface — and improving the Secure Score is a measurable part of that process.</p>
 
-      <div class="callout">
-        <div class="callout-label">Ask Your Team</div>
-        <div class="callout-text">What is your Microsoft 365 Secure Score?</div>
+      <div class="question-element" style="margin: 36px 0;">
+        <div class="q-label">Question Layer</div>
+        <p>What is your Microsoft 365 Secure Score? If your team cannot tell you the number — or explain what is driving it down — that is the gap.</p>
       </div>
     </div>
 
@@ -685,6 +752,10 @@
     <!-- ── LAYER 4: EXTERNAL ATTACK SURFACE ──────── -->
     <div class="layer" id="attack-surface">
       <div class="layer-title">Layer 4 — External Attack Surface Assessment</div>
+      <div class="question-element">
+        <div class="q-label">Question Layer</div>
+        <p>Do you know what an attacker — or your cyber insurer's automated scanning tool — sees when they look at your firm from the outside?</p>
+      </div>
       <p>The external attack surface is everything visible from the outside — what an attacker or an automated scanning tool would see when looking at the firm:</p>
 
       <div class="area-row">
@@ -747,6 +818,10 @@
   <div class="section" id="motivations">
     <div class="section-label">Section 3</div>
     <div class="section-title">Why Firms Run Security Assessments</div>
+    <div class="question-element">
+      <div class="q-label">Question Layer</div>
+      <p>Which of these four reasons applies to your firm right now — and what happens if you wait?</p>
+    </div>
     <div class="section-intro">There are four primary reasons a firm initiates a security assessment. Understanding the motivation shapes the scope, urgency, and audience for the results.</div>
 
     <div class="motivation">
@@ -776,6 +851,19 @@
     </div>
   </div>
 
+
+  <!-- ═══════════════════════════════════════════════
+       QUESTIONS BLOCK
+  ═══════════════════════════════════════════════ -->
+  <div class="question-block">
+    <div class="qb-title">Questions Your Firm Should Be Able to Answer Before the Next Exam</div>
+    <div class="qb-item">When was the last time your firm ran a comprehensive security assessment — and would you be confident showing the results to a regulator today?</div>
+    <div class="qb-item">Has your firm tested what happens when an attacker is already inside the network — not just at the perimeter?</div>
+    <div class="qb-item">Could your firm produce penetration test results, vulnerability scan reports, and a remediation record — all current — if an examiner asked this week?</div>
+    <div class="qb-item">Do you know your Microsoft 365 Secure Score — and has anyone reviewed the configuration settings that are driving it down?</div>
+    <div class="qb-item">What does your firm's external attack surface look like to an automated scanning tool — and would your cyber insurer be satisfied with what it finds?</div>
+    <div class="qb-transition">If you paused on any of these — a 30-minute gap analysis will give you the answers.</div>
+  </div>
 
   <!-- ═══════════════════════════════════════════════
        FOOTER

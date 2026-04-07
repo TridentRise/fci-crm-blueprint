@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FCI — Question Layer Implementation Plan</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Inter+Tight:wght@500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --blue:      #2563EB;
+      --blue-dark: #1D4ED8;
+      --sky:       #0EA5E9;
+      --deep-navy: #1E3A6E;
+      --tint:      #DBEAFE;
+      --faint:     #EFF6FF;
+      --white:     #FFFFFF;
+      --offwhite:  #F8FAFC;
+      --rule:      #E2E8F0;
+      --text:      #0F172A;
+      --body:      #475569;
+      --muted:     #64748B;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { font-size: 16px; scroll-behavior: smooth; }
+    body { font-family: 'Inter', sans-serif; background: var(--offwhite); color: var(--text); -webkit-font-smoothing: antialiased; padding-top: 52px; }
+
+    /* ── HUB NAV ── */
+    .hub-nav {
+      position: fixed; top: 0; left: 0; right: 0; height: 52px; z-index: 200;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 32px;
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(15,23,42,0.08);
+    }
+    .hub-nav .back-nav {
+      font-size: 13px; font-weight: 600; text-decoration: none;
+      color: #475569; transition: color 0.15s;
+    }
+    .hub-nav .back-nav:hover { color: #0F172A; }
+
+    /* ── HEADER ── */
+    .site-header {
+      background: var(--blue);
+      padding: 56px 64px 48px;
+      position: relative; overflow: hidden;
+    }
+    .site-header::before {
+      content: ''; position: absolute; top: -100px; right: -100px;
+      width: 380px; height: 380px; border-radius: 50%;
+      background: rgba(255,255,255,0.04); pointer-events: none;
+    }
+    .header-eyebrow {
+      font-size: 12px; font-weight: 600; letter-spacing: 0.2em;
+      text-transform: uppercase; color: rgba(255,255,255,0.70);
+      margin-bottom: 20px; position: relative; z-index: 1;
+    }
+    .header-logo {
+      font-family: 'Inter Tight', sans-serif; font-size: 40px;
+      font-weight: 600; letter-spacing: 0; color: var(--white);
+      line-height: 1; display: inline-flex; align-items: baseline;
+      position: relative; z-index: 1;
+    }
+    .header-desc {
+      font-size: 13px; font-weight: 400; letter-spacing: 0.1em;
+      text-transform: uppercase; color: rgba(255,255,255,0.75);
+      margin-top: 8px; position: relative; z-index: 1;
+    }
+    .header-title {
+      font-family: 'Inter Tight', sans-serif;
+      font-size: clamp(24px, 3vw, 34px); font-weight: 600;
+      color: var(--white); letter-spacing: -0.02em;
+      line-height: 1.2; margin-top: 32px; position: relative; z-index: 1;
+    }
+    .header-sub {
+      font-size: 14px; color: rgba(255,255,255,0.82);
+      margin-top: 10px; max-width: 620px; line-height: 1.65;
+      position: relative; z-index: 1;
+    }
+
+    /* ── LAYOUT ── */
+    .wrap { max-width: 920px; margin: 0 auto; padding: 0 64px 120px; }
+
+    /* ── SECTIONS ── */
+    .page-section {
+      margin-top: 72px;
+      padding-top: 40px;
+      border-top: 2px solid var(--blue);
+      scroll-margin-top: 80px;
+    }
+    .page-section:first-of-type { margin-top: 56px; }
+    .page-label {
+      font-size: 11px; font-weight: 700; letter-spacing: 0.22em;
+      text-transform: uppercase; color: var(--sky); margin-bottom: 6px;
+    }
+    .page-title {
+      font-family: 'Inter Tight', sans-serif;
+      font-size: clamp(22px, 2.8vw, 30px); font-weight: 600;
+      color: var(--text); letter-spacing: -0.02em; line-height: 1.2;
+      margin-bottom: 8px;
+    }
+    .page-desc {
+      font-size: 16px; color: var(--muted); max-width: 620px; line-height: 1.6;
+      margin-bottom: 40px;
+    }
+    .section-label {
+      font-size: 11px; font-weight: 700; letter-spacing: 0.22em;
+      text-transform: uppercase; color: var(--sky); margin-bottom: 16px;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .section-label::after {
+      content: ''; flex: 1; height: 1px; background: var(--tint);
+    }
+
+    /* ── DELIVERABLE CARD ── */
+    .deliverable {
+      background: var(--white);
+      border: 1px solid var(--rule);
+      border-top: 3px solid var(--blue);
+      padding: 28px 32px;
+      margin-bottom: 24px;
+    }
+    .deliverable-header {
+      display: flex; align-items: center; gap: 14px;
+      margin-bottom: 16px;
+    }
+    .deliverable-number {
+      font-family: 'Inter Tight', sans-serif;
+      font-size: 13px; font-weight: 700;
+      color: var(--white); background: var(--blue);
+      width: 32px; height: 32px;
+      display: flex; align-items: center; justify-content: center;
+      border-radius: 4px; flex-shrink: 0;
+    }
+    .deliverable-title {
+      font-family: 'Inter Tight', sans-serif;
+      font-size: 18px; font-weight: 600;
+      color: var(--text); letter-spacing: -0.01em;
+    }
+    .deliverable-file {
+      font-size: 12px; font-weight: 500;
+      color: var(--muted); letter-spacing: 0.04em;
+      margin-top: 2px;
+    }
+    .deliverable p {
+      font-size: 15px; color: var(--body); line-height: 1.7;
+      margin-bottom: 12px;
+    }
+    .deliverable p:last-child { margin-bottom: 0; }
+
+    /* ── TASK LIST ── */
+    .task-list {
+      margin-top: 16px;
+      padding-top: 16px;
+      border-top: 1px solid var(--rule);
+    }
+    .task-list-title {
+      font-size: 11px; font-weight: 700; letter-spacing: 0.18em;
+      text-transform: uppercase; color: var(--sky); margin-bottom: 12px;
+    }
+    .task {
+      display: flex; gap: 12px; align-items: flex-start;
+      padding: 8px 0;
+      border-bottom: 1px solid var(--faint);
+    }
+    .task:last-child { border-bottom: none; }
+    .task-check {
+      width: 18px; height: 18px; border: 2px solid var(--rule);
+      border-radius: 3px; flex-shrink: 0; margin-top: 2px;
+    }
+    .task-text {
+      font-size: 14px; color: var(--body); line-height: 1.55;
+    }
+
+    /* ── DEPENDENCY NOTE ── */
+    .dep-note {
+      background: var(--faint);
+      border-left: 3px solid var(--sky);
+      padding: 14px 20px;
+      margin-top: 16px;
+    }
+    .dep-note p {
+      font-size: 13px; color: var(--body); line-height: 1.6;
+    }
+    .dep-note strong { color: var(--text); }
+
+    /* ── PHASE BANNER ── */
+    .phase-banner {
+      background: var(--deep-navy);
+      color: var(--white);
+      padding: 16px 24px;
+      margin-bottom: 24px;
+      display: flex; align-items: center; gap: 16px;
+    }
+    .phase-badge {
+      font-size: 11px; font-weight: 700; letter-spacing: 0.2em;
+      text-transform: uppercase;
+      background: rgba(255,255,255,0.15);
+      padding: 4px 12px; border-radius: 3px;
+      flex-shrink: 0;
+    }
+    .phase-text {
+      font-size: 15px; font-weight: 500; line-height: 1.4;
+    }
+
+    /* ── INFO BLOCK ── */
+    .info-block {
+      background: var(--white);
+      border: 1px solid var(--rule);
+      padding: 24px 28px;
+      margin-bottom: 24px;
+    }
+    .info-block h3 {
+      font-family: 'Inter Tight', sans-serif;
+      font-size: 16px; font-weight: 600; color: var(--text); margin-bottom: 12px;
+    }
+    .info-block p {
+      font-size: 14px; color: var(--body); line-height: 1.7; margin-bottom: 10px;
+    }
+    .info-block p:last-child { margin-bottom: 0; }
+
+    /* ── DARK MODE ── */
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --white:    #1E293B;
+        --offwhite: #0F172A;
+        --rule:     #334155;
+        --text:     #F1F5F9;
+        --body:     #CBD5E1;
+        --muted:    #94A3B8;
+        --faint:    #1E293B;
+        --tint:     #334155;
+      }
+      body { background: #0F172A; }
+      .hub-nav { background: rgba(8,14,28,0.9); border-bottom-color: rgba(255,255,255,0.07); }
+      .hub-nav .back-nav { color: rgba(255,255,255,0.5); }
+      .hub-nav .back-nav:hover { color: #fff; }
+      .deliverable { background: #1E293B; border-color: #334155; }
+      .info-block { background: #1E293B; border-color: #334155; }
+    }
+
+    /* ── MOBILE ── */
+    @media (max-width: 680px) {
+      .wrap { padding: 0 20px 80px; }
+      .site-header { padding: 36px 24px 32px; }
+    }
+  </style>
+</head>
+<body>
+
+<nav class="hub-nav">
+  <a href="index.html" class="back-nav">FCI Hub</a>
+</nav>
+
+<header class="site-header">
+  <div class="header-eyebrow">Brand &amp; Website Development</div>
+  <div class="header-logo">FCI</div>
+  <div class="header-desc">Field Compliance Inc.</div>
+  <div class="header-title">Question Layer — Implementation Plan</div>
+  <div class="header-sub">A phased plan for integrating question-based messaging across the FCI brand system. Based on the approved Working Draft and Marcus Sheridan's "They Ask, You Answer" methodology.</div>
+</header>
+
+<div class="wrap">
+
+  <!-- ══════════════════════════════════════════════════
+       OVERVIEW
+  ══════════════════════════════════════════════════ -->
+
+  <div class="page-section">
+    <div class="page-label">Overview</div>
+    <div class="page-title">What We're Doing and Why</div>
+    <div class="page-desc">Adding a consistent question layer across FCI's brand materials — not replacing existing copy, but adding a new dimension that creates emotional pull alongside the authority of what's already written.</div>
+
+    <div class="info-block">
+      <h3>The Principle</h3>
+      <p>A statement tells the prospect what FCI does. A question makes the prospect feel why they need it. The two work together: the headline carries credibility, the companion question forces the reader to mentally answer — and most of them realize the answer is "no, we can't do that today." That moment of recognition is the conversion trigger.</p>
+      <p>Every question element will have a consistent, recognizable visual treatment across all materials — website, white papers, brochures — so that visitors and readers learn to associate this design pattern with FCI's approach of asking the hard questions the industry avoids.</p>
+    </div>
+
+    <div class="info-block">
+      <h3>Scope</h3>
+      <p>Six deliverables across two phases. Phase 1 establishes the design system and applies the question layer to the two strategic documents (Messaging Architecture and Website Copy). Phase 2 extends the pattern to the two finalized brochures (CISO Portal White Paper and Security Assessment). All other collateral — one-pagers, presentations — will be rebuilt from scratch and will adopt the question layer natively when that happens.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════
+       PHASE 1 — FOUNDATION
+  ══════════════════════════════════════════════════ -->
+
+  <div class="page-section" id="phase-1">
+    <div class="page-label">Phase 1</div>
+    <div class="page-title">Foundation — Strategy &amp; Website</div>
+    <div class="page-desc">Define the question layer as a brand element, finalize the question bank, and integrate into the two core documents.</div>
+
+    <!-- DELIVERABLE 1 -->
+    <div class="phase-banner">
+      <div class="phase-badge">Start Here</div>
+      <div class="phase-text">The Messaging Architecture defines the question layer as a brand element. Everything else pulls from this.</div>
+    </div>
+
+    <div class="deliverable">
+      <div class="deliverable-header">
+        <div class="deliverable-number">1</div>
+        <div>
+          <div class="deliverable-title">Messaging Architecture — Question Layer Section</div>
+          <div class="deliverable-file">FCI Messaging Architecture.html</div>
+        </div>
+      </div>
+      <p>Add a new section to the Messaging Architecture titled <strong>"The Question Layer"</strong> that defines this approach as a strategic brand element — not just a copywriting technique, but a deliberate positioning choice. The section establishes why FCI uses questions (the Sheridan methodology, the psychology of prospect self-diagnosis), where questions appear (inline companion pattern, dedicated question blocks), and how they look visually.</p>
+      <p>This section also contains the <strong>approved question bank</strong> — the master list of questions organized by theme and by market. Every other document pulls its questions from this bank, ensuring consistency. When a question is refined or replaced, it's updated here first.</p>
+
+      <div class="task-list">
+        <div class="task-list-title">Tasks</div>
+        <div class="task"><div class="task-check"></div><div class="task-text">Draft the "Question Layer" section: rationale, methodology reference, design principles</div></div>
+        <div class="task"><div class="task-check"></div><div class="task-text">Define the visual specification: typography, spacing, color treatment, italic vs. regular, border/accent style — one design that works on web, in white papers, and in brochures</div></div>
+        <div class="task"><div class="task-check"></div><div class="task-text">Define the two patterns: (a) inline companion (statement + question side by side or stacked) and (b) dedicated questions block (wall of questions before a CTA)</div></div>
+        <div class="task"><div class="task-check"></div><div class="task-text">Finalize the question bank from the Working Draft — organized by theme (regulatory readiness, breach preparedness, compliance operations, policy vs. proof, cyber insurance) and tagged by market applicability (all markets, broker-dealers &amp; branch offices, insurance carriers &amp; agencies, RIAs)</div></div>
+        <div class="task"><div class="task-check"></div><div class="task-text">Add the section to FCI Messaging Architecture.html and verify it reads as a natural extension of the existing framework</div></div>
+      </div>
+    </div>
+
+    <!-- DELIVERABLE 2 -->
+    <div class="deliverable">
+      <div class="deliverable-header">
+        <div class="deliverable-number">2</div>
+        <div>
+          <div class="deliverable-title">Website Copy — Inline Questions + Dedicated Section</div>
+          <div class="deliverable-file">FCI Website Copy.html</div>
+        </div>
+      </div>
+      <p>Integrate the question layer into the website copy document. This is the largest integration — it touches all four pages (homepage, broker-dealers &amp; branch offices, insurance carriers &amp; agencies, RIAs). Two types of additions:</p>
+      <p><strong>Inline companion questions:</strong> For each major section, add the approved question alongside the existing headline. The existing headline text does not change. The question is a new element that appears in a consistent visual treatment (defined in Deliverable 1). The Website Copy document will include design notes for each placement showing exactly where the question sits relative to the headline.</p>
+      <p><strong>Dedicated Questions Section:</strong> A new section on the homepage, positioned between "Why Trust FCI" and the closing CTA. Contains the wall of pain-point questions grouped by theme, ending with the transition line ("If you paused on any of these — that is exactly why FCI exists") leading into the CTA.</p>
+
+      <div class="task-list">
+        <div class="task-list-title">Tasks</div>
+        <div class="task"><div class="task-check"></div><div class="task-text">Add companion questions to all homepage sections (hero, problem, four pillars, who we serve, security assessment, managed cybersecurity, CISO Portal spotlight, why trust FCI, closing CTA)</div></div>
+        <div class="task"><div class="task-check"></div><div class="task-text">Add companion questions to the Broker-Dealers &amp; Branch Offices page (hero, problem, what changes, exam evidence)</div></div>
+        <div class="task"><div class="task-check"></div><div class="task-text">Add companion questions to the Insurance Carriers &amp; Agencies page (hero, problem, what changes, evidence section)</div></div>
+        <div class="task"><div class="task-check"></div><div class="task-text">Add companion questions to the RIAs page (hero, problem, what changes, examiner section)</div></div>
+        <div class="task"><div class="task-check"></div><div class="task-text">Add the dedicated Questions Section to the homepage with design direction notes</div></div>
+        <div class="task"><div class="task-check"></div><div class="task-text">Review all additions to confirm questions pull from the approved bank (Deliverable 1) and no existing copy was modified</div></div>
+      </div>
+
+      <div class="dep-note">
+        <p><strong>Depends on:</strong> Deliverable 1 (Messaging Architecture) — the question bank and visual spec must be finalized before questions are added to the website copy, so all placements are consistent.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════
+       PHASE 2 — BROCHURES
+  ══════════════════════════════════════════════════ -->
+
+  <div class="page-section" id="phase-2">
+    <div class="page-label">Phase 2</div>
+    <div class="page-title">Brochures — CISO Portal &amp; Security Assessment</div>
+    <div class="page-desc">Extend the question layer to the two finalized brochures. Both get inline companion questions alongside key headlines, plus a dedicated questions block.</div>
+
+    <!-- DELIVERABLE 3 -->
+    <div class="deliverable">
+      <div class="deliverable-header">
+        <div class="deliverable-number">3</div>
+        <div>
+          <div class="deliverable-title">CISO Portal White Paper — Question Layer Integration</div>
+          <div class="deliverable-file">CISO_Portal_White_Paper.html</div>
+        </div>
+      </div>
+      <p>The CISO Portal White Paper has six sections with strong headlines that are perfect candidates for companion questions. The document already has a pull quote style and challenge grid — the question pattern will complement these existing elements without competing with them.</p>
+      <p><strong>Inline placements</strong> — companion questions alongside these existing headlines:</p>
+      <p style="padding-left: 16px; border-left: 2px solid var(--tint); margin: 12px 0;">
+        "Most firms are managing compliance the hard way." &rarr; question about how many hours the reader's team spends<br><br>
+        "One platform. Everything your security officer needs to act." &rarr; question about how many systems their security officer currently juggles<br><br>
+        "Know exactly where you stand — and what to fix first." &rarr; question about whether they can see their compliance posture right now<br><br>
+        "Tasks that used to take hours now take seconds." &rarr; question about their current decommissioning workflow<br><br>
+        "Tangible benefits from day one." &rarr; question about what their team would do with 80% of their compliance time back<br><br>
+        "Evidence that meets modern examiner expectations." &rarr; question about whether their current evidence would satisfy an examiner today
+      </p>
+      <p><strong>Dedicated questions block</strong> — a compact callout box before the closing panel, containing 4–6 questions specific to the CISO Portal's value proposition (compliance visibility, device management, incident response, exam readiness).</p>
+
+      <div class="task-list">
+        <div class="task-list-title">Tasks</div>
+        <div class="task"><div class="task-check"></div><div class="task-text">Draft companion questions for the six section headlines, pulling from the approved bank where applicable and writing CISO Portal-specific questions where needed</div></div>
+        <div class="task"><div class="task-check"></div><div class="task-text">Draft the dedicated questions block (4–6 questions focused on portal capabilities)</div></div>
+        <div class="task"><div class="task-check"></div><div class="task-text">Add both elements to CISO_Portal_White_Paper.html using the visual spec from Deliverable 1</div></div>
+        <div class="task"><div class="task-check"></div><div class="task-text">Verify the additions do not disrupt the white paper's narrative flow — the question elements should enhance, not interrupt</div></div>
+      </div>
+
+      <div class="dep-note">
+        <p><strong>Depends on:</strong> Deliverable 1 (visual spec and question bank finalized).</p>
+      </div>
+    </div>
+
+    <!-- DELIVERABLE 4 -->
+    <div class="deliverable">
+      <div class="deliverable-header">
+        <div class="deliverable-number">4</div>
+        <div>
+          <div class="deliverable-title">Security Assessment Brochure — Question Layer Integration</div>
+          <div class="deliverable-file">FCI Security Assessment.html</div>
+        </div>
+      </div>
+      <p>The Security Assessment brochure already has one question-style callout: "What is your Microsoft 365 Secure Score?" in the Cloud App Hardening section. This is proof the pattern works naturally in this document. We extend it to other sections consistently.</p>
+      <p><strong>Inline placements</strong> — companion questions alongside section titles and layer headings:</p>
+      <p style="padding-left: 16px; border-left: 2px solid var(--tint); margin: 12px 0;">
+        "The Four Layers of Security Assessment" &rarr; question about what their firm would find if it ran a full security assessment today<br><br>
+        Layer 1 (Gap Analysis) &rarr; question about whether they know where their gaps are — or are they waiting for an examiner to find them<br><br>
+        Layer 2 (Pen Testing) &rarr; question about whether they've tested what happens when an attacker is already inside the network<br><br>
+        Layer 3 (Cloud App Hardening) &rarr; already has "What is your Microsoft 365 Secure Score?" — upgrade the visual treatment to match the new system<br><br>
+        Layer 4 (External Attack Surface) &rarr; question about whether they know what an attacker sees when scanning their public infrastructure<br><br>
+        "Why Firms Run Security Assessments" &rarr; question about which of the four motivations applies to them right now
+      </p>
+      <p><strong>Dedicated questions block</strong> — a compact callout before the footer, containing 4–5 questions specific to assessment readiness and regulatory expectations.</p>
+
+      <div class="task-list">
+        <div class="task-list-title">Tasks</div>
+        <div class="task"><div class="task-check"></div><div class="task-text">Draft companion questions for the section titles and layer headings</div></div>
+        <div class="task"><div class="task-check"></div><div class="task-text">Upgrade the existing "What is your Microsoft 365 Secure Score?" callout to match the new visual system</div></div>
+        <div class="task"><div class="task-check"></div><div class="task-text">Draft the dedicated questions block (4–5 questions focused on assessment readiness)</div></div>
+        <div class="task"><div class="task-check"></div><div class="task-text">Add all elements to FCI Security Assessment.html using the visual spec from Deliverable 1</div></div>
+        <div class="task"><div class="task-check"></div><div class="task-text">Verify consistency with the CISO Portal White Paper question style</div></div>
+      </div>
+
+      <div class="dep-note">
+        <p><strong>Depends on:</strong> Deliverable 1 (visual spec) and Deliverable 3 (CISO Portal) — completing the CISO Portal first ensures consistency when we do the Security Assessment.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════
+       WHAT YOU MIGHT BE MISSING
+  ══════════════════════════════════════════════════ -->
+
+  <div class="page-section" id="additions">
+    <div class="page-label">Proposed Additions</div>
+    <div class="page-title">What You Might Be Missing</div>
+    <div class="page-desc">Three things not in your original request that I believe should be part of the plan.</div>
+
+    <!-- DELIVERABLE 5 -->
+    <div class="deliverable">
+      <div class="deliverable-header">
+        <div class="deliverable-number">5</div>
+        <div>
+          <div class="deliverable-title">Brand Guidelines — Question Element Spec</div>
+          <div class="deliverable-file">FCI Brand Guidelines.html</div>
+        </div>
+      </div>
+      <p>If the question layer becomes a signature brand element — and it should — it needs a slot in the Brand Guidelines. This doesn't need to be a large section: a brief entry under the typography or UI elements area that defines the question's visual treatment (font weight, style, color, border accent, spacing) with a "do / don't" example showing how the pattern works in context.</p>
+      <p>This ensures that when the one-pagers and other collateral get rebuilt from scratch, anyone producing those materials knows exactly how the question element should look — even if they weren't part of this conversation.</p>
+
+      <div class="task-list">
+        <div class="task-list-title">Tasks</div>
+        <div class="task"><div class="task-check"></div><div class="task-text">Draft a "Question Element" entry for the Brand Guidelines with visual spec, do/don't examples, and usage rules</div></div>
+        <div class="task"><div class="task-check"></div><div class="task-text">Add to FCI Brand Guidelines.html</div></div>
+      </div>
+
+      <div class="dep-note">
+        <p><strong>Depends on:</strong> Deliverable 1 (visual spec is defined in the Messaging Architecture first, then codified here).</p>
+      </div>
+    </div>
+
+    <!-- DELIVERABLE 6 -->
+    <div class="deliverable">
+      <div class="deliverable-header">
+        <div class="deliverable-number">6</div>
+        <div>
+          <div class="deliverable-title">Sales Enablement — Question Conversation Starters</div>
+          <div class="deliverable-file">Future deliverable — not yet in the Hub</div>
+        </div>
+      </div>
+      <p>The questions in the bank aren't just website copy — they're conversation openers. Brian and the sales team can use these in prospect calls, discovery meetings, and email outreach. A one-page reference card with the 10–12 strongest questions, organized by market, gives the sales team a tool they can use immediately.</p>
+      <p>This is a future deliverable — low effort, high impact, and it naturally follows once the question bank is finalized in Deliverable 1. It could also be a simple section in the Messaging Architecture rather than a standalone document.</p>
+
+      <div class="task-list">
+        <div class="task-list-title">Tasks</div>
+        <div class="task"><div class="task-check"></div><div class="task-text">Select the 10–12 strongest questions from the approved bank</div></div>
+        <div class="task"><div class="task-check"></div><div class="task-text">Organize by market and conversation stage (opener, discovery, closing)</div></div>
+        <div class="task"><div class="task-check"></div><div class="task-text">Decide format: section in Messaging Architecture, standalone one-pager, or both</div></div>
+      </div>
+
+      <div class="dep-note">
+        <p><strong>Depends on:</strong> Deliverable 1 (approved question bank). Can run in parallel with Phase 2.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════
+       EXECUTION ORDER
+  ══════════════════════════════════════════════════ -->
+
+  <div class="page-section" id="order">
+    <div class="page-label">Execution</div>
+    <div class="page-title">Recommended Order</div>
+
+    <div class="info-block">
+      <h3>Phase 1 — Foundation</h3>
+      <p><strong>Step 1:</strong> Finalize the Working Draft questions with Brian's input. Decide which questions stay, which get refined, which get cut.</p>
+      <p><strong>Step 2:</strong> Messaging Architecture (Deliverable 1) — define the question layer as a brand element, finalize the visual spec, publish the approved question bank.</p>
+      <p><strong>Step 3:</strong> Website Copy (Deliverable 2) — integrate inline questions and the dedicated section, pulling from the approved bank.</p>
+    </div>
+
+    <div class="info-block">
+      <h3>Phase 2 — Brochures</h3>
+      <p><strong>Step 4:</strong> CISO Portal White Paper (Deliverable 3) — inline questions + questions block.</p>
+      <p><strong>Step 5:</strong> Security Assessment Brochure (Deliverable 4) — inline questions + questions block, upgrade existing "Ask Your Team" callout.</p>
+    </div>
+
+    <div class="info-block">
+      <h3>In Parallel or After</h3>
+      <p><strong>Step 6:</strong> Brand Guidelines (Deliverable 5) — codify the visual spec so it persists beyond this project.</p>
+      <p><strong>Step 7:</strong> Sales Enablement (Deliverable 6) — extract the strongest questions into a conversation reference card.</p>
+    </div>
+
+    <div class="info-block">
+      <h3>Not in Scope</h3>
+      <p><strong>One-pagers</strong> (broker-dealer, insurance, RIA, end-client) — will be rebuilt from scratch and will adopt the question layer natively during that rebuild.</p>
+      <p><strong>CISO Portal Redesign</strong> (CISO_Portal_Redesign.html, CISO_Portal_10_Directions.html, CISO_Portal_Design_Reference.html) — these are design mockups, not copy documents. The question layer doesn't apply here.</p>
+      <p><strong>Hero Gallery / Logo Exploration</strong> — visual assets, no copy to integrate questions into.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════
+       WORKING DOCUMENTS
+  ══════════════════════════════════════════════════ -->
+
+  <div class="page-section" id="working-docs">
+    <div class="page-label">Reference</div>
+    <div class="page-title">Working Documents</div>
+
+    <div class="info-block">
+      <h3>Already Created</h3>
+      <p><a href="FCI Question Layer — Working Draft.html" style="color: var(--blue); font-weight: 500;">FCI Question Layer — Working Draft</a> — the initial draft mapping questions to every section of the website copy, plus the dedicated questions wall. This is the document we review and refine before executing the plan.</p>
+    </div>
+
+    <div class="info-block">
+      <h3>To Be Created During Execution</h3>
+      <p>No new standalone documents beyond what's listed above. All question layer content integrates into existing documents — the Messaging Architecture, Website Copy, CISO Portal White Paper, Security Assessment, and Brand Guidelines.</p>
+    </div>
+  </div>
+
+</div>
+
+</body>
+</html>

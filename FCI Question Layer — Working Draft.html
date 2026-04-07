@@ -1,0 +1,799 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FCI — Question Layer Working Draft</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Inter+Tight:wght@500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --blue:      #2563EB;
+      --blue-dark: #1D4ED8;
+      --sky:       #0EA5E9;
+      --deep-navy: #1E3A6E;
+      --tint:      #DBEAFE;
+      --faint:     #EFF6FF;
+      --white:     #FFFFFF;
+      --offwhite:  #F8FAFC;
+      --rule:      #E2E8F0;
+      --text:      #0F172A;
+      --body:      #475569;
+      --muted:     #64748B;
+      --amber:     #D97706;
+      --amber-bg:  #FFFBEB;
+      --amber-border: #FCD34D;
+      --green:     #059669;
+      --green-bg:  #ECFDF5;
+      --green-border: #6EE7B7;
+      --violet:    #7C3AED;
+      --violet-bg: #F5F3FF;
+      --violet-border: #C4B5FD;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { font-size: 16px; scroll-behavior: smooth; }
+    body { font-family: 'Inter', sans-serif; background: var(--offwhite); color: var(--text); -webkit-font-smoothing: antialiased; padding-top: 52px; }
+
+    /* ── HUB NAV ── */
+    .hub-nav {
+      position: fixed; top: 0; left: 0; right: 0; height: 52px; z-index: 200;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 32px;
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(15,23,42,0.08);
+    }
+    .hub-nav .back-nav {
+      font-size: 13px; font-weight: 600; text-decoration: none;
+      color: #475569; transition: color 0.15s;
+    }
+    .hub-nav .back-nav:hover { color: #0F172A; }
+
+    /* ── HEADER ── */
+    .site-header {
+      background: var(--blue);
+      padding: 56px 64px 48px;
+      position: relative; overflow: hidden;
+    }
+    .site-header::before {
+      content: ''; position: absolute; top: -100px; right: -100px;
+      width: 380px; height: 380px; border-radius: 50%;
+      background: rgba(255,255,255,0.04); pointer-events: none;
+    }
+    .header-eyebrow {
+      font-size: 12px; font-weight: 600; letter-spacing: 0.2em;
+      text-transform: uppercase; color: rgba(255,255,255,0.70);
+      margin-bottom: 20px; position: relative; z-index: 1;
+    }
+    .header-logo {
+      font-family: 'Inter Tight', sans-serif; font-size: 40px;
+      font-weight: 600; letter-spacing: 0; color: var(--white);
+      line-height: 1; display: inline-flex; align-items: baseline;
+      position: relative; z-index: 1;
+    }
+    .header-desc {
+      font-size: 13px; font-weight: 400; letter-spacing: 0.1em;
+      text-transform: uppercase; color: rgba(255,255,255,0.75);
+      margin-top: 8px; position: relative; z-index: 1;
+    }
+    .header-title {
+      font-family: 'Inter Tight', sans-serif;
+      font-size: clamp(24px, 3vw, 34px); font-weight: 600;
+      color: var(--white); letter-spacing: -0.02em;
+      line-height: 1.2; margin-top: 32px; position: relative; z-index: 1;
+    }
+    .header-sub {
+      font-size: 14px; color: rgba(255,255,255,0.82);
+      margin-top: 10px; max-width: 620px; line-height: 1.65;
+      position: relative; z-index: 1;
+    }
+
+    /* ── LAYOUT ── */
+    .wrap { max-width: 920px; margin: 0 auto; padding: 0 64px 120px; }
+
+    /* ── PAGE SECTION ── */
+    .page-section {
+      margin-top: 72px;
+      padding-top: 40px;
+      border-top: 2px solid var(--blue);
+      scroll-margin-top: 80px;
+    }
+    .page-section:first-of-type { margin-top: 56px; }
+    .page-label {
+      font-size: 11px; font-weight: 700; letter-spacing: 0.22em;
+      text-transform: uppercase; color: var(--sky); margin-bottom: 6px;
+    }
+    .page-title {
+      font-family: 'Inter Tight', sans-serif;
+      font-size: clamp(22px, 2.8vw, 30px); font-weight: 600;
+      color: var(--text); letter-spacing: -0.02em; line-height: 1.2;
+      margin-bottom: 8px;
+    }
+    .page-desc {
+      font-size: 16px; color: var(--muted); max-width: 620px; line-height: 1.6;
+      margin-bottom: 40px;
+    }
+
+    /* ── SECTION LABEL ── */
+    .section-label {
+      font-size: 11px; font-weight: 700; letter-spacing: 0.22em;
+      text-transform: uppercase; color: var(--sky); margin-bottom: 16px;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .section-label::after {
+      content: ''; flex: 1; height: 1px; background: var(--tint);
+    }
+
+    /* ── PLACEMENT BLOCK ── */
+    .placement {
+      margin-bottom: 48px;
+    }
+    .placement + .placement {
+      border-top: 1px solid var(--rule);
+      padding-top: 40px;
+    }
+
+    /* ── CURRENT COPY (amber) ── */
+    .current-box {
+      background: var(--amber-bg);
+      border: 1px solid var(--amber-border);
+      border-left: 4px solid var(--amber);
+      padding: 20px 24px;
+      margin-bottom: 16px;
+    }
+    .current-box .box-label {
+      font-size: 11px; font-weight: 700; letter-spacing: 0.18em;
+      text-transform: uppercase; color: var(--amber); margin-bottom: 10px;
+    }
+    .current-box p {
+      font-size: 15px; color: var(--text); line-height: 1.65; margin-bottom: 6px;
+    }
+
+    /* ── PROPOSED QUESTION (green) ── */
+    .question-box {
+      background: var(--green-bg);
+      border: 1px solid var(--green-border);
+      border-left: 4px solid var(--green);
+      padding: 20px 24px;
+      margin-bottom: 16px;
+    }
+    .question-box .box-label {
+      font-size: 11px; font-weight: 700; letter-spacing: 0.18em;
+      text-transform: uppercase; color: var(--green); margin-bottom: 10px;
+    }
+    .question-box p {
+      font-size: 15px; color: var(--text); line-height: 1.65; margin-bottom: 6px;
+      font-style: italic;
+    }
+    .question-box p:last-child { margin-bottom: 0; }
+
+    /* ── PLACEMENT NOTE (violet) ── */
+    .placement-note {
+      background: var(--violet-bg);
+      border: 1px solid var(--violet-border);
+      border-left: 4px solid var(--violet);
+      padding: 14px 20px;
+      margin-bottom: 16px;
+    }
+    .placement-note .box-label {
+      font-size: 11px; font-weight: 700; letter-spacing: 0.18em;
+      text-transform: uppercase; color: var(--violet); margin-bottom: 6px;
+    }
+    .placement-note p {
+      font-size: 14px; color: var(--body); line-height: 1.6;
+    }
+
+    /* ── QUESTION WALL ── */
+    .question-wall {
+      background: var(--white);
+      border: 2px solid var(--blue);
+      padding: 32px 36px;
+      margin-top: 32px;
+    }
+    .question-wall .wall-title {
+      font-family: 'Inter Tight', sans-serif;
+      font-size: 20px; font-weight: 600; color: var(--blue);
+      margin-bottom: 24px;
+    }
+    .question-wall .q-group-label {
+      font-size: 11px; font-weight: 700; letter-spacing: 0.18em;
+      text-transform: uppercase; color: var(--sky);
+      margin-top: 24px; margin-bottom: 12px;
+    }
+    .question-wall .q-group-label:first-of-type { margin-top: 0; }
+    .question-wall .q-item {
+      font-size: 15px; color: var(--text); line-height: 1.65;
+      padding: 10px 0;
+      border-bottom: 1px solid var(--rule);
+      font-style: italic;
+    }
+    .question-wall .q-item:last-child { border-bottom: none; }
+
+    /* ── INTRO BLOCK ── */
+    .intro-block {
+      background: var(--white);
+      border: 1px solid var(--rule);
+      padding: 28px 32px;
+      margin-bottom: 40px;
+    }
+    .intro-block h3 {
+      font-family: 'Inter Tight', sans-serif;
+      font-size: 17px; font-weight: 600; color: var(--text); margin-bottom: 12px;
+    }
+    .intro-block p {
+      font-size: 14px; color: var(--body); line-height: 1.7; margin-bottom: 10px;
+    }
+    .intro-block p:last-child { margin-bottom: 0; }
+
+    /* ── COLOR KEY ── */
+    .color-key {
+      display: flex; gap: 24px; flex-wrap: wrap;
+      margin-top: 16px; padding-top: 16px;
+      border-top: 1px solid var(--rule);
+    }
+    .color-key-item {
+      display: flex; align-items: center; gap: 8px;
+      font-size: 13px; color: var(--body);
+    }
+    .color-key-swatch {
+      width: 14px; height: 14px; border-radius: 2px;
+    }
+
+    /* ── DARK MODE ── */
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --white:    #1E293B;
+        --offwhite: #0F172A;
+        --rule:     #334155;
+        --text:     #F1F5F9;
+        --body:     #CBD5E1;
+        --muted:    #94A3B8;
+        --faint:    #1E293B;
+        --tint:     #334155;
+        --amber-bg: #1C1507;
+        --amber-border: #78350F;
+        --green-bg: #052E16;
+        --green-border: #065F46;
+        --violet-bg: #1E1338;
+        --violet-border: #4C1D95;
+      }
+      body { background: #0F172A; }
+      .hub-nav { background: rgba(8,14,28,0.9); border-bottom-color: rgba(255,255,255,0.07); }
+      .hub-nav .back-nav { color: rgba(255,255,255,0.5); }
+      .hub-nav .back-nav:hover { color: #fff; }
+      .intro-block { background: #1E293B; border-color: #334155; }
+      .question-wall { background: #1E293B; }
+    }
+
+    /* ── MOBILE ── */
+    @media (max-width: 680px) {
+      .wrap { padding: 0 20px 80px; }
+      .site-header { padding: 36px 24px 32px; }
+      .color-key { flex-direction: column; gap: 8px; }
+    }
+  </style>
+</head>
+<body>
+
+<nav class="hub-nav">
+  <a href="index.html" class="back-nav">FCI Hub</a>
+</nav>
+
+<header class="site-header">
+  <div class="header-eyebrow">Brand &amp; Website Development</div>
+  <div class="header-logo">FCI</div>
+  <div class="header-desc">Field Compliance Inc.</div>
+  <div class="header-title">Question Layer — Working Draft</div>
+  <div class="header-sub">Mapping question-based messaging to the current website copy. Inspired by Marcus Sheridan's "They Ask, You Answer" methodology. This document proposes where questions sit alongside existing headlines — not replacing them.</div>
+</header>
+
+<div class="wrap">
+
+  <!-- ══════════════════════════════════════════════════
+       INTRODUCTION
+  ══════════════════════════════════════════════════ -->
+
+  <div class="page-section">
+    <div class="page-label">Reference</div>
+    <div class="page-title">How to Read This Document</div>
+
+    <div class="intro-block">
+      <h3>The Approach</h3>
+      <p>This document maps question-based messaging onto the existing FCI website copy. The current headlines and text remain untouched. For each section, we show the current copy and propose a companion question that would sit alongside it — creating a "statement + question" pattern where the headline carries authority and the question creates emotional pull.</p>
+      <p>At the end, a dedicated Questions Section collects the most powerful pain-point questions into a single wall — designed to sit just before the closing CTA on the homepage.</p>
+      <p><strong>The methodology behind this:</strong> Marcus Sheridan's "They Ask, You Answer" — a framework born from his near-bankrupt swimming pool company, River Pools & Spas. By answering every question his customers were already asking, he became the most trafficked pool website in the world. His "Big 5" topics (pricing, problems, comparisons, reviews, best-of) drive nearly all B2B purchase research. Research shows that pages opening with pain-point questions increase engagement by 36% and conversion by up to 45% compared to benefit-only copy.</p>
+
+      <div class="color-key">
+        <div class="color-key-item">
+          <div class="color-key-swatch" style="background: var(--amber);"></div>
+          Current Copy — what exists today
+        </div>
+        <div class="color-key-item">
+          <div class="color-key-swatch" style="background: var(--green);"></div>
+          Proposed Question — new addition alongside existing copy
+        </div>
+        <div class="color-key-item">
+          <div class="color-key-swatch" style="background: var(--violet);"></div>
+          Placement Note — where and how it would appear
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════
+       PAGE 1 — HOMEPAGE
+  ══════════════════════════════════════════════════ -->
+
+  <div class="page-section" id="homepage">
+    <div class="page-label">Page 1</div>
+    <div class="page-title">Homepage</div>
+    <div class="page-desc">The homepage carries the broadest audience. Questions here must resonate across all three markets — broker-dealers &amp; branch offices, insurance carriers &amp; agencies, and RIAs.</div>
+
+    <!-- HERO -->
+    <div class="placement">
+      <div class="section-label">Hero Section</div>
+
+      <div class="current-box">
+        <div class="box-label">Current — H1</div>
+        <p>Managed Cybersecurity for Financial Services</p>
+      </div>
+      <div class="current-box">
+        <div class="box-label">Current — H2</div>
+        <p>Security enforced. Compliance proven.</p>
+      </div>
+
+      <div class="question-box">
+        <div class="box-label">Proposed Question — Below H2, above CTA</div>
+        <p>If a regulator examined your sales offices tomorrow, could you prove every device is protected?</p>
+      </div>
+
+      <div class="placement-note">
+        <div class="box-label">Placement</div>
+        <p>The H1 and H2 stay exactly as they are. The question appears as a single line below the sub-headline, above the CTA button. It acts as the emotional bridge between the brand statement and the action. The visitor reads "Security enforced. Compliance proven." and then the question forces a gut check before they decide to scroll or click.</p>
+      </div>
+    </div>
+
+    <!-- PROBLEM SECTION -->
+    <div class="placement">
+      <div class="section-label">Problem Section — "The Challenge You're Managing"</div>
+
+      <div class="current-box">
+        <div class="box-label">Current — Section Headline</div>
+        <p>Your sales offices hold the most private financial information of the country's wealthiest families.</p>
+        <p>Regulators, home offices, and cyber insurers all expect proof that it is protected.</p>
+      </div>
+
+      <div class="question-box">
+        <div class="box-label">Proposed Question — Companion to headline</div>
+        <p>How many hours does your team spend assembling compliance evidence before each exam — and is it ever fully complete?</p>
+      </div>
+
+      <div class="placement-note">
+        <div class="box-label">Placement</div>
+        <p>The current headline is a powerful authority statement. The question sits directly next to it — either as a right-column element (in a two-column layout) or immediately below the headline, before the body copy begins. The statement says "this is the reality." The question says "and here's where it hurts you personally."</p>
+      </div>
+    </div>
+
+    <!-- FOUR PILLARS -->
+    <div class="placement">
+      <div class="section-label">Answer Section — Four Pillars</div>
+
+      <div class="current-box">
+        <div class="box-label">Current — Section Headline</div>
+        <p>Everything every sales office needs. Delivered as one managed service.</p>
+      </div>
+
+      <div class="question-box">
+        <div class="box-label">Proposed Question — Above the pillar cards</div>
+        <p>What if the tools, the procedures, the expertise, and the proof were all part of the same service?</p>
+      </div>
+
+      <div class="placement-note">
+        <div class="box-label">Placement</div>
+        <p>This question sits between the section headline and the four pillar cards. The headline tells you what FCI delivers. The question creates a "what if" moment that makes the reader lean in before seeing the four cards. Together they create a 1-2 punch: authority statement, then possibility question.</p>
+      </div>
+    </div>
+
+    <!-- WHO WE SERVE -->
+    <div class="placement">
+      <div class="section-label">Market Navigation — "Who We Serve"</div>
+
+      <div class="current-box">
+        <div class="box-label">Current — Section Headline</div>
+        <p>Three markets. One managed service. Built for the sales office.</p>
+      </div>
+
+      <div class="question-box">
+        <div class="box-label">Proposed Question — Below section headline</div>
+        <p>Which of these describes the compliance challenge your firm is facing right now?</p>
+      </div>
+
+      <div class="placement-note">
+        <div class="box-label">Placement</div>
+        <p>Below the headline, above the three market cards. The question activates self-selection — the reader stops scanning and starts looking for themselves in the three options. It turns the navigation section from a passive menu into an active decision moment.</p>
+      </div>
+    </div>
+
+    <!-- SECURITY ASSESSMENT -->
+    <div class="placement">
+      <div class="section-label">Security Assessment Overview</div>
+
+      <div class="current-box">
+        <div class="box-label">Current — Section Headline</div>
+        <p>Start with a clear picture of where you stand.</p>
+      </div>
+
+      <div class="question-box">
+        <div class="box-label">Proposed Question — Companion to headline</div>
+        <p>Do you know exactly where your firm's security gaps are — or are you waiting for an examiner to find them first?</p>
+      </div>
+
+      <div class="placement-note">
+        <div class="box-label">Placement</div>
+        <p>Same side-by-side or stacked pattern. The current headline is a gentle invitation. The question adds urgency: the gap analysis isn't just a nice-to-have, it's the difference between proactive and reactive.</p>
+      </div>
+    </div>
+
+    <!-- MANAGED CYBERSECURITY -->
+    <div class="placement">
+      <div class="section-label">Managed Cybersecurity Overview</div>
+
+      <div class="current-box">
+        <div class="box-label">Current — Section Headline</div>
+        <p>Six security domains. One AI-driven managed service.</p>
+      </div>
+
+      <div class="question-box">
+        <div class="box-label">Proposed Question — Below headline, above the six cards</div>
+        <p>How many separate tools and vendors does your firm use to cover endpoint, network, user, data, cloud, and firm security — and can any one of them show a regulator the full picture?</p>
+      </div>
+
+      <div class="placement-note">
+        <div class="box-label">Placement</div>
+        <p>This question does double duty: it highlights the complexity of the prospect's current multi-vendor setup AND sets up the value of FCI's single-service model. It appears between the headline and the six domain cards.</p>
+      </div>
+    </div>
+
+    <!-- CISO PORTAL -->
+    <div class="placement">
+      <div class="section-label">CISO Portal Spotlight</div>
+
+      <div class="current-box">
+        <div class="box-label">Current — Section Headline</div>
+        <p>The CISO Portal: where your compliance record lives.</p>
+      </div>
+
+      <div class="question-box">
+        <div class="box-label">Proposed Question — Below headline</div>
+        <p>What if your compliance evidence assembled itself — continuously, automatically — instead of requiring weeks of manual preparation before every exam?</p>
+      </div>
+
+      <div class="placement-note">
+        <div class="box-label">Placement</div>
+        <p>Below the headline, before the body copy. The current body copy already describes the spreadsheets-and-screenshots problem. The question gives the reader permission to imagine the alternative before reading about how it works.</p>
+      </div>
+    </div>
+
+    <!-- WHY TRUST FCI -->
+    <div class="placement">
+      <div class="section-label">Why Trust FCI — Proof Section</div>
+
+      <div class="current-box">
+        <div class="box-label">Current — Section Headline</div>
+        <p>30 years of operational proof. Not marketing claims.</p>
+      </div>
+
+      <div class="question-box">
+        <div class="box-label">Proposed Question — Companion to headline</div>
+        <p>When was the last time your cybersecurity provider could show you 30 years of financial services experience — and the certifications to back it up?</p>
+      </div>
+
+      <div class="placement-note">
+        <div class="box-label">Placement</div>
+        <p>The headline is a strong authority claim. The question turns that claim into a comparison the reader makes internally. They think about their current provider and realize the answer is probably "never."</p>
+      </div>
+    </div>
+
+    <!-- CLOSING CTA -->
+    <div class="placement">
+      <div class="section-label">Homepage Closing CTA</div>
+
+      <div class="current-box">
+        <div class="box-label">Current — CTA Headline</div>
+        <p>Your employees and affiliates will not notice a difference. Your regulators will.</p>
+      </div>
+
+      <div class="question-box">
+        <div class="box-label">Proposed Question — Above CTA headline</div>
+        <p>Ready to stop preparing for exams and start showing them?</p>
+      </div>
+
+      <div class="placement-note">
+        <div class="box-label">Placement</div>
+        <p>This short question appears above the current CTA headline as a transition from the Questions Section (see below). It echoes the pain-point questions that came before and pivots to action. The current CTA headline then serves as the closing punch.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════
+       PAGE 3 — BROKER-DEALERS & BRANCH OFFICES
+  ══════════════════════════════════════════════════ -->
+
+  <div class="page-section" id="broker-dealer">
+    <div class="page-label">Page 3</div>
+    <div class="page-title">Broker-Dealers &amp; Branch Offices</div>
+    <div class="page-desc">Audience: CCOs, supervision officers, compliance directors at broker-dealer home offices and branch networks.</div>
+
+    <div class="placement">
+      <div class="section-label">Page Hero</div>
+
+      <div class="current-box">
+        <div class="box-label">Current — H1</div>
+        <p>Controls enforced across every rep. Evidence assembled before the examiner walks in.</p>
+      </div>
+
+      <div class="question-box">
+        <div class="box-label">Proposed Question — Below H1</div>
+        <p>If FINRA asked for evidence of endpoint protection across every registered representative tomorrow, could your home office produce it?</p>
+      </div>
+    </div>
+
+    <div class="placement">
+      <div class="section-label">The Problem</div>
+
+      <div class="current-box">
+        <div class="box-label">Current — Section Headline</div>
+        <p>FINRA expects evidence of supervision. Your reps work from places you cannot see.</p>
+      </div>
+
+      <div class="question-box">
+        <div class="box-label">Proposed Question — Companion to headline</div>
+        <p>How many of your registered representatives are working from devices and networks that your IT team has never verified?</p>
+      </div>
+    </div>
+
+    <div class="placement">
+      <div class="section-label">What Changes With FCI</div>
+
+      <div class="current-box">
+        <div class="box-label">Current — Section Headline</div>
+        <p>Network-wide enforcement. Exam evidence that builds itself. One portal to show the examiner.</p>
+      </div>
+
+      <div class="question-box">
+        <div class="box-label">Proposed Question — Companion to headline</div>
+        <p>What would it mean for your compliance team if FINRA exam evidence was already assembled — before the examination notice arrived?</p>
+      </div>
+    </div>
+
+    <div class="placement">
+      <div class="section-label">The Exam Evidence Package</div>
+
+      <div class="current-box">
+        <div class="box-label">Current — Section Headline</div>
+        <p>The FINRA or SEC examiner will ask for your cybersecurity evidence. FCI builds it while your reps are working — not after the exam notice arrives.</p>
+      </div>
+
+      <div class="question-box">
+        <div class="box-label">Proposed Question — Companion to headline</div>
+        <p>Can your firm produce device inventory logs, MFA enforcement records, and written supervisory procedure documentation — for every branch — on demand?</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════
+       PAGE 4 — INSURANCE CARRIERS & AGENCIES
+  ══════════════════════════════════════════════════ -->
+
+  <div class="page-section" id="insurance">
+    <div class="page-label">Page 4</div>
+    <div class="page-title">Insurance Carriers &amp; Agencies</div>
+    <div class="page-desc">Audience: Operations leaders, compliance officers, CISOs at carriers and agency networks.</div>
+
+    <div class="placement">
+      <div class="section-label">Page Hero</div>
+
+      <div class="current-box">
+        <div class="box-label">Current — H1</div>
+        <p>Security controls that reach every appointed agent. Evidence your cyber insurer will accept.</p>
+      </div>
+
+      <div class="question-box">
+        <div class="box-label">Proposed Question — Below H1</div>
+        <p>If a cyber incident hit one of your appointed agencies today, could you document the controls that were in place at the time it happened?</p>
+      </div>
+    </div>
+
+    <div class="placement">
+      <div class="section-label">The Problem</div>
+
+      <div class="current-box">
+        <div class="box-label">Current — Section Headline</div>
+        <p>Your agency network creates compliance exposure that most security providers were not designed to reach.</p>
+      </div>
+
+      <div class="question-box">
+        <div class="box-label">Proposed Question — Companion to headline</div>
+        <p>How does your carrier prove to state regulators that cybersecurity controls actually reach your independent agents — the ones using their own devices, in their own offices, on their own networks?</p>
+      </div>
+    </div>
+
+    <div class="placement">
+      <div class="section-label">What Changes With FCI</div>
+
+      <div class="current-box">
+        <div class="box-label">Current — Section Headline</div>
+        <p>Controls extended to every appointed agent and independent agency. Documentation your regulator and your cyber insurer are already asking for.</p>
+      </div>
+
+      <div class="question-box">
+        <div class="box-label">Proposed Question — Companion to headline</div>
+        <p>What if your next NAIC filing and your next cyber insurance renewal could pull from the same evidence — already assembled, already formatted?</p>
+      </div>
+    </div>
+
+    <div class="placement">
+      <div class="section-label">Evidence Section</div>
+
+      <div class="current-box">
+        <div class="box-label">Current — Section Headline</div>
+        <p>Your cyber insurer will ask what controls you had in place. FCI makes sure you have an answer before they ask.</p>
+      </div>
+
+      <div class="question-box">
+        <div class="box-label">Proposed Question — Companion to headline</div>
+        <p>If a claim is filed after a breach, will your documentation prove the controls were there — or will it prove they weren't?</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════
+       PAGE 2 — RIAs
+  ══════════════════════════════════════════════════ -->
+
+  <div class="page-section" id="ria">
+    <div class="page-label">Page 2</div>
+    <div class="page-title">Registered Investment Advisers</div>
+    <div class="page-desc">Audience: RIA principals, managing partners, CCOs. Core fears: exam deficiency, breach eroding fiduciary trust, compliance burden consuming advisor time.</div>
+
+    <div class="placement">
+      <div class="section-label">Page Hero</div>
+
+      <div class="current-box">
+        <div class="box-label">Current — H1</div>
+        <p>Your practice stays compliant. Your advisors stay focused. Your next exam stays calm.</p>
+      </div>
+
+      <div class="question-box">
+        <div class="box-label">Proposed Question — Below H1</div>
+        <p>If the SEC examined your firm next month, could you show documented evidence of controls across every advisor — including those working from home?</p>
+      </div>
+    </div>
+
+    <div class="placement">
+      <div class="section-label">The Problem You're Living With</div>
+
+      <div class="current-box">
+        <div class="box-label">Current — Section Headline</div>
+        <p>Your advisors work from places your IT team has never seen.</p>
+      </div>
+
+      <div class="question-box">
+        <div class="box-label">Proposed Question — Companion to headline</div>
+        <p>Do you know how many of your advisors' devices have endpoint protection running right now — and can you prove it to an examiner?</p>
+      </div>
+    </div>
+
+    <div class="placement">
+      <div class="section-label">What Changes With FCI</div>
+
+      <div class="current-box">
+        <div class="box-label">Current — Section Headline</div>
+        <p>Controls enforced across every advisor. Evidence assembled without your team lifting a finger.</p>
+      </div>
+
+      <div class="question-box">
+        <div class="box-label">Proposed Question — Companion to headline</div>
+        <p>What would your CCO do with the 80% of compliance management time they'd get back?</p>
+      </div>
+    </div>
+
+    <div class="placement">
+      <div class="section-label">What You Can Show the Examiner</div>
+
+      <div class="current-box">
+        <div class="box-label">Current — Section Headline</div>
+        <p>When the SEC or FINRA notice arrives, you open the CISO Portal.</p>
+      </div>
+
+      <div class="question-box">
+        <div class="box-label">Proposed Question — Companion to headline</div>
+        <p>When the exam notice arrives, do you start preparing — or do you just open the portal?</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════
+       DEDICATED QUESTIONS SECTION
+  ══════════════════════════════════════════════════ -->
+
+  <div class="page-section" id="questions-section">
+    <div class="page-label">New Section</div>
+    <div class="page-title">Dedicated Questions Section</div>
+    <div class="page-desc">A wall of pain-point questions designed to sit on the homepage just before the closing CTA. No answers — or very short ones. Let the discomfort build, then offer the path forward. This is where "They Ask, You Answer" meets FCI's authority.</div>
+
+    <div class="intro-block">
+      <h3>Design Direction</h3>
+      <p>Clean, minimal layout. Questions only — no explanations, no product mentions. White or light background, generous spacing. Each question is its own line. Grouped loosely by theme but the grouping labels are subtle or absent on the live page. The section ends with a single CTA transition line.</p>
+      <p>The purpose is emotional: the reader should pause on at least two or three questions and think "I don't actually have a good answer to that." That moment of recognition is the conversion trigger.</p>
+    </div>
+
+    <div class="question-wall">
+      <div class="wall-title">Questions Your Firm Should Be Able to Answer</div>
+
+      <div class="q-group-label">Regulatory Readiness</div>
+      <div class="q-item">If a regulatory examiner arrived at your office tomorrow, could you produce your cybersecurity evidence by the end of the day?</div>
+      <div class="q-item">Can your firm show documented proof that every sales office, every device, and every user is covered by enforced security controls?</div>
+      <div class="q-item">When was the last time your compliance documentation was updated — and does it reflect what is actually deployed, or just what was planned?</div>
+      <div class="q-item">Do your written supervisory procedures have technical enforcement evidence behind them — or are they policies on paper?</div>
+
+      <div class="q-group-label">Breach &amp; Incident Preparedness</div>
+      <div class="q-item">If a cyber incident occurred at one of your branch offices today, could you prove the other branches were protected?</div>
+      <div class="q-item">Does your current provider offer incident response — containment, remediation, documentation, and communication — or just monitoring?</div>
+      <div class="q-item">What happens to your cyber insurance claim if you cannot produce evidence of controls that were in place at the time of the breach?</div>
+
+      <div class="q-group-label">Compliance Operations</div>
+      <div class="q-item">How many hours does your compliance team spend manually assembling evidence before every exam, audit, or cyber insurance renewal?</div>
+      <div class="q-item">Are you confident that every advisor, every agent, every registered representative in your network is running enforced endpoint protection right now?</div>
+      <div class="q-item">If your cyber insurer asked for MFA enforcement records across every user in your firm today, could you produce them?</div>
+
+      <div class="q-group-label">The Gap Between Policy &amp; Proof</div>
+      <div class="q-item">Is there a gap between the security program your firm has written and what you can actually prove is enforced in the field?</div>
+      <div class="q-item">How many separate tools and vendors would you need to contact to assemble a complete picture of your firm's security posture?</div>
+      <div class="q-item">Can your compliance team see the enforcement status of every device in your network right now — or would they need to ask IT to build a report?</div>
+
+      <div class="q-group-label">Cyber Insurance</div>
+      <div class="q-item">At your last cyber insurance renewal, could you document every control your insurer asked about — or did you check boxes you weren't 100% sure of?</div>
+      <div class="q-item">If a claim is filed after a breach, will your documentation prove the controls were in place — or will it prove they weren't?</div>
+      <div class="q-item">Is your cyber insurance renewal package pre-formatted to match your insurer's questionnaire — or do you start from scratch every year?</div>
+    </div>
+
+    <div style="margin-top: 32px; padding: 24px 28px; background: var(--faint); border-left: 4px solid var(--blue);">
+      <p style="font-size: 15px; color: var(--text); line-height: 1.65; font-style: italic;">If you paused on any of these — that is exactly why FCI exists.</p>
+      <p style="font-size: 14px; color: var(--body); line-height: 1.65; margin-top: 8px;">This line transitions directly to the closing CTA.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════
+       IMPLEMENTATION NOTES
+  ══════════════════════════════════════════════════ -->
+
+  <div class="page-section" id="notes">
+    <div class="page-label">Reference</div>
+    <div class="page-title">Implementation Notes</div>
+
+    <div class="intro-block">
+      <h3>The Statement + Question Pattern</h3>
+      <p>Throughout this document, the proposed questions are designed to sit <em>alongside</em> the current headlines — not to replace them. The visual pattern would be: a bold declarative headline (authority, credibility) paired with an italic question in slightly smaller type (emotional pull, self-diagnosis). The headline tells them what FCI does. The question makes them feel why they need it.</p>
+      <p>In design terms, this could be a two-column layout (headline left, question right), or a stacked pattern (headline above, question below in a distinct typographic treatment). The key is that both are visible at the same time — the reader sees the authority and the challenge in one glance.</p>
+    </div>
+
+    <div class="intro-block">
+      <h3>The Dedicated Questions Section</h3>
+      <p>The questions wall is designed for the homepage, positioned between the "Why Trust FCI" proof section and the closing CTA. It creates a deliberate emotional shift: the reader has just seen FCI's credentials (30 years, 400+ clients, SOC 2) and now faces a cascade of questions about their own firm's readiness. The contrast between FCI's proof and their own uncertainty is the conversion mechanism.</p>
+      <p>These questions could also be repurposed as individual social media posts, email subject lines, or the opening lines of market-specific landing pages.</p>
+    </div>
+
+    <div class="intro-block">
+      <h3>Next Steps</h3>
+      <p>1. Review and refine the proposed questions — some may need to be sharpened, combined, or replaced based on what Brian and the team hear most often from prospects.</p>
+      <p>2. Decide on the visual treatment for the statement + question pattern.</p>
+      <p>3. Decide which questions make the cut for the dedicated wall section.</p>
+      <p>4. Once approved, integrate into the Website Copy document as additions — not replacements.</p>
+    </div>
+  </div>
+
+</div>
+
+</body>
+</html>
