@@ -521,7 +521,13 @@
     <div class="progress-step"></div>
   </div>
 
-  <form id="intakeForm" action="https://formspree.io/f/xbljengl" method="POST">
+  <form id="intakeForm" action="https://formsubmit.co/mpytura@fcicyber.com" method="POST">
+
+    <!-- FormSubmit config -->
+    <input type="hidden" name="_subject" value="FCI Sales Intake — New Submission" />
+    <input type="hidden" name="_captcha" value="false" />
+    <input type="hidden" name="_template" value="table" />
+    <input type="text" name="_honey" style="display:none" />
 
     <!-- ═══════════════════════════════════════════ -->
     <!-- SECTION 1 — Prospect Info                   -->
@@ -1259,7 +1265,7 @@
     }
   }
 
-  /* ── Form submission via Formspree ── */
+  /* ── Form submission via FormSubmit ── */
   var form = document.getElementById('intakeForm');
   form.addEventListener('submit', function(e) {
     e.preventDefault();
@@ -1274,7 +1280,7 @@
       body: data,
       headers: { 'Accept': 'application/json' }
     }).then(function(res) {
-      if (res.ok) {
+      if (res.ok || res.status === 200 || res.status === 302) {
         form.style.display = 'none';
         document.querySelector('.progress-bar').style.display = 'none';
         document.querySelector('.progress-labels').style.display = 'none';
