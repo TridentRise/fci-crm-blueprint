@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FCI — Project Overview</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Inter+Tight:wght@600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    *, ::before, ::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:       #060B14;
+      --surface:  #0D1626;
+      --surface2: #111F33;
+      --blue:     #2563EB;
+      --blue2:    rgba(37,99,235,0.12);
+      --sky:      #0EA5E9;
+      --sky2:     rgba(14,165,233,0.12);
+      --indigo:   #818CF8;
+      --indigo2:  rgba(129,140,248,0.12);
+      --emerald:  #10B981;
+      --emerald2: rgba(16,185,129,0.10);
+      --amber:    #F59E0B;
+      --amber2:   rgba(245,158,11,0.10);
+      --violet:   #A855F7;
+      --violet2:  rgba(168,85,247,0.10);
+      --text1:    #F1F5F9;
+      --text2:    #94A3B8;
+      --text3:    #475569;
+      --rule:     #1A2B40;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text1);
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    ::selection { background: var(--blue); color: #fff; }
+
+    /* ── Background glow ── */
+    .bg-glow {
+      position: fixed; inset: 0; pointer-events: none; z-index: 0;
+      background:
+        radial-gradient(80% 50% at 50% -10%, rgba(37,99,235,0.15) 0%, transparent 65%),
+        radial-gradient(35% 28% at 6% 88%,  rgba(168,85,247,0.07) 0%, transparent 55%),
+        radial-gradient(35% 28% at 94% 82%, rgba(16,185,129,0.06) 0%, transparent 55%);
+    }
+
+    /* ── Top nav ── */
+    .topnav {
+      position: fixed; top: 0; left: 0; right: 0; height: 56px;
+      background: var(--nav-bg, rgba(6,11,20,0.88));
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--rule);
+      display: flex; align-items: center; padding: 0 48px; z-index: 100;
+    }
+
+    .nav-logo {
+      font-family: 'Inter Tight', sans-serif;
+      font-size: 20px; font-weight: 800;
+      color: var(--text1); text-decoration: none;
+      letter-spacing: -0.02em;
+      display: inline-flex; align-items: baseline; gap: 1px;
+    }
+    .nav-logo .accent { color: var(--sky); }
+
+    /* ── Header ── */
+    header {
+      position: relative; z-index: 1;
+      text-align: center; padding: 128px 24px 56px;
+    }
+
+    .header-eyebrow {
+      display: inline-block;
+      font-size: 10px; font-weight: 700;
+      letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--sky);
+      border: 1px solid rgba(14,165,233,0.28);
+      background: rgba(14,165,233,0.07);
+      padding: 5px 16px; border-radius: 100px;
+      margin-bottom: 28px;
+    }
+
+    header h1 {
+      font-family: 'Inter Tight', sans-serif;
+      font-size: clamp(36px, 5vw, 56px);
+      font-weight: 800; letter-spacing: -0.035em; line-height: 1.1;
+      color: var(--text1); margin-bottom: 20px;
+    }
+    header h1 em { color: var(--sky); font-style: normal; }
+
+    header p {
+      font-size: 17px; color: var(--text2);
+      line-height: 1.7; max-width: 560px; margin: 0 auto;
+    }
+
+    /* ── Timeline container ── */
+    .timeline {
+      position: relative; z-index: 1;
+      max-width: 720px; width: 100%;
+      margin: 0 auto; padding: 0 32px 120px;
+    }
+
+    /* Vertical connector line */
+    .timeline::before {
+      content: '';
+      position: absolute;
+      top: 0; bottom: 120px;
+      left: 50%;
+      width: 2px;
+      background: linear-gradient(180deg, var(--rule) 0%, var(--sky) 50%, var(--rule) 100%);
+      transform: translateX(-1px);
+    }
+
+    /* ── Step card ── */
+    .step {
+      position: relative;
+      margin-bottom: 0;
+      padding: 24px 0;
+    }
+
+    .step-inner {
+      position: relative;
+      background: var(--surface);
+      border: 1px solid var(--rule);
+      border-radius: 16px;
+      padding: 32px 28px 28px;
+      transition: transform 0.25s cubic-bezier(0.16,1,0.3,1), box-shadow 0.25s, border-color 0.2s;
+    }
+    .step-inner:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 16px 48px rgba(0,0,0,0.3);
+    }
+
+    /* Top accent bar */
+    .step-inner::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0;
+      height: 3px; border-radius: 16px 16px 0 0;
+    }
+
+    /* Step number circle */
+    .step-number {
+      position: absolute;
+      left: 50%; top: 24px;
+      transform: translate(-50%, -50%);
+      width: 44px; height: 44px;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Inter Tight', sans-serif;
+      font-size: 16px; font-weight: 800;
+      z-index: 2;
+      border: 3px solid var(--bg);
+    }
+
+    .step-phase {
+      font-size: 10px; font-weight: 700;
+      letter-spacing: 0.18em; text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    .step-title {
+      font-family: 'Inter Tight', sans-serif;
+      font-size: 22px; font-weight: 700;
+      letter-spacing: -0.02em; line-height: 1.2;
+      color: var(--text1); margin-bottom: 10px;
+    }
+
+    .step-desc {
+      font-size: 14px; color: var(--text2);
+      line-height: 1.75; margin-bottom: 16px;
+    }
+
+    /* Deliverable links */
+    .step-links {
+      display: flex; flex-wrap: wrap; gap: 8px;
+    }
+    .step-links a {
+      font-size: 11px; font-weight: 600; letter-spacing: 0.05em;
+      padding: 5px 12px; border-radius: 6px;
+      text-decoration: none;
+      transition: transform 0.15s, box-shadow 0.15s;
+    }
+    .step-links a:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    }
+
+    /* ── Color accents ── */
+    .accent-blue .step-inner::before { background: linear-gradient(90deg, var(--blue), rgba(37,99,235,0.25)); }
+    .accent-blue .step-inner:hover { border-color: rgba(37,99,235,0.35); }
+    .accent-blue .step-number { background: var(--blue); color: #fff; }
+    .accent-blue .step-phase { color: var(--blue); }
+    .accent-blue .step-links a { background: var(--blue2); color: var(--blue); border: 1px solid rgba(37,99,235,0.2); }
+
+    .accent-sky .step-inner::before { background: linear-gradient(90deg, var(--sky), rgba(14,165,233,0.25)); }
+    .accent-sky .step-inner:hover { border-color: rgba(14,165,233,0.35); }
+    .accent-sky .step-number { background: var(--sky); color: #fff; }
+    .accent-sky .step-phase { color: var(--sky); }
+    .accent-sky .step-links a { background: var(--sky2); color: var(--sky); border: 1px solid rgba(14,165,233,0.2); }
+
+    .accent-indigo .step-inner::before { background: linear-gradient(90deg, var(--indigo), rgba(129,140,248,0.25)); }
+    .accent-indigo .step-inner:hover { border-color: rgba(129,140,248,0.35); }
+    .accent-indigo .step-number { background: var(--indigo); color: #fff; }
+    .accent-indigo .step-phase { color: var(--indigo); }
+    .accent-indigo .step-links a { background: var(--indigo2); color: var(--indigo); border: 1px solid rgba(129,140,248,0.2); }
+
+    .accent-emerald .step-inner::before { background: linear-gradient(90deg, var(--emerald), rgba(16,185,129,0.25)); }
+    .accent-emerald .step-inner:hover { border-color: rgba(16,185,129,0.35); }
+    .accent-emerald .step-number { background: var(--emerald); color: #fff; }
+    .accent-emerald .step-phase { color: var(--emerald); }
+    .accent-emerald .step-links a { background: var(--emerald2); color: var(--emerald); border: 1px solid rgba(16,185,129,0.2); }
+
+    .accent-amber .step-inner::before { background: linear-gradient(90deg, var(--amber), rgba(245,158,11,0.25)); }
+    .accent-amber .step-inner:hover { border-color: rgba(245,158,11,0.35); }
+    .accent-amber .step-number { background: var(--amber); color: #fff; }
+    .accent-amber .step-phase { color: var(--amber); }
+    .accent-amber .step-links a { background: var(--amber2); color: var(--amber); border: 1px solid rgba(245,158,11,0.2); }
+
+    .accent-violet .step-inner::before { background: linear-gradient(90deg, var(--violet), rgba(168,85,247,0.25)); }
+    .accent-violet .step-inner:hover { border-color: rgba(168,85,247,0.35); }
+    .accent-violet .step-number { background: var(--violet); color: #fff; }
+    .accent-violet .step-phase { color: var(--violet); }
+    .accent-violet .step-links a { background: var(--violet2); color: var(--violet); border: 1px solid rgba(168,85,247,0.2); }
+
+    /* ── We Are Here marker ── */
+    .marker {
+      position: relative;
+      padding: 32px 0;
+      text-align: center;
+      z-index: 3;
+    }
+
+    .marker-inner {
+      display: inline-flex; align-items: center; gap: 14px;
+      background: var(--bg);
+      border: 2px solid var(--sky);
+      border-radius: 100px;
+      padding: 14px 32px;
+      position: relative;
+      box-shadow:
+        0 0 40px rgba(14,165,233,0.25),
+        0 0 80px rgba(14,165,233,0.1);
+      animation: markerPulse 3s ease-in-out infinite;
+    }
+
+    @keyframes markerPulse {
+      0%, 100% { box-shadow: 0 0 40px rgba(14,165,233,0.25), 0 0 80px rgba(14,165,233,0.1); }
+      50% { box-shadow: 0 0 60px rgba(14,165,233,0.35), 0 0 120px rgba(14,165,233,0.15); }
+    }
+
+    .marker-dot {
+      width: 12px; height: 12px;
+      border-radius: 50%;
+      background: var(--sky);
+      animation: dotPulse 2s ease-in-out infinite;
+    }
+
+    @keyframes dotPulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.6; transform: scale(0.8); }
+    }
+
+    .marker-text {
+      font-family: 'Inter Tight', sans-serif;
+      font-size: 15px; font-weight: 800;
+      letter-spacing: 0.15em; text-transform: uppercase;
+      color: var(--sky);
+    }
+
+    /* ── Future / To Do steps ── */
+    .step-future .step-inner {
+      border-style: dashed;
+      opacity: 0.6;
+    }
+    .step-future .step-inner:hover {
+      opacity: 0.85;
+    }
+    .step-future .step-number {
+      opacity: 0.7;
+    }
+
+    .todo-badge {
+      display: inline-block;
+      font-size: 9px; font-weight: 700;
+      letter-spacing: 0.15em; text-transform: uppercase;
+      padding: 3px 10px; border-radius: 4px;
+      background: rgba(245,158,11,0.12);
+      color: var(--amber);
+      border: 1px solid rgba(245,158,11,0.25);
+      margin-left: 10px;
+      vertical-align: middle;
+    }
+
+    /* ── In-progress steps ── */
+    .step-current .step-inner {
+      border-color: rgba(14,165,233,0.3);
+      box-shadow: 0 0 30px rgba(14,165,233,0.08);
+    }
+    .step-current .step-number {
+      box-shadow: 0 0 20px rgba(14,165,233,0.4);
+    }
+
+    /* ── Footer ── */
+    footer {
+      position: relative; z-index: 1;
+      text-align: center; padding: 0 24px 52px;
+    }
+    .footer-inner { display: inline-flex; align-items: center; gap: 14px; }
+    .footer-dot { width: 3px; height: 3px; border-radius: 50%; background: var(--text3); }
+    footer span { font-size: 12px; color: var(--text3); }
+    .footer-logo {
+      font-family: 'Inter Tight', sans-serif;
+      font-size: 15px; font-weight: 700;
+      color: var(--text3); letter-spacing: -0.01em;
+    }
+
+    /* ── Back link ── */
+    .back-link {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: 13px; font-weight: 600;
+      color: var(--text3); text-decoration: none;
+      margin-left: 24px;
+      transition: color 0.15s;
+    }
+    .back-link:hover { color: var(--text1); }
+    .back-link .arrow { font-size: 16px; }
+
+    /* ── Mobile ── */
+    @media (max-width: 720px) {
+      .topnav { padding: 0 24px; }
+      header { padding: 96px 20px 40px; }
+      .timeline { padding: 0 20px 80px; }
+      .step-inner { padding: 28px 22px 24px; }
+      .step-title { font-size: 19px; }
+      .step-number { width: 38px; height: 38px; font-size: 14px; }
+      .marker-inner { padding: 12px 24px; }
+      .marker-text { font-size: 13px; }
+    }
+
+    /* -- Light mode variables -- */
+    :root { --nav-bg: rgba(6,11,20,0.88); }
+    html[data-theme="light"] {
+      --bg: #F8FAFC; --surface: #FFFFFF; --surface2: #F1F5F9;
+      --text1: #0F172A; --text2: #475569; --text3: #94A3B8; --rule: #E2E8F0;
+      --nav-bg: rgba(248,250,252,0.92);
+    }
+    html[data-theme="light"] body { background: #F8FAFC; }
+    html[data-theme="light"] .bg-glow {
+      background:
+        radial-gradient(80% 50% at 50% -10%, rgba(37,99,235,0.07) 0%, transparent 65%),
+        radial-gradient(35% 28% at 6% 88%, rgba(168,85,247,0.03) 0%, transparent 55%),
+        radial-gradient(35% 28% at 94% 82%, rgba(16,185,129,0.03) 0%, transparent 55%);
+    }
+    html[data-theme="light"] .marker-inner {
+      background: #F8FAFC;
+    }
+    html[data-theme="light"] .step-number {
+      border-color: #F8FAFC;
+    }
+    @media (prefers-color-scheme: light) {
+      html:not([data-theme="dark"]) {
+        --bg: #F8FAFC; --surface: #FFFFFF; --surface2: #F1F5F9;
+        --text1: #0F172A; --text2: #475569; --text3: #94A3B8; --rule: #E2E8F0;
+        --nav-bg: rgba(248,250,252,0.92);
+      }
+      html:not([data-theme="dark"]) body { background: #F8FAFC; }
+      html:not([data-theme="dark"]) .bg-glow {
+        background:
+          radial-gradient(80% 50% at 50% -10%, rgba(37,99,235,0.07) 0%, transparent 65%),
+          radial-gradient(35% 28% at 6% 88%, rgba(168,85,247,0.03) 0%, transparent 55%),
+          radial-gradient(35% 28% at 94% 82%, rgba(16,185,129,0.03) 0%, transparent 55%);
+      }
+      html:not([data-theme="dark"]) .marker-inner { background: #F8FAFC; }
+      html:not([data-theme="dark"]) .step-number { border-color: #F8FAFC; }
+    }
+    /* -- Theme toggle -- */
+    .theme-toggle {
+      margin-left: auto; display: flex; align-items: center;
+      background: var(--surface2); border: 1px solid var(--rule);
+      border-radius: 8px; padding: 3px; gap: 2px;
+    }
+    .theme-toggle button {
+      font-family: Inter, sans-serif; font-size: 11px; font-weight: 600;
+      letter-spacing: 0.03em; color: var(--text3); background: transparent;
+      border: none; cursor: pointer; padding: 4px 10px; border-radius: 6px;
+      transition: background 0.15s, color 0.15s; line-height: 1;
+    }
+    .theme-toggle button:hover { color: var(--text1); }
+    .theme-toggle button.active {
+      background: var(--surface); color: var(--text1);
+      box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+    }
+  </style>
+</head>
+<body>
+
+<div class="bg-glow"></div>
+
+<nav class="topnav">
+  <a class="nav-logo" href="index.html">FCI</a>
+  <a class="back-link" href="index.html"><span class="arrow">&larr;</span> Back to Hub</a>
+  <div class="theme-toggle">
+    <button data-mode="light" onclick="setTheme('light')">Light</button>
+    <button data-mode="dark" onclick="setTheme('dark')">Dark</button>
+    <button data-mode="system" onclick="setTheme('system')" class="active">System</button>
+  </div>
+</nav>
+
+<header>
+  <div class="header-eyebrow">Project Roadmap</div>
+  <h1>The <em>Rebrand</em> Journey</h1>
+  <p>From vision to website to market. Every phase of the FCI rebranding project — what we built, the decisions we made, and what's next.</p>
+</header>
+
+<div class="timeline">
+
+  <!-- ── Step 1: Vision ── -->
+  <div class="step accent-sky">
+    <div class="step-number">1</div>
+    <div class="step-inner">
+      <div class="step-phase">Starting Point</div>
+      <div class="step-title">Vision</div>
+      <div class="step-desc">Improve branding, positioning, and marketing collateral to trigger growth. FCI's cybersecurity expertise needed a brand presence that matched — sharper identity, clearer messaging, stronger sales materials.</div>
+    </div>
+  </div>
+
+  <!-- ── Step 2: Brand Foundation ── -->
+  <div class="step accent-blue">
+    <div class="step-number">2</div>
+    <div class="step-inner">
+      <div class="step-phase">Phase 1 &middot; Identity</div>
+      <div class="step-title">Brand Foundation</div>
+      <div class="step-desc">Built the visual identity from scratch — logo, color palette, typography, voice guidelines, and imagery direction. Explored 10 font directions before landing on the final Inter Tight wordmark.</div>
+      <div class="step-links">
+        <a href="FCI Brand Guidelines.html">Brand Guidelines</a>
+        <a href="FCI Logo Exploration.html">Logo Exploration</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Step 3: Messaging Architecture ── -->
+  <div class="step accent-indigo">
+    <div class="step-number">3</div>
+    <div class="step-inner">
+      <div class="step-phase">Phase 1 &middot; Strategy</div>
+      <div class="step-title">Messaging Architecture</div>
+      <div class="step-desc">Defined the ground truth for all copy — brand voice, buyer journey mapping, message hierarchy, competitive response framework, cost of inaction data, and channel adaptation. Then layered in FCI's decade-long AI story as a distinct narrative arc.</div>
+      <div class="step-links">
+        <a href="FCI Messaging Architecture v2.html">Messaging Architecture</a>
+        <a href="FCI AI Messaging.html">AI Messaging</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Step 4: Website Copy ── -->
+  <div class="step accent-emerald">
+    <div class="step-number">4</div>
+    <div class="step-inner">
+      <div class="step-phase">Phase 2 &middot; Copy</div>
+      <div class="step-title">Website Copy</div>
+      <div class="step-desc">Translated the messaging architecture into complete, page-by-page website copy — homepage, three persona pages (broker-dealers &amp; branch offices, insurance carriers &amp; agencies, RIAs), six solution pages, and About. Ready for developer handoff.</div>
+      <div class="step-links">
+        <a href="FCI Website Copy.html">Website Copy</a>
+        <a href="FCI Question Layer — Implementation Plan.html">Question Layer</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Step 5: Old Website Audit ── -->
+  <div class="step accent-amber">
+    <div class="step-number">5</div>
+    <div class="step-inner">
+      <div class="step-phase">Phase 2 &middot; Audit</div>
+      <div class="step-title">Old Website Audit</div>
+      <div class="step-desc">Went through every page of the current fcicyber.com — 35+ news articles, 40 Cyber Bites, team bios, speaking appearances, media citations, service pages, and whitepapers. Each piece cataloged and marked: migrate, archive, or drop.</div>
+      <div class="step-links">
+        <a href="FCI Content Migration.html">Content Migration Inventory</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Step 6: Content Migration ── -->
+  <div class="step accent-emerald">
+    <div class="step-number">6</div>
+    <div class="step-inner">
+      <div class="step-phase">Phase 3 &middot; Migration</div>
+      <div class="step-title">Content Migration</div>
+      <div class="step-desc">Rewrote every piece of migrated content in the new brand voice — 8 leadership bios, 40 Cyber Bites, 18 speaking appearances, 16 media citations, 40 news articles, careers content, and contact information. All standardized and brand-aligned.</div>
+      <div class="step-links">
+        <a href="FCI Company and Team.html">Company &amp; Team</a>
+        <a href="FCI Cyber Bites.html">Cyber Bites</a>
+        <a href="FCI Speaking and Media.html">Speaking &amp; Media</a>
+        <a href="FCI News.html">News &amp; Press</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Step 7: Positioning Decisions ── -->
+  <div class="step accent-violet">
+    <div class="step-number">7</div>
+    <div class="step-inner">
+      <div class="step-phase">Phase 3 &middot; Strategy</div>
+      <div class="step-title">Positioning Decisions</div>
+      <div class="step-desc">Made the critical strategic calls — how to frame the Security Assessment offering, the question-layer messaging approach inspired by "They Ask, You Answer," and how FCI's AI capabilities weave through every touchpoint.</div>
+      <div class="step-links">
+        <a href="FCI Security Assessment.html">Security Assessment</a>
+        <a href="FCI Question Layer — Implementation Plan.html">Question Layer</a>
+        <a href="FCI AI Messaging.html">AI Messaging</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Step 8: Review ── -->
+  <div class="step accent-sky">
+    <div class="step-number">8</div>
+    <div class="step-inner">
+      <div class="step-phase">Phase 3 &middot; Checkpoint</div>
+      <div class="step-title">Review &amp; Refinement</div>
+      <div class="step-desc">All brand assets, messaging, copy, and migrated content reviewed and refined before moving into the build phase. Every deliverable validated against the brand guidelines, messaging architecture, and market positioning.</div>
+    </div>
+  </div>
+
+  <!-- ══════════ WE ARE HERE ══════════ -->
+  <div class="marker">
+    <div class="marker-inner">
+      <div class="marker-dot"></div>
+      <div class="marker-text">We Are Here</div>
+      <div class="marker-dot"></div>
+    </div>
+  </div>
+
+  <!-- ── Step 9: Website Build ── -->
+  <div class="step accent-blue step-current">
+    <div class="step-number">9</div>
+    <div class="step-inner">
+      <div class="step-phase">Phase 4 &middot; Build</div>
+      <div class="step-title">Website Build</div>
+      <div class="step-desc">Architecture plan locked — 24-page sitemap, FastAPI + HTMX stack, 5-sprint build order. Hero design directions explored across 29 proposals and 5 final concepts. Prototype in progress.</div>
+      <div class="step-links">
+        <a href="FCI Website Architecture.html">Website Architecture</a>
+        <a href="FCI Hero Gallery.html">Hero Gallery</a>
+        <a href="FCI Hero Five Concepts.html">Five Hero Concepts</a>
+        <a href="FCI Design Direction - Hero.html">Design Direction</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Step 10: Collateral ── -->
+  <div class="step accent-amber step-current">
+    <div class="step-number">10</div>
+    <div class="step-inner">
+      <div class="step-phase">Phase 4 &middot; Sales Enablement</div>
+      <div class="step-title">Collateral &amp; Sales Enablement</div>
+      <div class="step-desc">Market-specific one-pagers for every audience, a 10-slide executive deck for board-level delivery, and a client-facing CISO Portal white paper. Plus the portal design reference itself.</div>
+      <div class="step-links">
+        <a href="collaterals.html">Collaterals</a>
+        <a href="CISO_Portal_Design_Reference.html">CISO Portal Design</a>
+        <a href="CISO_Portal_White_Paper.html">White Paper</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Step 11: Email & Marketing ── -->
+  <div class="step accent-amber step-future">
+    <div class="step-number">11</div>
+    <div class="step-inner">
+      <div class="step-phase">Phase 5 &middot; Growth</div>
+      <div class="step-title">Email Sequences &amp; Marketing Push <span class="todo-badge">To Do</span></div>
+      <div class="step-desc">Outbound email campaigns and sequences to drive the new positioning into the market. Targeted by persona — broker-dealers &amp; branch offices, insurance carriers &amp; agencies, and RIAs. Designed to convert awareness into conversations.</div>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <span class="footer-logo">FCI</span>
+    <div class="footer-dot"></div>
+    <span>Project Overview</span>
+    <div class="footer-dot"></div>
+    <span>Internal &middot; 2026</span>
+  </div>
+</footer>
+
+<script>
+  function setTheme(m) {
+    if (m === 'system') { document.documentElement.removeAttribute('data-theme'); localStorage.removeItem('fci-theme'); }
+    else { document.documentElement.setAttribute('data-theme', m); localStorage.setItem('fci-theme', m); }
+    document.querySelectorAll('.theme-toggle button').forEach(function(b){ b.classList.toggle('active', b.dataset.mode === m); });
+  }
+  (function(){
+    var s = localStorage.getItem('fci-theme') || 'system';
+    if (s !== 'system') document.documentElement.setAttribute('data-theme', s);
+    document.addEventListener('DOMContentLoaded', function(){
+      document.querySelectorAll('.theme-toggle button').forEach(function(b){ b.classList.toggle('active', b.dataset.mode === s); });
+    });
+  })();
+</script>
+</body>
+</html>
