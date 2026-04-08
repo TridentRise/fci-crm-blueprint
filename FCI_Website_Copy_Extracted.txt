@@ -1,0 +1,513 @@
+Page 1
+Homepage
+The homepage establishes the category claim and routes each market to its dedicated page within two clicks. It opens with their problem, not our product.
+Hero Section
+Design direction: Full-width hero, electric blue background, minimal layout — headline and one CTA button. Single sentence sub-head below. No imagery in the hero itself. 80% white space, 20% message.
+H1 — Main Headline
+Managed Cybersecurity for Financial Services
+H2 — Sub-Headline
+Security enforced. Compliance proven.
+H3 — Supporting Copy
+FCI manages cybersecurity for sales offices of broker-dealers and branch offices, insurance carriers and agencies, and RIAs — enforcing the tools, settings, and procedures required by regulators, home offices, and cyber insurers.
+Question Layer
+If a regulator examined your sales offices tomorrow, could you prove every device is protected?
+CTA Button
+Request a 30-Minute Gap Analysis
+Secondary Link (below CTA)
+Explore Managed Cybersecurity Services →
+Proof Bar — Below Hero
+Design direction: Thin horizontal band, light background, five stats in a row. First element below the fold that proves scale.
+Five Stats (left to right)
+400+ clients in financial services
+40,000+ endpoints under management
+30+ years serving financial services exclusively
+SOC 2 Type 1 Certified
+100% SecurityScorecard rating
+Problem Section — "The Challenge You're Managing"
+Design direction: First scroll after the hero. Text-forward section — make the reader feel seen. Left-column headline, right-column body copy. No product mention yet.
+Section Headline
+Your sales offices hold the most private financial information of the country's wealthiest families.
+Regulators, home offices, and cyber insurers all expect proof that it is protected.
+How many hours does your team spend assembling compliance evidence before each exam — and is it ever fully complete?
+Body Copy
+Sales offices in financial services — broker-dealer branches, insurance agencies, RIA advisory practices — are the advisors, agents, representatives, and branch teams that deliver personal financial guidance. They manage wills, trusts, account statements, insurance policies, and investment portfolios. They carry strict requirements for protecting all of it.
+Regulators from the SEC, FINRA, NYDFS, and NAIC expect documented proof that cybersecurity controls reach every sales office, every device, every user. Cyber insurers ask the same question at every renewal. Home offices require documentation that every affiliated office is in good order. Most firms discover they cannot fully answer — not without weeks of manual preparation.
+The regulatory framework differs by market. The challenge is the same. And it is the problem FCI was built to solve.
+Answer Section — Four Pillars
+Section Overline
+The four pillars of FCI
+Everything every sales office needs. Delivered as one managed service.
+What if the tools, the procedures, the expertise, and the proof were all part of the same service?
+Pillar 1 — Cyber Tools & Settings
+Controls implemented across every device, every location
+FCI implements and maintains the technical controls required by regulators, home offices, and cyber insurers. These controls run across every user, device, network, and cloud app — automatically, without touching the workflows of the people using them. Employees and affiliates do not notice the protections running.
+Pillar 2 — Procedures & Processes
+The processes that make compliance manageable
+Cyber tools and settings are necessary but not sufficient. Regulators, home offices, and cyber insurers require documented evidence. The CISO Portal automates what would otherwise take weeks of manual effort, producing exam-ready documentation and returning more than 80% of compliance management time to the firm.
+Pillar 3 — Expert Knowledge, Applied at Scale
+30 years and 40,000+ endpoints of financial services experience
+FCI's experience comes from managing cybersecurity across more than 40,000 endpoints with more than 400 clients in financial services — through regulatory examinations, cyber incidents, cyber insurance renewals, and home office audits. When a cyber event occurs, FCI manages the incident response — containment, remediation, documentation, and communication. Most competitors do not offer incident response at all.
+Pillar 4 — Proof of Security & Compliance
+Security and compliance are only as real as what you can prove
+Whether it is a regulatory exam, a cyber insurance renewal, a claim, or a breach, the question is always the same: can you document what controls were in place, when they were deployed, and how they were maintained? FCI builds that evidence continuously, through the CISO Portal, as a byproduct of how it operates — so the proof is already assembled before anyone asks for it.
+Market Navigation Section — "Who We Serve"
+Three markets. One managed service. Built for the sales office.
+Which of these describes the compliance challenge your firm is facing right now?
+Card 1 — Broker-Dealers & Branch Offices
+Headline: Controls enforced across every rep. Evidence ready before the examiner arrives.
+Body: FCI enforces controls across the full branch network — every registered representative, every device, every office — and produces FINRA and SEC-aligned evidence continuously, so the home office can confirm every branch is in good order before the examiner asks.
+Link: See how FCI serves broker-dealers and branch offices →
+Card 2 — Insurance Carriers & Agencies
+Headline: Controls enforced across every appointed agent. Evidence your regulator will accept.
+Body: FCI extends cybersecurity controls to every appointed agent and independent agency in the carrier's distribution network — and produces NAIC-aligned evidence that satisfies both the carrier's compliance requirements and the agent's cyber insurance obligations.
+Link: See how FCI serves insurance carriers and agencies →
+Card 3 — RIAs
+Headline: Your advisors stay focused. Your next exam stays calm.
+Body: FCI extends cybersecurity controls to every affiliated advisor — regardless of location, device ownership, or technical expertise — and produces the SEC-aligned documentation that examiners and cyber insurers require, continuously and automatically.
+Link: See how FCI serves RIAs →
+Security Assessment — Overview
+Design direction: Compact section — four items displayed as cards or a horizontal row. Each links to the Security Assessment page. Short and scannable.
+Start with a clear picture of where you stand.
+Do you know exactly where your firm's security gaps are — or are you waiting for an examiner to find them first?
+Before any controls are deployed, FCI assesses your firm's current security posture — identifying gaps, vulnerabilities, and exposure across four dimensions.
+Gap Analysis
+A 30-minute assessment of what controls are in place, what is missing, and what your next exam or renewal will require.
+Network Pen & Vulnerability Scan
+Penetration testing and vulnerability scanning across your internal network and endpoints — evidence your examiner will accept.
+Public-Facing Assessment
+External scan of your firm's internet-facing attack surface — DNS, web properties, email configuration, and exposed services.
+Cloud App Assessment
+Configuration review of Microsoft 365, Google Workspace, and key cloud services — identifying misconfigurations and policy gaps.
+Link
+Learn about Security Assessments →
+Managed Cybersecurity — Overview
+Design direction: Six items displayed as a compact grid (3x2 or 6-across). Each links to its subsection on the Managed Cybersecurity page. Visual, scannable, minimal copy.
+Six security domains. One AI-driven managed service.
+How many separate tools and vendors does your firm use to cover endpoint, network, user, data, cloud, and firm security — and can any one of them show a regulator the full picture?
+FCI manages cybersecurity across six domains — using AI to enforce controls, detect threats, and produce compliance evidence at a scale that would be impossible manually. Every domain is managed as part of one integrated service.
+Endpoint Security
+Protection and response across every device — including BYOD.
+User Security
+Identity protection across your entire distributed network.
+Network Security
+Secure the networks your advisors actually use — office, home, and field.
+Data Security
+Encryption, exfiltration protection, and backup across every location.
+Cloud App Security
+Visibility and control across M365 and your cloud environment.
+Firm Security
+24x7 SOC, incident response, and the operational backbone that ties it all together.
+See the CISO Portal →
+CISO Portal Spotlight Section
+Design direction: Split section — left is copy, right is a stylized dashboard UI illustration or screenshot placeholder. Anchor to the CISO Portal solutions page.
+Proprietary technology
+The CISO Portal: where your compliance record lives.
+What if your compliance evidence assembled itself — continuously, automatically — instead of requiring weeks of manual preparation before every exam?
+Most firms build their compliance evidence manually — spreadsheets, screenshots, exported logs, stitched together in the weeks before an exam. It takes enormous time. It is never fully complete. It is always reactive.
+FCI's CISO Portal assembles your evidence continuously, as a byproduct of the managed service itself. Every control action is logged, timestamped, and mapped to SEC, FINRA, NYDFS, or NAIC framework requirements.
+When an examiner asks for your cybersecurity documentation, you open the portal. The record is there.
+Supporting Stats
+90% faster implementation than manual, form-driven processes
+80% less time on recurring monthly compliance tasks
+Learn about the CISO Portal →
+Why Trust FCI — Proof Section
+30 years of operational proof. Not marketing claims.
+When was the last time your cybersecurity provider could show you 30 years of financial services experience — and the certifications to back it up?
+FCI has served financial services sales offices exclusively for over three decades — through market cycles, regulatory overhauls, and every evolution in how advisors, agents, and representatives work. We have never pivoted to another market. Every investment has been made for one industry: yours.
+Proof Points (display as stats)
+100% SecurityScorecard rating across all categories
+SOC 2 Type 1 — controls independently audited and certified
+Certification Chips (display as labels)
+SOC 2 Type 1 · NIST CSF · SEC · FINRA · NYDFS · NAIC · Zero Trust
+Questions Section — "Questions Your Firm Should Be Able to Answer"
+Design direction: Clean, minimal layout. Questions only — no explanations, no product mentions. White or light background, generous spacing. Each question is its own line with the sky-blue left border treatment. Grouped by theme with subtle overline labels. Positioned between "Why Trust FCI" and the closing CTA. The purpose is emotional: the reader should pause on at least two or three questions and think "I don't actually have a good answer to that."
+Section Title
+Questions Your Firm Should Be Able to Answer
+Regulatory Readiness
+If a regulatory examiner arrived at your office tomorrow, could you produce your cybersecurity evidence by the end of the day?
+Can your firm show documented proof that every sales office, every device, and every user is covered by enforced security controls?
+When was the last time your compliance documentation was updated — and does it reflect what is actually deployed, or just what was planned?
+Do your written supervisory procedures have technical enforcement evidence behind them — or are they policies on paper?
+Breach & Incident Preparedness
+If a cyber incident occurred at one of your branch offices today, could you prove the other branches were protected?
+Does your current provider offer incident response — containment, remediation, documentation, and communication — or just monitoring?
+What happens to your cyber insurance claim if you cannot produce evidence of controls that were in place at the time of the breach?
+Compliance Operations
+How many hours does your compliance team spend manually assembling evidence before every exam, audit, or cyber insurance renewal?
+Are you confident that every advisor, every agent, every registered representative in your network is running enforced endpoint protection right now?
+If your cyber insurer asked for MFA enforcement records across every user in your firm today, could you produce them?
+The Gap Between Policy & Proof
+Is there a gap between the security program your firm has written and what you can actually prove is enforced in the field?
+How many separate tools and vendors would you need to contact to assemble a complete picture of your firm's security posture?
+Can your compliance team see the enforcement status of every device in your network right now — or would they need to ask IT to build a report?
+Cyber Insurance
+At your last cyber insurance renewal, could you document every control your insurer asked about — or did you check boxes you weren't 100% sure of?
+If a claim is filed after a breach, will your documentation prove the controls were in place — or will it prove they weren't?
+Is your cyber insurance renewal package pre-formatted to match your insurer's questionnaire — or do you start from scratch every year?
+If you paused on any of these — that is exactly why FCI exists.
+Homepage Closing CTA
+Ready to stop preparing for exams and start showing them?
+CTA Headline
+Your employees and affiliates will not notice a difference. Your regulators will.
+CTA Body
+Request a 30-Minute Gap Analysis. In 30 minutes, you will have a clear picture of what controls must be in place, what is missing, and what your next regulatory exam, home office audit, or cyber insurance renewal will ask for.
+Below-CTA Reassurance Line
+No obligation. No long sales process. A 30-minute conversation and a clear picture of where you stand.
+Page 3 — Who We Serve
+Broker-Dealers & Branch Offices
+Audience: CCOs, supervision officers, compliance directors at broker-dealer home offices and branch networks. Core fears: exam deficiency from uncontrolled rep devices, inability to produce FINRA/SEC evidence, the gap between the home office's stated security posture and what can actually be verified in the field.
+Page Hero
+Controls enforced across every rep. Evidence assembled before the examiner walks in.
+If FINRA asked for evidence of endpoint protection across every registered representative tomorrow, could your home office produce it?
+Sub-Head
+The broker-dealer home office sets the compliance program. That program must reach every branch and every registered representative, including those working from independent offices or home locations. FCI enforces controls across the full branch network — and produces FINRA and SEC-aligned evidence continuously, so the home office can confirm every branch is in good order before the examiner asks.
+What Changes for You
+Design direction: Four compact cards, one per role. Short and direct — the visitor finds their title and reads what FCI means for them specifically.
+Owner / Managing Partner
+Your firm's regulatory standing and client trust are protected by controls that run across every branch and every rep — without requiring you to build a security team or manage technology. When the examiner or cyber insurer asks, the documentation is already there.
+CISO / CCO
+The gap between your written policies and what you can actually prove in the field closes on day one. Controls enforce across every branch, every rep device. The CISO Portal produces FINRA and SEC-aligned evidence continuously — you stop preparing for exams and start showing them.
+Field Compliance Officer
+You no longer chase branches for documentation or verify controls office by office. FCI enforces the home office's security requirements across every location automatically — and the evidence of that enforcement is visible in real time through the CISO Portal.
+IT Manager
+FCI works alongside your existing infrastructure — it is not a replacement. Endpoint protection, patching, and monitoring deploy without requiring you to visit branches or configure devices remotely. Your workload decreases. Your visibility increases.
+The Problem
+FINRA expects evidence of supervision. Your reps work from places you cannot see.
+How many of your registered representatives are working from devices and networks that your IT team has never verified?
+Each branch may have its own technology environment, its own devices, and its own IT support — or lack of it. Registered representatives may work from independent offices or home locations on BYOD devices that process client orders and access firm systems without ever being verified or monitored.
+FINRA's examination program has expanded its cybersecurity focus significantly. Examiners now routinely ask for evidence of specific controls: endpoint protection across all registered representative devices, MFA enforcement, access controls, incident response plans, vendor due diligence documentation, and written supervisory procedures backed by technical evidence — not just policies on paper. Examination findings increasingly cite the gap between a written policy and a technically enforced control.
+For most broker-dealers, assembling that evidence takes weeks. Findings from controls that failed to reach branch offices are among the most difficult to remediate.
+What Changes With FCI
+Network-wide enforcement. Exam evidence that builds itself. One portal to show the examiner.
+What would it mean for your compliance team if FINRA exam evidence was already assembled — before the examination notice arrived?
+FCI maps the full scope of your rep network — every device, every location, every connection to firm systems. Controls are deployed and enforced from that point forward: MFA, Always-On VPN, endpoint protection, Zero Trust access. Your CISO Portal begins producing documentation aligned to FINRA and SEC framework requirements immediately.
+Benefit List
+Controls reach every registered rep — branch, independent, and home office — without requiring IT presence on site
+FINRA and SEC exam evidence assembles continuously — your compliance team opens the portal instead of rebuilding records manually
+Written supervisory procedures backed by technical enforcement logs — not just policy documents
+Zero Trust access controls prevent a single compromised rep device from reaching firm systems or other branches
+24x7 SOC monitoring across the full rep network — every alert reviewed by trained analysts
+The Exam Evidence Package
+The FINRA or SEC examiner will ask for your cybersecurity evidence. FCI builds it while your reps are working — not after the exam notice arrives.
+Can your firm produce device inventory logs, MFA enforcement records, and written supervisory procedure documentation — for every branch — on demand?
+Evidence Artifacts List
+Device inventory and control enforcement log across all reps and branch locations
+FINRA Rule 3110 and SEC cybersecurity framework alignment mapping
+Written supervisory procedure documentation with supporting technical evidence
+MFA, VPN, and endpoint encryption enforcement records — rep by rep
+Vendor due diligence file for FCI (SOC 2 Type 1, SecurityScorecard)
+Incident log and response documentation
+Access control and user provisioning records
+Next Step
+Request a 30-minute Gap Analysis — see your branch network exposure and exam readiness today.
+Page 4 — Who We Serve
+Insurance Carriers & Agencies
+Audience: Operations leaders, compliance officers, CISOs at carriers and agency networks. Core fears: cyber claim denial, NAIC regulatory gaps, inability to document controls for state filings and renewals.
+Security controls that reach every appointed agent. Evidence your cyber insurer will accept.
+If a cyber incident hit one of your appointed agencies today, could you document the controls that were in place at the time it happened?
+Your appointed agents and independent field offices operate outside your direct IT control. State regulators and your own cyber insurer both expect proof that controls extend to the field. FCI delivers that proof — continuously.
+Owner / Executive Leadership
+Your carrier's regulatory standing and client trust are protected by controls that reach every appointed agent and field agency — without building an internal security team. When state regulators or your cyber insurer ask for evidence, it is already assembled.
+The gap between your security program and what you can prove in the field closes immediately. FCI enforces NAIC-aligned controls across every agency and produces the documentation state examiners require — continuously, not in a scramble after the notice arrives.
+You stop chasing agencies for attestations and verifying controls location by location. FCI enforces the carrier's requirements across every appointed agent automatically — and the CISO Portal shows real-time enforcement status across the entire distribution network.
+FCI extends security controls to field agencies without adding to your infrastructure or your workload. Endpoint protection, patching, and monitoring deploy to agent devices you have never managed — and report back through a single dashboard.
+Your agency network creates compliance exposure that most security providers were not designed to reach.
+How does your carrier prove to state regulators that cybersecurity controls actually reach your independent agents — the ones using their own devices, in their own offices, on their own networks?
+Insurance carriers distribute their products through appointed agents and independent agencies. Those agents hold private client data — health information, financial records, beneficiary designations — and connect to carrier systems to submit applications, access policy information, and process claims. The carrier is responsible for demonstrating that cybersecurity controls reach those agents, even though it does not own their offices or manage their technology.
+The National Association of Insurance Commissioners (NAIC) Model Data Security Law has been adopted by most states. It requires insurance carriers and large producers to develop and maintain a cybersecurity program, conduct risk assessments, oversee the security practices of third-party service providers, and notify regulators of cybersecurity events. State regulators are conducting more frequent and more detailed cybersecurity examinations of carriers, with increasing scope into their distribution networks.
+Cyber insurance compounds the challenge — carriers are being asked by their own cyber insurers for the same documentation they require their agents to maintain. Renewals increasingly require evidence of specific controls — not just a policy attestation, but logs, configuration records, and enforcement documentation.
+Controls extended to every appointed agent and independent agency. Documentation your regulator and your cyber insurer are already asking for.
+What if your next NAIC filing and your next cyber insurance renewal could pull from the same evidence — already assembled, already formatted?
+NAIC Model Law-aligned controls deployed to every appointed agent — without requiring on-site IT support
+Zero Trust access prevents a compromise in one field agency from spreading to carrier systems or the broader network
+Cyber insurance renewal documentation pre-formatted to match the questionnaire structure your carrier uses
+CISO Portal produces your state filing compliance evidence on demand — no manual assembly
+24x7 SOC monitoring across the full field agent network — with incident logs your compliance team can actually hand to a regulator
+What You Can Show a Regulator or Insurer
+Your cyber insurer will ask what controls you had in place. FCI makes sure you have an answer before they ask.
+If a claim is filed after a breach, will your documentation prove the controls were there — or will it prove they weren't?
+NAIC Model Law cybersecurity program documentation — aligned to current state requirements
+Appointed agent device inventory and control enforcement log
+Cyber insurance renewal package mapped to carrier questionnaire format
+Zero Trust access records showing agent and device-level permissions
+Annual cybersecurity review documentation required under state law
+Incident log and response documentation for the full field network
+"We strongly recommend FCI to any firm with a desire to get cybersecurity protection and compliance."
+Nash Subotic — Founder & CEO, Westpac Wealth Partners
+Agency of The Guardian Life Insurance Company of America
+Request a 30-minute Gap Analysis — see your agency network exposure and NAIC compliance posture.
+Page 2 — Who We Serve
+Registered Investment Advisers
+Audience: RIA principals, managing partners, CCOs. Core fears: exam deficiency, breach eroding the client trust the entire business depends on, compliance burden consuming advisor time. RIAs operate under a fiduciary standard — a cybersecurity breach does not just create regulatory exposure, it erodes the relationship the business is built on.
+Your practice stays compliant. Your advisors stay focused. Your next exam stays calm.
+If the SEC examined your firm next month, could you show documented evidence of controls across every advisor — including those working from home?
+FCI extends cybersecurity controls to every affiliated advisor — regardless of location, device ownership, or technical expertise — and produces the SEC-aligned documentation that examiners and cyber insurers require, continuously and automatically.
+The client trust you spent decades building is protected by controls that run across every advisor, every device, every location — without asking you to build a security team. When the SEC examiner or cyber insurer asks, the evidence is already assembled. You made the decision. The service runs itself.
+CCO / Compliance Lead
+The gap between your written policies and what you can prove to an examiner closes on day one. FCI enforces controls across every advisor endpoint and produces SEC-aligned documentation continuously. You stop rebuilding evidence every exam cycle and start showing a living compliance record.
+You no longer verify controls advisor by advisor or chase down documentation from remote offices. FCI enforces the firm's security requirements across every location automatically — and the CISO Portal shows real-time enforcement status across your entire advisor network.
+FCI works alongside your existing setup — it handles the compliance and regulatory documentation layer while deploying endpoint protection, patching, and monitoring to advisor devices you may have never managed directly. Your workload goes down. Your coverage goes up.
+The Problem You're Living With
+Your advisors work from places your IT team has never seen.
+Do you know how many of your advisors' devices have endpoint protection running right now — and can you prove it to an examiner?
+Many RIAs operate through a model where advisors work from their own offices, using their own devices, on networks the firm does not manage. Client data flows through personal laptops, email accounts, and cloud applications that may or may not meet regulatory standards.
+A smaller RIA faces the same documentation requirements as a larger one. The SEC and the cyber insurer ask the same questions regardless of firm size. For most RIAs, the honest answer is: the evidence is not fully there. Not because no one cared — but because building it manually across every advisor location is a full-time job, and no one has the time.
+Controls enforced across every advisor. Evidence assembled without your team lifting a finger.
+What would your CCO do with the 80% of compliance management time they'd get back?
+What Changes on Day One
+FCI takes a complete inventory of every device associated with the firm. Leadership receives a clear view of the full cybersecurity posture — often for the first time. Most RIAs discover endpoints and access paths they did not know existed.
+From that point, controls deploy automatically: MFA on every device, Always-On VPN for every advisor session, endpoint protection running silently in the background. Your advisors will not notice a difference in how they work. The documentation of what is in place starts building from that moment forward through the CISO Portal.
+Your advisors keep their workflow exactly as it is — controls run silently in the background
+SEC and FINRA exam documentation assembles continuously — no manual prep, no last-minute scramble
+Every advisor device is inventoried, monitored, and verified compliant — including BYOD and home offices
+Zero Trust access controls prevent a single compromised device from reaching the rest of your network
+24x7 SOC monitoring detects and responds to threats before they become incidents
+Your cyber insurer sees documented evidence of controls at renewal — reducing friction and supporting your claim defensibility
+What You Can Show the Examiner
+When the SEC or FINRA notice arrives, you open the CISO Portal.
+When the exam notice arrives, do you start preparing — or do you just open the portal?
+The complete evidence package is already assembled. Not a folder of screenshots. Not a spreadsheet rebuilt under deadline pressure. A structured, timestamped compliance record mapped to the specific questions examiners ask.
+Device inventory with control verification for every advisor endpoint
+Regulation S-P and FINRA Rule 4370 cybersecurity program documentation
+MFA, VPN, and endpoint encryption enforcement records
+Written Information Security Policy aligned to current SEC and FINRA expectations
+Vendor due diligence file for FCI (SOC 2 Type 1, SecurityScorecard, NIST CSF mapping)
+Closing Line
+Closing Statement
+"FCI CEO Brian Edelman is one of the few real cybersecurity experts who understand compliance — a true thought leader."
+Joel Bruckenstein
+Technology Tools for Today (T3)
+Request a 30-minute Gap Analysis — see your exposure and exam readiness today.
+Security Assessment
+A security assessment is not a single test. It is a layered process that begins with understanding what the firm has in place today and ends with a verified view of its exposure from the outside.
+Know exactly where your firm stands. Before your regulator asks.
+FCI's Security Assessment is a layered, four-part evaluation of your firm's cybersecurity posture — covering controls, vulnerabilities, cloud configuration, and external exposure. In 60 to 80 percent of assessments, we find compliance gaps the firm did not know existed.
+The Four Layers
+Layer 1 — Gap Analysis
+What controls are in place — and can the firm prove it?
+FCI evaluates the firm's security posture across six domains: Firm, Endpoint, User, Network, Cloud App, and Data. For each, we assess what controls exist and whether the firm has the evidence to prove it — the evidence a regulator, insurer, or home office would require. In 30 minutes, the firm knows exactly where the gaps are.
+Layer 2 — Network Pen Testing & Vulnerability Scanning
+Can someone break in? What exposures exist right now?
+Penetration testing simulates real-world attacks against the firm's infrastructure — both from outside and from inside the network. Vulnerability scanning systematically identifies known weaknesses: missing patches, misconfigured services, open ports. Together, they give the firm a real-world stress test and a prioritized inventory of risk. FCI performs both internal and external testing — internal testing is now required by NYDFS and expected by most regulators.
+Layer 3 — Cloud App Hardening
+Is your Microsoft 365 environment configured securely?
+Microsoft 365 is where most firms store sensitive client data and communicate daily — and it is a primary attack surface. FCI reviews email security, data sharing permissions, conditional access policies, and MFA enforcement against best practices. The average organization's Microsoft Secure Score is between 30% and 45%. Most firms do not know their number.
+Layer 4 — External Attack Surface
+What can an attacker — or an insurer — see from the outside?
+This layer scans everything visible from outside the firm: public-facing servers, open ports, DNS records, email authentication, SSL certificates, and the corporate website. Cyber insurance carriers now use automated tools to verify a firm's external posture before underwriting or renewing a policy. A poor result can directly affect insurability and premium pricing.
+How FCI Delivers — Three Phases
+Design direction: Three numbered cards or a horizontal timeline. Emphasize the differentiator: FCI helps fix what it finds, then proves it.
+Differentiator
+Most vendors deliver a report and walk away. When FCI finds problems, it helps resolve them — and then proves it.
+Phase 1 — Draft Report
+Detailed findings with risk ratings and remediation recommendations. The firm sees exactly what was found, how severe it is, and what needs to happen next.
+Phase 2 — Remediation Window
+A defined window for the firm to address the findings — with FCI's team available to help implement fixes and close gaps. The firm is not left to figure it out alone.
+Phase 3 — Final Report
+After remediation, FCI re-tests and delivers a final report that reflects the firm's improved posture. This is the report the firm presents to regulators, insurers, and home offices. It demonstrates not just that issues were found, but that they were resolved.
+Why Firms Run Security Assessments
+Self-Validation
+The firm wants to know where it stands — confirming its posture is solid, or identifying weaknesses and building the case for budget to address them.
+Regulatory Requirement
+SEC, FINRA, NYDFS, and state insurance departments ask for copies of security assessments during examinations. Having a current assessment ready is a compliance expectation.
+Home Office Requirement
+The home office, carrier, or enterprise above the sales office requires annual assessments as part of its oversight — either as a standing requirement or triggered by an incident or audit finding.
+Mergers & Acquisitions
+On the sell side, a strong assessment adds credibility. On the buy side, the acquirer needs to understand and reduce liability. A poor assessment can directly reduce acquisition value.
+Start Here
+A Security Assessment starts with a 30-minute Gap Analysis. Results in two to four weeks.
+Page 5 — Managed Cybersecurity
+Managed Cybersecurity
+FCI's managed cybersecurity program organized by security domain. Each layer works together as an integrated service — every component feeds the CISO Portal, every action produces evidence, every alert reaches a human analyst.
+Holistic cybersecurity automated for scale.
+FCI's managed cybersecurity program covers six security domains — endpoint, user, network, data, cloud app, and firm. Every domain is managed as part of one integrated service, not a stack of disconnected tools.
+Design direction: Each subsection below is a distinct security domain. Can be displayed as full-width sections with anchored navigation from the sidebar.
+Headline
+Automated safeguard enforcement, EDR with MXDR, DLP, RMM, OS patching, and attended remote IT support. NIST CSF-mapped. Enforced without user involvement.
+FCI implements and maintains endpoint protection across every device on the firm's network — company-owned, BYOD, and home office. Controls deploy automatically. Employees and affiliates do not need to configure, approve, or interact with them. When a threat is detected, FCI's SOC analysts respond in real time — containing the incident before it spreads.
+Capabilities
+Endpoint Detection & Response (EDR) with Managed Extended Detection & Response (MXDR)
+Data Loss Prevention (DLP) enforced at the device level
+Remote Monitoring & Management (RMM) across all endpoints
+Automated OS patching and software updates
+Attended remote IT support for end users
+Protect every identity across your distributed network.
+Centralized phishing-resistant MFA, user lifecycle management, and dark web monitoring for leaked credentials — covering every rep, advisor, and field agent.
+Identity is the most targeted attack surface in financial services. FCI manages authentication, access provisioning, and credential monitoring across every user in the firm's network — from onboarding to offboarding, with no gaps in between.
+Phishing-resistant multi-factor authentication (MFA) — enforced, not optional
+User lifecycle management — provisioning, role changes, and offboarding
+Dark web monitoring for compromised credentials
+Security awareness training and phishing simulation
+Secure the networks your advisors actually use.
+Physical firewall and Wi-Fi management, Always-On VPN with cloud-based firewall, ISP and DNS control, infrastructure management, and full network lifecycle coverage — including field offices and home networks.
+Financial services firms operate across dozens or hundreds of locations — branch offices, home offices, client meeting spaces. FCI manages network security across every location, ensuring consistent protection regardless of where advisors, agents, and representatives connect.
+Physical firewall and Wi-Fi management at branch and field offices
+Always-On VPN with cloud-based firewall for remote and home networks
+ISP and DNS control
+Infrastructure lifecycle management
+Full network coverage — office, home, and field locations
+Protect the data your clients trust you to keep private.
+Sales offices hold the most sensitive financial information of the country's wealthiest families — wills, trusts, account statements, insurance policies, investment portfolios. FCI implements data protection controls that prevent exfiltration, enforce encryption, and maintain backup and recovery — continuously, across every device and location.
+Encryption at rest and in transit
+Data exfiltration protection
+Data leakage protection (DLP)
+Backup and recovery
+Visibility and control across your cloud environment.
+M365 hardening and templated configuration, centralized SIEM logging, configuration change tracking, and 24x7 SOC with MXDR — so nothing in your cloud environment goes unmonitored.
+Cloud applications are where most of the daily work happens — email, file sharing, collaboration, CRM. FCI hardens and monitors the cloud environment to the same standard as on-premise infrastructure, ensuring consistent security posture across every platform the firm uses.
+Microsoft 365 hardening and templated configuration
+Centralized SIEM logging across cloud applications
+Configuration change tracking and drift detection
+24x7 SOC monitoring with MXDR for cloud environments
+Design direction: This is the umbrella layer — the operational backbone that ties every domain together. Includes SOC, incident response, and the coordination layer that makes everything else work as one managed service.
+The operational backbone. 24x7 monitoring, incident response, and the coordination that makes everything else work as one service.
+Every module FCI manages feeds into a single command center. The CISO Portal gives your security and compliance teams real-time visibility, one-click controls, and continuously assembled audit evidence — mapped to the regulatory frameworks your examiners use.
+FCI's security operations center monitors your entire distributed network around the clock. When a threat is detected, trained analysts investigate and respond — within the incident, not in a follow-up email. Your team is notified with context, not with raw alerts that require interpretation under pressure.
+Every incident is documented from the moment of detection through containment and recovery. That documentation becomes part of your CISO Portal compliance record — available to show regulators and cyber insurers that incidents were identified, contained, and handled according to your documented response plan.
+24x7 Security Operations Center (SOC) — human-led monitoring and response
+Mass vulnerability response — coordinated coverage for zero-day events
+Security incident response — containment, remediation, documentation, and communication
+Breach support — regulatory notification, insurer coordination, and recovery
+CISO Portal — real-time compliance posture, one-click controls, audit-ready evidence
+Security Officer support and cyber software instance management
+Support system and scheduling
+Page 7 — Solutions
+Zero Trust
+Explains Zero Trust in plain language for financial firm executives. Focuses on containing field exposure — not technical architecture.
+Verify every user, device, and network. Before they reach anything.
+Zero Trust is not a product. It is a principle: nothing on your network is trusted by default. Every access request is verified — user identity, device health, location, and context — before a connection is allowed. FCI deploys this model pragmatically for firms with distributed field operations.
+Why This Matters for Your Firm
+When one device is compromised, Zero Trust determines how far the damage spreads.
+In a traditional network model, a compromised device in a branch office or field agency has access to everything that device user normally reaches. Client data. Internal systems. Other network connections.
+In a Zero Trust model, that same device — once flagged — can reach nothing it has not been explicitly authorized to access. The blast radius of any incident is contained at the source.
+For financial firms with dozens or hundreds of field locations, Zero Trust is not a luxury. It is the architecture that makes distributed operations defensible.
+How FCI Deploys Zero Trust
+Always-On VPN
+Every advisor and rep session runs through FCI's managed VPN — automatically, without requiring the user to connect manually. Every session is encrypted. Every connection is logged. Regulators see consistent, verifiable evidence of encrypted access across your entire network.
+Identity Verification
+Multi-factor authentication enforced on every device and every access point. Not optional. Not user-configured. Deployed and maintained by FCI — consistently, without drift.
+Device Trust
+Every device requesting access to firm systems is verified against a current health baseline — encryption status, patch level, endpoint protection active. Devices that fall out of compliance are flagged before they create exposure.
+Access Segmentation
+Access is granted by role, office, and supervisor — mapped from your directory services. Field advisors reach what they need. They cannot reach what they don't. A compromise in one location stays in one location.
+See how Zero Trust applies to your specific field model — in a 30-minute assessment.
+Request Assessment
+Page 6 — Solutions
+The CISO Portal
+FCI's proprietary differentiator. This page gets its own dedicated copy treatment — it is the most powerful proof point on the site.
+When the examiner asks for your compliance documentation, this is what you open.
+The FCI CISO Portal assembles your cybersecurity compliance record continuously — as a byproduct of the managed service itself. Not a reporting tool you fill in by hand. A living record that builds itself while your advisors are working.
+The Problem It Solves
+Most compliance evidence is assembled under pressure, after the fact, and never fully complete.
+When a FINRA notice arrives or a cyber insurer requests your cybersecurity documentation, most firms begin the same process: locate spreadsheets, export logs, chase down records from multiple systems, and compile them into something coherent.
+It takes weeks. It requires staff who could be doing something else. And the result is always reactive — assembled for this exam, then discarded and rebuilt for the next one.
+The CISO Portal changes the economics of evidence. Every control action taken through FCI's managed service is automatically logged, timestamped, and stored in a structured record mapped to your regulatory frameworks. When you need it, it is there.
+What the Portal Does
+Feature 1
+Real-time endpoint visibility — complete inventory of every device on your network, including BYOD, home offices, and field locations.
+Feature 2
+One-click device lockdown — immediately secure any device during a high-risk event. The portal records and timestamps the action automatically.
+Feature 3
+NIST CSF control status — always current. See the real-time compliance posture of your entire network, mapped to framework requirements.
+Feature 4
+Regulatory framework mapping — SEC Regulation S-P, FINRA Rule 3110, NYDFS Part 500, and NAIC Model Law. Your evidence is structured to answer what examiners actually ask.
+Feature 5
+Exam evidence package — one click. A complete, auditor-ready documentation package generated in minutes, not weeks.
+Feature 6
+Cyber insurance renewal documentation — pre-formatted to match the questionnaire structure carriers use, with underlying control evidence already attached.
+Feature 7
+Zero-touch decommissioning — remove a departing advisor's access and devices in minutes. The portal records and preserves every step for your audit file.
+Feature 8
+Directory-aware by design — synchronizes with your directory services to map devices to people, roles, offices, and supervisors. Policy by group, not by individual configuration.
+Results
+Stats
+90% faster implementation than manual, form-driven compliance processes
+80% less time on recurring monthly tasks — attestations, terminations, exceptions, and reporting
+Fewer audit findings — complete, timestamped evidence removes the gaps examiners look for
+See It In Action
+Request a demo with your firm's real data — see what your compliance record looks like today.
+Request a Demo
+Page 9 — Solutions
+Compliance & Exam Readiness
+The page that speaks directly to CCOs and compliance officers. Focuses on exam prep, regulatory mapping, and the stress of being unprepared.
+The examiner is coming. The documentation is already there.
+FCI maps every control to the specific frameworks your regulators use — SEC, FINRA, NYDFS, NAIC. Your compliance team does not prep for exams. They open the CISO Portal and show the work that has been building all year.
+Regulatory Coverage
+SEC — Regulation S-P (Amended)
+Written cybersecurity program, incident response procedures, access controls, and vendor oversight documentation — aligned to current S-P requirements and the SEC's recent examination priorities.
+FINRA — Rules 3110, 4370, and Cybersecurity Guidance
+Supervisory system documentation, business continuity planning evidence, and the specific cybersecurity controls FINRA examiners are requesting during routine reviews of broker-dealers and their registered representatives.
+NYDFS — Part 500
+CISO certification support, penetration testing evidence, multi-factor authentication documentation, and the annual reporting requirements under NYDFS Part 500 — including the enhanced requirements introduced in 2023.
+NAIC — Insurance Data Security Model Law
+Cybersecurity program documentation aligned to the NAIC Model Law, adopted in more than 20 states. Annual cybersecurity review records, appointed agent control evidence, and third-party oversight documentation.
+What Your Compliance Team Receives
+Deliverables List
+Written Information Security Policy — aligned to your regulator's specific language and reviewed annually
+Device inventory with current control verification — exportable for examiner review
+Framework alignment mapping — controls cross-referenced to every applicable regulatory requirement
+Exam evidence package — generated on demand, structured to match what examiners ask for
+Vendor due diligence file for FCI — SOC 2 Type 1, SecurityScorecard, NIST CSF mapping, and insurance documentation
+Incident response plan — documented, tested, and aligned to regulatory guidance
+User access and provisioning records — current and historical
+See your current exam readiness posture — and what it would look like with FCI — in 30 minutes.
+Client Stories
+What changes when a firm works with FCI
+Three markets. Three different compliance environments. The same outcome: every endpoint covered, every exam ready, every year.
+Registered Investment Advisor
+Portland Private Wealth Management, Inc. — Portland / Bend / Eugene, Oregon
+The situation
+The firm had advisors working across multiple locations on a mix of firm and personal devices. A scheduled SEC examination under the new cybersecurity rules created urgency. The compliance officer needed to demonstrate consistent controls across every endpoint — but had no systematic way to enforce or document them.
+What changed
+FCI deployed Zero Trust, Always-On VPN, and endpoint protection across every advisor device. The CISO Portal produced the complete exam evidence package — every control documented, every device accounted for — before the examination date.
+The outcome
+The firm entered its SEC examination fully prepared, with no cybersecurity deficiencies cited.
+Jacob Becker
+President, COO & Co-CIO — Portland Private Wealth Management, Inc.
+Regional Broker-Dealer — Independent Sales Offices, FINRA Examination Pressure
+FINRA examiners were asking registered representatives for cybersecurity documentation the firm could not consistently produce. Branch managers were attempting to self-manage compliance — with uneven results across locations. Some branches had controls in place; others did not.
+FCI standardized cybersecurity controls across every branch and home office through the CISO Portal, giving compliance officers real-time visibility into every representative's device posture and a consistent evidence record across the network.
+Branch-level inconsistency eliminated. Every representative's posture documented and available for examination at any time.
+Insurance Agency — Guardian Life
+Westpac Wealth Partners — One of the Fastest-Growing Agencies in the Guardian Life Network
+Westpac was growing fast — and an external IT firm was already in place to support them. The gap was cybersecurity. As the agency expanded its appointed agent base, the volume of onboarding, device provisioning, and compliance implementation requests grew beyond what a general IT firm could handle at the regulatory depth Guardian Life and state regulators required.
+FCI brought the specialized cybersecurity expertise the IT firm was not positioned to provide. Using automation, FCI absorbed the growing implementation load — covering every new agent, every device, every requirement — at a scale and pace the agency could not have reached manually. The annual security assessment became a routine deliverable rather than a yearly effort.
+The IT firm kept doing what it does well. FCI handled the cyber layer. The agency kept growing without compliance holding it back.
+Nash Subotic
+Founder & CEO — Westpac Wealth Partners
+Page 10 — About
+About FCI
+The about page builds trust through specificity, not superlatives. 30 years of focus on one market is the story.
+30 years in financial services. Not 30 years in cybersecurity with a financial services practice.
+FCI was founded to serve one market. We have never pivoted. Every investment, every hire, every tool we have built has been designed for the way financial services sales offices actually operate — regulated, exposed, and structurally different from every other industry in ways generic security providers were never designed to handle.
+Our Story
+Financial services sales offices present a security challenge that most managed security service providers have never fully understood. Independent advisors, appointed agents, branch offices with their own devices and their own networks — the sales office model creates an attack surface that was never designed for centralized IT management.
+A typical MSSP deploys endpoint protection or runs a SOC — then hands the client a dashboard and a phone number. The client is still responsible for configuring controls, writing policies, producing compliance evidence, and responding to regulatory examinations. FCI does all of that. The four pillars — Cyber Tools & Settings, Procedures & Processes, Expert Knowledge Applied at Scale, and Proof of Security & Compliance — are not sold separately. They are one service, delivered by one team.
+Over 30 years, we have developed the operational expertise, regulatory fluency, and purpose-built technology that this market requires. FCI uses AI to enforce controls, detect threats, and produce compliance evidence across six security domains — at a scale that would be impossible manually. Our CISO Portal was designed specifically for firms managing compliance across sales office networks. Our SOC analysts understand the regulatory context of what they are protecting. Our implementation approach is calibrated to financial firms that cannot afford user friction or IT downtime.
+Today we manage more than 40,000 endpoints across more than 400 clients — broker-dealers and branch offices, insurance carriers and agencies, and RIAs. We hold SOC 2 Type 1 certification and a 100% SecurityScorecard rating. We are independently verified, not self-described.
+By the Numbers
+Proof Points
+30+ years serving financial services exclusively — broker-dealers and branch offices, insurance carriers and agencies, and RIAs
+100% SecurityScorecard rating across all security categories
+NIST CSF-mapped controls enforced across every client engagement
+Deep regulatory fluency: SEC, FINRA, NYDFS, NAIC — operationalized, not just documented
+What Makes FCI Different
+Body Copy — For the skeptical buyer
+Most managed security service providers serve financial services as one vertical among many. They deploy endpoint protection or run a SOC — then hand the client a dashboard and a phone number. They do not produce the documentation regulators actually ask for. They do not sit with the firm during an examination. They do not manage incident response. They do not enforce controls across devices they did not sell.
+FCI does all four — because the financial services sales office requires all four. Our managed service was designed from the beginning for the sales office model — the BYOD environments, the independent branch offices, the compliance requirements that extend to every appointed agent and registered rep, not just the home office.
+This specificity is not a marketing claim. It is operational DNA. Our tools, our workflows, our SOC analysts, and our CISO Portal are all built around one question: what does it take to keep a financial services sales office compliant, protected, and exam-ready — continuously?
+Start a Conversation
+Markets
+RIAs
+Services
+CISO Portal
+Compliance Readiness
+Company
+Team
+Media & Press Kit
+Working at FCI
+News
+Privacy
+Security & Privacy Policy
+Privacy Notice
+Managed Cybersecurity for Financial Services · fcicyber.com

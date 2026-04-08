@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FCI — Website Build Plan</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Inter+Tight:wght@600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    *, ::before, ::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #060B14; --surface: #0D1626; --surface2: #111F33;
+      --blue: #2563EB; --blue2: rgba(37,99,235,0.12);
+      --sky: #0EA5E9; --sky2: rgba(14,165,233,0.12);
+      --emerald: #10B981; --emerald2: rgba(16,185,129,0.10);
+      --amber: #F59E0B; --amber2: rgba(245,158,11,0.10);
+      --violet: #A855F7; --violet2: rgba(168,85,247,0.10);
+      --indigo: #6366F1; --indigo2: rgba(99,102,241,0.10);
+      --red: #EF4444; --red2: rgba(239,68,68,0.10);
+      --text1: #F1F5F9; --text2: #94A3B8; --text3: #475569; --rule: #1A2B40;
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text1); min-height: 100vh; -webkit-font-smoothing: antialiased; }
+    ::selection { background: var(--blue); color: #fff; }
+
+    .bg-glow {
+      position: fixed; inset: 0; pointer-events: none; z-index: 0;
+      background:
+        radial-gradient(70% 45% at 50% -5%, rgba(37,99,235,0.10) 0%, transparent 65%),
+        radial-gradient(35% 28% at 6% 88%, rgba(168,85,247,0.06) 0%, transparent 55%);
+    }
+
+    /* Nav */
+    .hub-nav {
+      position: fixed; top: 0; left: 0; right: 0; height: 52px; z-index: 200;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 32px;
+      background: rgba(6,11,20,0.88);
+      backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--rule);
+    }
+    .hub-nav .back-nav { font-size: 13px; font-weight: 600; text-decoration: none; color: var(--text3); transition: color 0.15s; }
+    .hub-nav .back-nav:hover { color: var(--text1); }
+    .hub-theme-toggle { display: flex; align-items: center; background: var(--surface2); border: 1px solid var(--rule); border-radius: 8px; padding: 3px; gap: 2px; }
+    .hub-theme-toggle button { font-family: inherit; font-size: 11px; font-weight: 600; letter-spacing: 0.03em; color: var(--text3); background: transparent; border: none; cursor: pointer; padding: 4px 10px; border-radius: 6px; line-height: 1; transition: background 0.15s, color 0.15s; }
+    .hub-theme-toggle button:hover { color: var(--text1); }
+    .hub-theme-toggle button.active { background: var(--surface); color: var(--text1); box-shadow: 0 1px 3px rgba(0,0,0,0.15); }
+
+    /* Light nav */
+    html[data-hub-theme=light] .hub-nav { background: rgba(255,255,255,0.92); border-bottom-color: rgba(15,23,42,0.08); }
+    html[data-hub-theme=light] .hub-nav .back-nav { color: #475569; }
+    html[data-hub-theme=light] .hub-nav .back-nav:hover { color: #0F172A; }
+    html[data-hub-theme=light] .hub-theme-toggle { background: rgba(15,23,42,0.06); border-color: rgba(15,23,42,0.1); }
+    html[data-hub-theme=light] .hub-theme-toggle button { color: #94A3B8; }
+    html[data-hub-theme=light] .hub-theme-toggle button:hover { color: #0F172A; }
+    html[data-hub-theme=light] .hub-theme-toggle button.active { background: #fff; color: #0F172A; box-shadow: 0 1px 3px rgba(0,0,0,0.12); }
+
+    /* Light mode */
+    html[data-hub-theme=light] { --bg: #F8FAFC; --surface: #FFFFFF; --surface2: #F1F5F9; --text1: #0F172A; --text2: #475569; --text3: #94A3B8; --rule: #E2E8F0; }
+    html[data-hub-theme=light] body { background: #F8FAFC; }
+    html[data-hub-theme=light] .bg-glow { background: radial-gradient(70% 45% at 50% -5%, rgba(37,99,235,0.06) 0%, transparent 65%); }
+    @media (prefers-color-scheme: light) {
+      html:not([data-hub-theme=dark]) { --bg: #F8FAFC; --surface: #FFFFFF; --surface2: #F1F5F9; --text1: #0F172A; --text2: #475569; --text3: #94A3B8; --rule: #E2E8F0; }
+      html:not([data-hub-theme=dark]) body { background: #F8FAFC; }
+      html:not([data-hub-theme=dark]) .bg-glow { background: radial-gradient(70% 45% at 50% -5%, rgba(37,99,235,0.06) 0%, transparent 65%); }
+      html:not([data-hub-theme=dark]) .hub-nav { background: rgba(255,255,255,0.92); border-bottom-color: rgba(15,23,42,0.08); }
+      html:not([data-hub-theme=dark]) .hub-nav .back-nav { color: #475569; }
+      html:not([data-hub-theme=dark]) .hub-nav .back-nav:hover { color: #0F172A; }
+      html:not([data-hub-theme=dark]) .hub-theme-toggle { background: rgba(15,23,42,0.06); border-color: rgba(15,23,42,0.1); }
+      html:not([data-hub-theme=dark]) .hub-theme-toggle button { color: #94A3B8; }
+      html:not([data-hub-theme=dark]) .hub-theme-toggle button:hover { color: #0F172A; }
+      html:not([data-hub-theme=dark]) .hub-theme-toggle button.active { background: #fff; color: #0F172A; box-shadow: 0 1px 3px rgba(0,0,0,0.12); }
+    }
+
+    /* Header */
+    header { position: relative; z-index: 1; text-align: center; padding: 112px 24px 48px; }
+    .header-eyebrow { display: inline-block; font-size: 10px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--blue); border: 1px solid rgba(37,99,235,0.3); background: rgba(37,99,235,0.07); padding: 5px 16px; border-radius: 100px; margin-bottom: 24px; }
+    header h1 { font-family: 'Inter Tight', sans-serif; font-size: clamp(32px, 5vw, 48px); font-weight: 800; letter-spacing: -0.03em; line-height: 1.1; color: var(--text1); margin-bottom: 16px; }
+    header p { font-size: 15px; color: var(--text2); line-height: 1.7; max-width: 700px; margin: 0 auto; }
+
+    /* Main content */
+    .content { position: relative; z-index: 1; max-width: 900px; width: 100%; margin: 0 auto; padding: 0 32px 100px; }
+
+    /* Section dividers */
+    .section-divider {
+      display: flex; align-items: center; gap: 16px; margin: 56px 0 28px;
+    }
+    .section-divider .line { flex: 1; height: 1px; background: var(--rule); }
+    .section-divider .label { font-size: 11px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; white-space: nowrap; }
+
+    /* Principle boxes */
+    .principle-box {
+      background: var(--surface); border: 1px solid var(--rule); border-radius: 14px;
+      padding: 28px; margin-bottom: 16px;
+    }
+    .principle-box h3 { font-family: 'Inter Tight', sans-serif; font-size: 16px; font-weight: 800; letter-spacing: -0.01em; margin-bottom: 14px; }
+    .principle-box p { font-size: 14px; color: var(--text2); line-height: 1.75; margin-bottom: 12px; }
+    .principle-box p:last-child { margin-bottom: 0; }
+    .principle-box .source { font-size: 12px; color: var(--text3); font-style: italic; margin-top: 8px; padding-top: 12px; border-top: 1px solid var(--rule); }
+
+    /* Gate boxes */
+    .gate-box {
+      background: var(--surface); border: 1px solid var(--rule); border-radius: 14px;
+      margin-bottom: 20px; overflow: hidden;
+    }
+    .gate-header {
+      display: flex; align-items: center; gap: 16px;
+      padding: 20px 28px; border-bottom: 1px solid var(--rule);
+    }
+    .gate-number {
+      font-family: 'Inter Tight', sans-serif; font-size: 28px; font-weight: 800;
+      min-width: 48px;
+    }
+    .gate-title-group { flex: 1; }
+    .gate-title { font-family: 'Inter Tight', sans-serif; font-size: 16px; font-weight: 800; letter-spacing: -0.01em; }
+    .gate-subtitle { font-size: 12px; color: var(--text3); margin-top: 2px; }
+    .gate-body { padding: 24px 28px; }
+    .gate-body h4 { font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text3); margin-bottom: 10px; margin-top: 20px; }
+    .gate-body h4:first-child { margin-top: 0; }
+    .gate-body p { font-size: 14px; color: var(--text2); line-height: 1.75; margin-bottom: 10px; }
+    .gate-body p:last-child { margin-bottom: 0; }
+    .gate-approval {
+      padding: 16px 28px; border-top: 1px solid var(--rule);
+      background: rgba(37,99,235,0.04);
+    }
+    .gate-approval p { font-size: 13px; color: var(--blue); font-weight: 600; }
+
+    /* Checklist */
+    .check-item {
+      display: flex; gap: 10px; padding: 8px 0; font-size: 14px; color: var(--text2); line-height: 1.5;
+    }
+    .check-item::before {
+      content: "□"; font-size: 14px; color: var(--text3); flex-shrink: 0; margin-top: 1px;
+    }
+
+    /* Risk table */
+    .risk-row {
+      display: grid; grid-template-columns: 1fr 1fr 120px; gap: 16px;
+      padding: 14px 0; border-bottom: 1px solid var(--rule); font-size: 13px;
+    }
+    .risk-row:last-child { border-bottom: none; }
+    .risk-head { font-weight: 700; color: var(--text3); text-transform: uppercase; letter-spacing: 0.06em; font-size: 11px; }
+    .risk-label { color: var(--text1); font-weight: 600; }
+    .risk-mitigation { color: var(--text2); }
+    .sev-high { color: var(--red); font-weight: 700; font-size: 11px; text-transform: uppercase; letter-spacing: 0.04em; }
+    .sev-med { color: var(--amber); font-weight: 700; font-size: 11px; text-transform: uppercase; letter-spacing: 0.04em; }
+
+    /* Callout */
+    .callout {
+      background: rgba(37,99,235,0.06); border: 1px solid rgba(37,99,235,0.2); border-radius: 12px;
+      padding: 20px 24px; margin: 20px 0;
+    }
+    .callout p { font-size: 14px; color: var(--text2); line-height: 1.75; }
+    .callout strong { color: var(--text1); }
+
+    /* Footer */
+    .hub-footer {
+      text-align: center; padding: 48px 24px; font-size: 12px; color: var(--text3);
+      border-top: 1px solid var(--rule); position: relative; z-index: 1;
+    }
+
+    @media (max-width: 640px) {
+      .content { padding: 0 16px 80px; }
+      .risk-row { grid-template-columns: 1fr; gap: 4px; }
+    }
+  </style>
+</head>
+<body>
+<div class="bg-glow"></div>
+
+<nav class="hub-nav">
+  <a class="back-nav" href="index.html">&larr; FCI Brand Hub</a>
+  <div class="hub-theme-toggle">
+    <button onclick="document.documentElement.setAttribute('data-hub-theme','dark');this.classList.add('active');this.nextElementSibling.classList.remove('active')">Dark</button>
+    <button onclick="document.documentElement.setAttribute('data-hub-theme','light');this.classList.add('active');this.previousElementSibling.classList.remove('active')">Light</button>
+  </div>
+</nav>
+
+<header>
+  <div class="header-eyebrow">Phase 4 — Website Build</div>
+  <h1>Website Build Plan</h1>
+  <p>A gated, research-backed methodology for building the FCI website. One component at a time, one page at a time, with approval gates that prevent cascading rework. Every decision here is grounded in established industry practice and our Honest Code principles.</p>
+</header>
+
+<div class="content">
+
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <!-- PART 1: THE PROBLEM THIS PLAN SOLVES                   -->
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <div class="section-divider">
+    <div class="line"></div>
+    <div class="label" style="color: var(--red);">The Problem This Plan Solves</div>
+    <div class="line"></div>
+  </div>
+
+  <div class="principle-box">
+    <h3>Why Website Projects Fail</h3>
+    <p>Research from CommonPlaces, Armia Systems, and two decades of post-mortem literature identify the same pattern: a team builds 15 pages based on a template that felt right on page one. By page eight, someone notices the spacing is off, the nav doesn't work on mobile, or the color system drifts. Now the fix has to be applied retroactively to every page already built. Each fix introduces new inconsistencies. The project spirals into a cycle of rework that feels productive but is actually just catching up to where it should have been.</p>
+    <p>The technical term is <strong>design drift</strong>. The emotional term is what you described: "a monster."</p>
+    <p>This plan is engineered to make that impossible. We build one page — a single, complete, pixel-perfect page — and we don't touch page two until that foundation is locked. Every visual decision, every spacing value, every color, every component exists in exactly one place. Change it there, it changes everywhere. That's not a feature request — it's the architecture.</p>
+    <div class="source">Sources: CommonPlaces, "Top 10 Reasons Why Website Projects Fail" &middot; Armia Systems, "Why Do Some Web Projects Fail?" &middot; Brad Frost, Atomic Design (2016)</div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <!-- PART 2: THE THREE STRATEGIES                            -->
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <div class="section-divider">
+    <div class="line"></div>
+    <div class="label" style="color: var(--blue);">Three Strategies That Prevent the Monster</div>
+    <div class="line"></div>
+  </div>
+
+  <div class="principle-box">
+    <h3>Strategy 1 — Design Tokens: One Source of Truth</h3>
+    <p>Every color, every font size, every spacing value, every border radius, every shadow lives in CSS custom properties declared once in a single file (<code>base.css</code>). The components never hardcode a color — they reference <code>var(--blue)</code>, <code>var(--text2)</code>, <code>var(--spacing-lg)</code>. This is the same system already working in our Brand Hub pages.</p>
+    <p>When we decide the primary blue should be slightly different, or the section padding needs adjusting, we change one line. Every page, every component, every fragment inherits the change automatically. There is no "apply it to all pages" step because there are no per-page values to update.</p>
+    <p>This is not optional — it is Honest Code's CSS convention (custom properties in <code>:root</code>, components reference tokens via <code>var(--token-name)</code>, no component owns color or spacing values directly).</p>
+    <div class="source">Source: Penpot, "The Developer's Guide to Design Tokens and CSS Variables" &middot; Builder.io, "Design Tokens Docs" &middot; Honest Code Architecture, CSS Conventions</div>
+  </div>
+
+  <div class="principle-box">
+    <h3>Strategy 2 — Atomic Design: Build From the Bottom Up</h3>
+    <p>Brad Frost's Atomic Design methodology gives us the exact sequence. We don't start by designing a page. We start by designing the smallest pieces and composing upward:</p>
+    <p><strong>Atoms</strong> are the irreducible elements: a button, a heading, an input field, a badge, a link style. They inherit from the design tokens. <strong>Molecules</strong> are small groupings: a search bar (input + button), a nav link with an icon, a card header (eyebrow + title + subtitle). <strong>Organisms</strong> are recognizable sections: the site header (logo + nav + CTA button), a hero section, a feature grid, a footer. <strong>Templates</strong> are page layouts that arrange organisms into a structure without real content. <strong>Pages</strong> are templates filled with actual FCI content.</p>
+    <p>The discipline is: <strong>we don't build organisms until we've approved the atoms and molecules that compose them.</strong> A hero section is just a heading atom + a paragraph atom + a button atom + a background treatment. If the atoms are right, the hero is right. If we skip atoms and go straight to "build the homepage," we're guessing at details and will pay for it later.</p>
+    <div class="source">Source: Brad Frost, Atomic Design (atomicdesign.bradfrost.com) &middot; Design Systems, "Build Systems, Not Pages"</div>
+  </div>
+
+  <div class="principle-box">
+    <h3>Strategy 3 — Phase Gates: No Forward Motion Without Approval</h3>
+    <p>The phase-gate process (also called stage-gate) comes from product development methodology and has been adapted across the entire software industry. The core idea: the project is divided into discrete phases, and between each phase is a gate — a formal approval checkpoint. You do not pass through the gate until the deliverables for that phase are reviewed and accepted.</p>
+    <p>For our website, this means: you see and approve the design tokens before I build a single component. You see and approve the components before I build a single page. You see and approve the homepage before I build page two. At no point are we building ahead of what's been validated.</p>
+    <p>This is the opposite of "build everything, then review." It's also the opposite of "build one page and hope it generalizes." It's a structured escalation from the smallest decisions to the largest, with your sign-off at each level.</p>
+    <div class="source">Source: Wikipedia, "Phase-Gate Process" &middot; ProjectManager.com, "Stage-Gate Guide" &middot; Robert G. Cooper, "Winning at New Products" (2017)</div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <!-- PART 3: HOW THIS MAPS TO HONEST CODE                   -->
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <div class="section-divider">
+    <div class="line"></div>
+    <div class="label" style="color: var(--emerald);">How This Maps to Honest Code</div>
+    <div class="line"></div>
+  </div>
+
+  <div class="principle-box">
+    <h3>The Architecture Is the Strategy</h3>
+    <p>Honest Code isn't just how we write Python — it's the philosophy that prevents the monster. Here's the direct mapping:</p>
+    <p><strong>P06 DOM as State (DATAOS)</strong> — The server renders complete HTML. No client-side framework building a virtual DOM that drifts from the server's view of reality. The HTML you see in the browser is the truth. HTMX swaps fragments; it doesn't rebuild the world.</p>
+    <p><strong>P07 HTML Attributes Over Imperative DOM</strong> — <code>hx-get</code>, <code>hx-target</code>, <code>hx-swap</code> replace hundreds of lines of JavaScript event wiring. Less code means fewer places for things to break.</p>
+    <p><strong>P04 I/O at the Boundary</strong> — Route handlers do I/O and return templates. Pure functions in <code>app/logic/</code> do the thinking. The template layer has no surprises because it receives clean data.</p>
+    <p><strong>P15 Declarative Equivalents Over Lifecycle Hooks</strong> — <code>hx-trigger="load"</code> replaces <code>componentDidMount</code>. The page arrives ready. No initialization sequence. No loading spinners hiding architectural debt.</p>
+    <p><strong>CSS Conventions</strong> — Custom properties in <code>:root</code>, BEM naming, one file per component. This is the design token strategy encoded as a rule, not a suggestion.</p>
+    <p>These principles mean the website is structurally incapable of the problems that cause cascading rework. The design system lives in tokens. The components reference tokens. The pages compose components. Change flows downward, never sideways.</p>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <!-- PART 4: THE GATED PLAN                                  -->
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <div class="section-divider">
+    <div class="line"></div>
+    <div class="label" style="color: var(--violet);">The Seven Gates</div>
+    <div class="line"></div>
+  </div>
+
+  <div class="callout">
+    <p><strong>How gates work:</strong> Each gate produces a deliverable you can see and interact with. You review it. If something is wrong, we fix it at that level — where the fix is small and contained. Only when you say "approved" do we proceed. Nothing built at Gate N+1 ever contradicts what was approved at Gate N, because Gate N+1 is composed from Gate N's outputs.</p>
+  </div>
+
+  <!-- GATE 0 -->
+  <div class="gate-box">
+    <div class="gate-header">
+      <div class="gate-number" style="color: var(--text3);">0</div>
+      <div class="gate-title-group">
+        <div class="gate-title">Project Skeleton &amp; Design Tokens</div>
+        <div class="gate-subtitle">The foundation everything else inherits from</div>
+      </div>
+    </div>
+    <div class="gate-body">
+      <h4>What I Build</h4>
+      <p>The FastAPI project structure per Honest Code architecture: <code>app/main.py</code>, <code>app/routes/</code>, <code>app/logic/</code>, <code>app/templates/</code>, <code>app/static/css/</code>. The <code>base.html</code> shell with the HTMX script tag. And critically: <code>base.css</code> with every design token — every color, font size, font weight, spacing value, border radius, shadow, transition duration, and breakpoint — declared as CSS custom properties in <code>:root</code>.</p>
+      <p>I also build the dark/light theme system (already proven in our hub pages) and set the <code>:root</code> overrides for each theme.</p>
+
+      <h4>What You Review</h4>
+      <div class="check-item">The complete design token list — every color, spacing, and type value — presented as a visual reference sheet</div>
+      <div class="check-item">The project folder structure matches Honest Code architecture</div>
+      <div class="check-item">base.html renders a blank page with correct fonts, background, and theme toggle</div>
+      <div class="check-item">Dark and light mode switch correctly</div>
+
+      <h4>Why This Gate Exists</h4>
+      <p>If the tokens are wrong, every single component, page, and interaction built on top of them will be wrong. This is the cheapest possible time to debate whether <code>--spacing-section</code> should be 64px or 80px. After this gate, that question is answered forever.</p>
+    </div>
+    <div class="gate-approval">
+      <p>Gate 0 Approval &rarr; "The design tokens and project structure are correct. Proceed to components."</p>
+    </div>
+  </div>
+
+  <!-- GATE 1 -->
+  <div class="gate-box">
+    <div class="gate-header">
+      <div class="gate-number" style="color: var(--blue);">1</div>
+      <div class="gate-title-group">
+        <div class="gate-title">Atoms &amp; Molecules — The Component Library</div>
+        <div class="gate-subtitle">Every UI element the site will ever use, built and tested in isolation</div>
+      </div>
+    </div>
+    <div class="gate-body">
+      <h4>What I Build</h4>
+      <p>Each component as its own BEM-named CSS file in <code>static/css/components/</code> and its own Jinja2 fragment. Built in isolation on a dedicated "component gallery" page (like a Storybook, but as a simple HTML page within our own app — no external tooling needed).</p>
+      <p><strong>Atoms:</strong> Button (primary, secondary, ghost variants) &middot; Heading (h1 through h4 with Inter Tight weights) &middot; Body text (paragraph, small, caption) &middot; Link (inline, standalone, nav) &middot; Badge/eyebrow &middot; Input field &middot; Textarea &middot; Form label &middot; Divider/rule &middot; Icon container &middot; Logo mark</p>
+      <p><strong>Molecules:</strong> Nav link with dropdown indicator &middot; Card (icon + title + description) &middot; CTA block (heading + paragraph + button) &middot; Form group (label + input + error message) &middot; Stat block (number + label) &middot; Team member card (photo + name + title) &middot; Article preview (date + title + excerpt) &middot; Breadcrumb trail</p>
+
+      <h4>What You Review</h4>
+      <div class="check-item">The component gallery page showing every atom and molecule in both dark and light mode</div>
+      <div class="check-item">Each component at mobile (375px), tablet (768px), and desktop (1280px) widths</div>
+      <div class="check-item">Hover states, focus states, and active states on interactive elements</div>
+      <div class="check-item">Typography feels right — the sizes, weights, spacing, and line heights feel like FCI</div>
+
+      <h4>Why This Gate Exists</h4>
+      <p>These atoms and molecules are what pages are made of. A homepage hero is just: heading atom + paragraph atom + CTA molecule + background treatment. A solutions page is just: heading + card molecules in a grid + CTA block. If the building blocks are right, the pages assemble correctly. If we skip this step and go straight to pages, we're making atomic-level decisions inside page-level contexts, which means every page will make them slightly differently.</p>
+    </div>
+    <div class="gate-approval">
+      <p>Gate 1 Approval &rarr; "The components look right, feel right, and work at all sizes. Proceed to navigation."</p>
+    </div>
+  </div>
+
+  <!-- GATE 2 -->
+  <div class="gate-box">
+    <div class="gate-header">
+      <div class="gate-number" style="color: var(--sky);">2</div>
+      <div class="gate-title-group">
+        <div class="gate-title">Navigation &amp; Page Shell — The Organism Layer</div>
+        <div class="gate-subtitle">Header, footer, and navigation tested as a standalone experience</div>
+      </div>
+    </div>
+    <div class="gate-body">
+      <h4>What I Build</h4>
+      <p>The site header organism: FCI logo + primary nav with dropdowns (Markets, Solutions, Resources, About) + Contact CTA button. The footer organism: three-column link structure + bottom bar with legal links and phone numbers. The mobile hamburger menu with animated open/close. All built as Jinja2 includes inside <code>base.html</code>.</p>
+      <p>At this gate, the page body between header and footer is empty (or contains placeholder text). The entire focus is: does the navigation work? Does it feel right? Does the dropdown open and close correctly? Does the mobile menu work? Does the sticky header behave properly on scroll?</p>
+
+      <h4>What You Review</h4>
+      <div class="check-item">Desktop nav: hover states, dropdown menus, active page indicator</div>
+      <div class="check-item">Mobile nav: hamburger icon, slide-out or overlay menu, all links accessible</div>
+      <div class="check-item">Footer: all links present, phone numbers correct, layout balanced</div>
+      <div class="check-item">Sticky header behavior on scroll — does it feel premium and not janky?</div>
+      <div class="check-item">Navigation tested on an actual phone (or phone-sized browser window)</div>
+
+      <h4>Why This Gate Exists</h4>
+      <p>Navigation is seen on every single page. If the nav is 2px off, or the dropdown feels laggy, or the mobile menu doesn't close properly, that bug exists on all 24 pages simultaneously. Testing it in isolation — with nothing else on the page to distract — means we see exactly how it behaves. Fixing a nav bug here is a 1-file change. Fixing it after 24 pages are built is 24 pages of regression testing.</p>
+    </div>
+    <div class="gate-approval">
+      <p>Gate 2 Approval &rarr; "The navigation is pixel-perfect, works on mobile, and the header/footer are approved. Proceed to the first page."</p>
+    </div>
+  </div>
+
+  <!-- GATE 3 -->
+  <div class="gate-box">
+    <div class="gate-header">
+      <div class="gate-number" style="color: var(--emerald);">3</div>
+      <div class="gate-title-group">
+        <div class="gate-title">The Homepage — The Proof of Concept</div>
+        <div class="gate-subtitle">One complete page that proves the entire system works</div>
+      </div>
+    </div>
+    <div class="gate-body">
+      <h4>What I Build</h4>
+      <p>The full homepage, using only the approved components from Gates 0–2, filled with the approved Website Copy content. This includes: hero section with the FCI positioning statement, the "what we do" overview, the market segments with links to broker-dealers &amp; branch offices / insurance carriers &amp; agencies / RIAs, the solutions preview, social proof / authority signals, and the CTA section.</p>
+      <p>This is the single most important page on the site. It's also the hardest — it uses the most components, has the most visual variety, and sets the standard for everything that follows.</p>
+
+      <h4>What You Review</h4>
+      <div class="check-item">Does the page feel like FCI? Does it match the brand direction from our Hero explorations?</div>
+      <div class="check-item">Content hierarchy: does the eye move where it should?</div>
+      <div class="check-item">Mobile rendering: does it read well on a phone?</div>
+      <div class="check-item">Performance: Lighthouse score (targeting 90+ on Performance, 100 on Accessibility)</div>
+      <div class="check-item">Load time: the page should render in under 2 seconds on a 4G connection</div>
+      <div class="check-item">All links in nav point to real routes (they can be empty pages — but no 404s)</div>
+
+      <h4>Why This Gate Exists</h4>
+      <p>This is the proof that the system works. If the homepage looks right using only the approved tokens and components, then every other page will look right too — because they're made of the same pieces. If something feels wrong here, we trace it back: is it a token problem (Gate 0), a component problem (Gate 1), a nav problem (Gate 2), or a layout problem (this gate)? We fix it at the right level. We never "patch" a page.</p>
+    </div>
+    <div class="gate-approval">
+      <p>Gate 3 Approval &rarr; "The homepage is right. The design system is proven. Proceed to build the remaining static pages."</p>
+    </div>
+  </div>
+
+  <!-- GATE 4 -->
+  <div class="gate-box">
+    <div class="gate-header">
+      <div class="gate-number" style="color: var(--amber);">4</div>
+      <div class="gate-title-group">
+        <div class="gate-title">All Static Pages — The Rollout</div>
+        <div class="gate-subtitle">15 "Ready" pages built from the proven system</div>
+      </div>
+    </div>
+    <div class="gate-body">
+      <h4>What I Build</h4>
+      <p>All pages with "Ready" content status, in this order: About FCI, What Changes, the three Market pages (broker-dealers &amp; branch offices, insurance carriers &amp; agencies, RIAs), the five Solution pages (Managed Cybersecurity, Zero Trust, CISO Portal, Compliance &amp; Exam Readiness, Security Assessment), Team &amp; Leadership, Careers, Speaking &amp; Media. Each page is a Jinja2 template extending <code>base.html</code>, composed entirely from approved components.</p>
+      <p>Because these pages are built from the same atoms and molecules approved at Gate 1, and laid out using the same grid and spacing tokens approved at Gate 0, they should assemble quickly and consistently. This is where the upfront investment pays off.</p>
+
+      <h4>What You Review</h4>
+      <div class="check-item">Each page reviewed individually — does the content feel right in this layout?</div>
+      <div class="check-item">Cross-page consistency: do the pages feel like they belong to the same site?</div>
+      <div class="check-item">Internal links work: clicking from one page to another navigates correctly</div>
+      <div class="check-item">Mobile spot-check: pick 3 pages at random, check them on mobile</div>
+
+      <h4>Why This Gate Exists</h4>
+      <p>This is a volume gate — 15 pages is a lot of content. But because the components and tokens are locked, the work here is layout and content placement, not design decisions. If we discover a problem that affects all pages, it's almost certainly a token or component issue, which means fixing it once fixes it everywhere. That's the whole point.</p>
+    </div>
+    <div class="gate-approval">
+      <p>Gate 4 Approval &rarr; "All static pages look consistent and correct. Proceed to dynamic content."</p>
+    </div>
+  </div>
+
+  <!-- GATE 5 -->
+  <div class="gate-box">
+    <div class="gate-header">
+      <div class="gate-number" style="color: var(--violet);">5</div>
+      <div class="gate-title-group">
+        <div class="gate-title">CMS, Forms &amp; Dynamic Content</div>
+        <div class="gate-subtitle">News, Cyber Bites, Contact form, and HTMX interactions</div>
+      </div>
+    </div>
+    <div class="gate-body">
+      <h4>What I Build</h4>
+      <p>The dynamic layer: SQLite database for News articles and Cyber Bites (seeded with the 40 migrated items each). Listing pages with HTMX-powered pagination and filtering — no full page reloads, just fragment swaps. The Contact form with server-side validation (P11 — type declarations over imperative validation). The admin CMS interface for creating and publishing content, behind authentication.</p>
+      <p>This is the first gate where we add real interactivity beyond navigation. The HTMX approach means the server returns HTML fragments, not JSON. The browser swaps them in. No client-side state to manage, no API contracts to maintain (P06 — DOM as State).</p>
+
+      <h4>What You Review</h4>
+      <div class="check-item">News listing: articles load, pagination works, clicking an article shows the full post</div>
+      <div class="check-item">Cyber Bites listing: same as News</div>
+      <div class="check-item">Contact form: submit with valid data (confirm it stores), submit with invalid data (confirm it shows errors)</div>
+      <div class="check-item">Admin CMS: create a test article, edit it, publish it, confirm it appears on the public site</div>
+      <div class="check-item">HTMX interactions feel smooth — no flashing, no layout shift during fragment swaps</div>
+
+      <h4>Why This Gate Exists</h4>
+      <p>Dynamic content introduces a database, server-side logic, and HTMX interactivity. These are new failure modes that don't exist in static pages. Testing them in isolation — after the static pages are proven — means any bug we find is definitively in the dynamic layer, not in the design system.</p>
+    </div>
+    <div class="gate-approval">
+      <p>Gate 5 Approval &rarr; "Dynamic content works correctly. The CMS is functional. Proceed to launch preparation."</p>
+    </div>
+  </div>
+
+  <!-- GATE 6 -->
+  <div class="gate-box">
+    <div class="gate-header">
+      <div class="gate-number" style="color: var(--indigo);">6</div>
+      <div class="gate-title-group">
+        <div class="gate-title">Launch Readiness — Performance, SEO &amp; Security</div>
+        <div class="gate-subtitle">The final quality gate before DNS cutover</div>
+      </div>
+    </div>
+    <div class="gate-body">
+      <h4>What I Build</h4>
+      <p>301 redirects from every old WordPress URL to its new equivalent (preserving SEO equity). Meta tags, Open Graph tags, and structured data on every page. Security headers (CSP, HSTS, X-Frame-Options). Sitemap.xml and robots.txt. Performance optimization: image compression, CSS minification, preconnect hints, proper caching headers. Accessibility audit: every page scores 100 on Lighthouse accessibility.</p>
+
+      <h4>What You Review</h4>
+      <div class="check-item">Lighthouse report: Performance 90+, Accessibility 100, Best Practices 90+, SEO 90+</div>
+      <div class="check-item">Every old fcicyber.com URL redirects to the correct new page (no 404s for existing links)</div>
+      <div class="check-item">Share a page on LinkedIn — does the preview card show the right image and description?</div>
+      <div class="check-item">Full mobile walkthrough: navigate the entire site on a phone from homepage to contact</div>
+      <div class="check-item">Content review: final read-through of every page for typos, outdated info, broken links</div>
+
+      <h4>Why This Gate Exists</h4>
+      <p>Once DNS is cut over, the old WordPress site is gone. There is no "go back." This gate ensures we've caught everything before the irreversible step. The redirect map is especially critical — every existing link to fcicyber.com from LinkedIn posts, email signatures, regulatory filings, and partner sites must land on the right page.</p>
+    </div>
+    <div class="gate-approval">
+      <p>Gate 6 Approval &rarr; "The site is ready. Cut over DNS."</p>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <!-- PART 5: HOW I WILL WORK                                 -->
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <div class="section-divider">
+    <div class="line"></div>
+    <div class="label" style="color: var(--sky);">How I Will Work</div>
+    <div class="line"></div>
+  </div>
+
+  <div class="principle-box">
+    <h3>My Commitment to This Process</h3>
+    <p><strong>I will not skip gates.</strong> Even if I'm confident a component is right, I show it to you before building on top of it. Confidence without verification is how design drift starts.</p>
+    <p><strong>I will not build ahead.</strong> If Gate 2 (navigation) is under review and I have time, I don't "get a head start" on Gate 3 (homepage). Building ahead creates pressure to approve things that aren't ready, because work has already been done on top of them.</p>
+    <p><strong>I will commit and push after every change.</strong> Per our workflow, no batching. Every change is individually versioned. If something goes wrong, we can revert to the exact commit before the problem — not "somewhere last Thursday."</p>
+    <p><strong>I will test my own work before declaring it done.</strong> Every gate deliverable will have been tested at mobile, tablet, and desktop widths, in both dark and light mode, before I show it to you. You should never be the first person to catch a responsive issue.</p>
+    <p><strong>I will trace bugs to the right level.</strong> If a page looks wrong, the question is: is the token wrong (Gate 0)? Is the component wrong (Gate 1)? Is the layout wrong (this gate)? I fix at the root, not at the symptom. A "page fix" that changes a token value is a design system fix — it gets tested as one.</p>
+  </div>
+
+  <div class="principle-box">
+    <h3>How Each Work Session Will Flow</h3>
+    <p><strong>Step 1: Pull.</strong> Always start by pulling the latest from the repo. No working on stale code.</p>
+    <p><strong>Step 2: State the scope.</strong> "Today I'm working on Gate 1 — building the button atom and card molecule." You know exactly what I'm doing before I do it.</p>
+    <p><strong>Step 3: Build.</strong> Write the code, the CSS, and the template. Follow Honest Code principles — pure functions in logic/, I/O at the boundary in routes/, design tokens in base.css, BEM components in their own files.</p>
+    <p><strong>Step 4: Self-test.</strong> Check at 375px, 768px, 1280px. Check dark mode. Check light mode. Check hover states. Check focus states for keyboard navigation.</p>
+    <p><strong>Step 5: Commit and push.</strong> One commit per logical change. Clear commit message. Push immediately.</p>
+    <p><strong>Step 6: Present for review.</strong> Show you the deliverable with a link to the live page. State what to look for. Wait for approval before proceeding.</p>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <!-- PART 6: PERFORMANCE BUDGET                              -->
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <div class="section-divider">
+    <div class="line"></div>
+    <div class="label" style="color: var(--emerald);">Performance Budget</div>
+    <div class="line"></div>
+  </div>
+
+  <div class="principle-box">
+    <h3>Measurable Performance Targets</h3>
+    <p>These are not aspirations — they are pass/fail criteria checked at every gate. If a gate's deliverable fails a target, it does not pass.</p>
+    <p><strong>Largest Contentful Paint (LCP):</strong> under 2.5 seconds. This is the time until the largest visible element renders. Our stack advantage: server-rendered HTML arrives ready. No JavaScript bundle to parse before the first paint.</p>
+    <p><strong>Interaction to Next Paint (INP):</strong> under 200ms. This is the time between a user interaction and the browser's response. HTMX fragment swaps are inherently fast because they're small HTML payloads, not full-page re-renders.</p>
+    <p><strong>Cumulative Layout Shift (CLS):</strong> under 0.1. No content should jump around after the page loads. This means: explicit width/height on images, no late-loading fonts that reflow text, no HTMX swaps that change the layout above the current scroll position.</p>
+    <p><strong>Lighthouse Performance:</strong> 90+ on every page. <strong>Lighthouse Accessibility:</strong> 100 on every page. <strong>Total page weight:</strong> under 500KB for any page (HTML + CSS + images). No external JavaScript frameworks beyond HTMX (~14KB gzipped).</p>
+    <div class="source">Source: Google, "Core Web Vitals" &middot; DebugBear, "Working with Performance Budgets" &middot; web.dev, "Largest Contentful Paint"</div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <!-- PART 7: RISK MITIGATION                                 -->
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <div class="section-divider">
+    <div class="line"></div>
+    <div class="label" style="color: var(--amber);">Risk Mitigation</div>
+    <div class="line"></div>
+  </div>
+
+  <div class="principle-box">
+    <h3>What Could Go Wrong and How We Prevent It</h3>
+    <div class="risk-row">
+      <div class="risk-head">Risk</div>
+      <div class="risk-head">Mitigation</div>
+      <div class="risk-head">Severity</div>
+    </div>
+    <div class="risk-row">
+      <div class="risk-label">Design drift across pages</div>
+      <div class="risk-mitigation">Design tokens + component library. No page ever hardcodes a value. Change propagates from one source.</div>
+      <div class="sev-high">Eliminated</div>
+    </div>
+    <div class="risk-row">
+      <div class="risk-label">Fixing one page breaks another</div>
+      <div class="risk-mitigation">BEM naming (no global CSS collisions). Each component's CSS is scoped to its block name. Pages compose components; they don't override them.</div>
+      <div class="sev-high">Eliminated</div>
+    </div>
+    <div class="risk-row">
+      <div class="risk-label">Mobile looks bad on launch</div>
+      <div class="risk-mitigation">Mobile-first development. Every gate includes mobile review. Nothing passes gate approval without working at 375px.</div>
+      <div class="sev-high">Eliminated</div>
+    </div>
+    <div class="risk-row">
+      <div class="risk-label">Slow page loads</div>
+      <div class="risk-mitigation">Performance budget enforced at every gate. Server-rendered HTML + HTMX means no large JS bundles. Sub-500KB page weight target.</div>
+      <div class="sev-med">Mitigated</div>
+    </div>
+    <div class="risk-row">
+      <div class="risk-label">Old WordPress URLs break</div>
+      <div class="risk-mitigation">301 redirect map built and tested at Gate 6 before DNS cutover. Every known URL verified.</div>
+      <div class="sev-med">Mitigated</div>
+    </div>
+    <div class="risk-row">
+      <div class="risk-label">Content gaps delay launch</div>
+      <div class="risk-mitigation">7 identified gaps from Website Architecture. All "Ready" pages (15) built first. Gap content can be filled in parallel without blocking the build.</div>
+      <div class="sev-med">Mitigated</div>
+    </div>
+    <div class="risk-row">
+      <div class="risk-label">Scope creep — "just one more feature"</div>
+      <div class="risk-mitigation">Gate structure forces scope decisions at defined checkpoints. Features not in the gate scope are noted for a future gate, not squeezed in.</div>
+      <div class="sev-med">Mitigated</div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <!-- PART 8: WHAT WE ALREADY HAVE                            -->
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <div class="section-divider">
+    <div class="line"></div>
+    <div class="label" style="color: var(--blue);">What We Already Have</div>
+    <div class="line"></div>
+  </div>
+
+  <div class="principle-box">
+    <h3>The Head Start From Our Rebranding Work</h3>
+    <p>We're not starting from zero. The hours we've invested in the rebranding give us a significant head start:</p>
+    <p><strong>Brand Guidelines</strong> — The complete color system, typography (Inter + Inter Tight), logo variants, and spacing rules are defined and approved. These translate directly into Gate 0's design tokens.</p>
+    <p><strong>Website Copy</strong> — 15 of 24 pages have approved copy. The messaging architecture gives us the voice and positioning. The one-pagers give us the market-specific language. This means Gate 4 (static page rollout) has content ready to go.</p>
+    <p><strong>Hero Direction</strong> — Multiple hero explorations have been done. The visual direction for the homepage is informed by real design work, not guesses.</p>
+    <p><strong>Website Architecture</strong> — The sitemap (24 pages, 7 sections), navigation structure, tech stack, and content readiness status are documented and reviewed.</p>
+    <p><strong>Content Migration Inventory</strong> — We know exactly what content exists on the old site, what's been migrated, and what needs to be written. No surprises.</p>
+    <p><strong>Honest Code Methodology</strong> — The architecture and coding principles are defined. I don't have to decide how to structure the project — it's already decided.</p>
+    <p>This plan doesn't redo any of that work. It takes everything we've built and channels it into a disciplined, gated construction process.</p>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <!-- PART 9: SUMMARY TIMELINE                                -->
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <div class="section-divider">
+    <div class="line"></div>
+    <div class="label" style="color: var(--indigo);">Gate Summary</div>
+    <div class="line"></div>
+  </div>
+
+  <div class="principle-box">
+    <h3>At a Glance</h3>
+    <p><strong>Gate 0:</strong> Project skeleton + design tokens &rarr; "The foundation is right"</p>
+    <p><strong>Gate 1:</strong> Atoms + molecules (component library) &rarr; "The building blocks are right"</p>
+    <p><strong>Gate 2:</strong> Navigation + page shell &rarr; "The frame is right"</p>
+    <p><strong>Gate 3:</strong> Homepage (the proof of concept) &rarr; "The system works"</p>
+    <p><strong>Gate 4:</strong> All static pages (15 pages) &rarr; "The site is consistent"</p>
+    <p><strong>Gate 5:</strong> CMS + forms + dynamic content &rarr; "The interactivity works"</p>
+    <p><strong>Gate 6:</strong> Performance, SEO, security, redirects &rarr; "Ready for launch"</p>
+    <p style="margin-top: 16px; color: var(--text1);"><strong>Total pages: 24.</strong> But the design decisions are made once, at Gates 0–1. The hard thinking is front-loaded. The building is disciplined. The reviewing is structured. No monsters.</p>
+  </div>
+
+  <div class="callout">
+    <p><strong>What happens next:</strong> If you approve this plan, Gate 0 starts immediately. I build the project skeleton, the design token system, and the base template. You review. We go from there — one gate at a time, no skipping, no rushing, no monsters.</p>
+  </div>
+
+</div>
+
+<footer class="hub-footer">FCI Brand Hub &middot; Website Build Plan &middot; Phase 4</footer>
+
+<script>
+  // Section collapse toggle (if needed)
+  document.querySelectorAll('.site-section-header').forEach(h => {
+    h.addEventListener('click', () => h.parentElement.classList.toggle('open'));
+  });
+</script>
+</body>
+</html>
