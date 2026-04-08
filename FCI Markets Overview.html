@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FCI — Markets Overview</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Inter+Tight:wght@600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    *, ::before, ::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #060B14; --surface: #0D1626; --surface2: #111F33;
+      --blue: #2563EB; --blue2: rgba(37,99,235,0.12);
+      --sky: #0EA5E9; --sky2: rgba(14,165,233,0.12);
+      --emerald: #10B981; --emerald2: rgba(16,185,129,0.10);
+      --amber: #F59E0B; --amber2: rgba(245,158,11,0.10);
+      --violet: #A855F7; --violet2: rgba(168,85,247,0.10);
+      --indigo: #6366F1; --indigo2: rgba(99,102,241,0.10);
+      --text1: #F1F5F9; --text2: #94A3B8; --text3: #475569; --rule: #1A2B40;
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text1); min-height: 100vh; -webkit-font-smoothing: antialiased; }
+    ::selection { background: var(--blue); color: #fff; }
+    .bg-glow { position: fixed; inset: 0; pointer-events: none; z-index: 0; background: radial-gradient(70% 45% at 50% -5%, rgba(37,99,235,0.10) 0%, transparent 65%), radial-gradient(35% 28% at 6% 88%, rgba(168,85,247,0.06) 0%, transparent 55%); }
+
+    .hub-nav { position: fixed; top: 0; left: 0; right: 0; height: 52px; z-index: 200; display: flex; align-items: center; justify-content: space-between; padding: 0 32px; background: rgba(6,11,20,0.88); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); border-bottom: 1px solid var(--rule); }
+    .hub-nav .back-nav { font-size: 13px; font-weight: 600; text-decoration: none; color: var(--text3); transition: color 0.15s; }
+    .hub-nav .back-nav:hover { color: var(--text1); }
+    .hub-theme-toggle { display: flex; align-items: center; background: var(--surface2); border: 1px solid var(--rule); border-radius: 8px; padding: 3px; gap: 2px; }
+    .hub-theme-toggle button { font-family: inherit; font-size: 11px; font-weight: 600; letter-spacing: 0.03em; color: var(--text3); background: transparent; border: none; cursor: pointer; padding: 4px 10px; border-radius: 6px; line-height: 1; transition: background 0.15s, color 0.15s; }
+    .hub-theme-toggle button:hover { color: var(--text1); }
+    .hub-theme-toggle button.active { background: var(--surface); color: var(--text1); box-shadow: 0 1px 3px rgba(0,0,0,0.15); }
+
+    html[data-hub-theme=light] .hub-nav { background: rgba(255,255,255,0.92); border-bottom-color: rgba(15,23,42,0.08); }
+    html[data-hub-theme=light] .hub-nav .back-nav { color: #475569; }
+    html[data-hub-theme=light] .hub-nav .back-nav:hover { color: #0F172A; }
+    html[data-hub-theme=light] .hub-theme-toggle { background: rgba(15,23,42,0.06); border-color: rgba(15,23,42,0.1); }
+    html[data-hub-theme=light] .hub-theme-toggle button { color: #94A3B8; }
+    html[data-hub-theme=light] .hub-theme-toggle button:hover { color: #0F172A; }
+    html[data-hub-theme=light] .hub-theme-toggle button.active { background: #fff; color: #0F172A; box-shadow: 0 1px 3px rgba(0,0,0,0.12); }
+    html[data-hub-theme=light] { --bg: #F8FAFC; --surface: #FFFFFF; --surface2: #F1F5F9; --text1: #0F172A; --text2: #475569; --text3: #94A3B8; --rule: #E2E8F0; }
+    html[data-hub-theme=light] body { background: #F8FAFC; }
+    html[data-hub-theme=light] .bg-glow { background: radial-gradient(70% 45% at 50% -5%, rgba(37,99,235,0.06) 0%, transparent 65%); }
+    @media (prefers-color-scheme: light) {
+      html:not([data-hub-theme=dark]) { --bg: #F8FAFC; --surface: #FFFFFF; --surface2: #F1F5F9; --text1: #0F172A; --text2: #475569; --text3: #94A3B8; --rule: #E2E8F0; }
+      html:not([data-hub-theme=dark]) body { background: #F8FAFC; }
+      html:not([data-hub-theme=dark]) .bg-glow { background: radial-gradient(70% 45% at 50% -5%, rgba(37,99,235,0.06) 0%, transparent 65%); }
+      html:not([data-hub-theme=dark]) .hub-nav { background: rgba(255,255,255,0.92); border-bottom-color: rgba(15,23,42,0.08); }
+      html:not([data-hub-theme=dark]) .hub-nav .back-nav { color: #475569; }
+      html:not([data-hub-theme=dark]) .hub-nav .back-nav:hover { color: #0F172A; }
+      html:not([data-hub-theme=dark]) .hub-theme-toggle { background: rgba(15,23,42,0.06); border-color: rgba(15,23,42,0.1); }
+      html:not([data-hub-theme=dark]) .hub-theme-toggle button { color: #94A3B8; }
+      html:not([data-hub-theme=dark]) .hub-theme-toggle button:hover { color: #0F172A; }
+      html:not([data-hub-theme=dark]) .hub-theme-toggle button.active { background: #fff; color: #0F172A; box-shadow: 0 1px 3px rgba(0,0,0,0.12); }
+    }
+
+    header { position: relative; z-index: 1; text-align: center; padding: 112px 24px 48px; }
+    .header-eyebrow { display: inline-block; font-size: 10px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--blue); border: 1px solid rgba(37,99,235,0.3); background: rgba(37,99,235,0.07); padding: 5px 16px; border-radius: 100px; margin-bottom: 24px; }
+    header h1 { font-family: 'Inter Tight', sans-serif; font-size: clamp(32px, 5vw, 48px); font-weight: 800; letter-spacing: -0.03em; line-height: 1.1; color: var(--text1); margin-bottom: 16px; }
+    header p { font-size: 15px; color: var(--text2); line-height: 1.7; max-width: 620px; margin: 0 auto; }
+
+    .content { position: relative; z-index: 1; max-width: 860px; width: 100%; margin: 0 auto; padding: 0 32px 100px; }
+
+    .intro { font-size: 16px; color: var(--text2); line-height: 1.8; max-width: 720px; margin: 0 auto 48px; text-align: center; }
+
+    .market-card {
+      background: var(--surface); border: 1px solid var(--rule); border-radius: 14px;
+      padding: 36px; margin-bottom: 24px; transition: border-color 0.2s;
+    }
+    .market-card:hover { border-color: var(--blue); }
+    .market-eyebrow { font-size: 10px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 10px; }
+    .market-h2 { font-family: 'Inter Tight', sans-serif; font-size: 22px; font-weight: 800; letter-spacing: -0.02em; margin-bottom: 16px; line-height: 1.2; }
+    .market-body { font-size: 15px; color: var(--text2); line-height: 1.75; margin-bottom: 20px; }
+    .market-roles { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px; }
+    .role-tag { font-size: 11px; font-weight: 600; padding: 4px 12px; border-radius: 100px; background: var(--surface2); color: var(--text2); border: 1px solid var(--rule); }
+    .market-regs { font-size: 13px; color: var(--text3); margin-bottom: 20px; }
+    .market-regs strong { color: var(--text2); }
+    .market-question { font-size: 14px; color: var(--text1); font-style: italic; padding: 16px 20px; background: var(--surface2); border-radius: 10px; border-left: 3px solid var(--blue); margin-bottom: 20px; line-height: 1.6; }
+    .market-cta { display: inline-block; font-size: 13px; font-weight: 700; color: var(--blue); text-decoration: none; transition: color 0.15s; }
+    .market-cta:hover { color: var(--text1); }
+
+    .common-section { margin-top: 56px; }
+    .section-divider { display: flex; align-items: center; gap: 16px; margin-bottom: 28px; }
+    .section-divider .line { flex: 1; height: 1px; background: var(--rule); }
+    .section-divider .label { font-size: 11px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; white-space: nowrap; }
+    .common-body { font-size: 15px; color: var(--text2); line-height: 1.75; }
+    .common-body p { margin-bottom: 14px; }
+
+    .hub-footer { text-align: center; padding: 48px 24px; font-size: 12px; color: var(--text3); border-top: 1px solid var(--rule); position: relative; z-index: 1; }
+
+    @media (max-width: 640px) { .content { padding: 0 16px 80px; } .market-card { padding: 24px; } }
+  </style>
+</head>
+<body>
+<div class="bg-glow"></div>
+<nav class="hub-nav">
+  <a class="back-nav" href="index.html">&larr; FCI Brand Hub</a>
+  <div class="hub-theme-toggle">
+    <button onclick="document.documentElement.setAttribute('data-hub-theme','dark');this.classList.add('active');this.nextElementSibling.classList.remove('active')">Dark</button>
+    <button onclick="document.documentElement.setAttribute('data-hub-theme','light');this.classList.add('active');this.previousElementSibling.classList.remove('active')">Light</button>
+  </div>
+</nav>
+
+<header>
+  <div class="header-eyebrow">Phase 3 &middot; New Content</div>
+  <h1>Who We Serve</h1>
+  <p>Website copy for /markets — the landing page that introduces all three markets FCI serves and routes visitors to the right conversation.</p>
+</header>
+
+<div class="content">
+
+  <div class="intro">
+    FCI implements cybersecurity controls and produces evidence of compliance for firms in regulated financial services. Every market we serve shares the same structural problem: the home office sets the security program, but the sales offices, branches, and field agents operate outside direct IT control. FCI closes that gap.
+  </div>
+
+  <!-- ═══ BROKER-DEALERS ═══ -->
+  <div class="market-card">
+    <div class="market-eyebrow" style="color: var(--blue);">Market 1</div>
+    <div class="market-h2">Broker-Dealers &amp; Branch Offices</div>
+    <div class="market-body">The broker-dealer home office sets the compliance program. That program must reach every branch and every registered representative — including those working from independent offices or home locations. FCI enforces controls across the full branch network and produces FINRA and SEC-aligned evidence continuously, so the home office can confirm every branch is in good order before the examiner asks.</div>
+    <div class="market-roles">
+      <span class="role-tag">Owner / Managing Partner</span>
+      <span class="role-tag">CISO / CCO</span>
+      <span class="role-tag">Field Compliance Officer</span>
+      <span class="role-tag">IT Manager</span>
+    </div>
+    <div class="market-regs"><strong>Regulatory frameworks:</strong> SEC Reg S-P, FINRA Rules 3110 &amp; 4370, NYDFS 23 NYCRR 500</div>
+    <div class="market-question">If FINRA asked for evidence of endpoint protection across every registered representative tomorrow, could your home office produce it?</div>
+    <div class="market-cta" href="#">Learn more about FCI for Broker-Dealers &rarr;</div>
+  </div>
+
+  <!-- ═══ INSURANCE ═══ -->
+  <div class="market-card">
+    <div class="market-eyebrow" style="color: var(--emerald);">Market 2</div>
+    <div class="market-h2">Insurance Carriers &amp; Agencies</div>
+    <div class="market-body">Your appointed agents and independent field offices operate outside your direct IT control. State regulators and your own cyber insurer both expect proof that controls extend to the field. FCI delivers that proof continuously — enforcing NAIC-aligned controls across every agency and producing the documentation state examiners require.</div>
+    <div class="market-roles">
+      <span class="role-tag">Owner / Executive Leadership</span>
+      <span class="role-tag">CISO / CCO</span>
+      <span class="role-tag">Field Compliance Officer</span>
+      <span class="role-tag">IT Manager</span>
+    </div>
+    <div class="market-regs"><strong>Regulatory frameworks:</strong> NAIC Insurance Data Security Model Law, state-level cybersecurity requirements, cyber insurer documentation standards</div>
+    <div class="market-question">If a cyber incident hit one of your appointed agencies today, could you document the controls that were in place at the time it happened?</div>
+    <div class="market-cta" href="#">Learn more about FCI for Insurance &rarr;</div>
+  </div>
+
+  <!-- ═══ RIAs ═══ -->
+  <div class="market-card">
+    <div class="market-eyebrow" style="color: var(--violet);">Market 3</div>
+    <div class="market-h2">Registered Investment Advisers</div>
+    <div class="market-body">FCI extends cybersecurity controls to every affiliated advisor — regardless of location, device ownership, or technical expertise — and produces the SEC-aligned documentation that examiners and cyber insurers require, continuously and automatically. A cybersecurity breach doesn't just create regulatory exposure for an RIA — it erodes the client trust the entire business is built on.</div>
+    <div class="market-roles">
+      <span class="role-tag">Owner / Managing Partner</span>
+      <span class="role-tag">CCO / Compliance Lead</span>
+      <span class="role-tag">Field Compliance Officer</span>
+      <span class="role-tag">IT Manager</span>
+    </div>
+    <div class="market-regs"><strong>Regulatory frameworks:</strong> SEC Reg S-P (Amended), SEC Examination Priorities, state-level cybersecurity requirements</div>
+    <div class="market-question">If the SEC examined your firm next month, could you show documented evidence of controls across every advisor — including those working from home?</div>
+    <div class="market-cta" href="#">Learn more about FCI for RIAs &rarr;</div>
+  </div>
+
+  <!-- ═══ WHAT'S COMMON ═══ -->
+  <div class="common-section">
+    <div class="section-divider">
+      <div class="line"></div>
+      <div class="label" style="color: var(--amber);">What Every Market Shares</div>
+      <div class="line"></div>
+    </div>
+    <div class="common-body">
+      <p>Regardless of the specific regulatory framework, every firm FCI serves faces the same structural challenge: the home office or headquarters defines the cybersecurity program, but the field — branches, agencies, advisor offices — operates outside direct IT control. The gap between the program on paper and what can be verified in the field is where regulatory exposure lives.</p>
+      <p>FCI closes that gap by implementing controls at the endpoint level across the entire distributed operation, then producing evidence of those controls continuously through the CISO Portal. The firm's compliance team does not prepare for exams. They open a living record that has been building itself since the day the service went live.</p>
+      <p>Every FCI engagement covers the same core: managed endpoint protection, Zero Trust enforcement, compliance documentation, and 24/7 SOC monitoring. The difference between markets is which regulators are asking and which frameworks apply — not what FCI deploys.</p>
+    </div>
+  </div>
+
+</div>
+
+<footer class="hub-footer">FCI Brand Hub &middot; Markets Overview &middot; Phase 3 Content</footer>
+</body>
+</html>

@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FCI — Contact Page Copy</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Inter+Tight:wght@600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    *, ::before, ::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root { --bg: #060B14; --surface: #0D1626; --surface2: #111F33; --blue: #2563EB; --blue2: rgba(37,99,235,0.12); --emerald: #10B981; --emerald2: rgba(16,185,129,0.10); --amber: #F59E0B; --amber2: rgba(245,158,11,0.10); --violet: #A855F7; --violet2: rgba(168,85,247,0.10); --text1: #F1F5F9; --text2: #94A3B8; --text3: #475569; --rule: #1A2B40; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text1); min-height: 100vh; -webkit-font-smoothing: antialiased; }
+    ::selection { background: var(--blue); color: #fff; }
+    .bg-glow { position: fixed; inset: 0; pointer-events: none; z-index: 0; background: radial-gradient(70% 45% at 50% -5%, rgba(37,99,235,0.10) 0%, transparent 65%); }
+
+    .hub-nav { position: fixed; top: 0; left: 0; right: 0; height: 52px; z-index: 200; display: flex; align-items: center; justify-content: space-between; padding: 0 32px; background: rgba(6,11,20,0.88); backdrop-filter: blur(14px); border-bottom: 1px solid var(--rule); }
+    .hub-nav .back-nav { font-size: 13px; font-weight: 600; text-decoration: none; color: var(--text3); transition: color 0.15s; }
+    .hub-nav .back-nav:hover { color: var(--text1); }
+    .hub-theme-toggle { display: flex; align-items: center; background: var(--surface2); border: 1px solid var(--rule); border-radius: 8px; padding: 3px; gap: 2px; }
+    .hub-theme-toggle button { font-family: inherit; font-size: 11px; font-weight: 600; letter-spacing: 0.03em; color: var(--text3); background: transparent; border: none; cursor: pointer; padding: 4px 10px; border-radius: 6px; line-height: 1; transition: background 0.15s, color 0.15s; }
+    .hub-theme-toggle button:hover { color: var(--text1); }
+    .hub-theme-toggle button.active { background: var(--surface); color: var(--text1); box-shadow: 0 1px 3px rgba(0,0,0,0.15); }
+    html[data-hub-theme=light] { --bg: #F8FAFC; --surface: #FFFFFF; --surface2: #F1F5F9; --text1: #0F172A; --text2: #475569; --text3: #94A3B8; --rule: #E2E8F0; }
+    html[data-hub-theme=light] body { background: #F8FAFC; }
+    html[data-hub-theme=light] .hub-nav { background: rgba(255,255,255,0.92); border-bottom-color: rgba(15,23,42,0.08); }
+    html[data-hub-theme=light] .hub-nav .back-nav { color: #475569; }
+    html[data-hub-theme=light] .hub-nav .back-nav:hover { color: #0F172A; }
+    html[data-hub-theme=light] .hub-theme-toggle { background: rgba(15,23,42,0.06); border-color: rgba(15,23,42,0.1); }
+    html[data-hub-theme=light] .hub-theme-toggle button { color: #94A3B8; }
+    html[data-hub-theme=light] .hub-theme-toggle button:hover { color: #0F172A; }
+    html[data-hub-theme=light] .hub-theme-toggle button.active { background: #fff; color: #0F172A; box-shadow: 0 1px 3px rgba(0,0,0,0.12); }
+    @media (prefers-color-scheme: light) {
+      html:not([data-hub-theme=dark]) { --bg: #F8FAFC; --surface: #FFFFFF; --surface2: #F1F5F9; --text1: #0F172A; --text2: #475569; --text3: #94A3B8; --rule: #E2E8F0; }
+      html:not([data-hub-theme=dark]) body { background: #F8FAFC; }
+      html:not([data-hub-theme=dark]) .hub-nav { background: rgba(255,255,255,0.92); border-bottom-color: rgba(15,23,42,0.08); }
+      html:not([data-hub-theme=dark]) .hub-nav .back-nav { color: #475569; }
+      html:not([data-hub-theme=dark]) .hub-nav .back-nav:hover { color: #0F172A; }
+      html:not([data-hub-theme=dark]) .hub-theme-toggle { background: rgba(15,23,42,0.06); border-color: rgba(15,23,42,0.1); }
+      html:not([data-hub-theme=dark]) .hub-theme-toggle button { color: #94A3B8; }
+      html:not([data-hub-theme=dark]) .hub-theme-toggle button:hover { color: #0F172A; }
+      html:not([data-hub-theme=dark]) .hub-theme-toggle button.active { background: #fff; color: #0F172A; box-shadow: 0 1px 3px rgba(0,0,0,0.12); }
+    }
+
+    header { position: relative; z-index: 1; text-align: center; padding: 112px 24px 48px; }
+    .header-eyebrow { display: inline-block; font-size: 10px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--amber); border: 1px solid rgba(245,158,11,0.3); background: rgba(245,158,11,0.07); padding: 5px 16px; border-radius: 100px; margin-bottom: 24px; }
+    header h1 { font-family: 'Inter Tight', sans-serif; font-size: clamp(32px, 5vw, 48px); font-weight: 800; letter-spacing: -0.03em; line-height: 1.1; color: var(--text1); margin-bottom: 16px; }
+    header p { font-size: 15px; color: var(--text2); line-height: 1.7; max-width: 620px; margin: 0 auto; }
+
+    .content { position: relative; z-index: 1; max-width: 860px; width: 100%; margin: 0 auto; padding: 0 32px 100px; }
+
+    .section-divider { display: flex; align-items: center; gap: 16px; margin: 48px 0 28px; }
+    .section-divider .line { flex: 1; height: 1px; background: var(--rule); }
+    .section-divider .label { font-size: 11px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; white-space: nowrap; }
+
+    .copy-section { background: var(--surface); border: 1px solid var(--rule); border-radius: 14px; padding: 32px; margin-bottom: 20px; }
+    .copy-label { font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text3); margin-bottom: 10px; }
+    .copy-h2 { font-family: 'Inter Tight', sans-serif; font-size: 20px; font-weight: 800; letter-spacing: -0.02em; margin-bottom: 14px; }
+    .copy-body { font-size: 15px; color: var(--text2); line-height: 1.75; }
+    .copy-body p { margin-bottom: 12px; }
+    .copy-body p:last-child { margin-bottom: 0; }
+
+    .contact-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; margin-top: 20px; }
+    .contact-card { background: var(--surface2); border: 1px solid var(--rule); border-radius: 10px; padding: 20px; }
+    .contact-type { font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--amber); margin-bottom: 8px; }
+    .contact-value { font-size: 16px; font-weight: 700; color: var(--text1); margin-bottom: 4px; }
+    .contact-desc { font-size: 13px; color: var(--text3); }
+
+    .form-fields { margin-top: 20px; }
+    .form-row { display: flex; gap: 12px; margin-bottom: 12px; }
+    .form-field { flex: 1; background: var(--surface2); border: 1px solid var(--rule); border-radius: 8px; padding: 12px 16px; font-size: 13px; color: var(--text3); }
+    .form-field.full { flex: none; width: 100%; min-height: 100px; }
+
+    .hub-footer { text-align: center; padding: 48px 24px; font-size: 12px; color: var(--text3); border-top: 1px solid var(--rule); position: relative; z-index: 1; }
+    @media (max-width: 640px) { .content { padding: 0 16px 80px; } .form-row { flex-direction: column; } }
+  </style>
+</head>
+<body>
+<div class="bg-glow"></div>
+<nav class="hub-nav">
+  <a class="back-nav" href="index.html">&larr; FCI Brand Hub</a>
+  <div class="hub-theme-toggle">
+    <button onclick="document.documentElement.setAttribute('data-hub-theme','dark');this.classList.add('active');this.nextElementSibling.classList.remove('active')">Dark</button>
+    <button onclick="document.documentElement.setAttribute('data-hub-theme','light');this.classList.add('active');this.previousElementSibling.classList.remove('active')">Light</button>
+  </div>
+</nav>
+
+<header>
+  <div class="header-eyebrow">Phase 3 &middot; New Content</div>
+  <h1>Contact &amp; Support</h1>
+  <p>Website copy for /contact and /support — two separate pages for prospects and existing clients.</p>
+</header>
+
+<div class="content">
+
+  <!-- ═══ CONTACT PAGE ═══ -->
+  <div class="section-divider">
+    <div class="line"></div>
+    <div class="label" style="color: var(--amber);">Contact Page &middot; /contact</div>
+    <div class="line"></div>
+  </div>
+
+  <div class="copy-section">
+    <div class="copy-label">Page Headline</div>
+    <div class="copy-h2">Start with a 30-minute gap analysis.</div>
+    <div class="copy-body">
+      <p>Tell us about your firm and we will schedule a 30-minute gap analysis — a structured conversation that reveals where your cybersecurity controls, evidence, and regulatory alignment actually stand today. No sales pitch. No pressure. Just clarity.</p>
+    </div>
+  </div>
+
+  <div class="copy-section">
+    <div class="copy-label">Form Fields</div>
+    <div class="form-fields">
+      <div class="form-row">
+        <div class="form-field">First Name</div>
+        <div class="form-field">Last Name</div>
+      </div>
+      <div class="form-row">
+        <div class="form-field">Email Address</div>
+        <div class="form-field">Phone Number</div>
+      </div>
+      <div class="form-row">
+        <div class="form-field">Company / Firm Name</div>
+        <div class="form-field">Your Role / Title</div>
+      </div>
+      <div class="form-row">
+        <div class="form-field">Market: Broker-Dealer &amp; Branch Offices / Insurance Carrier &amp; Agency / RIA / Other</div>
+      </div>
+      <div class="form-row">
+        <div class="form-field">Approximate number of endpoints (devices)</div>
+      </div>
+      <div class="form-row">
+        <div class="form-field full">What prompted you to reach out? (upcoming exam, board request, incident, cyber insurance renewal, general interest)</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="copy-section">
+    <div class="copy-label">What Happens Next</div>
+    <div class="copy-body">
+      <p>After you submit, a member of the FCI team will reach out within one business day to schedule your gap analysis. The session takes approximately 30 minutes, covers six security domains, and gives your firm a clear picture of where controls exist, where gaps remain, and what evidence you can produce today versus what a regulator or insurer would expect.</p>
+      <p>There is no commitment, no contract, and no obligation beyond the conversation itself.</p>
+    </div>
+  </div>
+
+  <div class="copy-section">
+    <div class="copy-label">Contact Information</div>
+    <div class="contact-grid">
+      <div class="contact-card">
+        <div class="contact-type">General Inquiries</div>
+        <div class="contact-value">888-434-6443</div>
+        <div class="contact-desc">Sales and partnership inquiries</div>
+      </div>
+      <div class="contact-card">
+        <div class="contact-type">Email</div>
+        <div class="contact-value">info@fcicyber.com</div>
+        <div class="contact-desc">General correspondence</div>
+      </div>
+      <div class="contact-card">
+        <div class="contact-type">Press</div>
+        <div class="contact-value">press@fcicyber.com</div>
+        <div class="contact-desc">Media inquiries and speaking requests</div>
+      </div>
+      <div class="contact-card">
+        <div class="contact-type">Headquarters</div>
+        <div class="contact-value">140 E. Ridgewood Ave</div>
+        <div class="contact-desc">Paramus, NJ 07652</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ SUPPORT PAGE ═══ -->
+  <div class="section-divider">
+    <div class="line"></div>
+    <div class="label" style="color: var(--emerald);">Support Page &middot; /support</div>
+    <div class="line"></div>
+  </div>
+
+  <div class="copy-section">
+    <div class="copy-label">Page Headline</div>
+    <div class="copy-h2">FCI Technical Support</div>
+    <div class="copy-body">
+      <p>FCI support is staffed by background-checked cybersecurity technicians located in the United States. No call center agents. No scripts. No bots. When you call, a real technician answers.</p>
+    </div>
+  </div>
+
+  <div class="copy-section">
+    <div class="copy-label">Support Channels</div>
+    <div class="contact-grid">
+      <div class="contact-card">
+        <div class="contact-type">Technical Support</div>
+        <div class="contact-value">973-227-8878</div>
+        <div class="contact-desc">Direct line to FCI technicians</div>
+      </div>
+      <div class="contact-card">
+        <div class="contact-type">Email Support</div>
+        <div class="contact-value">support@fcicyber.com</div>
+        <div class="contact-desc">Open a support ticket</div>
+      </div>
+      <div class="contact-card">
+        <div class="contact-type">SOC — 24/7</div>
+        <div class="contact-value">Security Operations Center</div>
+        <div class="contact-desc">Monitoring and incident response around the clock, 365 days/year</div>
+      </div>
+      <div class="contact-card">
+        <div class="contact-type">CISO Portal</div>
+        <div class="contact-value">portal.fcicyber.com</div>
+        <div class="contact-desc">Log in to view compliance status, device inventory, and evidence</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="copy-section">
+    <div class="copy-label">Breach or Security Incident</div>
+    <div class="copy-h2">If you suspect a breach or active security incident</div>
+    <div class="copy-body">
+      <p>Call 973-227-8878 immediately and identify the call as a security incident. FCI's SOC team will initiate the incident response protocol, which includes device isolation, forensic evidence preservation, and coordinated communication with your compliance team.</p>
+      <p>Do not attempt to remediate the affected device yourself. Do not power off the device unless instructed to do so by the SOC team. Preserving the state of the device at the time of the incident is critical for forensic analysis and regulatory reporting.</p>
+    </div>
+  </div>
+
+  <div class="copy-section">
+    <div class="copy-label">Support Hours</div>
+    <div class="copy-body">
+      <p>FCI technical support is available during business hours, Eastern Time. The Security Operations Center (SOC) operates 24/7, 365 days per year — security alerts and incident response are never delayed by business hours.</p>
+    </div>
+  </div>
+
+</div>
+
+<footer class="hub-footer">FCI Brand Hub &middot; Contact &amp; Support &middot; Phase 3 Content</footer>
+</body>
+</html>

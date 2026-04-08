@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FCI — Solutions Overview</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Inter+Tight:wght@600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    *, ::before, ::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root { --bg: #060B14; --surface: #0D1626; --surface2: #111F33; --blue: #2563EB; --blue2: rgba(37,99,235,0.12); --sky: #0EA5E9; --sky2: rgba(14,165,233,0.12); --emerald: #10B981; --emerald2: rgba(16,185,129,0.10); --amber: #F59E0B; --amber2: rgba(245,158,11,0.10); --violet: #A855F7; --violet2: rgba(168,85,247,0.10); --indigo: #6366F1; --indigo2: rgba(99,102,241,0.10); --text1: #F1F5F9; --text2: #94A3B8; --text3: #475569; --rule: #1A2B40; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text1); min-height: 100vh; -webkit-font-smoothing: antialiased; }
+    ::selection { background: var(--blue); color: #fff; }
+    .bg-glow { position: fixed; inset: 0; pointer-events: none; z-index: 0; background: radial-gradient(70% 45% at 50% -5%, rgba(37,99,235,0.10) 0%, transparent 65%), radial-gradient(35% 28% at 6% 88%, rgba(168,85,247,0.06) 0%, transparent 55%); }
+
+    .hub-nav { position: fixed; top: 0; left: 0; right: 0; height: 52px; z-index: 200; display: flex; align-items: center; justify-content: space-between; padding: 0 32px; background: rgba(6,11,20,0.88); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); border-bottom: 1px solid var(--rule); }
+    .hub-nav .back-nav { font-size: 13px; font-weight: 600; text-decoration: none; color: var(--text3); transition: color 0.15s; }
+    .hub-nav .back-nav:hover { color: var(--text1); }
+    .hub-theme-toggle { display: flex; align-items: center; background: var(--surface2); border: 1px solid var(--rule); border-radius: 8px; padding: 3px; gap: 2px; }
+    .hub-theme-toggle button { font-family: inherit; font-size: 11px; font-weight: 600; letter-spacing: 0.03em; color: var(--text3); background: transparent; border: none; cursor: pointer; padding: 4px 10px; border-radius: 6px; line-height: 1; transition: background 0.15s, color 0.15s; }
+    .hub-theme-toggle button:hover { color: var(--text1); }
+    .hub-theme-toggle button.active { background: var(--surface); color: var(--text1); box-shadow: 0 1px 3px rgba(0,0,0,0.15); }
+    html[data-hub-theme=light] .hub-nav { background: rgba(255,255,255,0.92); border-bottom-color: rgba(15,23,42,0.08); }
+    html[data-hub-theme=light] .hub-nav .back-nav { color: #475569; }
+    html[data-hub-theme=light] .hub-nav .back-nav:hover { color: #0F172A; }
+    html[data-hub-theme=light] .hub-theme-toggle { background: rgba(15,23,42,0.06); border-color: rgba(15,23,42,0.1); }
+    html[data-hub-theme=light] .hub-theme-toggle button { color: #94A3B8; }
+    html[data-hub-theme=light] .hub-theme-toggle button:hover { color: #0F172A; }
+    html[data-hub-theme=light] .hub-theme-toggle button.active { background: #fff; color: #0F172A; box-shadow: 0 1px 3px rgba(0,0,0,0.12); }
+    html[data-hub-theme=light] { --bg: #F8FAFC; --surface: #FFFFFF; --surface2: #F1F5F9; --text1: #0F172A; --text2: #475569; --text3: #94A3B8; --rule: #E2E8F0; }
+    html[data-hub-theme=light] body { background: #F8FAFC; }
+    html[data-hub-theme=light] .bg-glow { background: radial-gradient(70% 45% at 50% -5%, rgba(37,99,235,0.06) 0%, transparent 65%); }
+    @media (prefers-color-scheme: light) {
+      html:not([data-hub-theme=dark]) { --bg: #F8FAFC; --surface: #FFFFFF; --surface2: #F1F5F9; --text1: #0F172A; --text2: #475569; --text3: #94A3B8; --rule: #E2E8F0; }
+      html:not([data-hub-theme=dark]) body { background: #F8FAFC; }
+      html:not([data-hub-theme=dark]) .bg-glow { background: radial-gradient(70% 45% at 50% -5%, rgba(37,99,235,0.06) 0%, transparent 65%); }
+      html:not([data-hub-theme=dark]) .hub-nav { background: rgba(255,255,255,0.92); border-bottom-color: rgba(15,23,42,0.08); }
+      html:not([data-hub-theme=dark]) .hub-nav .back-nav { color: #475569; }
+      html:not([data-hub-theme=dark]) .hub-nav .back-nav:hover { color: #0F172A; }
+      html:not([data-hub-theme=dark]) .hub-theme-toggle { background: rgba(15,23,42,0.06); border-color: rgba(15,23,42,0.1); }
+      html:not([data-hub-theme=dark]) .hub-theme-toggle button { color: #94A3B8; }
+      html:not([data-hub-theme=dark]) .hub-theme-toggle button:hover { color: #0F172A; }
+      html:not([data-hub-theme=dark]) .hub-theme-toggle button.active { background: #fff; color: #0F172A; box-shadow: 0 1px 3px rgba(0,0,0,0.12); }
+    }
+
+    header { position: relative; z-index: 1; text-align: center; padding: 112px 24px 48px; }
+    .header-eyebrow { display: inline-block; font-size: 10px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--emerald); border: 1px solid rgba(16,185,129,0.3); background: rgba(16,185,129,0.07); padding: 5px 16px; border-radius: 100px; margin-bottom: 24px; }
+    header h1 { font-family: 'Inter Tight', sans-serif; font-size: clamp(32px, 5vw, 48px); font-weight: 800; letter-spacing: -0.03em; line-height: 1.1; color: var(--text1); margin-bottom: 16px; }
+    header p { font-size: 15px; color: var(--text2); line-height: 1.7; max-width: 620px; margin: 0 auto; }
+
+    .content { position: relative; z-index: 1; max-width: 860px; width: 100%; margin: 0 auto; padding: 0 32px 100px; }
+
+    .intro { font-size: 16px; color: var(--text2); line-height: 1.8; max-width: 720px; margin: 0 auto 48px; text-align: center; }
+
+    .solution-card {
+      background: var(--surface); border: 1px solid var(--rule); border-radius: 14px;
+      padding: 36px; margin-bottom: 24px; transition: border-color 0.2s;
+    }
+    .solution-card:hover { border-color: var(--emerald); }
+    .solution-num { font-size: 11px; font-weight: 800; letter-spacing: 0.06em; margin-bottom: 8px; }
+    .solution-h2 { font-family: 'Inter Tight', sans-serif; font-size: 22px; font-weight: 800; letter-spacing: -0.02em; margin-bottom: 6px; line-height: 1.2; }
+    .solution-tagline { font-size: 14px; color: var(--emerald); font-weight: 600; margin-bottom: 16px; }
+    .solution-body { font-size: 15px; color: var(--text2); line-height: 1.75; margin-bottom: 20px; }
+    .solution-domains { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px; }
+    .domain-tag { font-size: 11px; font-weight: 600; padding: 4px 12px; border-radius: 100px; background: var(--emerald2); color: var(--emerald); border: 1px solid rgba(16,185,129,0.2); }
+    .solution-cta { display: inline-block; font-size: 13px; font-weight: 700; color: var(--emerald); text-decoration: none; }
+
+    .how-section { margin-top: 56px; }
+    .section-divider { display: flex; align-items: center; gap: 16px; margin-bottom: 28px; }
+    .section-divider .line { flex: 1; height: 1px; background: var(--rule); }
+    .section-divider .label { font-size: 11px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; white-space: nowrap; }
+    .how-body { font-size: 15px; color: var(--text2); line-height: 1.75; }
+    .how-body p { margin-bottom: 14px; }
+
+    .hub-footer { text-align: center; padding: 48px 24px; font-size: 12px; color: var(--text3); border-top: 1px solid var(--rule); position: relative; z-index: 1; }
+    @media (max-width: 640px) { .content { padding: 0 16px 80px; } .solution-card { padding: 24px; } }
+  </style>
+</head>
+<body>
+<div class="bg-glow"></div>
+<nav class="hub-nav">
+  <a class="back-nav" href="index.html">&larr; FCI Brand Hub</a>
+  <div class="hub-theme-toggle">
+    <button onclick="document.documentElement.setAttribute('data-hub-theme','dark');this.classList.add('active');this.nextElementSibling.classList.remove('active')">Dark</button>
+    <button onclick="document.documentElement.setAttribute('data-hub-theme','light');this.classList.add('active');this.previousElementSibling.classList.remove('active')">Light</button>
+  </div>
+</nav>
+
+<header>
+  <div class="header-eyebrow">Phase 3 &middot; New Content</div>
+  <h1>What We Do</h1>
+  <p>Website copy for /solutions — the landing page that maps FCI's complete solution set and shows how they work together as one integrated service.</p>
+</header>
+
+<div class="content">
+
+  <div class="intro">
+    FCI does not sell point products. Every solution listed here works as part of one integrated managed cybersecurity service — every component feeds the CISO Portal, every action produces evidence, every alert reaches a human analyst. The question isn't which solution to buy. It's which combination your firm's regulatory environment requires.
+  </div>
+
+  <!-- ═══ MANAGED CYBERSECURITY ═══ -->
+  <div class="solution-card">
+    <div class="solution-num" style="color: var(--blue);">01</div>
+    <div class="solution-h2">Managed Cybersecurity</div>
+    <div class="solution-tagline">Holistic cybersecurity automated for scale.</div>
+    <div class="solution-body">FCI's managed cybersecurity covers six security domains — endpoint, user, network, data, cloud app, and firm. Every domain is managed as part of one integrated service, not a stack of disconnected tools. Protection deploys to every device in the distributed operation. Monitoring runs 24/7 through a staffed SOC. Evidence of every control builds automatically in the CISO Portal.</div>
+    <div class="solution-domains">
+      <span class="domain-tag">Endpoint</span>
+      <span class="domain-tag">User</span>
+      <span class="domain-tag">Network</span>
+      <span class="domain-tag">Data</span>
+      <span class="domain-tag">Cloud App</span>
+      <span class="domain-tag">Firm</span>
+    </div>
+    <div class="solution-cta">Explore Managed Cybersecurity &rarr;</div>
+  </div>
+
+  <!-- ═══ ZERO TRUST ═══ -->
+  <div class="solution-card">
+    <div class="solution-num" style="color: var(--indigo);">02</div>
+    <div class="solution-h2">Zero Trust</div>
+    <div class="solution-tagline">Verify every user, device, and network. Before they reach anything.</div>
+    <div class="solution-body">Zero Trust is not a product. It is a principle: nothing on your network is trusted by default. Every access request is verified — user identity, device health, location, and context — before a connection is allowed. FCI deploys this model pragmatically for firms with distributed field operations. When one device is compromised, Zero Trust determines how far the damage spreads.</div>
+    <div class="solution-domains">
+      <span class="domain-tag">Always-On VPN</span>
+      <span class="domain-tag">Identity Verification</span>
+      <span class="domain-tag">Device Health</span>
+      <span class="domain-tag">Network Segmentation</span>
+    </div>
+    <div class="solution-cta">Explore Zero Trust &rarr;</div>
+  </div>
+
+  <!-- ═══ CISO PORTAL ═══ -->
+  <div class="solution-card">
+    <div class="solution-num" style="color: var(--violet);">03</div>
+    <div class="solution-h2">The CISO Portal</div>
+    <div class="solution-tagline">When the examiner asks for your compliance documentation, this is what you open.</div>
+    <div class="solution-body">The CISO Portal assembles your cybersecurity compliance record continuously — as a byproduct of the managed service itself. Not a reporting tool you fill in by hand. A living record that builds itself while your advisors are working. Every control mapped to the specific regulatory framework your firm operates under. Every device accounted for. Every exam cycle covered without a rebuild.</div>
+    <div class="solution-domains">
+      <span class="domain-tag">Compliance Evidence</span>
+      <span class="domain-tag">Regulatory Mapping</span>
+      <span class="domain-tag">Device Visibility</span>
+      <span class="domain-tag">Exam Readiness</span>
+    </div>
+    <div class="solution-cta">Explore The CISO Portal &rarr;</div>
+  </div>
+
+  <!-- ═══ COMPLIANCE ═══ -->
+  <div class="solution-card">
+    <div class="solution-num" style="color: var(--amber);">04</div>
+    <div class="solution-h2">Compliance &amp; Exam Readiness</div>
+    <div class="solution-tagline">The examiner is coming. The documentation is already there.</div>
+    <div class="solution-body">FCI maps every control to the specific frameworks your regulators use — SEC, FINRA, NYDFS, NAIC. Your compliance team does not prep for exams. They open the CISO Portal and show the work that has been building all year. Coverage spans Regulation S-P, FINRA Rules 3110 and 4370, the NYDFS Second Amendment (23 NYCRR 500), and NAIC Insurance Data Security Model Law requirements.</div>
+    <div class="solution-domains">
+      <span class="domain-tag">SEC</span>
+      <span class="domain-tag">FINRA</span>
+      <span class="domain-tag">NYDFS</span>
+      <span class="domain-tag">NAIC</span>
+    </div>
+    <div class="solution-cta">Explore Compliance &amp; Exam Readiness &rarr;</div>
+  </div>
+
+  <!-- ═══ SECURITY ASSESSMENT ═══ -->
+  <div class="solution-card">
+    <div class="solution-num" style="color: var(--sky);">05</div>
+    <div class="solution-h2">Security Assessment</div>
+    <div class="solution-tagline">Know exactly where your firm stands. Before your regulator asks.</div>
+    <div class="solution-body">FCI's Security Assessment is a layered, four-part evaluation of your firm's cybersecurity posture — covering controls, vulnerabilities, cloud configuration, and external exposure. In 60 to 80 percent of assessments, we find compliance gaps the firm did not know existed. The process starts with a 30-minute gap analysis and builds to a complete picture of the firm's security posture.</div>
+    <div class="solution-domains">
+      <span class="domain-tag">Gap Analysis</span>
+      <span class="domain-tag">Pen Testing</span>
+      <span class="domain-tag">Cloud Hardening</span>
+      <span class="domain-tag">External Exposure</span>
+    </div>
+    <div class="solution-cta">Explore Security Assessment &rarr;</div>
+  </div>
+
+  <!-- ═══ HOW THEY FIT TOGETHER ═══ -->
+  <div class="how-section">
+    <div class="section-divider">
+      <div class="line"></div>
+      <div class="label" style="color: var(--amber);">How They Fit Together</div>
+      <div class="line"></div>
+    </div>
+    <div class="how-body">
+      <p>Most firms start with a Security Assessment — a 30-minute gap analysis that reveals where the firm's controls, evidence, and regulatory alignment actually stand. From there, FCI implements the Managed Cybersecurity service across the firm's distributed operation, with Zero Trust enforcement determining how every device, user, and network connection is verified.</p>
+      <p>Every control FCI implements feeds the CISO Portal automatically. Compliance evidence is not a separate activity — it is a byproduct of the service running. When the firm's regulatory framework requires specific documentation (SEC, FINRA, NYDFS, NAIC), the CISO Portal maps each control to the applicable requirement and produces the evidence package the examiner or insurer expects.</p>
+      <p>The result: one integrated service that protects the firm, documents the protection, and produces the evidence — continuously, across every endpoint, every location, every exam cycle.</p>
+    </div>
+  </div>
+
+</div>
+
+<footer class="hub-footer">FCI Brand Hub &middot; Solutions Overview &middot; Phase 3 Content</footer>
+</body>
+</html>

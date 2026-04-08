@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FCI — AI Page Copy</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Inter+Tight:wght@600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    *, ::before, ::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root { --bg: #060B14; --surface: #0D1626; --surface2: #111F33; --blue: #2563EB; --blue2: rgba(37,99,235,0.12); --emerald: #10B981; --emerald2: rgba(16,185,129,0.10); --amber: #F59E0B; --amber2: rgba(245,158,11,0.10); --violet: #A855F7; --violet2: rgba(168,85,247,0.10); --text1: #F1F5F9; --text2: #94A3B8; --text3: #475569; --rule: #1A2B40; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text1); min-height: 100vh; -webkit-font-smoothing: antialiased; }
+    ::selection { background: var(--blue); color: #fff; }
+    .bg-glow { position: fixed; inset: 0; pointer-events: none; z-index: 0; background: radial-gradient(70% 45% at 50% -5%, rgba(37,99,235,0.10) 0%, transparent 65%); }
+
+    .hub-nav { position: fixed; top: 0; left: 0; right: 0; height: 52px; z-index: 200; display: flex; align-items: center; justify-content: space-between; padding: 0 32px; background: rgba(6,11,20,0.88); backdrop-filter: blur(14px); border-bottom: 1px solid var(--rule); }
+    .hub-nav .back-nav { font-size: 13px; font-weight: 600; text-decoration: none; color: var(--text3); transition: color 0.15s; }
+    .hub-nav .back-nav:hover { color: var(--text1); }
+    .hub-theme-toggle { display: flex; align-items: center; background: var(--surface2); border: 1px solid var(--rule); border-radius: 8px; padding: 3px; gap: 2px; }
+    .hub-theme-toggle button { font-family: inherit; font-size: 11px; font-weight: 600; letter-spacing: 0.03em; color: var(--text3); background: transparent; border: none; cursor: pointer; padding: 4px 10px; border-radius: 6px; line-height: 1; transition: background 0.15s, color 0.15s; }
+    .hub-theme-toggle button:hover { color: var(--text1); }
+    .hub-theme-toggle button.active { background: var(--surface); color: var(--text1); box-shadow: 0 1px 3px rgba(0,0,0,0.15); }
+    html[data-hub-theme=light] { --bg: #F8FAFC; --surface: #FFFFFF; --surface2: #F1F5F9; --text1: #0F172A; --text2: #475569; --text3: #94A3B8; --rule: #E2E8F0; }
+    html[data-hub-theme=light] body { background: #F8FAFC; }
+    html[data-hub-theme=light] .hub-nav { background: rgba(255,255,255,0.92); border-bottom-color: rgba(15,23,42,0.08); }
+    html[data-hub-theme=light] .hub-nav .back-nav { color: #475569; }
+    html[data-hub-theme=light] .hub-nav .back-nav:hover { color: #0F172A; }
+    html[data-hub-theme=light] .hub-theme-toggle { background: rgba(15,23,42,0.06); border-color: rgba(15,23,42,0.1); }
+    html[data-hub-theme=light] .hub-theme-toggle button { color: #94A3B8; }
+    html[data-hub-theme=light] .hub-theme-toggle button:hover { color: #0F172A; }
+    html[data-hub-theme=light] .hub-theme-toggle button.active { background: #fff; color: #0F172A; box-shadow: 0 1px 3px rgba(0,0,0,0.12); }
+    @media (prefers-color-scheme: light) {
+      html:not([data-hub-theme=dark]) { --bg: #F8FAFC; --surface: #FFFFFF; --surface2: #F1F5F9; --text1: #0F172A; --text2: #475569; --text3: #94A3B8; --rule: #E2E8F0; }
+      html:not([data-hub-theme=dark]) body { background: #F8FAFC; }
+      html:not([data-hub-theme=dark]) .hub-nav { background: rgba(255,255,255,0.92); border-bottom-color: rgba(15,23,42,0.08); }
+      html:not([data-hub-theme=dark]) .hub-nav .back-nav { color: #475569; }
+      html:not([data-hub-theme=dark]) .hub-nav .back-nav:hover { color: #0F172A; }
+      html:not([data-hub-theme=dark]) .hub-theme-toggle { background: rgba(15,23,42,0.06); border-color: rgba(15,23,42,0.1); }
+      html:not([data-hub-theme=dark]) .hub-theme-toggle button { color: #94A3B8; }
+      html:not([data-hub-theme=dark]) .hub-theme-toggle button:hover { color: #0F172A; }
+      html:not([data-hub-theme=dark]) .hub-theme-toggle button.active { background: #fff; color: #0F172A; box-shadow: 0 1px 3px rgba(0,0,0,0.12); }
+    }
+
+    header { position: relative; z-index: 1; text-align: center; padding: 112px 24px 48px; }
+    .header-eyebrow { display: inline-block; font-size: 10px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--violet); border: 1px solid rgba(168,85,247,0.3); background: rgba(168,85,247,0.07); padding: 5px 16px; border-radius: 100px; margin-bottom: 24px; }
+    header h1 { font-family: 'Inter Tight', sans-serif; font-size: clamp(32px, 5vw, 48px); font-weight: 800; letter-spacing: -0.03em; line-height: 1.1; color: var(--text1); margin-bottom: 16px; }
+    header p { font-size: 15px; color: var(--text2); line-height: 1.7; max-width: 620px; margin: 0 auto; }
+
+    .content { position: relative; z-index: 1; max-width: 820px; width: 100%; margin: 0 auto; padding: 0 32px 100px; }
+
+    .section-divider { display: flex; align-items: center; gap: 16px; margin: 48px 0 24px; }
+    .section-divider .line { flex: 1; height: 1px; background: var(--rule); }
+    .section-divider .label { font-size: 11px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; white-space: nowrap; }
+
+    .hero-copy { font-size: 16px; color: var(--text2); line-height: 1.8; max-width: 720px; margin: 0 auto 48px; text-align: center; }
+
+    .chapter-card { background: var(--surface); border: 1px solid var(--rule); border-radius: 14px; padding: 32px; margin-bottom: 20px; }
+    .chapter-num { font-size: 11px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 8px; }
+    .chapter-title { font-family: 'Inter Tight', sans-serif; font-size: 20px; font-weight: 800; letter-spacing: -0.02em; margin-bottom: 6px; }
+    .chapter-period { font-size: 12px; font-weight: 600; color: var(--text3); margin-bottom: 16px; }
+    .chapter-body { font-size: 15px; color: var(--text2); line-height: 1.75; margin-bottom: 14px; }
+    .chapter-body:last-child { margin-bottom: 0; }
+
+    .throughline { margin-top: 48px; padding: 32px; background: var(--surface); border: 1px solid var(--rule); border-radius: 14px; border-left: 4px solid var(--violet); }
+    .throughline p { font-size: 15px; color: var(--text2); line-height: 1.75; margin-bottom: 12px; }
+    .throughline p:last-child { margin-bottom: 0; }
+    .throughline strong { color: var(--text1); }
+
+    .hub-footer { text-align: center; padding: 48px 24px; font-size: 12px; color: var(--text3); border-top: 1px solid var(--rule); position: relative; z-index: 1; }
+    @media (max-width: 640px) { .content { padding: 0 16px 80px; } .chapter-card { padding: 24px; } }
+  </style>
+</head>
+<body>
+<div class="bg-glow"></div>
+<nav class="hub-nav">
+  <a class="back-nav" href="index.html">&larr; FCI Brand Hub</a>
+  <div class="hub-theme-toggle">
+    <button onclick="document.documentElement.setAttribute('data-hub-theme','dark');this.classList.add('active');this.nextElementSibling.classList.remove('active')">Dark</button>
+    <button onclick="document.documentElement.setAttribute('data-hub-theme','light');this.classList.add('active');this.previousElementSibling.classList.remove('active')">Light</button>
+  </div>
+</nav>
+
+<header>
+  <div class="header-eyebrow">Phase 3 &middot; New Content</div>
+  <h1>FCI &amp; AI</h1>
+  <p>Website copy for /resources/ai — how FCI uses AI operationally and helps firms govern AI risk. Adapted from the internal AI Messaging reference into public-facing content.</p>
+</header>
+
+<div class="content">
+
+  <div class="hero-copy">
+    FCI's relationship with AI is not new, not reactive, and not a marketing angle. It is a decade-long operational capability that has deepened as the technology — and its risks — have evolved. FCI both deploys AI to protect firms and helps firms govern AI to meet regulatory expectations.
+  </div>
+
+  <!-- ═══ CHAPTER 1 ═══ -->
+  <div class="section-divider">
+    <div class="line"></div>
+    <div class="label" style="color: var(--blue);">How FCI Uses AI</div>
+    <div class="line"></div>
+  </div>
+
+  <div class="chapter-card">
+    <div class="chapter-num" style="color: var(--blue);">Since 2017</div>
+    <div class="chapter-title">AI-Driven Threat Detection</div>
+    <div class="chapter-body">FCI began integrating AI into its threat detection capabilities in 2017 — years before the current wave of AI awareness in financial services. Traditional detection relies on matching known attack patterns. AI-driven detection identifies behavioral anomalies — deviations from baseline that indicate a threat even when the attack has never been seen before.</div>
+    <div class="chapter-body">Across 40,000+ endpoints, this means threats are caught faster, with fewer false positives, and without relying on the threat having been seen before. In the distributed sales office environment, where the threat surface is unpredictable and operates across devices and networks FCI does not control, pattern-matching alone is not enough.</div>
+  </div>
+
+  <div class="chapter-card">
+    <div class="chapter-num" style="color: var(--emerald);">Ongoing</div>
+    <div class="chapter-title">AI-Enhanced SIEM &amp; Log Analysis</div>
+    <div class="chapter-body">FCI uses AI within its Security Information and Event Management (SIEM) operations to analyze log data at a scale and speed that manual analysis cannot match. Patterns that indicate potential threats — lateral movement, unusual access patterns, credential misuse — are surfaced before they become incidents.</div>
+    <div class="chapter-body">AI-enhanced SIEM does not just detect — it documents. Every flagged event, every correlated pattern, every escalation creates a forensic trail that becomes part of the compliance evidence FCI produces through the CISO Portal.</div>
+  </div>
+
+  <!-- ═══ HOW FCI GOVERNS AI ═══ -->
+  <div class="section-divider">
+    <div class="line"></div>
+    <div class="label" style="color: var(--violet);">How FCI Helps Firms Govern AI</div>
+    <div class="line"></div>
+  </div>
+
+  <div class="chapter-card">
+    <div class="chapter-num" style="color: var(--violet);">Current</div>
+    <div class="chapter-title">Cloud Application AI Hardening</div>
+    <div class="chapter-body">The same AI tools that create business value also create risk. Financial services firms use cloud applications — Microsoft 365, CRM platforms, AI-powered productivity tools — that may expose client data to AI models if default settings are left in place.</div>
+    <div class="chapter-body">FCI's cloud application security hardening includes reviewing and enforcing controls on how AI features interact with the firm's data. This means configuring which AI features are enabled, which are restricted, and which are blocked entirely — based on what the firm's cybersecurity program requires and what regulators expect. The firm defines the policy. FCI implements the technical controls that enforce it.</div>
+  </div>
+
+  <div class="chapter-card">
+    <div class="chapter-num" style="color: var(--amber);">Current</div>
+    <div class="chapter-title">AI Strategy, Policy &amp; Procedure Support</div>
+    <div class="chapter-body">AI governance is not just a technical problem — it is a policy and procedure problem. Firms need to define how employees and affiliates may use AI tools, what data may be entered into them, what disclosures are required, and how AI-generated outputs are reviewed before use. Regulators are already asking these questions.</div>
+    <div class="chapter-body">FCI brings expertise from working across 400+ financial services firms to help each firm make informed decisions about where AI creates value, where it creates risk, and how to document the controls that govern its use. The firm owns its program. FCI provides the expertise and implements the enforcement.</div>
+    <div class="chapter-body">The enforcement can go as far as the firm's program requires — from selective restriction to full prohibition of specific AI tools on firm-controlled endpoints. The technical enforcement matches the policy, and the documentation proves the controls are in place.</div>
+  </div>
+
+  <!-- ═══ THROUGHLINE ═══ -->
+  <div class="throughline">
+    <p><strong>FCI has been where AI meets cybersecurity longer than most firms have been thinking about it.</strong></p>
+    <p>The progression is natural — from using AI to protect, to using AI to analyze, to protecting clients from AI, to helping clients govern AI. Each chapter built on the one before it. This is not a company that added an "AI" badge to its marketing. This is a company that has been operationally deploying and managing AI in a regulated environment for nearly a decade.</p>
+  </div>
+
+</div>
+
+<footer class="hub-footer">FCI Brand Hub &middot; FCI &amp; AI Page &middot; Phase 3 Content</footer>
+</body>
+</html>
