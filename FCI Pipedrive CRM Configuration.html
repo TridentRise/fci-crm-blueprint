@@ -1,0 +1,1113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FCI — Pipedrive CRM Configuration Plan</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Inter+Tight:wght@600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    *, ::before, ::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #060B14; --surface: #0D1626; --surface2: #111F33; --surface3: #162032;
+      --blue: #2563EB; --blue2: rgba(37,99,235,0.12);
+      --sky: #0EA5E9; --sky2: rgba(14,165,233,0.12);
+      --emerald: #10B981; --emerald2: rgba(16,185,129,0.10);
+      --amber: #F59E0B; --amber2: rgba(245,158,11,0.10);
+      --violet: #A855F7; --violet2: rgba(168,85,247,0.10);
+      --indigo: #6366F1; --indigo2: rgba(99,102,241,0.10);
+      --red: #EF4444; --red2: rgba(239,68,68,0.10);
+      --text1: #F1F5F9; --text2: #94A3B8; --text3: #475569; --rule: #1A2B40;
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text1); min-height: 100vh; -webkit-font-smoothing: antialiased; }
+    ::selection { background: var(--amber); color: #000; }
+    .bg-glow { position: fixed; inset: 0; pointer-events: none; z-index: 0; background: radial-gradient(80% 50% at 50% -10%, rgba(245,158,11,0.10) 0%, transparent 65%), radial-gradient(35% 28% at 6% 88%, rgba(37,99,235,0.06) 0%, transparent 55%); }
+
+    /* Nav */
+    .topnav { position: fixed; top: 0; left: 0; right: 0; height: 56px; background: rgba(6,11,20,0.92); backdrop-filter: blur(14px); border-bottom: 1px solid var(--rule); display: flex; align-items: center; padding: 0 48px; z-index: 100; }
+    .nav-logo { font-family: 'Inter Tight', sans-serif; font-size: 20px; font-weight: 800; color: var(--text1); text-decoration: none; letter-spacing: -0.02em; }
+    .nav-logo .accent { color: var(--sky); }
+    .nav-back { font-size: 13px; font-weight: 600; color: var(--text3); text-decoration: none; margin-left: 28px; transition: color 0.15s; }
+    .nav-back:hover { color: var(--text2); }
+
+    /* Header */
+    header { position: relative; z-index: 1; text-align: center; padding: 128px 24px 64px; }
+    .header-eyebrow { display: inline-block; font-size: 10px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--amber); border: 1px solid rgba(245,158,11,0.28); background: rgba(245,158,11,0.07); padding: 5px 16px; border-radius: 100px; margin-bottom: 28px; }
+    header h1 { font-family: 'Inter Tight', sans-serif; font-size: clamp(36px, 6vw, 56px); font-weight: 800; letter-spacing: -0.035em; line-height: 1.1; color: var(--text1); margin-bottom: 20px; }
+    header h1 em { color: var(--amber); font-style: normal; }
+    header p { font-size: 17px; color: var(--text2); line-height: 1.7; max-width: 620px; margin: 0 auto; }
+
+    /* Content */
+    .content { position: relative; z-index: 1; max-width: 920px; width: 100%; margin: 0 auto; padding: 0 32px 100px; }
+
+    /* TOC */
+    .toc { background: var(--surface); border: 1px solid var(--rule); border-radius: 16px; padding: 36px; margin-bottom: 56px; }
+    .toc-title { font-family: 'Inter Tight', sans-serif; font-size: 18px; font-weight: 800; color: var(--text1); margin-bottom: 20px; letter-spacing: -0.01em; }
+    .toc a { display: block; font-size: 14px; font-weight: 600; color: var(--text2); text-decoration: none; padding: 8px 0; border-bottom: 1px solid rgba(26,43,64,0.5); transition: color 0.15s; }
+    .toc a:last-child { border-bottom: none; }
+    .toc a:hover { color: var(--amber); }
+    .toc .toc-num { color: var(--text3); margin-right: 12px; font-size: 12px; font-weight: 700; }
+
+    /* Section dividers */
+    .section-divider { display: flex; align-items: center; gap: 16px; margin: 64px 0 32px; }
+    .section-divider .line { flex: 1; height: 1px; background: var(--rule); }
+    .section-divider .label { font-size: 11px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; white-space: nowrap; }
+
+    /* Cards */
+    .config-card { background: var(--surface); border: 1px solid var(--rule); border-radius: 14px; padding: 32px; margin-bottom: 20px; }
+    .config-card:hover { border-color: rgba(245,158,11,0.3); }
+    .card-eyebrow { font-size: 10px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 10px; }
+    .card-title { font-family: 'Inter Tight', sans-serif; font-size: 20px; font-weight: 800; letter-spacing: -0.02em; margin-bottom: 14px; line-height: 1.2; color: var(--text1); }
+    .card-body { font-size: 14px; color: var(--text2); line-height: 1.75; margin-bottom: 16px; }
+    .card-body p { margin-bottom: 12px; }
+    .card-body p:last-child { margin-bottom: 0; }
+
+    /* Field tables */
+    .field-table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 13px; }
+    .field-table th { text-align: left; padding: 10px 14px; font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text3); border-bottom: 2px solid var(--rule); background: var(--surface2); }
+    .field-table th:first-child { border-radius: 8px 0 0 0; }
+    .field-table th:last-child { border-radius: 0 8px 0 0; }
+    .field-table td { padding: 10px 14px; border-bottom: 1px solid rgba(26,43,64,0.4); color: var(--text2); vertical-align: top; }
+    .field-table tr:last-child td { border-bottom: none; }
+    .field-table .field-name { font-weight: 700; color: var(--text1); white-space: nowrap; }
+    .field-table .field-type { font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 4px; white-space: nowrap; }
+    .type-dropdown { background: var(--blue2); color: var(--blue); }
+    .type-text { background: var(--emerald2); color: var(--emerald); }
+    .type-number { background: var(--violet2); color: var(--violet); }
+    .type-date { background: var(--amber2); color: var(--amber); }
+    .type-monetary { background: rgba(245,158,11,0.12); color: var(--amber); }
+    .type-phone { background: var(--sky2); color: var(--sky); }
+    .type-multi { background: var(--indigo2); color: var(--indigo); }
+    .type-address { background: rgba(16,185,129,0.08); color: var(--emerald); }
+    .type-large-text { background: rgba(168,85,247,0.08); color: var(--violet); }
+
+    /* Pipeline stages */
+    .pipeline-flow { display: flex; gap: 0; margin: 20px 0; overflow-x: auto; padding-bottom: 8px; }
+    .stage-block { flex: 1; min-width: 120px; padding: 16px 12px; text-align: center; position: relative; }
+    .stage-block::after { content: ''; position: absolute; right: -1px; top: 50%; transform: translateY(-50%); width: 0; height: 0; border-top: 10px solid transparent; border-bottom: 10px solid transparent; border-left: 10px solid var(--rule); z-index: 1; }
+    .stage-block:last-child::after { display: none; }
+    .stage-name { font-size: 12px; font-weight: 700; color: var(--text1); margin-bottom: 4px; }
+    .stage-pct { font-size: 22px; font-weight: 800; font-family: 'Inter Tight', sans-serif; margin-bottom: 4px; }
+    .stage-desc { font-size: 10px; color: var(--text3); line-height: 1.4; }
+
+    /* Tags */
+    .tag { display: inline-block; font-size: 11px; font-weight: 600; padding: 3px 10px; border-radius: 100px; margin: 2px 4px 2px 0; }
+    .tag-blue { background: var(--blue2); color: var(--blue); border: 1px solid rgba(37,99,235,0.2); }
+    .tag-amber { background: var(--amber2); color: var(--amber); border: 1px solid rgba(245,158,11,0.2); }
+    .tag-emerald { background: var(--emerald2); color: var(--emerald); border: 1px solid rgba(16,185,129,0.2); }
+    .tag-violet { background: var(--violet2); color: var(--violet); border: 1px solid rgba(168,85,247,0.2); }
+    .tag-red { background: var(--red2); color: var(--red); border: 1px solid rgba(239,68,68,0.2); }
+
+    /* Subsection */
+    .subsection { margin: 28px 0 20px; }
+    .subsection-title { font-family: 'Inter Tight', sans-serif; font-size: 16px; font-weight: 700; color: var(--text1); margin-bottom: 12px; letter-spacing: -0.01em; }
+    .subsection-body { font-size: 14px; color: var(--text2); line-height: 1.75; }
+
+    /* Callout */
+    .callout { background: var(--surface2); border-left: 3px solid var(--amber); border-radius: 0 10px 10px 0; padding: 16px 20px; margin: 20px 0; font-size: 13px; color: var(--text2); line-height: 1.7; }
+    .callout strong { color: var(--text1); }
+    .callout.callout-blue { border-left-color: var(--blue); }
+    .callout.callout-emerald { border-left-color: var(--emerald); }
+    .callout.callout-red { border-left-color: var(--red); }
+
+    /* Numbered list inside cards */
+    .num-list { counter-reset: item; list-style: none; padding: 0; }
+    .num-list li { counter-increment: item; font-size: 14px; color: var(--text2); line-height: 1.75; padding: 8px 0 8px 36px; position: relative; border-bottom: 1px solid rgba(26,43,64,0.3); }
+    .num-list li:last-child { border-bottom: none; }
+    .num-list li::before { content: counter(item); position: absolute; left: 0; top: 8px; font-family: 'Inter Tight', sans-serif; font-size: 14px; font-weight: 800; color: var(--amber); width: 24px; text-align: center; }
+
+    /* Footer */
+    footer { text-align: center; padding: 48px 24px; font-size: 12px; color: var(--text3); border-top: 1px solid var(--rule); position: relative; z-index: 1; }
+
+    @media (max-width: 640px) { .content { padding: 0 16px 80px; } .config-card { padding: 20px; } .field-table { font-size: 12px; } .pipeline-flow { flex-direction: column; } .stage-block::after { display: none; } }
+  </style>
+</head>
+<body>
+<div class="bg-glow"></div>
+
+<nav class="topnav">
+  <a class="nav-logo" href="index.html">FCI<span class="accent">.</span></a>
+  <a class="nav-back" href="sales.html">&larr; Sales Hub</a>
+</nav>
+
+<header>
+  <div class="header-eyebrow">CRM Overhaul &middot; Pipedrive Configuration</div>
+  <h1>Pipedrive CRM <em>Blueprint</em></h1>
+  <p>A complete configuration plan for FCI's Pipedrive environment &mdash; custom fields, pipelines, lead generation tracking, and data hygiene &mdash; built from FCI's markets, buyer roles, solutions, and sales process.</p>
+</header>
+
+<div class="content">
+
+  <!-- ═══ TABLE OF CONTENTS ═══ -->
+  <div class="toc">
+    <div class="toc-title">Configuration Plan</div>
+    <a href="#org-fields"><span class="toc-num">01</span>Organization Custom Fields</a>
+    <a href="#person-fields"><span class="toc-num">02</span>Person (Contact) Custom Fields</a>
+    <a href="#deal-fields"><span class="toc-num">03</span>Deal Custom Fields</a>
+    <a href="#pipeline-new"><span class="toc-num">04</span>Pipeline 1 &mdash; New Business</a>
+    <a href="#pipeline-assess"><span class="toc-num">05</span>Pipeline 2 &mdash; Security Assessment</a>
+    <a href="#pipeline-expand"><span class="toc-num">06</span>Pipeline 3 &mdash; Expansion &amp; Renewal</a>
+    <a href="#pipeline-partner"><span class="toc-num">07</span>Pipeline 4 &mdash; Channel &amp; Referral Partners</a>
+    <a href="#lead-gen"><span class="toc-num">08</span>Lead Generation &amp; Source Tracking</a>
+    <a href="#labels"><span class="toc-num">09</span>Labels, Filters &amp; Views</a>
+    <a href="#hygiene"><span class="toc-num">10</span>Data Hygiene &amp; Cleanup Protocol</a>
+    <a href="#automation"><span class="toc-num">11</span>Automation &amp; Workflow Rules</a>
+    <a href="#reporting"><span class="toc-num">12</span>Dashboards &amp; Reporting</a>
+  </div>
+
+
+  <!-- ════════════════════════════════════════════ -->
+  <!--  1. ORGANIZATION CUSTOM FIELDS               -->
+  <!-- ════════════════════════════════════════════ -->
+  <div class="section-divider" id="org-fields">
+    <div class="line"></div>
+    <div class="label" style="color: var(--blue);">01 &mdash; Organization Fields</div>
+    <div class="line"></div>
+  </div>
+
+  <div class="config-card">
+    <div class="card-eyebrow" style="color: var(--blue);">Firm Classification</div>
+    <div class="card-title">Organization Custom Fields</div>
+    <div class="card-body">
+      <p>These fields classify every firm in Pipedrive so you can segment, filter, and report by market, size, regulatory exposure, and security posture. Every organization record should have these populated before a deal is created.</p>
+    </div>
+
+    <table class="field-table">
+      <thead>
+        <tr><th>Field Name</th><th>Type</th><th>Options / Notes</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="field-name">Firm Type</td>
+          <td><span class="field-type type-dropdown">Dropdown</span></td>
+          <td>RIA &bull; Broker-Dealer &bull; Insurance Carrier &bull; Insurance Agency &bull; MGA / MGU &bull; Hybrid (BD + RIA) &bull; Other</td>
+        </tr>
+        <tr>
+          <td class="field-name">Market Segment</td>
+          <td><span class="field-type type-dropdown">Dropdown</span></td>
+          <td>RIA &bull; Broker-Dealer &amp; Branch Offices &bull; Insurance Carriers &amp; Agencies</td>
+        </tr>
+        <tr>
+          <td class="field-name">Firm Size Tier</td>
+          <td><span class="field-type type-dropdown">Dropdown</span></td>
+          <td>Small (1&ndash;25 endpoints) &bull; Mid-Market (26&ndash;150 endpoints) &bull; Enterprise (151&ndash;500 endpoints) &bull; Large Enterprise (500+)</td>
+        </tr>
+        <tr>
+          <td class="field-name">Total Endpoints</td>
+          <td><span class="field-type type-number">Number</span></td>
+          <td>Desktops, laptops, servers across all locations</td>
+        </tr>
+        <tr>
+          <td class="field-name">Total Users</td>
+          <td><span class="field-type type-number">Number</span></td>
+          <td>All users including remote</td>
+        </tr>
+        <tr>
+          <td class="field-name">Number of Locations</td>
+          <td><span class="field-type type-number">Number</span></td>
+          <td>Office / branch / agency locations</td>
+        </tr>
+        <tr>
+          <td class="field-name">AUM Range</td>
+          <td><span class="field-type type-dropdown">Dropdown</span></td>
+          <td>Under $500M &bull; $500M&ndash;$1B &bull; $1B&ndash;$5B &bull; $5B&ndash;$10B &bull; Over $10B &bull; N/A</td>
+        </tr>
+        <tr>
+          <td class="field-name">Number of Advisors / Reps / Agents</td>
+          <td><span class="field-type type-number">Number</span></td>
+          <td>Advisors (RIA), Registered Reps (BD), Appointed Agents (Insurance)</td>
+        </tr>
+        <tr>
+          <td class="field-name">Number of Branches</td>
+          <td><span class="field-type type-number">Number</span></td>
+          <td>For Broker-Dealers and Insurance with distributed offices</td>
+        </tr>
+        <tr>
+          <td class="field-name">Registration Type</td>
+          <td><span class="field-type type-dropdown">Dropdown</span></td>
+          <td>SEC Registered &bull; State Registered &bull; Both / Dual &bull; FINRA Member &bull; State Insurance License &bull; N/A</td>
+        </tr>
+        <tr>
+          <td class="field-name">BD Model</td>
+          <td><span class="field-type type-dropdown">Dropdown</span></td>
+          <td>Independent Broker-Dealer &bull; Full Service &bull; Hybrid &bull; N/A</td>
+        </tr>
+        <tr>
+          <td class="field-name">Insurance Sub-Type</td>
+          <td><span class="field-type type-dropdown">Dropdown</span></td>
+          <td>Insurance Carrier &bull; Insurance Agency &bull; MGA / MGU &bull; N/A</td>
+        </tr>
+        <tr>
+          <td class="field-name">States of Operation</td>
+          <td><span class="field-type type-text">Text</span></td>
+          <td>Comma-separated list of states (important for insurance regulatory mapping)</td>
+        </tr>
+        <tr>
+          <td class="field-name">Regulatory Exposure</td>
+          <td><span class="field-type type-multi">Multi-option</span></td>
+          <td>SEC Reg S-P &bull; FINRA 3110 &amp; 4370 &bull; NYDFS 23 NYCRR 500 &bull; NAIC Model Law &bull; State Cybersecurity Reqs</td>
+        </tr>
+        <tr>
+          <td class="field-name">Subject to NYDFS?</td>
+          <td><span class="field-type type-dropdown">Dropdown</span></td>
+          <td>Yes &bull; No &bull; Unsure</td>
+        </tr>
+        <tr>
+          <td class="field-name">Has Written Security Policy?</td>
+          <td><span class="field-type type-dropdown">Dropdown</span></td>
+          <td>Yes &mdash; Documented &amp; Enforced &bull; Yes &mdash; Documented, Not Enforced &bull; No Formal Policy &bull; Unsure</td>
+        </tr>
+        <tr>
+          <td class="field-name">Last Regulatory Exam</td>
+          <td><span class="field-type type-text">Text</span></td>
+          <td>Year of last SEC, FINRA, or state exam</td>
+        </tr>
+        <tr>
+          <td class="field-name">Next Exam Expected</td>
+          <td><span class="field-type type-date">Date</span></td>
+          <td>Anticipated date for next regulatory examination</td>
+        </tr>
+        <tr>
+          <td class="field-name">BYOD Status</td>
+          <td><span class="field-type type-dropdown">Dropdown</span></td>
+          <td>Mostly Personal Devices &bull; Mixed (BYOD + Company) &bull; All Company-Issued</td>
+        </tr>
+        <tr>
+          <td class="field-name">Current Security Vendor</td>
+          <td><span class="field-type type-text">Text</span></td>
+          <td>Internal IT, MSP name, or "none"</td>
+        </tr>
+        <tr>
+          <td class="field-name">Current EDR / Endpoint Tool</td>
+          <td><span class="field-type type-dropdown">Dropdown</span></td>
+          <td>Microsoft Defender &bull; CrowdStrike &bull; SentinelOne &bull; Sophos &bull; Bitdefender &bull; Built-in Only &bull; None &bull; Other &bull; Unknown</td>
+        </tr>
+        <tr>
+          <td class="field-name">MFA Status</td>
+          <td><span class="field-type type-dropdown">Dropdown</span></td>
+          <td>Enforced for All &bull; Partial &bull; None &bull; Unsure</td>
+        </tr>
+        <tr>
+          <td class="field-name">Cloud Platform</td>
+          <td><span class="field-type type-multi">Multi-option</span></td>
+          <td>Microsoft 365 &bull; Google Workspace &bull; AWS &bull; Azure &bull; Other</td>
+        </tr>
+        <tr>
+          <td class="field-name">Has SOC / SIEM?</td>
+          <td><span class="field-type type-dropdown">Dropdown</span></td>
+          <td>Managed SOC / SIEM &bull; In-House SIEM Only &bull; No Centralized Monitoring &bull; Unsure</td>
+        </tr>
+        <tr>
+          <td class="field-name">Backup Approach</td>
+          <td><span class="field-type type-dropdown">Dropdown</span></td>
+          <td>Cloud Backup &bull; On-Prem &bull; Hybrid &bull; No Formal Backup &bull; Unsure</td>
+        </tr>
+        <tr>
+          <td class="field-name">Incident History (24 months)</td>
+          <td><span class="field-type type-dropdown">Dropdown</span></td>
+          <td>No Incidents &bull; Minor (Phishing / Account Compromise) &bull; Significant (Ransomware / Breach) &bull; Undisclosed</td>
+        </tr>
+        <tr>
+          <td class="field-name">Security Readiness Score</td>
+          <td><span class="field-type type-text">Text</span></td>
+          <td>From prospect intake self-assessment (e.g., "18/30 &mdash; Moderate")</td>
+        </tr>
+        <tr>
+          <td class="field-name">Cyber Insurance Carrier</td>
+          <td><span class="field-type type-text">Text</span></td>
+          <td>Name of current cyber insurance provider</td>
+        </tr>
+        <tr>
+          <td class="field-name">Cyber Insurance Renewal Date</td>
+          <td><span class="field-type type-date">Date</span></td>
+          <td>Creates urgency-based triggers for outreach</td>
+        </tr>
+        <tr>
+          <td class="field-name">Home Office / Parent Firm</td>
+          <td><span class="field-type type-text">Text</span></td>
+          <td>Name of parent broker-dealer, home office, or carrier (for branch-level orgs)</td>
+        </tr>
+        <tr>
+          <td class="field-name">Relationship Type</td>
+          <td><span class="field-type type-dropdown">Dropdown</span></td>
+          <td>Prospect &bull; Active Client &bull; Former Client &bull; Referral Partner &bull; Vendor &bull; Competitor &bull; Industry Contact</td>
+        </tr>
+        <tr>
+          <td class="field-name">Client Since</td>
+          <td><span class="field-type type-date">Date</span></td>
+          <td>Date they became an active FCI client</td>
+        </tr>
+        <tr>
+          <td class="field-name">Website</td>
+          <td><span class="field-type type-text">Text</span></td>
+          <td>Company website URL</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+
+  <!-- ════════════════════════════════════════════ -->
+  <!--  2. PERSON CUSTOM FIELDS                     -->
+  <!-- ════════════════════════════════════════════ -->
+  <div class="section-divider" id="person-fields">
+    <div class="line"></div>
+    <div class="label" style="color: var(--emerald);">02 &mdash; Person Fields</div>
+    <div class="line"></div>
+  </div>
+
+  <div class="config-card">
+    <div class="card-eyebrow" style="color: var(--emerald);">Contact Intelligence</div>
+    <div class="card-title">Person (Contact) Custom Fields</div>
+    <div class="card-body">
+      <p>These fields map each contact to one of FCI's four buyer roles and track their engagement, authority, and position in the sales process. The buyer role is the most important field here &mdash; it determines which messaging, proof points, and objection responses to use.</p>
+    </div>
+
+    <table class="field-table">
+      <thead>
+        <tr><th>Field Name</th><th>Type</th><th>Options / Notes</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="field-name">Buyer Role</td>
+          <td><span class="field-type type-dropdown">Dropdown</span></td>
+          <td>Board / C-Level / Owner &bull; CISO / CCO / Compliance Lead &bull; Field Compliance Officer &bull; IT Manager / Director &bull; Operations &bull; Other</td>
+        </tr>
+        <tr>
+          <td class="field-name">Title</td>
+          <td><span class="field-type type-text">Text</span></td>
+          <td>Actual title (CEO, CCO, Managing Partner, Branch Manager, etc.)</td>
+        </tr>
+        <tr>
+          <td class="field-name">Decision Authority</td>
+          <td><span class="field-type type-dropdown">Dropdown</span></td>
+          <td>Decision Maker &bull; Strong Influencer &bull; Champion &bull; Evaluator &bull; Gatekeeper &bull; End User</td>
+        </tr>
+        <tr>
+          <td class="field-name">Engagement Level</td>
+          <td><span class="field-type type-dropdown">Dropdown</span></td>
+          <td>Hot (Active Conversations) &bull; Warm (Has Responded) &bull; Cold (No Recent Engagement) &bull; Dormant</td>
+        </tr>
+        <tr>
+          <td class="field-name">Contact Source</td>
+          <td><span class="field-type type-dropdown">Dropdown</span></td>
+          <td>Inbound &mdash; Website &bull; Inbound &mdash; Gap Analysis Request &bull; Referral &bull; Conference / Event &bull; LinkedIn &bull; Cold Outreach &bull; Existing Client Intro &bull; Industry Publication &bull; Webinar &bull; Other</td>
+        </tr>
+        <tr>
+          <td class="field-name">Referral Source Name</td>
+          <td><span class="field-type type-text">Text</span></td>
+          <td>Who specifically referred this person (if applicable)</td>
+        </tr>
+        <tr>
+          <td class="field-name">Conference / Event Name</td>
+          <td><span class="field-type type-text">Text</span></td>
+          <td>Specific event (e.g., "T3 2026", "FPA Annual 2026")</td>
+        </tr>
+        <tr>
+          <td class="field-name">LinkedIn Profile</td>
+          <td><span class="field-type type-text">Text</span></td>
+          <td>LinkedIn URL for the contact</td>
+        </tr>
+        <tr>
+          <td class="field-name">Compliance Concern</td>
+          <td><span class="field-type type-large-text">Large Text</span></td>
+          <td>Their stated biggest compliance concern (from intake or discovery)</td>
+        </tr>
+        <tr>
+          <td class="field-name">Buyer Journey Stage</td>
+          <td><span class="field-type type-dropdown">Dropdown</span></td>
+          <td>Awareness ("might have a problem") &bull; Consideration ("need to solve this") &bull; Decision ("choosing a partner")</td>
+        </tr>
+        <tr>
+          <td class="field-name">Fear Statement</td>
+          <td><span class="field-type type-large-text">Large Text</span></td>
+          <td>The specific fear or pain point expressed by this contact (maps to role-specific fears in messaging architecture)</td>
+        </tr>
+        <tr>
+          <td class="field-name">Email Opt-In</td>
+          <td><span class="field-type type-dropdown">Dropdown</span></td>
+          <td>Opted In &bull; Opted Out &bull; Not Asked</td>
+        </tr>
+        <tr>
+          <td class="field-name">Last Meeting Date</td>
+          <td><span class="field-type type-date">Date</span></td>
+          <td>Date of most recent meeting or call</td>
+        </tr>
+        <tr>
+          <td class="field-name">Assigned To</td>
+          <td><span class="field-type type-dropdown">Dropdown</span></td>
+          <td>Mike Pytura &bull; Ben Gunay &bull; Vincent Guyaux &bull; Brian Edelman &bull; Eric Edelman</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+
+  <!-- ════════════════════════════════════════════ -->
+  <!--  3. DEAL CUSTOM FIELDS                       -->
+  <!-- ════════════════════════════════════════════ -->
+  <div class="section-divider" id="deal-fields">
+    <div class="line"></div>
+    <div class="label" style="color: var(--violet);">03 &mdash; Deal Fields</div>
+    <div class="line"></div>
+  </div>
+
+  <div class="config-card">
+    <div class="card-eyebrow" style="color: var(--violet);">Deal Intelligence</div>
+    <div class="card-title">Deal Custom Fields</div>
+    <div class="card-body">
+      <p>These fields live on every deal and track what matters for forecasting, pipeline health, and knowing where each opportunity stands. They should be updated at every stage transition.</p>
+    </div>
+
+    <table class="field-table">
+      <thead>
+        <tr><th>Field Name</th><th>Type</th><th>Options / Notes</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="field-name">Solution Interest</td>
+          <td><span class="field-type type-multi">Multi-option</span></td>
+          <td>Managed Cybersecurity &bull; Zero Trust &bull; CISO Portal &bull; Compliance &amp; Exam Readiness &bull; Security Assessment &bull; Full Platform</td>
+        </tr>
+        <tr>
+          <td class="field-name">Entry Point</td>
+          <td><span class="field-type type-dropdown">Dropdown</span></td>
+          <td>Gap Analysis &bull; Security Assessment &bull; Inbound Request &bull; Referral &bull; Conference Follow-up &bull; Renewal Concern &bull; Incident Response</td>
+        </tr>
+        <tr>
+          <td class="field-name">Urgency Trigger</td>
+          <td><span class="field-type type-dropdown">Dropdown</span></td>
+          <td>Upcoming Exam &bull; Cyber Insurance Renewal &bull; Recent Incident &bull; Home Office Mandate &bull; Board / Leadership Directive &bull; Compliance Gap Discovered &bull; No Specific Trigger</td>
+        </tr>
+        <tr>
+          <td class="field-name">Competitive Situation</td>
+          <td><span class="field-type type-dropdown">Dropdown</span></td>
+          <td>No Competition &bull; Another MSSP &bull; IT Provider Expanding &bull; Enterprise Platform (CrowdStrike, etc.) &bull; Internal Build &bull; Status Quo / Doing Nothing &bull; Unknown</td>
+        </tr>
+        <tr>
+          <td class="field-name">Competitor Name</td>
+          <td><span class="field-type type-text">Text</span></td>
+          <td>Specific competitor name if applicable</td>
+        </tr>
+        <tr>
+          <td class="field-name">Monthly Recurring Revenue (MRR)</td>
+          <td><span class="field-type type-monetary">Monetary</span></td>
+          <td>Expected monthly recurring revenue for this engagement</td>
+        </tr>
+        <tr>
+          <td class="field-name">Annual Contract Value (ACV)</td>
+          <td><span class="field-type type-monetary">Monetary</span></td>
+          <td>MRR &times; 12 (or custom if non-standard term)</td>
+        </tr>
+        <tr>
+          <td class="field-name">Per-Endpoint Price</td>
+          <td><span class="field-type type-monetary">Monetary</span></td>
+          <td>For benchmarking and pricing consistency</td>
+        </tr>
+        <tr>
+          <td class="field-name">Gap Analysis Completed?</td>
+          <td><span class="field-type type-dropdown">Dropdown</span></td>
+          <td>Yes &bull; Scheduled &bull; Not Yet &bull; Declined</td>
+        </tr>
+        <tr>
+          <td class="field-name">Gap Analysis Date</td>
+          <td><span class="field-type type-date">Date</span></td>
+          <td>Date the gap analysis was completed or is scheduled</td>
+        </tr>
+        <tr>
+          <td class="field-name">Security Assessment Completed?</td>
+          <td><span class="field-type type-dropdown">Dropdown</span></td>
+          <td>Yes &bull; Scheduled &bull; Not Yet &bull; N/A</td>
+        </tr>
+        <tr>
+          <td class="field-name">Proposal Sent?</td>
+          <td><span class="field-type type-dropdown">Dropdown</span></td>
+          <td>Yes &bull; In Progress &bull; Not Yet</td>
+        </tr>
+        <tr>
+          <td class="field-name">Proposal Date</td>
+          <td><span class="field-type type-date">Date</span></td>
+          <td>Date proposal was sent</td>
+        </tr>
+        <tr>
+          <td class="field-name">Decision Timeline</td>
+          <td><span class="field-type type-dropdown">Dropdown</span></td>
+          <td>Immediate (this month) &bull; Near-Term (1&ndash;3 months) &bull; Mid-Term (3&ndash;6 months) &bull; Long-Term (6+ months) &bull; No Timeline</td>
+        </tr>
+        <tr>
+          <td class="field-name">Champion Identified?</td>
+          <td><span class="field-type type-dropdown">Dropdown</span></td>
+          <td>Yes &bull; Developing &bull; No</td>
+        </tr>
+        <tr>
+          <td class="field-name">Multi-Threading Status</td>
+          <td><span class="field-type type-dropdown">Dropdown</span></td>
+          <td>Multi-Threaded (2+ contacts engaged) &bull; Single-Threaded (1 contact only)</td>
+        </tr>
+        <tr>
+          <td class="field-name">Deal Risk Level</td>
+          <td><span class="field-type type-dropdown">Dropdown</span></td>
+          <td>Low Risk &bull; Medium Risk &bull; High Risk &bull; At Risk</td>
+        </tr>
+        <tr>
+          <td class="field-name">Stall Reason</td>
+          <td><span class="field-type type-dropdown">Dropdown</span></td>
+          <td>Budget &bull; Timing &bull; Internal Politics &bull; Evaluating Competitors &bull; No Urgency &bull; Ghost (No Response) &bull; Champion Left &bull; Other</td>
+        </tr>
+        <tr>
+          <td class="field-name">Lost Reason</td>
+          <td><span class="field-type type-dropdown">Dropdown</span></td>
+          <td>Chose Competitor &bull; Chose IT Provider &bull; Building Internal &bull; Budget Constraints &bull; No Decision Made &bull; Timing Not Right &bull; Lost Champion &bull; Other</td>
+        </tr>
+        <tr>
+          <td class="field-name">Days in Current Stage</td>
+          <td><span class="field-type type-number">Number</span></td>
+          <td>Auto-calculated &mdash; used for stale deal identification</td>
+        </tr>
+        <tr>
+          <td class="field-name">Next Step</td>
+          <td><span class="field-type type-text">Text</span></td>
+          <td>Clear, specific next action (e.g., "Send proposal by Friday" not "Follow up")</td>
+        </tr>
+        <tr>
+          <td class="field-name">Next Step Date</td>
+          <td><span class="field-type type-date">Date</span></td>
+          <td>When the next step is due</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+
+  <!-- ════════════════════════════════════════════ -->
+  <!--  4. PIPELINE 1 — NEW BUSINESS                -->
+  <!-- ════════════════════════════════════════════ -->
+  <div class="section-divider" id="pipeline-new">
+    <div class="line"></div>
+    <div class="label" style="color: var(--amber);">04 &mdash; New Business Pipeline</div>
+    <div class="line"></div>
+  </div>
+
+  <div class="config-card">
+    <div class="card-eyebrow" style="color: var(--amber);">Primary Sales Pipeline</div>
+    <div class="card-title">Pipeline 1 &mdash; New Business</div>
+    <div class="card-body">
+      <p>This is FCI's primary pipeline. It follows the natural sales motion: inbound or outbound lead &rarr; gap analysis &rarr; assessment &rarr; proposal &rarr; close. The stage probabilities reflect FCI's actual conversion patterns &mdash; the gap analysis is the critical inflection point.</p>
+    </div>
+
+    <div class="pipeline-flow">
+      <div class="stage-block" style="background: rgba(37,99,235,0.08); border-radius: 10px 0 0 10px;">
+        <div class="stage-pct" style="color: var(--blue);">5%</div>
+        <div class="stage-name">Lead In</div>
+        <div class="stage-desc">New lead captured. Not yet qualified.</div>
+      </div>
+      <div class="stage-block" style="background: rgba(14,165,233,0.08);">
+        <div class="stage-pct" style="color: var(--sky);">15%</div>
+        <div class="stage-name">Qualified</div>
+        <div class="stage-desc">Confirmed: right firm type, has pain, willing to talk.</div>
+      </div>
+      <div class="stage-block" style="background: rgba(99,102,241,0.08);">
+        <div class="stage-pct" style="color: var(--indigo);">30%</div>
+        <div class="stage-name">Gap Analysis Scheduled</div>
+        <div class="stage-desc">30-min gap analysis on the calendar.</div>
+      </div>
+      <div class="stage-block" style="background: rgba(168,85,247,0.08);">
+        <div class="stage-pct" style="color: var(--violet);">50%</div>
+        <div class="stage-name">Gap Analysis Complete</div>
+        <div class="stage-desc">Gap analysis done. Findings delivered. Interest confirmed.</div>
+      </div>
+      <div class="stage-block" style="background: rgba(245,158,11,0.08);">
+        <div class="stage-pct" style="color: var(--amber);">65%</div>
+        <div class="stage-name">Assessment / Deep Dive</div>
+        <div class="stage-desc">Full security assessment underway or scoping discussion.</div>
+      </div>
+      <div class="stage-block" style="background: rgba(245,158,11,0.12);">
+        <div class="stage-pct" style="color: var(--amber);">80%</div>
+        <div class="stage-name">Proposal Sent</div>
+        <div class="stage-desc">Formal proposal delivered. Decision maker engaged.</div>
+      </div>
+      <div class="stage-block" style="background: rgba(16,185,129,0.08);">
+        <div class="stage-pct" style="color: var(--emerald);">90%</div>
+        <div class="stage-name">Verbal Commit</div>
+        <div class="stage-desc">Verbal yes. Contract or SOW in review.</div>
+      </div>
+      <div class="stage-block" style="background: rgba(16,185,129,0.12); border-radius: 0 10px 10px 0;">
+        <div class="stage-pct" style="color: var(--emerald);">100%</div>
+        <div class="stage-name">Won</div>
+        <div class="stage-desc">Signed. Handoff to onboarding.</div>
+      </div>
+    </div>
+
+    <div class="callout">
+      <strong>Stage entry criteria matter.</strong> A deal should not advance to "Qualified" until you've confirmed the firm type, that they have a real pain point (upcoming exam, incident, insurance renewal, home office mandate), and that someone with authority is engaged. A deal should not advance to "Proposal Sent" without a completed gap analysis &mdash; proposals without discovery are wasted effort.
+    </div>
+
+    <div class="subsection">
+      <div class="subsection-title">Required Fields at Each Stage</div>
+      <table class="field-table">
+        <thead><tr><th>Stage</th><th>Must Be Populated</th></tr></thead>
+        <tbody>
+          <tr><td class="field-name">Lead In</td><td>Contact Source, Firm Type, Assigned To</td></tr>
+          <tr><td class="field-name">Qualified</td><td>+ Buyer Role, Urgency Trigger, Total Endpoints, Buyer Journey Stage</td></tr>
+          <tr><td class="field-name">Gap Analysis Scheduled</td><td>+ Gap Analysis Date, Market Segment</td></tr>
+          <tr><td class="field-name">Gap Analysis Complete</td><td>+ Security Readiness Score, Compliance Concern, Solution Interest</td></tr>
+          <tr><td class="field-name">Assessment / Deep Dive</td><td>+ Full IT environment fields (EDR, MFA, Cloud, SOC, BYOD)</td></tr>
+          <tr><td class="field-name">Proposal Sent</td><td>+ MRR, ACV, Proposal Date, Decision Timeline, Champion Identified</td></tr>
+          <tr><td class="field-name">Verbal Commit</td><td>+ Multi-Threading Status, Next Step = contract logistics</td></tr>
+          <tr><td class="field-name">Won</td><td>+ Client Since date on Org, Relationship Type &rarr; Active Client</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+
+  <!-- ════════════════════════════════════════════ -->
+  <!--  5. PIPELINE 2 — SECURITY ASSESSMENT         -->
+  <!-- ════════════════════════════════════════════ -->
+  <div class="section-divider" id="pipeline-assess">
+    <div class="line"></div>
+    <div class="label" style="color: var(--sky);">05 &mdash; Assessment Pipeline</div>
+    <div class="line"></div>
+  </div>
+
+  <div class="config-card">
+    <div class="card-eyebrow" style="color: var(--sky);">Technical Pipeline</div>
+    <div class="card-title">Pipeline 2 &mdash; Security Assessment</div>
+    <div class="card-body">
+      <p>Tracks the four-part security assessment process independently. Some firms enter through assessment-first (especially those coming from conferences or who have a specific compliance deadline). This pipeline tracks the technical delivery that often runs in parallel with the sales conversation.</p>
+    </div>
+
+    <div class="pipeline-flow">
+      <div class="stage-block" style="background: rgba(14,165,233,0.06); border-radius: 10px 0 0 10px;">
+        <div class="stage-name">Gap Analysis</div>
+        <div class="stage-desc">30-minute initial gap analysis call</div>
+      </div>
+      <div class="stage-block" style="background: rgba(14,165,233,0.08);">
+        <div class="stage-name">Vulnerability Scan</div>
+        <div class="stage-desc">External and internal vulnerability assessment</div>
+      </div>
+      <div class="stage-block" style="background: rgba(14,165,233,0.10);">
+        <div class="stage-name">Cloud Config Review</div>
+        <div class="stage-desc">M365 / Google Workspace hardening audit</div>
+      </div>
+      <div class="stage-block" style="background: rgba(14,165,233,0.12);">
+        <div class="stage-name">External Exposure</div>
+        <div class="stage-desc">Attack surface and external footprint analysis</div>
+      </div>
+      <div class="stage-block" style="background: rgba(16,185,129,0.10); border-radius: 0 10px 10px 0;">
+        <div class="stage-name">Report Delivered</div>
+        <div class="stage-desc">Full assessment report presented to firm</div>
+      </div>
+    </div>
+
+    <div class="callout callout-blue">
+      <strong>Link to New Business pipeline.</strong> Every completed assessment should have a linked deal in the New Business pipeline. If the assessment reveals gaps (and FCI finds them 60&ndash;80% of the time), that assessment becomes the most powerful sales tool in the deal.
+    </div>
+  </div>
+
+
+  <!-- ════════════════════════════════════════════ -->
+  <!--  6. PIPELINE 3 — EXPANSION & RENEWAL         -->
+  <!-- ════════════════════════════════════════════ -->
+  <div class="section-divider" id="pipeline-expand">
+    <div class="line"></div>
+    <div class="label" style="color: var(--emerald);">06 &mdash; Expansion &amp; Renewal</div>
+    <div class="line"></div>
+  </div>
+
+  <div class="config-card">
+    <div class="card-eyebrow" style="color: var(--emerald);">Client Growth Pipeline</div>
+    <div class="card-title">Pipeline 3 &mdash; Expansion &amp; Renewal</div>
+    <div class="card-body">
+      <p>For existing clients. Tracks upsells (adding Zero Trust, CISO Portal upgrades, new branch rollouts), cross-sells (adding new locations or business units), and contract renewals. This is where FCI's recurring revenue growth lives.</p>
+    </div>
+
+    <div class="pipeline-flow">
+      <div class="stage-block" style="background: rgba(16,185,129,0.06); border-radius: 10px 0 0 10px;">
+        <div class="stage-name">Opportunity Identified</div>
+        <div class="stage-desc">Expansion or renewal opportunity flagged</div>
+      </div>
+      <div class="stage-block" style="background: rgba(16,185,129,0.08);">
+        <div class="stage-name">Discussion</div>
+        <div class="stage-desc">Conversation initiated with client</div>
+      </div>
+      <div class="stage-block" style="background: rgba(16,185,129,0.10);">
+        <div class="stage-name">Proposal / Quote</div>
+        <div class="stage-desc">Expansion pricing or renewal terms sent</div>
+      </div>
+      <div class="stage-block" style="background: rgba(16,185,129,0.12); border-radius: 0 10px 10px 0;">
+        <div class="stage-name">Closed</div>
+        <div class="stage-desc">Expansion active or renewal signed</div>
+      </div>
+    </div>
+
+    <div class="subsection">
+      <div class="subsection-title">Expansion Deal Types (Track via Deal Field)</div>
+      <div style="display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px;">
+        <span class="tag tag-emerald">New Branch Rollout</span>
+        <span class="tag tag-emerald">Added Endpoints</span>
+        <span class="tag tag-emerald">Zero Trust Add-On</span>
+        <span class="tag tag-emerald">CISO Portal Upgrade</span>
+        <span class="tag tag-emerald">New Office Location</span>
+        <span class="tag tag-emerald">Annual Renewal</span>
+        <span class="tag tag-emerald">Multi-Year Extension</span>
+        <span class="tag tag-emerald">Parent Firm Expansion</span>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ════════════════════════════════════════════ -->
+  <!--  7. PIPELINE 4 — CHANNEL & REFERRAL          -->
+  <!-- ════════════════════════════════════════════ -->
+  <div class="section-divider" id="pipeline-partner">
+    <div class="line"></div>
+    <div class="label" style="color: var(--indigo);">07 &mdash; Channel &amp; Referral Partners</div>
+    <div class="line"></div>
+  </div>
+
+  <div class="config-card">
+    <div class="card-eyebrow" style="color: var(--indigo);">Partner Pipeline</div>
+    <div class="card-title">Pipeline 4 &mdash; Channel &amp; Referral Partners</div>
+    <div class="card-body">
+      <p>Tracks relationships with firms and individuals who refer business to FCI &mdash; home offices, compliance consultants, IT providers, industry associations, and existing clients who make introductions. Referral is a top lead source &mdash; this pipeline makes it measurable.</p>
+    </div>
+
+    <div class="pipeline-flow">
+      <div class="stage-block" style="background: rgba(99,102,241,0.06); border-radius: 10px 0 0 10px;">
+        <div class="stage-name">Identified</div>
+        <div class="stage-desc">Potential referral partner identified</div>
+      </div>
+      <div class="stage-block" style="background: rgba(99,102,241,0.08);">
+        <div class="stage-name">Relationship Building</div>
+        <div class="stage-desc">Initial conversations, educating on FCI</div>
+      </div>
+      <div class="stage-block" style="background: rgba(99,102,241,0.10);">
+        <div class="stage-name">Active Partner</div>
+        <div class="stage-desc">Has referred or committed to referring</div>
+      </div>
+      <div class="stage-block" style="background: rgba(99,102,241,0.12); border-radius: 0 10px 10px 0;">
+        <div class="stage-name">Producing</div>
+        <div class="stage-desc">Consistently generating qualified referrals</div>
+      </div>
+    </div>
+
+    <div class="subsection">
+      <div class="subsection-title">Partner Types (Track via Org Field)</div>
+      <div style="display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px;">
+        <span class="tag tag-blue">Home Office / Broker-Dealer HQ</span>
+        <span class="tag tag-blue">Compliance Consultant</span>
+        <span class="tag tag-blue">IT Provider / MSP</span>
+        <span class="tag tag-blue">Industry Association</span>
+        <span class="tag tag-blue">Existing Client (Referrer)</span>
+        <span class="tag tag-blue">Cyber Insurance Broker</span>
+        <span class="tag tag-blue">Conference / Event Organizer</span>
+        <span class="tag tag-blue">Custodian</span>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ════════════════════════════════════════════ -->
+  <!--  8. LEAD GENERATION & SOURCE TRACKING         -->
+  <!-- ════════════════════════════════════════════ -->
+  <div class="section-divider" id="lead-gen">
+    <div class="line"></div>
+    <div class="label" style="color: var(--amber);">08 &mdash; Lead Generation</div>
+    <div class="line"></div>
+  </div>
+
+  <div class="config-card">
+    <div class="card-eyebrow" style="color: var(--amber);">Source Intelligence</div>
+    <div class="card-title">Lead Generation &amp; Source Tracking</div>
+    <div class="card-body">
+      <p>Every lead that enters Pipedrive must have a source. This is how you measure which channels produce pipeline and which produce noise. Track at both the contact level (how did we first meet this person?) and the deal level (what triggered this specific opportunity?).</p>
+    </div>
+
+    <div class="subsection">
+      <div class="subsection-title">Lead Source Categories (Contact-Level)</div>
+      <table class="field-table">
+        <thead><tr><th>Source</th><th>Description</th><th>Expected Quality</th></tr></thead>
+        <tbody>
+          <tr><td class="field-name">Inbound &mdash; Website</td><td>Contact form, gap analysis request from website</td><td><span class="tag tag-emerald">High</span></td></tr>
+          <tr><td class="field-name">Inbound &mdash; Gap Analysis Request</td><td>Specifically requested the 30-min gap analysis</td><td><span class="tag tag-emerald">Highest</span></td></tr>
+          <tr><td class="field-name">Referral</td><td>Introduced by existing client, partner, or industry contact</td><td><span class="tag tag-emerald">High</span></td></tr>
+          <tr><td class="field-name">Conference / Event</td><td>Met at T3, FPA, industry conference, or FCI-hosted event</td><td><span class="tag tag-amber">Medium-High</span></td></tr>
+          <tr><td class="field-name">LinkedIn</td><td>Connected via LinkedIn, responded to content or outreach</td><td><span class="tag tag-amber">Medium</span></td></tr>
+          <tr><td class="field-name">Cold Outreach</td><td>Proactive email or call &mdash; no prior relationship</td><td><span class="tag tag-amber">Medium</span></td></tr>
+          <tr><td class="field-name">Existing Client Intro</td><td>An active FCI client made the introduction</td><td><span class="tag tag-emerald">Highest</span></td></tr>
+          <tr><td class="field-name">Industry Publication</td><td>Responded to FCI content in trade publications</td><td><span class="tag tag-amber">Medium</span></td></tr>
+          <tr><td class="field-name">Webinar</td><td>Attended an FCI-hosted or co-hosted webinar</td><td><span class="tag tag-amber">Medium</span></td></tr>
+          <tr><td class="field-name">Brian Speaking Engagement</td><td>Came in from a Brian Edelman keynote or panel</td><td><span class="tag tag-emerald">High</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="subsection">
+      <div class="subsection-title">Deal Trigger Categories (Deal-Level)</div>
+      <div class="card-body">
+        <p>The Contact Source tells you <em>how they found FCI</em>. The Urgency Trigger tells you <em>why they are talking to you now</em>. Both matter for forecasting and prioritization.</p>
+      </div>
+      <div style="display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px;">
+        <span class="tag tag-red">Upcoming Exam</span>
+        <span class="tag tag-red">Recent Incident</span>
+        <span class="tag tag-amber">Cyber Insurance Renewal</span>
+        <span class="tag tag-amber">Home Office Mandate</span>
+        <span class="tag tag-amber">Board / Leadership Directive</span>
+        <span class="tag tag-blue">Compliance Gap Discovered</span>
+        <span class="tag tag-violet">No Specific Trigger</span>
+      </div>
+    </div>
+
+    <div class="callout callout-red">
+      <strong>Deals without urgency triggers stall.</strong> If "No Specific Trigger" is selected, that deal needs a different motion &mdash; nurture, education, and event invitations rather than direct sales pressure. Flag these for review in your weekly pipeline meeting.
+    </div>
+  </div>
+
+
+  <!-- ════════════════════════════════════════════ -->
+  <!--  9. LABELS, FILTERS & VIEWS                  -->
+  <!-- ════════════════════════════════════════════ -->
+  <div class="section-divider" id="labels">
+    <div class="line"></div>
+    <div class="label" style="color: var(--violet);">09 &mdash; Labels &amp; Filters</div>
+    <div class="line"></div>
+  </div>
+
+  <div class="config-card">
+    <div class="card-eyebrow" style="color: var(--violet);">Organization &amp; Workflow</div>
+    <div class="card-title">Labels, Filters &amp; Saved Views</div>
+    <div class="card-body">
+      <p>Set these up in Pipedrive so the team can instantly surface the deals and contacts that need attention without building custom reports every time.</p>
+    </div>
+
+    <div class="subsection">
+      <div class="subsection-title">Deal Labels (Color-Coded)</div>
+      <table class="field-table">
+        <thead><tr><th>Label</th><th>Color</th><th>When to Apply</th></tr></thead>
+        <tbody>
+          <tr><td class="field-name">Hot Deal</td><td><span class="tag tag-red">Red</span></td><td>Active conversation, urgency trigger present, expects decision this quarter</td></tr>
+          <tr><td class="field-name">Stalled</td><td><span class="tag tag-amber">Yellow</span></td><td>No activity for 14+ days in an active stage</td></tr>
+          <tr><td class="field-name">At Risk</td><td><span class="tag tag-red">Red</span></td><td>Champion left, competing heavily, budget issues surfaced</td></tr>
+          <tr><td class="field-name">Exam-Driven</td><td><span class="tag tag-violet">Purple</span></td><td>Urgency trigger is an upcoming regulatory exam</td></tr>
+          <tr><td class="field-name">Insurance-Driven</td><td><span class="tag tag-blue">Blue</span></td><td>Urgency trigger is cyber insurance renewal</td></tr>
+          <tr><td class="field-name">Referral Deal</td><td><span class="tag tag-emerald">Green</span></td><td>Came through a referral source</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="subsection">
+      <div class="subsection-title">Saved Filters to Create</div>
+      <ol class="num-list">
+        <li><strong>My Active Deals</strong> &mdash; Deals owned by me, not in Won/Lost, sorted by expected close date</li>
+        <li><strong>Stale Deals (14+ days no activity)</strong> &mdash; Any deal with no logged activity in 14+ days across all active stages</li>
+        <li><strong>Gap Analysis This Week</strong> &mdash; Deals with Gap Analysis Date in the current week</li>
+        <li><strong>Proposals Outstanding</strong> &mdash; Deals in "Proposal Sent" stage, sorted by days in stage</li>
+        <li><strong>Exam-Driven Pipeline</strong> &mdash; Urgency Trigger = Upcoming Exam, sorted by Next Exam Expected date</li>
+        <li><strong>Insurance Renewal Pipeline</strong> &mdash; Urgency Trigger = Cyber Insurance Renewal, sorted by renewal date</li>
+        <li><strong>RIA Prospects</strong> &mdash; Market Segment = RIA, all active deal stages</li>
+        <li><strong>Broker-Dealer Prospects</strong> &mdash; Market Segment = Broker-Dealer &amp; Branch Offices</li>
+        <li><strong>Insurance Prospects</strong> &mdash; Market Segment = Insurance Carriers &amp; Agencies</li>
+        <li><strong>Single-Threaded Deals</strong> &mdash; Multi-Threading Status = Single-Threaded + stage &ge; Qualified</li>
+        <li><strong>No Urgency Trigger</strong> &mdash; Urgency Trigger = No Specific Trigger + all active stages</li>
+        <li><strong>Won This Quarter</strong> &mdash; Won deals with close date in current quarter</li>
+        <li><strong>Lost This Quarter</strong> &mdash; Lost deals with close date in current quarter (for pattern analysis)</li>
+        <li><strong>Contacts Without Deals</strong> &mdash; Persons not linked to any active deal (potential nurture list)</li>
+      </ol>
+    </div>
+  </div>
+
+
+  <!-- ════════════════════════════════════════════ -->
+  <!--  10. DATA HYGIENE & CLEANUP                   -->
+  <!-- ════════════════════════════════════════════ -->
+  <div class="section-divider" id="hygiene">
+    <div class="line"></div>
+    <div class="label" style="color: var(--red);">10 &mdash; Data Hygiene</div>
+    <div class="line"></div>
+  </div>
+
+  <div class="config-card">
+    <div class="card-eyebrow" style="color: var(--red);">Cleanup Protocol</div>
+    <div class="card-title">Data Hygiene &amp; Dead Deal Cleanup</div>
+    <div class="card-body">
+      <p>Before implementing any of the above, the existing Pipedrive data needs to be cleaned. Stale data destroys pipeline accuracy and makes forecasting meaningless. Here is the cleanup protocol.</p>
+    </div>
+
+    <div class="subsection">
+      <div class="subsection-title">Phase 1 &mdash; Dead Deal Purge</div>
+      <ol class="num-list">
+        <li><strong>Pull all open deals.</strong> Export every deal currently in an "open" state across all pipelines.</li>
+        <li><strong>Flag stale deals.</strong> Any deal with no logged activity (email, call, note, meeting) in 90+ days is dead. Mark them Lost with reason "No Decision Made" or "Timing Not Right."</li>
+        <li><strong>Review 30&ndash;90 day deals.</strong> Any deal with 30&ndash;90 days of inactivity: the owner must either log a current status note and schedule a next step, or mark it Lost.</li>
+        <li><strong>Kill zombie pipeline.</strong> Deals that have been in the same stage for 6+ months with no movement &mdash; mark them Lost immediately. If the relationship is still warm, create a fresh deal when something real happens.</li>
+        <li><strong>Validate deal values.</strong> Any deal without an MRR or ACV &mdash; either populate it or mark the deal as requiring review.</li>
+      </ol>
+    </div>
+
+    <div class="subsection">
+      <div class="subsection-title">Phase 2 &mdash; Contact &amp; Org Cleanup</div>
+      <ol class="num-list">
+        <li><strong>Deduplicate organizations.</strong> Merge duplicate org records (common: same firm with slightly different names).</li>
+        <li><strong>Deduplicate contacts.</strong> Merge duplicate person records (common: same person entered from different sources).</li>
+        <li><strong>Classify every org.</strong> Every organization must have Firm Type and Relationship Type populated. Batch-update where possible.</li>
+        <li><strong>Tag former clients.</strong> Any org that was once a client but is no longer active should have Relationship Type = Former Client.</li>
+        <li><strong>Archive irrelevant orgs.</strong> Vendors, personal contacts, and non-target firms that clutter searches &mdash; either archive or tag clearly.</li>
+      </ol>
+    </div>
+
+    <div class="subsection">
+      <div class="subsection-title">Phase 3 &mdash; Ongoing Hygiene Rules</div>
+      <ol class="num-list">
+        <li><strong>Weekly pipeline review.</strong> Every Monday: review all deals, update Next Step, flag stale deals.</li>
+        <li><strong>30-day inactivity auto-flag.</strong> Set up Pipedrive automation to label deals with 30+ days of inactivity as "Stalled."</li>
+        <li><strong>Quarterly purge.</strong> Once per quarter, run the dead deal purge again. It is cheaper to lose a stale deal from the pipeline and reopen it later than to carry false pipeline all year.</li>
+        <li><strong>New deal checklist.</strong> No deal enters the pipeline without: Contact Source, Firm Type, Assigned To, and at least one contact with Buyer Role populated.</li>
+      </ol>
+    </div>
+
+    <div class="callout callout-red">
+      <strong>The goal of cleanup is not to have fewer deals. It is to have accurate deals.</strong> A 15-deal pipeline where every deal is real and has a next step is infinitely more useful than a 60-deal pipeline where 40 of them are ghosts. Clean pipeline = accurate forecast = better decisions.
+    </div>
+  </div>
+
+
+  <!-- ════════════════════════════════════════════ -->
+  <!--  11. AUTOMATION & WORKFLOWS                   -->
+  <!-- ════════════════════════════════════════════ -->
+  <div class="section-divider" id="automation">
+    <div class="line"></div>
+    <div class="label" style="color: var(--sky);">11 &mdash; Automation</div>
+    <div class="line"></div>
+  </div>
+
+  <div class="config-card">
+    <div class="card-eyebrow" style="color: var(--sky);">Workflow Automation</div>
+    <div class="card-title">Automation &amp; Workflow Rules</div>
+    <div class="card-body">
+      <p>Set these up in Pipedrive's Workflow Automation to reduce manual work and enforce data discipline.</p>
+    </div>
+
+    <table class="field-table">
+      <thead><tr><th>Trigger</th><th>Action</th></tr></thead>
+      <tbody>
+        <tr><td class="field-name">Deal created</td><td>Auto-populate Deal Owner from Contact's Assigned To field. Create activity: "Qualify this lead" due in 24 hours.</td></tr>
+        <tr><td class="field-name">Deal moves to "Qualified"</td><td>Create activity: "Schedule Gap Analysis" due in 3 business days.</td></tr>
+        <tr><td class="field-name">Deal moves to "Gap Analysis Complete"</td><td>Create activity: "Send assessment proposal or next-step recommendation" due in 2 business days.</td></tr>
+        <tr><td class="field-name">Deal moves to "Proposal Sent"</td><td>Create activity: "Follow up on proposal" due in 5 business days.</td></tr>
+        <tr><td class="field-name">Deal moves to "Won"</td><td>Update Org Relationship Type to "Active Client." Set Client Since date. Create activity: "Onboarding kickoff" due in 2 days.</td></tr>
+        <tr><td class="field-name">Deal marked "Lost"</td><td>Require Lost Reason field. Create activity: "90-day re-engagement check" due in 90 days.</td></tr>
+        <tr><td class="field-name">No activity on deal for 14 days</td><td>Add "Stalled" label. Notify deal owner via email.</td></tr>
+        <tr><td class="field-name">No activity on deal for 30 days</td><td>Notify sales manager (Mike). Escalation flag.</td></tr>
+        <tr><td class="field-name">Cyber Insurance Renewal Date &minus; 60 days</td><td>Create activity: "Renewal outreach &mdash; insurance-driven urgency" on linked deals.</td></tr>
+        <tr><td class="field-name">Next Exam Expected &minus; 90 days</td><td>Create activity: "Exam-driven outreach &mdash; compliance urgency" on linked deals.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+
+  <!-- ════════════════════════════════════════════ -->
+  <!--  12. DASHBOARDS & REPORTING                   -->
+  <!-- ════════════════════════════════════════════ -->
+  <div class="section-divider" id="reporting">
+    <div class="line"></div>
+    <div class="label" style="color: var(--emerald);">12 &mdash; Reporting</div>
+    <div class="line"></div>
+  </div>
+
+  <div class="config-card">
+    <div class="card-eyebrow" style="color: var(--emerald);">Insights &amp; Dashboards</div>
+    <div class="card-title">Dashboards &amp; Reporting</div>
+    <div class="card-body">
+      <p>Build these dashboards in Pipedrive Insights so the sales team and leadership have real-time visibility into pipeline health, conversion rates, and lead source performance.</p>
+    </div>
+
+    <div class="subsection">
+      <div class="subsection-title">Dashboard 1 &mdash; Pipeline Health (Weekly Review)</div>
+      <ol class="num-list">
+        <li>Total pipeline value (MRR and ACV) by stage</li>
+        <li>Deal count by stage</li>
+        <li>Average days in each stage</li>
+        <li>Stale deal count (14+ days, 30+ days)</li>
+        <li>Deals by urgency trigger</li>
+        <li>Single-threaded deal count</li>
+      </ol>
+    </div>
+
+    <div class="subsection">
+      <div class="subsection-title">Dashboard 2 &mdash; Lead Source Performance (Monthly)</div>
+      <ol class="num-list">
+        <li>Deals created by lead source (count and value)</li>
+        <li>Conversion rate by lead source (Lead In &rarr; Won)</li>
+        <li>Average deal size by lead source</li>
+        <li>Time to close by lead source</li>
+        <li>Cost per acquisition by source (if marketing spend data is available)</li>
+      </ol>
+    </div>
+
+    <div class="subsection">
+      <div class="subsection-title">Dashboard 3 &mdash; Market Segment View (Quarterly)</div>
+      <ol class="num-list">
+        <li>Pipeline value by market segment (RIA, BD, Insurance)</li>
+        <li>Win rate by market segment</li>
+        <li>Average deal size by firm type</li>
+        <li>Competitive win/loss by competitor type</li>
+        <li>Endpoint growth (new endpoints under management this quarter)</li>
+      </ol>
+    </div>
+
+    <div class="subsection">
+      <div class="subsection-title">Dashboard 4 &mdash; Sales Activity (Weekly)</div>
+      <ol class="num-list">
+        <li>Activities logged by rep (calls, emails, meetings)</li>
+        <li>Gap analyses scheduled and completed this week</li>
+        <li>Proposals sent this week</li>
+        <li>Deals advanced (moved to a later stage)</li>
+        <li>Deals won and lost this week / month</li>
+      </ol>
+    </div>
+
+    <div class="subsection">
+      <div class="subsection-title">Dashboard 5 &mdash; Revenue &amp; Forecast (Monthly)</div>
+      <ol class="num-list">
+        <li>Weighted pipeline value (deal value &times; stage probability)</li>
+        <li>Commit vs. upside breakdown</li>
+        <li>MRR trend (new client MRR won per month, trailing 12 months)</li>
+        <li>Expansion revenue (Pipeline 3 &mdash; closed expansion deals)</li>
+        <li>Client retention rate (clients renewed vs. churned)</li>
+      </ol>
+    </div>
+  </div>
+
+
+  <!-- ═══ IMPLEMENTATION ORDER ═══ -->
+  <div class="section-divider">
+    <div class="line"></div>
+    <div class="label" style="color: var(--amber);">Implementation Order</div>
+    <div class="line"></div>
+  </div>
+
+  <div class="config-card">
+    <div class="card-title">Recommended Implementation Sequence</div>
+    <div class="card-body">
+      <p>Don't try to do all of this in one day. Here's the order that delivers the most value fastest.</p>
+    </div>
+    <ol class="num-list">
+      <li><strong>Week 1: Clean the data.</strong> Run the dead deal purge (Phase 1). This is the foundation. Nothing else works if the pipeline is full of ghosts.</li>
+      <li><strong>Week 1: Create custom fields.</strong> Build all Organization, Person, and Deal custom fields. This is configuration only &mdash; fast to do, high impact.</li>
+      <li><strong>Week 2: Build the New Business pipeline</strong> with proper stages and probabilities. Migrate existing active deals into the new stages.</li>
+      <li><strong>Week 2: Deduplicate and classify orgs/contacts</strong> (Phase 2 cleanup). Populate Firm Type, Market Segment, and Relationship Type for all active records.</li>
+      <li><strong>Week 3: Build remaining pipelines</strong> (Assessment, Expansion & Renewal, Channel & Referral). Set up the labels and saved filters.</li>
+      <li><strong>Week 3: Set up automations.</strong> Start with the activity creation automations and stale deal alerts &mdash; these enforce behavior immediately.</li>
+      <li><strong>Week 4: Build dashboards.</strong> Start with Pipeline Health and Sales Activity. Add the others over time as data populates the new fields.</li>
+      <li><strong>Ongoing: Enforce data discipline.</strong> The configuration is only as good as the data that goes into it. Weekly pipeline reviews are non-negotiable.</li>
+    </ol>
+  </div>
+
+</div>
+
+<footer>FCI &middot; Pipedrive CRM Configuration Blueprint &middot; April 2026</footer>
+
+</body>
+</html>
