@@ -1297,13 +1297,11 @@
 
     <div class="subsection">
       <div class="subsection-title">Dashboard 3 &mdash; Market Segment (Quarterly Strategic)</div>
-      <p style="font-size:13px;color:var(--text3);margin-bottom:12px;">Which segment is FCI winning in, and where&rsquo;s the growth?</p>
+      <p style="font-size:13px;color:var(--text3);margin-bottom:12px;">Which segment is FCI winning in, and where&rsquo;s the growth? Uses Pipeline as proxy for market segment (New Business, Channel &amp; Referral Partners, Expansion &amp; Renewal, Closers.io 2026).</p>
       <ol class="num-list">
-        <li>Pipeline value by market segment &mdash; segmented by Market Segment org field (RIA, BD, Insurance)</li>
-        <li>Won deals by market segment &mdash; where is FCI actually winning?</li>
-        <li>Deal count by firm type &mdash; segmented by Firm Type, shows concentration</li>
-        <li>Win rate by segment &mdash; won vs. total deals by Market Segment</li>
-        <li>Average deal size by segment &mdash; guides targeting and resource allocation</li>
+        <li>Pipeline Value by Segment &mdash; deal value (USD) by pipeline, segmented by deal status</li>
+        <li>Won Deals by Segment &mdash; deal count by pipeline, filtered to won deals only</li>
+        <li>Win Rate by Segment &mdash; win/loss conversion view by pipeline</li>
       </ol>
     </div>
 
@@ -1311,11 +1309,9 @@
       <div class="subsection-title">Dashboard 4 &mdash; Sales Activity (Weekly Accountability)</div>
       <p style="font-size:13px;color:var(--text3);margin-bottom:12px;">Is the team doing the work? Rep-level activity tracking.</p>
       <ol class="num-list">
-        <li>Activities by type &mdash; calls, emails, meetings this week/month by user</li>
-        <li>Activities by user &mdash; leaderboard view, total activity volume</li>
-        <li>Deals advanced this period &mdash; deals that moved to a later stage this week</li>
-        <li>Proposals sent &mdash; activity type filter for proposals/quotes (leading close indicator)</li>
-        <li>Gap analyses completed &mdash; FCI&rsquo;s unique sales motion metric</li>
+        <li>Activities by Type &mdash; activity performance by type (calls, emails, meetings), this year</li>
+        <li>Activities by User &mdash; activity performance by assigned user, this year</li>
+        <li>Gap Analyses Completed &mdash; deal performance filtered by Gap Analysis Completed? = Yes, viewed by pipeline</li>
       </ol>
     </div>
 
@@ -1339,7 +1335,7 @@
     </div>
 
     <div class="subsection">
-      <div class="subsection-title">Completed (April 28&ndash;29)</div>
+      <div class="subsection-title">Completed (April 28&ndash;30)</div>
       <ol class="num-list">
         <li><strong>Data cleanup.</strong> Dead deal purge &mdash; stale open deals removed, won/lost deals preserved.</li>
         <li><strong>Custom fields.</strong> All Organization, Person, and Deal custom fields created, grouped, and mapped to blueprint.</li>
@@ -1347,16 +1343,16 @@
         <li><strong>Labels.</strong> Four deal labels live: Hot Deal, Warm Deal, Stalled, At Risk.</li>
         <li><strong>Saved filters.</strong> 14 new operational filters created. Legacy deal filters cleaned up.</li>
         <li><strong>Leads strategy.</strong> Lead vs. Deal framework defined. Creation triggers, conversion criteria, and pipeline flow documented.</li>
+        <li><strong>Dashboards.</strong> Legacy reports (52) and dashboards (7) wiped. Four new Insights dashboards built with 20 reports total: Pipeline &amp; Revenue (5), Lead Source &amp; Funnel (5), Market Segment (3), Sales Activity (3). Market Segment uses Pipeline as proxy since Market Segment is an org-level field unavailable in deal reports.</li>
       </ol>
     </div>
 
     <div class="subsection">
-      <div class="subsection-title">Remaining &mdash; Wed Apr 30 &ndash; Mon May 4</div>
+      <div class="subsection-title">Remaining &mdash; Thu May 1 &ndash; Mon May 4</div>
       <ol class="num-list">
-        <li><strong>Wed&ndash;Thu: Org &amp; contact dedup.</strong> Merge duplicate organizations and contacts. Populate Firm Type, Market Segment, and Relationship Type for all active records. Tag former clients. Archive irrelevant orgs.</li>
-        <li><strong>Thu&ndash;Fri: Leads Inbox setup.</strong> Clean stale leads. Build Calendly &rarr; Lead and website form &rarr; Lead automations. Test conversion flow end-to-end.</li>
-        <li><strong>Fri: Workflow automations.</strong> Deal stage activity reminders, stale deal alerts (14-day &amp; 30-day), lead inbox alerts (7-day &amp; 14-day), date-driven triggers (insurance renewal, exam approach), and deal-won/lost automations.</li>
-        <li><strong>Mon: Dashboards.</strong> Build four Insights dashboards: Pipeline &amp; Revenue, Lead Source &amp; Funnel, Market Segment, and Sales Activity. All reports created and assigned to dashboards. Legacy reports and dashboards wiped clean first.</li>
+        <li><strong>Thu&ndash;Fri: Org &amp; contact dedup.</strong> Merge duplicate organizations and contacts. Populate Firm Type, Market Segment, and Relationship Type for all active records. Tag former clients. Archive irrelevant orgs.</li>
+        <li><strong>Fri: Leads Inbox setup.</strong> Clean stale leads. Build Calendly &rarr; Lead and website form &rarr; Lead automations. Test conversion flow end-to-end.</li>
+        <li><strong>Sat&ndash;Sun: Workflow automations.</strong> Deal stage activity reminders, stale deal alerts (14-day &amp; 30-day), lead inbox alerts (7-day &amp; 14-day), date-driven triggers (insurance renewal, exam approach), and deal-won/lost automations.</li>
       </ol>
     </div>
 
