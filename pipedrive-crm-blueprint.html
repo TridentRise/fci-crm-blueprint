@@ -1219,7 +1219,7 @@
     <table class="field-table">
       <thead><tr><th>Trigger</th><th>Action</th></tr></thead>
       <tbody>
-        <tr><td class="field-name">Deal created</td><td>Auto-populate Deal Owner from Contact's Assigned To field. Create activity: "New deal checklist &mdash; confirm fields, verify contacts, schedule next step" due in 24 hours.</td></tr>
+        <tr><td class="field-name">Deal created <span style="color: var(--emerald); font-weight: 600;">&#x2713; LIVE</span></td><td>Auto-populate Deal Owner from Contact's Assigned To field.<sup style="color: var(--amber);">*</sup> Create activity: "New deal checklist &mdash; confirm fields, verify contacts, schedule next step" due in 24 hours. <br><em style="font-size: 0.85em; color: var(--text-muted);">Automation: "New Deal Checklist" &mdash; active, all users.</em></td></tr>
         <tr><td class="field-name">Deal moves to "Qualified"</td><td>Create activity: "Schedule Gap Analysis" due in 3 business days.</td></tr>
         <tr><td class="field-name">Deal moves to "Gap Analysis Complete"</td><td>Create activity: "Send assessment proposal or next-step recommendation" due in 2 business days.</td></tr>
         <tr><td class="field-name">Deal moves to "Proposal Sent"</td><td>Create activity: "Follow up on proposal" due in 5 business days.</td></tr>
@@ -1231,6 +1231,7 @@
         <tr><td class="field-name">Next Exam Expected &minus; 90 days</td><td>Create activity: "Exam-driven outreach &mdash; compliance urgency" on linked deals.</td></tr>
       </tbody>
     </table>
+    <p style="font-size: 0.85em; color: var(--text-muted); margin-top: 0.5rem;"><sup style="color: var(--amber);">*</sup> <strong>Limitation:</strong> Pipedrive's native automation engine cannot dynamically copy a Contact's "Assigned To" field to the Deal Owner. The Owner dropdown only supports static user selection or trigger-context values (Deal creator, Deal owner). The "New Deal Checklist" task reminds reps to verify the Deal Owner as part of their new-deal setup. A future API/webhook solution could automate this mapping.</p>
 
     <div class="subsection">
       <div class="subsection-title">Lead Inbox Automations</div>
