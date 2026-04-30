@@ -684,7 +684,7 @@
     <div class="card-eyebrow" style="color: var(--amber);">Primary Sales Pipeline</div>
     <div class="card-title">Pipeline 1 &mdash; New Business</div>
     <div class="card-body">
-      <p>This is FCI's primary pipeline. It follows the natural sales motion: inbound or outbound lead &rarr; gap analysis &rarr; assessment &rarr; proposal &rarr; close. The stage probabilities reflect FCI's actual conversion patterns &mdash; the gap analysis is the critical inflection point.</p>
+      <p>This is FCI's primary pipeline. It follows the natural sales motion: inbound or outbound lead &rarr; qualification &rarr; proposal &rarr; negotiation &rarr; close. The stage probabilities reflect FCI's actual conversion patterns.</p>
     </div>
 
     <div class="pipeline-flow">
@@ -695,43 +695,37 @@
       </div>
       <div class="stage-block" style="background: rgba(14,165,233,0.08);">
         <div class="stage-pct" style="color: var(--sky);">15%</div>
-        <div class="stage-name">Qualified</div>
-        <div class="stage-desc">Confirmed: right firm type, has pain, willing to talk.</div>
+        <div class="stage-name">Qualification</div>
+        <div class="stage-desc">Confirming firm type, pain point, and authority contact.</div>
       </div>
       <div class="stage-block" style="background: rgba(99,102,241,0.08);">
         <div class="stage-pct" style="color: var(--indigo);">30%</div>
-        <div class="stage-name">Gap Analysis Scheduled</div>
-        <div class="stage-desc">30-min gap analysis on the calendar.</div>
-      </div>
-      <div class="stage-block" style="background: rgba(168,85,247,0.08);">
-        <div class="stage-pct" style="color: var(--violet);">50%</div>
-        <div class="stage-name">Gap Analysis Complete</div>
-        <div class="stage-desc">Gap analysis done. Findings delivered. Interest confirmed.</div>
+        <div class="stage-name">Proposal Requested</div>
+        <div class="stage-desc">Prospect has asked for a proposal or scoping document.</div>
       </div>
       <div class="stage-block" style="background: rgba(245,158,11,0.08);">
-        <div class="stage-pct" style="color: var(--amber);">65%</div>
-        <div class="stage-name">Assessment / Deep Dive</div>
-        <div class="stage-desc">Full security assessment underway or scoping discussion.</div>
-      </div>
-      <div class="stage-block" style="background: rgba(245,158,11,0.12);">
-        <div class="stage-pct" style="color: var(--amber);">80%</div>
+        <div class="stage-pct" style="color: var(--amber);">50%</div>
         <div class="stage-name">Proposal Sent</div>
         <div class="stage-desc">Formal proposal delivered. Decision maker engaged.</div>
       </div>
-      <div class="stage-block" style="background: rgba(16,185,129,0.08);">
-        <div class="stage-pct" style="color: var(--emerald);">90%</div>
-        <div class="stage-name">Verbal Commit</div>
-        <div class="stage-desc">Verbal yes. Contract or SOW in review.</div>
+      <div class="stage-block" style="background: rgba(245,158,11,0.12);">
+        <div class="stage-pct" style="color: var(--amber);">65%</div>
+        <div class="stage-name">Revision/Negotiation</div>
+        <div class="stage-desc">Proposal under review. Terms or scope being negotiated.</div>
       </div>
-      <div class="stage-block" style="background: rgba(16,185,129,0.12); border-radius: 0 10px 10px 0;">
-        <div class="stage-pct" style="color: var(--emerald);">100%</div>
-        <div class="stage-name">Won</div>
-        <div class="stage-desc">Signed. Handoff to onboarding.</div>
+      <div class="stage-block" style="background: rgba(16,185,129,0.08);">
+        <div class="stage-pct" style="color: var(--emerald);">80%</div>
+        <div class="stage-name">Verbal</div>
+        <div class="stage-desc">Verbal yes. Contract or SOW in review.</div>
       </div>
     </div>
 
+    <div style="margin-top: 0.75rem;">
+      <p style="font-size: 0.9em; color: var(--text-muted); margin: 0;"><strong>Exception stages:</strong> <em>Delayed</em>, <em>Postponed</em>, and <em>Steering</em> are holding stages for deals that have stalled, been deferred, or need internal steering review. Deals in these stages are not part of the active progression &mdash; they should be reviewed regularly and either reactivated or lost.</p>
+    </div>
+
     <div class="callout">
-      <strong>Stage entry criteria matter.</strong> A deal should not advance to "Qualified" until you've confirmed the firm type, that they have a real pain point (upcoming exam, incident, insurance renewal, home office mandate), and that someone with authority is engaged. A deal should not advance to "Proposal Sent" without a completed gap analysis &mdash; proposals without discovery are wasted effort.
+      <strong>Stage entry criteria matter.</strong> A deal should not advance to "Qualification" until you've confirmed the firm type, that they have a real pain point (upcoming exam, incident, insurance renewal, home office mandate), and that someone with authority is engaged. A deal should not advance to "Proposal Sent" without understanding the prospect's needs &mdash; proposals without discovery are wasted effort.
     </div>
 
     <div class="subsection">
@@ -740,12 +734,11 @@
         <thead><tr><th>Stage</th><th>Must Be Populated</th></tr></thead>
         <tbody>
           <tr><td class="field-name">Lead In</td><td>Contact Source, Firm Type, Assigned To</td></tr>
-          <tr><td class="field-name">Qualified</td><td>+ Buyer Role, Urgency Trigger, Total Endpoints, Buyer Journey Stage</td></tr>
-          <tr><td class="field-name">Gap Analysis Scheduled</td><td>+ Gap Analysis Date, Market Segment</td></tr>
-          <tr><td class="field-name">Gap Analysis Complete</td><td>+ Security Readiness Score, Compliance Concern, Solution Interest</td></tr>
-          <tr><td class="field-name">Assessment / Deep Dive</td><td>+ Full IT environment fields (EDR, MFA, Cloud, SOC, BYOD)</td></tr>
+          <tr><td class="field-name">Qualification</td><td>+ Buyer Role, Urgency Trigger, Total Endpoints, Buyer Journey Stage, Market Segment</td></tr>
+          <tr><td class="field-name">Proposal Requested</td><td>+ Security Readiness Score, Compliance Concern, Solution Interest</td></tr>
           <tr><td class="field-name">Proposal Sent</td><td>+ MRR, ACV, Proposal Date, Decision Timeline, Champion Identified</td></tr>
-          <tr><td class="field-name">Verbal Commit</td><td>+ Multi-Threading Status, Next Step = contract logistics</td></tr>
+          <tr><td class="field-name">Revision/Negotiation</td><td>+ Multi-Threading Status, Next Step</td></tr>
+          <tr><td class="field-name">Verbal</td><td>+ Contract logistics confirmed</td></tr>
           <tr><td class="field-name">Won</td><td>+ Client Since date on Org, Relationship Type &rarr; Active Client</td></tr>
         </tbody>
       </table>
@@ -815,22 +808,38 @@
     </div>
 
     <div class="pipeline-flow">
-      <div class="stage-block" style="background: rgba(16,185,129,0.06); border-radius: 10px 0 0 10px;">
-        <div class="stage-name">Opportunity Identified</div>
-        <div class="stage-desc">Expansion or renewal opportunity flagged</div>
+      <div class="stage-block" style="background: rgba(16,185,129,0.04); border-radius: 10px 0 0 10px;">
+        <div class="stage-name">Email sent / Reach Out</div>
+        <div class="stage-desc">Initial outreach to existing client about expansion or renewal</div>
+      </div>
+      <div class="stage-block" style="background: rgba(16,185,129,0.06);">
+        <div class="stage-name">Contact Made / Call Scheduled</div>
+        <div class="stage-desc">Client engaged. Call or meeting on the calendar.</div>
       </div>
       <div class="stage-block" style="background: rgba(16,185,129,0.08);">
-        <div class="stage-name">Discussion</div>
-        <div class="stage-desc">Conversation initiated with client</div>
+        <div class="stage-name">Documents Ready</div>
+        <div class="stage-desc">Renewal or expansion documentation prepared</div>
+      </div>
+      <div class="stage-block" style="background: rgba(16,185,129,0.09);">
+        <div class="stage-name">UP Sell Call Completed</div>
+        <div class="stage-desc">Upsell or expansion conversation completed with client</div>
       </div>
       <div class="stage-block" style="background: rgba(16,185,129,0.10);">
-        <div class="stage-name">Proposal / Quote</div>
-        <div class="stage-desc">Expansion pricing or renewal terms sent</div>
+        <div class="stage-name">Proposal Sent</div>
+        <div class="stage-desc">Expansion pricing or renewal terms delivered</div>
       </div>
-      <div class="stage-block" style="background: rgba(16,185,129,0.12); border-radius: 0 10px 10px 0;">
-        <div class="stage-name">Closed</div>
-        <div class="stage-desc">Expansion active or renewal signed</div>
+      <div class="stage-block" style="background: rgba(16,185,129,0.11);">
+        <div class="stage-name">Proposal revision / negotiation</div>
+        <div class="stage-desc">Terms under review or being negotiated</div>
       </div>
+      <div class="stage-block" style="background: rgba(16,185,129,0.12);">
+        <div class="stage-name">Verbal</div>
+        <div class="stage-desc">Verbal commitment. Contract in progress.</div>
+      </div>
+    </div>
+
+    <div style="margin-top: 0.75rem;">
+      <p style="font-size: 0.9em; color: var(--text-muted); margin: 0;"><strong>Exception stage:</strong> <em>Steering</em> is a holding stage for deals that need internal steering review before proceeding.</p>
     </div>
 
     <div class="subsection">
@@ -866,22 +875,46 @@
     </div>
 
     <div class="pipeline-flow">
-      <div class="stage-block" style="background: rgba(99,102,241,0.06); border-radius: 10px 0 0 10px;">
-        <div class="stage-name">Identified</div>
-        <div class="stage-desc">Potential referral partner identified</div>
+      <div class="stage-block" style="background: rgba(99,102,241,0.04); border-radius: 10px 0 0 10px;">
+        <div class="stage-name">Prospect Identified</div>
+        <div class="stage-desc">Potential partner or referral prospect identified</div>
+      </div>
+      <div class="stage-block" style="background: rgba(99,102,241,0.05);">
+        <div class="stage-name">First Contact Made</div>
+        <div class="stage-desc">Initial outreach completed</div>
+      </div>
+      <div class="stage-block" style="background: rgba(99,102,241,0.06);">
+        <div class="stage-name">Presentation Made</div>
+        <div class="stage-desc">FCI capabilities presented to partner</div>
+      </div>
+      <div class="stage-block" style="background: rgba(99,102,241,0.07);">
+        <div class="stage-name">Qualified</div>
+        <div class="stage-desc">Partner confirmed as viable. Mutual interest established.</div>
       </div>
       <div class="stage-block" style="background: rgba(99,102,241,0.08);">
-        <div class="stage-name">Relationship Building</div>
-        <div class="stage-desc">Initial conversations, educating on FCI</div>
+        <div class="stage-name">Current Momentum</div>
+        <div class="stage-desc">Active engagement. Deals or referrals in motion.</div>
+      </div>
+      <div class="stage-block" style="background: rgba(99,102,241,0.09);">
+        <div class="stage-name">Quote Requested</div>
+        <div class="stage-desc">Partner or referred prospect has requested pricing</div>
       </div>
       <div class="stage-block" style="background: rgba(99,102,241,0.10);">
-        <div class="stage-name">Active Partner</div>
-        <div class="stage-desc">Has referred or committed to referring</div>
+        <div class="stage-name">Quote Sent</div>
+        <div class="stage-desc">Pricing or proposal delivered</div>
+      </div>
+      <div class="stage-block" style="background: rgba(99,102,241,0.11);">
+        <div class="stage-name">Revision/Negotiation</div>
+        <div class="stage-desc">Terms under review or being negotiated</div>
       </div>
       <div class="stage-block" style="background: rgba(99,102,241,0.12); border-radius: 0 10px 10px 0;">
-        <div class="stage-name">Producing</div>
-        <div class="stage-desc">Consistently generating qualified referrals</div>
+        <div class="stage-name">Verbal</div>
+        <div class="stage-desc">Verbal commitment received</div>
       </div>
+    </div>
+
+    <div style="margin-top: 0.75rem;">
+      <p style="font-size: 0.9em; color: var(--text-muted); margin: 0;"><strong>Exception stages:</strong> <em>Stuck in the Mud</em> is a holding stage for stalled partner deals. <em>Lost</em> marks deals that did not close.</p>
     </div>
 
     <div class="subsection">
@@ -895,6 +928,55 @@
         <span class="tag tag-blue">Cyber Insurance Broker</span>
         <span class="tag tag-blue">Conference / Event Organizer</span>
         <span class="tag tag-blue">Custodian</span>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ════════════════════════════════════════════ -->
+  <!--  7b. PIPELINE 5 — CLOSERS.IO 2026              -->
+  <!-- ════════════════════════════════════════════ -->
+  <div class="section-divider" id="pipeline-closers">
+    <div class="line"></div>
+    <div class="label" style="color: var(--violet);">07b &mdash; Closers.io 2026</div>
+    <div class="line"></div>
+  </div>
+
+  <div class="config-card">
+    <div class="card-eyebrow" style="color: var(--violet);">Outsourced Sales Pipeline</div>
+    <div class="card-title">Pipeline 5 &mdash; Closers.io 2026</div>
+    <div class="card-body">
+      <p>Tracks deals sourced and managed through Closers.io &mdash; FCI's outsourced sales development partner. This pipeline has its own stage names that mirror the Closers.io methodology, from initial call scheduling through to verbal commitment.</p>
+    </div>
+
+    <div class="pipeline-flow">
+      <div class="stage-block" style="background: rgba(168,85,247,0.04); border-radius: 10px 0 0 10px;">
+        <div class="stage-name">Lead in (Call 1 scheduled)</div>
+        <div class="stage-desc">First discovery call booked</div>
+      </div>
+      <div class="stage-block" style="background: rgba(168,85,247,0.06);">
+        <div class="stage-name">Opportunity confirmed</div>
+        <div class="stage-desc">Prospect has a real need and fit confirmed</div>
+      </div>
+      <div class="stage-block" style="background: rgba(168,85,247,0.08);">
+        <div class="stage-name">Firm profile and account plan</div>
+        <div class="stage-desc">Detailed prospect profile and account strategy built</div>
+      </div>
+      <div class="stage-block" style="background: rgba(168,85,247,0.10);">
+        <div class="stage-name">Technical call complete</div>
+        <div class="stage-desc">Technical discovery or assessment call completed</div>
+      </div>
+      <div class="stage-block" style="background: rgba(168,85,247,0.11);">
+        <div class="stage-name">Proposal presented</div>
+        <div class="stage-desc">Proposal delivered to prospect</div>
+      </div>
+      <div class="stage-block" style="background: rgba(168,85,247,0.12);">
+        <div class="stage-name">Review and negotiations</div>
+        <div class="stage-desc">Terms under review or being negotiated</div>
+      </div>
+      <div class="stage-block" style="background: rgba(16,185,129,0.10); border-radius: 0 10px 10px 0;">
+        <div class="stage-name">Verbal</div>
+        <div class="stage-desc">Verbal commitment received</div>
       </div>
     </div>
   </div>
@@ -1000,15 +1082,15 @@
     <div class="subsection">
       <div class="subsection-title">Where Converted Leads Land</div>
       <div class="card-body">
-        <p>When a lead is converted, it becomes a Deal in one of the four pipelines based on the nature of the opportunity:</p>
+        <p>When a lead is converted, it becomes a Deal in one of the five pipelines based on the nature of the opportunity:</p>
       </div>
       <table class="field-table">
         <thead><tr><th>Scenario</th><th>Pipeline</th><th>Starting Stage</th></tr></thead>
         <tbody>
-          <tr><td>New prospect wants cybersecurity / compliance services</td><td><span class="tag tag-blue">Pipeline 1 &mdash; New Business</span></td><td>Qualified</td></tr>
-          <tr><td>Prospect needs a security assessment or pen test</td><td><span class="tag tag-sky">Pipeline 2 &mdash; Security Assessment</span></td><td>Gap Analysis Scheduled</td></tr>
-          <tr><td>Existing client exploring additional services</td><td><span class="tag tag-emerald">Pipeline 3 &mdash; Expansion &amp; Renewal</span></td><td>Expansion Identified</td></tr>
-          <tr><td>A channel partner, broker-dealer, or referral partner</td><td><span class="tag tag-violet">Pipeline 4 &mdash; Channel &amp; Referral Partners</span></td><td>Partner Identified</td></tr>
+          <tr><td>New prospect wants cybersecurity / compliance services</td><td><span class="tag tag-blue">Pipeline 1 &mdash; New Business</span></td><td>Lead In</td></tr>
+          <tr><td>Prospect needs a security assessment or pen test</td><td><span class="tag tag-sky">Pipeline 2 &mdash; Security Assessment</span></td><td>Gap Analysis</td></tr>
+          <tr><td>Existing client exploring additional services</td><td><span class="tag tag-emerald">Pipeline 3 &mdash; Expansion &amp; Renewal</span></td><td>Email sent / Reach Out</td></tr>
+          <tr><td>A channel partner, broker-dealer, or referral partner</td><td><span class="tag tag-violet">Pipeline 4 &mdash; Channel &amp; Referral Partners</span></td><td>Prospect Identified</td></tr>
         </tbody>
       </table>
     </div>
@@ -1220,15 +1302,13 @@
       <thead><tr><th>Trigger</th><th>Action</th></tr></thead>
       <tbody>
         <tr><td class="field-name">Deal created <span style="color: var(--emerald); font-weight: 600;">&#x2713; LIVE</span></td><td>Auto-populate Deal Owner from Contact's Assigned To field.<sup style="color: var(--amber);">*</sup> Create activity: "New deal checklist &mdash; confirm fields, verify contacts, schedule next step" due in 24 hours. <br><em style="font-size: 0.85em; color: var(--text-muted);">Automation: "New Deal Checklist" &mdash; active, all users.</em></td></tr>
-        <tr><td class="field-name">Deal moves to "Qualified" <span style="color: var(--emerald); font-weight: 600;">&#x2713; LIVE</span></td><td>Create activity: "Schedule Gap Analysis" due in 3 business days. <br><em style="font-size: 0.85em; color: var(--text-muted);">Automation: "Qualified &mdash; Schedule Gap Analysis" &mdash; active, all users.</em></td></tr>
-        <tr><td class="field-name">Deal moves to "Gap Analysis Complete"</td><td>Create activity: "Send assessment proposal or next-step recommendation" due in 2 business days.</td></tr>
-        <tr><td class="field-name">Deal moves to "Proposal Sent"</td><td>Create activity: "Follow up on proposal" due in 5 business days.</td></tr>
-        <tr><td class="field-name">Deal moves to "Won"</td><td>Update Org Relationship Type to "Active Client." Set Client Since date. Create activity: "Onboarding kickoff" due in 2 days.</td></tr>
-        <tr><td class="field-name">Deal marked "Lost"</td><td>Require Lost Reason field. Create activity: "90-day re-engagement check" due in 90 days.</td></tr>
+        <tr><td class="field-name">Deal moves to "Qualified" <span style="color: var(--emerald); font-weight: 600;">&#x2713; LIVE</span></td><td>Create activity: "Schedule Gap Analysis" due in 3 business days. <em style="font-size: 0.85em;">(Channel &amp; Referral Partners pipeline only &mdash; only pipeline with a "Qualified" stage.)</em> <br><em style="font-size: 0.85em; color: var(--text-muted);">Automation: "Qualified &mdash; Schedule Gap Analysis" &mdash; active, all users.</em></td></tr>
+        <tr><td class="field-name">Deal moves to "Proposal Sent"</td><td>Create activity: "Follow up on proposal" due in 5 business days. <em style="font-size: 0.85em;">(Fires on New Business and Expansion &amp; Renewal pipelines.)</em></td></tr>
+        <tr><td class="field-name">Deal moves to "Won"</td><td>Update Org Relationship Type to "Active Client." Set Client Since date. Create activity: "Onboarding kickoff" due in 2 days. <em style="font-size: 0.85em;">(Deal status &mdash; fires across all pipelines.)</em></td></tr>
+        <tr><td class="field-name">Deal marked "Lost"</td><td>Require Lost Reason field. Create activity: "90-day re-engagement check" due in 90 days. <em style="font-size: 0.85em;">(Deal status &mdash; fires across all pipelines.)</em></td></tr>
         <tr><td class="field-name">No activity on deal for 14 days</td><td>Add "Stalled" label. Notify deal owner via email.</td></tr>
         <tr><td class="field-name">No activity on deal for 30 days</td><td>Notify sales manager (Mike). Escalation flag.</td></tr>
-        <tr><td class="field-name">Cyber Insurance Renewal Date &minus; 60 days</td><td>Create activity: "Renewal outreach &mdash; insurance-driven urgency" on linked deals.</td></tr>
-        <tr><td class="field-name">Next Exam Expected &minus; 90 days</td><td>Create activity: "Exam-driven outreach &mdash; compliance urgency" on linked deals.</td></tr>
+        <tr><td class="field-name">Cyber Insurance Renewal Date &minus; 60 days</td><td>Create activity: "Cyber insurance renewal prep &mdash; review client readiness" assigned to deal owner. <em style="font-size: 0.85em;">(Value-add client service: proactively help clients prepare for carrier requirements before renewal. Field-based trigger &mdash; fires when the date field is populated on any deal.)</em></td></tr>
       </tbody>
     </table>
     <p style="font-size: 0.85em; color: var(--text-muted); margin-top: 0.5rem;"><sup style="color: var(--amber);">*</sup> <strong>Limitation:</strong> Pipedrive's native automation engine cannot dynamically copy a Contact's "Assigned To" field to the Deal Owner. The Owner dropdown only supports static user selection or trigger-context values (Deal creator, Deal owner). The "New Deal Checklist" task reminds reps to verify the Deal Owner as part of their new-deal setup. A future API/webhook solution could automate this mapping.</p>
@@ -1272,7 +1352,7 @@
       <div class="subsection-title">Dashboard 1 &mdash; Pipeline &amp; Revenue (Weekly Review)</div>
       <p style="font-size:13px;color:var(--text3);margin-bottom:12px;">Monday morning board &mdash; where the money sits and where deals are stuck.</p>
       <ol class="num-list">
-        <li>Open deals by stage &mdash; stacked bar, all four pipelines, segmented by pipeline</li>
+        <li>Open deals by stage &mdash; stacked bar, all five pipelines, segmented by pipeline</li>
         <li>Deal value by stage &mdash; same view weighted by deal value instead of count</li>
         <li>Deals won vs. lost &mdash; monthly trend, trailing 6 months</li>
         <li>Won deal value &mdash; monthly trend, trailing 12 months (revenue trajectory)</li>
@@ -1340,7 +1420,7 @@
       <ol class="num-list">
         <li><strong>Data cleanup.</strong> Dead deal purge &mdash; stale open deals removed, won/lost deals preserved.</li>
         <li><strong>Custom fields.</strong> All Organization, Person, and Deal custom fields created, grouped, and mapped to blueprint.</li>
-        <li><strong>Pipelines.</strong> All four pipelines built (New Business, Security Assessment, Expansion &amp; Renewal, Channel &amp; Referral Partners). Vendor pipelines consolidated. Deals migrated.</li>
+        <li><strong>Pipelines.</strong> All five pipelines built (New Business, Security Assessment, Expansion &amp; Renewal, Channel &amp; Referral Partners, Closers.io 2026). Vendor pipelines consolidated. Deals migrated.</li>
         <li><strong>Labels.</strong> Four deal labels live: Hot Deal, Warm Deal, Stalled, At Risk.</li>
         <li><strong>Saved filters.</strong> 14 new operational filters created. Legacy deal filters cleaned up.</li>
         <li><strong>Leads strategy.</strong> Lead vs. Deal framework defined. Creation triggers, conversion criteria, and pipeline flow documented.</li>
